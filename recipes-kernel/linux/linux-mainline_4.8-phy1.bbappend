@@ -4,3 +4,4 @@ SRC_URI += "file://jtag-pm.patch"
 
 SRC_URI += "file://ppp-network.cfg"
 SRC_URI += "file://usb-devices.cfg"
+SRC_URI += "file://virtual-devices.cfg"
