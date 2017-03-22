@@ -15,7 +15,7 @@ BBLAYERS  ?= " \
   ${OEROOT}/../meta-openembedded/meta-networking \
   ${OEROOT}/../meta-qt5 \
   ${OEROOT}/../meta-phytec \
-  ${OEROOT}/../meta-omni \
+  ${OEROOT}/../meta-medusa-bsp \
   ${OEROOT}/../meta-medusa-app \
   ${OEROOT}/../meta-medusa-dist \
   "
