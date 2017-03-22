@@ -15,3 +15,4 @@ Tested build targets for the yocto bsp are:
 
 The version number can be supplied via:
     BB_ENV_EXTRAWHITE=MEDUSA_VERSION MEDUSA_VERSION=x.x.x.x
+
