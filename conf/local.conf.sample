@@ -1,16 +1,8 @@
+# Sets the default machine
 MACHINE ?= "imx6ul-omni"
 
+# Sets the default distribution
 DISTRO ?= "medusa"
-
-# The following line disables the autostart of the phytec-qtdemo by
-# default, but you can start the demo anytime using
-#  $ systemctl start phytec-qtdemo.service
-#SYSTEMD_AUTO_ENABLE_pn-phytec-qtdemo = "disable"
-
-# That are the default values of bitbake.  Adapt these to your workspace and
-# host preferences.
-#DL_DIR = "${TOPDIR}/downloads"
-#SSTATE_DIR = "${TOPDIR}/sstate-cache"
 
 # License Handling
 #  - Uncomment for Freescale i.MX6 proprietary GPU libraries
@@ -19,49 +11,149 @@ LICENSE_FLAGS_WHITELIST += "license-freescale_v6-february-2015_imx-gpu-viv"
 LICENSE_FLAGS_WHITELIST += "license-freescale_v6-february-2015_firmware-imx"
 
 # You can disable and enable FSTYPES as you wish. e.g. 'ext4'.
-# This is ordering dependend.
-IMAGE_FSTYPES += "tar"
-IMAGE_FSTYPES_append_mx6 = " sdcard ubifs"
-IMAGE_FSTYPES_append_ti33x = " sdcard ubifs"
-IMAGE_FSTYPES_append_rk3288 = " sdcard"
-#IMAGE_FSTYPES_append_ti33x = " emmc"
+# This is ordering dependent.
+IMAGE_FSTYPES_append += "tar"
 DEPLOY_DIR = "${TOPDIR}/deploy"
+
+#
+# Misc configuration
+#
+# Remove the old image from the deploy directory before the new
+# one gets created. This is useful to save disk space.
+#RM_OLD_IMAGE = "1"
 
 # Select configuration UI for linux and barebox recipe. The openembedded
 # default is 'menuconfig', 'nconfig' has more features.
 #KCONFIG_CONFIG_COMMAND = "menuconfig"
 KCONFIG_CONFIG_COMMAND = "nconfig"
 
-# The default package class of the distro yogurt is 'package_ipk'. The first
-# value is used as the package manager to build the image and sdk. To build
-# also tar packages use
-#PACKAGE_CLASSES = "package_ipk package_tar"
+#
+# Where to place downloads
+#
+# During a first build the system will download many different source code tarballs
+# from various upstream projects. This can take a while, particularly if your network
+# connection is slow. These are all stored in DL_DIR. When wiping and rebuilding you
+# can preserve this directory to speed up this part of subsequent builds. This directory
+# is safe to share between multiple builds on the same machine too.
+#
+# The default is a downloads directory under TOPDIR which is the build directory.
+#
+#DL_DIR ?= "${TOPDIR}/downloads"
 
-# Variable IMAGE_ROOTFS_EXTRA_SPACE from poky/meta/conf/documentation.conf:
-#   Defines additional free disk space created in the image in Kbytes. By
-#   default, this variable is set to '0'.
-# This example line adds an additional 512 MiB of free space to the root
-# filesystem:
-#IMAGE_ROOTFS_EXTRA_SPACE = "524288"
+#
+# Where to place shared-state files
+#
+# BitBake has the capability to accelerate builds based on previously built output.
+# This is done using "shared state" files which can be thought of as cache objects
+# and this option determines where those files are placed.
+#
+# You can wipe out TMPDIR leaving this directory intact and the build would regenerate
+# from these files if no changes were made to the configuration. If changes were made
+# to the configuration, only shared state files where the state was still valid would
+# be used (done using checksums).
+#
+# The default is a sstate-cache directory under TOPDIR.
+#
+#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
 
-# See http://www.yoctoproject.org/docs/1.8/ref-manual/ref-manual.html#ref-features-image
-#   "Through these variables, you can add several different predefined
-#    packages such as development utilities or packages with debug information
-#    needed to investigate application problems or profile applications
-EXTRA_IMAGE_FEATURES = ""
-# - "Makes an image suitable for development (e.g. allows root logins without
-#    passwords and enables post-installation logging)"
-EXTRA_IMAGE_FEATURES += "debug-tweaks"
-# - "Installs debug symbol packages for all packages installed in a given
-#    image."
-#EXTRA_IMAGE_FEATURES += "dbg-pkgs"
-# - "Installs debugging tools such as strace and gdb."
-#EXTRA_IMAGE_FEATURES += "tools-debug"
+#
+# Package Management configuration
+#
+# This variable lists which packaging formats to enable. Multiple package backends
+# can be enabled at once and the first item listed in the variable will be used
+# to generate the root filesystems.
+# Options are:
+#  - 'package_deb' for debian style deb files
+#  - 'package_ipk' for ipk files are used by opkg (a debian style embedded package manager)
+#  - 'package_rpm' for rpm style packages
+# E.g.: PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
+# We default to ipk:
+PACKAGE_CLASSES ?= "package_ipk"
+#IMAGE_FEATURES += "package-management"
 
-#SDKMACHINE ?= "x86_64"
+#
+# SDK/ADT target architecture
+#
+# This variable specifies the architecture to build SDK/ADT items for and means
+# you can build the SDK packages for architectures other than the machine you are
+# running the build on (i.e. building i686 packages on an x86_64 host).
+# Supported values are i686 and x86_64
+SDKMACHINE ?= "i686"
 
+#
+# Extra image configuration defaults
+#
+# The EXTRA_IMAGE_FEATURES variable allows extra packages to be added to the generated
+# images. Some of these options are added to certain image types automatically. The
+# variable can contain the following options:
+#  "dbg-pkgs"       - add -dbg packages for all installed packages
+#                     (adds symbol information for debugging/profiling)
+#  "dev-pkgs"       - add -dev packages for all installed packages
+#                     (useful if you want to develop against libs in the image)
+#  "ptest-pkgs"     - add -ptest packages for all ptest-enabled packages
+#                     (useful if you want to run the package test suites)
+#  "tools-sdk"      - add development tools (gcc, make, pkgconfig etc.)
+#  "tools-debug"    - add debugging tools (gdb, strace)
+#  "eclipse-debug"  - add Eclipse remote debugging support
+#  "tools-profile"  - add profiling tools (oprofile, exmap, lttng, valgrind)
+#  "tools-testapps" - add useful testing tools (ts_print, aplay, arecord etc.)
+#  "debug-tweaks"   - make an image suitable for development
+#                     e.g. ssh root access has a blank password
+# There are other application targets that can be used here too, see
+# meta/classes/image.bbclass and meta/classes/core-image.bbclass for more details.
+# We default to enabling the debugging tweaks.
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
+#
+# Additional image features
+#
+# The following is a list of additional classes to use when building images which
+# enable extra features. Some available options which can be included in this variable
+# are:
+#   - 'buildstats' collect build statistics
+#   - 'image-mklibs' to reduce shared library files size for an image
+#   - 'image-prelink' in order to prelink the filesystem image
+#   - 'image-swab' to perform host system intrusion detection
+# NOTE: if listing mklibs & prelink both, then make sure mklibs is before prelink
+# NOTE: mklibs also needs to be explicitly enabled for a given image, see local.conf.extended
+USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+
+# mklibs library size optimization is more useful to smaller images,
+# and less useful for bigger images. Also mklibs library optimization
+# can break the ABI compatibility, so should not be applied to the
+# images which are to be extended or upgraded later.
+#This enabled mklibs library size optimization just for the specified image.
+#MKLIBS_OPTIMIZED_IMAGES ?= "core-image-minimal"
+#This enable mklibs library size optimization will be for all the images.
+#MKLIBS_OPTIMIZED_IMAGES ?= "all"
+
+#
+# Interactive shell configuration
+#
+# Under certain circumstances the system may need input from you and to do this it
+# can launch an interactive shell. It needs to do this since the build is
+# multithreaded and needs to be able to handle the case where more than one parallel
+# process may require the user's attention. The default is iterate over the available
+# terminal types to find one that works.
+#
+# Examples of the occasions this may happen are when resolving patches which cannot
+# be applied, to use the devshell or the kernel menuconfig
+#
+# Supported values are auto, gnome, xfce, rxvt, screen, konsole (KDE 3.x only), none
+# Note: currently, Konsole support only works for KDE 3.x due to the way
+# newer Konsole versions behave
 OE_TERMINAL = "auto"
+# By default disable interactive patch resolution (tasks will just fail instead):
 PATCHRESOLVE = "noop"
+
+#
+# Disk Space Monitoring during the build
+#
+# Monitor the disk space during the build. If there is less that 1GB of space or less
+# than 100K inodes in any key build location (TMPDIR, DL_DIR, SSTATE_DIR), gracefully
+# shutdown the build. If there is less that 100MB or 1K inodes, perform a hard abort
+# of the build. The reason for this is that running completely out of space can corrupt
+# files and damages the build in ways which may not be easily recoverable.
 BB_DISKMON_DIRS = "\
     STOPTASKS,${TMPDIR},1G,100K \
     STOPTASKS,${DL_DIR},1G,100K \
@@ -70,4 +162,8 @@ BB_DISKMON_DIRS = "\
     ABORT,${DL_DIR},100M,1K \
     ABORT,${SSTATE_DIR},100M,1K"
 
+# CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
+# track the version of this file when it was generated. This can safely be ignored if
+# this doesn't mean anything to you.
 CONF_VERSION = "1"
+

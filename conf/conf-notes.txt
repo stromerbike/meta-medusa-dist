@@ -13,3 +13,5 @@ Tested build targets for the yocto bsp are:
     bitbake omni-image
     bitbake omni-image -c populate_sdk
 
+The version number can be supplied via:
+    BB_ENV_EXTRAWHITE=MEDUSA_VERSION MEDUSA_VERSION=x.x.x.x
