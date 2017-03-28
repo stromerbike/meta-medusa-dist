@@ -1,0 +1,12 @@
+[Unit]
+Description=can0 interface setup
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/sbin/ip link set can0 up type can bitrate 250000
+ExecStop=/sbin/ip link set can0 down
+ExecRestart=/sbin/ip link set can0 type can restart
+
+[Install]
+WantedBy=basic.target

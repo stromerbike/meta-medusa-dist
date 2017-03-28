@@ -1,0 +1,13 @@
+[Unit]
+Description=wvdial internet dialer service
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wvdial
+ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
