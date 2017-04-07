@@ -15,17 +15,33 @@ LICENSE_FLAGS_WHITELIST += "license-freescale_v6-february-2015_firmware-imx"
 IMAGE_FSTYPES_append += "tar"
 DEPLOY_DIR = "${TOPDIR}/deploy"
 
+# Select configuration UI for linux and barebox recipe. The openembedded
+# default is 'menuconfig', 'nconfig' has more features.
+#KCONFIG_CONFIG_COMMAND = "menuconfig"
+KCONFIG_CONFIG_COMMAND = "nconfig"
+
+#
+# Parallelism Options
+#
+# These two options control how much parallelism BitBake should use. The first 
+# option determines how many tasks bitbake should run in parallel:
+#
+#BB_NUMBER_THREADS = "4"
+# 
+# The second option controls how many processes make should run in parallel when
+# running compile tasks:
+#
+#PARALLEL_MAKE = "-j 4"
+#
+# For a quad-core machine, BB_NUMBER_THREADS = "4", PARALLEL_MAKE = "-j 4" would
+# be appropriate for example.
+
 #
 # Misc configuration
 #
 # Remove the old image from the deploy directory before the new
 # one gets created. This is useful to save disk space.
 #RM_OLD_IMAGE = "1"
-
-# Select configuration UI for linux and barebox recipe. The openembedded
-# default is 'menuconfig', 'nconfig' has more features.
-#KCONFIG_CONFIG_COMMAND = "menuconfig"
-KCONFIG_CONFIG_COMMAND = "nconfig"
 
 #
 # Where to place downloads
@@ -55,6 +71,18 @@ KCONFIG_CONFIG_COMMAND = "nconfig"
 # The default is a sstate-cache directory under TOPDIR.
 #
 #SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
+
+#
+# Where to place the build output
+#
+# This option specifies where the bulk of the building work should be done and
+# where BitBake should place its temporary files and output. Keep in mind that
+# this includes the extraction and compilation of many applications and the toolchain
+# which can use Gigabytes of hard disk space.
+#
+# The default is a tmp directory under TOPDIR.
+#
+#TMPDIR = "${TOPDIR}/tmp"
 
 #
 # Package Management configuration
@@ -128,6 +156,28 @@ USER_CLASSES ?= "buildstats image-mklibs image-prelink"
 #MKLIBS_OPTIMIZED_IMAGES ?= "all"
 
 #
+# Runtime testing of images
+#
+# The build system can test booting virtual machine images under qemu (an emulator)
+# after any root filesystems are created and run tests against those images. To
+# enable this uncomment this line
+#IMAGETEST = "qemu"
+#
+# This variable controls which tests are run against virtual images if enabled
+# above. The following would enable bat, boot the test case under the sanity suite
+# and perform toolchain tests
+#TEST_SCEN = "sanity bat sanity:boot toolchain"
+#
+# Because of the QEMU booting slowness issue (see bug #646 and #618), the
+# autobuilder may suffer a timeout issue when running sanity tests. We introduce
+# the variable TEST_SERIALIZE here to reduce the time taken by the sanity tests.
+# It is set to 1 by default, which will boot the image and run cases in the same
+# image without rebooting or killing the machine instance. If it is set to 0, the
+# image will be copied and tested for each case, which will take longer but be
+# more precise.
+#TEST_SERIALIZE = "1"
+
+#
 # Interactive shell configuration
 #
 # Under certain circumstances the system may need input from you and to do this it
@@ -145,6 +195,21 @@ USER_CLASSES ?= "buildstats image-mklibs image-prelink"
 OE_TERMINAL = "auto"
 # By default disable interactive patch resolution (tasks will just fail instead):
 PATCHRESOLVE = "noop"
+
+#
+# Shared-state files from other locations
+#
+# As mentioned above, shared state files are prebuilt cache data objects which can 
+# used to accelerate build time. This variable can be used to configure the system
+# to search other mirror locations for these objects before it builds the data itself.
+#
+# This can be a filesystem directory, or a remote url such as http or ftp. These
+# would contain the sstate-cache results from previous builds (possibly from other 
+# machines). This variable works like fetcher MIRRORS/PREMIRRORS and points to the 
+# cache locations to check for the shared objects.
+#SSTATE_MIRRORS ?= "\
+#file://.* http://someserver.tld/share/sstate/ \n \
+#file://.* file:///some/local/dir/sstate/"
 
 #
 # Disk Space Monitoring during the build
