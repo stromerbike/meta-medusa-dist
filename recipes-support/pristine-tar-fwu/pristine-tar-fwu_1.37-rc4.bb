@@ -15,8 +15,9 @@ SRC_URI[sha256sum] = "195743e5286d7d0e9bbbdf4b4b426d9930416f74e0961bb88371239bae
 
 inherit cpan
 
-#https://github.com/kraj/poky/blob/krogoth/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
-RDEPENDS_${PN} = " tar \
+# https://github.com/kraj/poky/blob/krogoth/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
+# Depends on tar which is included in busybox
+RDEPENDS_${PN} = " busybox \
                    xdelta3 \
                    perl \
                    perl-module-digest-sha \
