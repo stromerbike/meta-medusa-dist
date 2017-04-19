@@ -9,10 +9,11 @@
 
 Welcome to the Stromer BSP-Yocto buildsystem.
 
+The medusa-apps recipe can be generated via:
+    python ../../../tools/yocto/meta-medusa-app/recipes-medusa/medusa-apps/medusa-apps.py
+Whereas the version number can be supplied via:
+    MEDUSA_VERSION=x.x.x.x
+
 Tested build targets for the yocto bsp are:
     bitbake omni-image
     bitbake omni-image -c populate_sdk
-
-The version number can be supplied via:
-    BB_ENV_EXTRAWHITE=MEDUSA_VERSION MEDUSA_VERSION=x.x.x.x
-
