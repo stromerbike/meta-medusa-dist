@@ -11,7 +11,7 @@ Welcome to the Stromer BSP-Yocto buildsystem.
 
 The medusa-apps recipe can be generated via:
     python ../../../tools/yocto/meta-medusa-app/version.py
-The medusa distro config can be genarted via:
+The medusa distro config can be generated via:
     python ../../../tools/yocto/meta-medusa-dist/version.py
 Whereas the version number can be supplied via:
     MEDUSA_VERSION=x.x.x.x
