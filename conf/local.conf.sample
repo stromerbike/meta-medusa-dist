@@ -1,5 +1,5 @@
 # Sets the default machine
-MACHINE ?= "imx6ul-omni"
+MACHINE ?= "imx6ul-medusa"
 
 # Sets the default distribution
 DISTRO ?= "medusa"
