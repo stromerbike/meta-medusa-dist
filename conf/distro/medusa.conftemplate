@@ -31,7 +31,10 @@ SYSTEMD_DEFAULT_TARGET = "graphical.target"
 BAD_RECOMMENDATIONS += "systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
 
 # Remove full-cmdline since almost all features are already present in busybox
-IMAGE_INSTALL_remove_pn-omni-image = " packagegroup-core-full-cmdline"
+IMAGE_INSTALL_remove_pn-medusa-image = " packagegroup-core-full-cmdline"
+
+# Remove by Stromer unused (but by Escatec used) packages
+IMAGE_INSTALL_remove_pn-medusa-image += "minicom zile"
 
 # Image appends
 IMAGE_INSTALL_append = " medusa-apps medusa-services"
