@@ -4,6 +4,8 @@ SRC_URI += " \
             file://.profile \
 "
 
+DEPENDS_${PN}_append = " grep"
+
 FILES_${PN}_append = " /home/root/"
 
 do_install_append() {
