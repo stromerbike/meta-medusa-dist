@@ -4,7 +4,7 @@ SRC_URI += " \
             file://.profile \
 "
 
-DEPENDS_${PN}_append = " grep"
+RDEPENDS_${PN} += " grep"
 
 FILES_${PN}_append = " /home/root/"
 
