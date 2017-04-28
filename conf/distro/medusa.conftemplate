@@ -16,7 +16,7 @@ SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT
 DISTRO_FEATURES = "systemd"
 
 # Machine features
-MACHINE_FEATURES_append = " 3g can bluetooth usbgadget usbhost"
+MACHINE_FEATURES_append = " 3g can bluetooth usbgadget usbhost wifi"
 
 # Virtual runtime settings
 VIRTUAL-RUNTIME_dev_manager = "udev"
@@ -46,8 +46,8 @@ IMAGE_INSTALL_append = " openssh openssh-sftp-server"
 IMAGE_INSTALL_append = " busybox can-utils htop nano python rsync tree"
 
 # Uncomment this to install alsa.
-#MACHINE_FEATURES_append = " alsa"
-#IMAGE_INSTALL_append = " alsa-lib alsa-utils"
+MACHINE_FEATURES_append = " alsa"
+IMAGE_INSTALL_append = " alsa-lib"
 
 # Uncomment this to install systemd-analyze.
 #IMAGE_INSTALL_append = " systemd-analyze"
