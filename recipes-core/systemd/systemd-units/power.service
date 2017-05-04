@@ -1,0 +1,11 @@
+[Unit]
+Description=power
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/power.sh start
+ExecStop=/etc/scripts/power.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
