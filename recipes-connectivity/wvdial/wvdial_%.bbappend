@@ -4,5 +4,5 @@ SRC_URI += " \
 "
 
 do_install_append() {
-    install -m 0644 ${WORKDIR}/wvdial.conf ${D}/etc
+    install -m 0644 ${WORKDIR}/wvdial.conf ${D}/${sysconfdir}
 }
