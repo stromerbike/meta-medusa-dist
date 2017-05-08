@@ -45,6 +45,10 @@ IMAGE_INSTALL_append = " gdbserver tcf-agent"
 IMAGE_INSTALL_append = " openssh openssh-sftp-server"
 IMAGE_INSTALL_append = " busybox can-utils htop nano python rsync tree"
 
+# Uncomment this to install SDMA firmware.
+#SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
+#IMAGE_INSTALL_append = " sdma-firmware"
+
 # Uncomment this to install alsa.
 MACHINE_FEATURES_append = " alsa"
 IMAGE_INSTALL_append = " alsa-lib"
