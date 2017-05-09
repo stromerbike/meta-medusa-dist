@@ -51,8 +51,8 @@ IMAGE_INSTALL_append = " busybox can-utils htop nano python rsync tree"
 #IMAGE_INSTALL_append = " sdma-firmware"
 
 # Uncomment this to install alsa.
-MACHINE_FEATURES_append = " alsa"
-IMAGE_INSTALL_append = " alsa-lib"
+#MACHINE_FEATURES_append = " alsa"
+#IMAGE_INSTALL_append = " alsa-lib"
 
 # Uncomment this to install systemd-analyze.
 #IMAGE_INSTALL_append = " systemd-analyze"
