@@ -44,7 +44,7 @@ IMAGE_INSTALL_append = " gnupg pristine-tar-fwu xdelta3"
 IMAGE_INSTALL_append = " gdbserver tcf-agent"
 IMAGE_INSTALL_append = " strace"
 IMAGE_INSTALL_append = " openssh openssh-sftp-server"
-IMAGE_INSTALL_append = " busybox can-utils htop nano python rsync tree"
+IMAGE_INSTALL_append = " busybox can-utils gps-utils htop nano python rsync tree"
 
 # Uncomment this to install SDMA firmware.
 #SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
