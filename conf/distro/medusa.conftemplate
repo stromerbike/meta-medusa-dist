@@ -56,7 +56,7 @@ IMAGE_INSTALL_append = " python python-argparse python-curses python-json"
 #IMAGE_INSTALL_append = " alsa-lib"
 
 # Uncomment this to install systemd-analyze.
-#IMAGE_INSTALL_append = " systemd-analyze"
+IMAGE_INSTALL_append = " systemd-analyze"
 
 # Uncomment this to install qt exmaples.
 #PACKAGECONFIG_append_pn-qtbase = " examples"
