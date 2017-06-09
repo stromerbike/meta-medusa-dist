@@ -41,7 +41,7 @@ KCONFIG_CONFIG_COMMAND = "nconfig"
 #
 # Remove the old image from the deploy directory before the new
 # one gets created. This is useful to save disk space.
-#RM_OLD_IMAGE = "1"
+RM_OLD_IMAGE = "1"
 
 #
 # Where to place downloads
@@ -231,4 +231,3 @@ BB_DISKMON_DIRS = "\
 # track the version of this file when it was generated. This can safely be ignored if
 # this doesn't mean anything to you.
 CONF_VERSION = "1"
-
