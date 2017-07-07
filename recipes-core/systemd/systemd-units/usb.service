@@ -1,0 +1,11 @@
+[Unit]
+Description=usb
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/usb.sh start
+ExecStop=/etc/scripts/usb.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

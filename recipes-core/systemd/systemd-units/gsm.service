@@ -1,0 +1,11 @@
+[Unit]
+Description=gsm
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/gsm.sh start
+ExecStop=/etc/scripts/gsm.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
