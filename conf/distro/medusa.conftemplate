@@ -66,9 +66,9 @@ IMAGE_INSTALL_append = " python python-argparse python-curses python-json"
 IMAGE_INSTALL_append = " systemd-analyze"
 
 # Uncomment this to install qt exmaples.
-#PACKAGECONFIG_append_pn-qtbase = " examples"
-#IMAGE_INSTALL_append = " qtbase-examples"
-#BBMASK += "meta-medusa-app/recipes-qt/"
+PACKAGECONFIG_append_pn-qtbase = " examples"
+IMAGE_INSTALL_append = " qtbase-examples"
+BBMASK += "meta-medusa-app/recipes-qt/"
 
 # Do not install any locales
 IMAGE_LINGUAS = ""
