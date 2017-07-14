@@ -4,5 +4,5 @@ Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 
 Backports:
-- [pseudo: Work around issues with glibc 2.24](https://github.com/kraj/poky/commit/7b9e031355a993364a587b9ea878104827e3f799) (for building on Debian 9)
-- [pseudo: obey our LDFLAGS](https://github.com/kraj/poky/commit/cb5649cbb873d1287b25ac24e5cd413445b32d70)
+- [wvdial: inherit pkgconfig Missing pkgconfig does not let build the package.](https://github.com/openembedded/meta-openembedded/commit/4c9a7e975cb09b43b1e08f287e42d9c0682e949c)
+- [wxstreams: fix build with gcc-6 (patch from Debian). Remove blacklists for wvstreams and wvdial](https://github.com/openembedded/meta-openembedded/commit/85810933a8b1e88a8ae8652387885abc0522b419)
