@@ -1,12 +1,11 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS_append = " tslib"
-RDEPENDS_${PN}_append = " tslib-conf tslib-calibrate"
+RDEPENDS_qtbase_append = " tslib-conf tslib-calibrate"
 
 #PACKAGECONFIG_MULTIMEDIA_append = " alsa"
 PACKAGECONFIG_DEFAULT_append = " tslib"
 
-QT_CONFIG_FLAGS_append = " -tslib -qreal float"
+PACKAGECONFIG_FONTS = "fontconfig"
 
 #this is necessary for qtquickcontrols-qmlplugins
 #PACKAGECONFIG_append = " accessibility"
@@ -19,6 +18,10 @@ QT_CONFIG_FLAGS_append = " -tslib -qreal float"
 
 #fix for 5.5
 PACKAGECONFIG_append = " pcre"
+
+#input devices
+#PACKAGECONFIG_append = " libinput xkbcommon-evdev"
+#PACKAGECONFIG_DEFAULT = "dbus udev widgets tools libs"
 
 #SRC_URI_append = " file://res-touchscreen.rules"
 #SRC_URI_append = " file://qtLauncher"
@@ -40,10 +43,6 @@ load(qt_config)
 
 EOF
 }
-
-#skip QA tests for examples
-INSANE_SKIP_${PN}-examples-dev += "libdir"
-INSANE_SKIP_${PN}-examples-dbg += "libdir"
 
 #do_install_append () {
 #	install -d ${D}${nonarch_base_libdir}/udev/rules.d

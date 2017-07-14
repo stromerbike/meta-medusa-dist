@@ -30,6 +30,9 @@ VIRTUAL-RUNTIME_initscripts = ""
 SYSTEMD_DEFAULT_TARGET = "graphical.target"
 BAD_RECOMMENDATIONS += "systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
 
+# qt5 settings
+RDEPENDS_remove_pn-qtbase += "opengldummy qtdeclarative-render2d"
+
 # Remove full-cmdline since almost all features are already present in busybox
 IMAGE_INSTALL_remove_pn-medusa-image = " packagegroup-core-full-cmdline"
 
@@ -94,5 +97,3 @@ INHERIT += "buildstats"
 # Phytec git mirrors
 GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
-#GIT_URL_pn-barebox = "git://github.com/tramseyer/barebox.git;protocol=git"
-#GIT_URL_pn-linux-mainline = "git://github.com/tramseyer/linux-mainline.git;protocol=git"
