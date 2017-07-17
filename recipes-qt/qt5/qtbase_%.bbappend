@@ -2,7 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 RDEPENDS_qtbase_append = " tslib-conf tslib-calibrate"
 
-#PACKAGECONFIG_MULTIMEDIA_append = " alsa"
+PACKAGECONFIG_MULTIMEDIA_append = " alsa"
 PACKAGECONFIG_DEFAULT_append = " tslib"
 
 PACKAGECONFIG_FONTS = "fontconfig"
@@ -17,17 +17,16 @@ PACKAGECONFIG_FONTS = "fontconfig"
 #PACKAGECONFIG_append = " sql-sqlite"
 
 #fix for 5.5
-PACKAGECONFIG_append = " pcre"
+#PACKAGECONFIG_append = " pcre"
 
 #input devices
 #PACKAGECONFIG_append = " libinput xkbcommon-evdev"
-#PACKAGECONFIG_DEFAULT = "dbus udev widgets tools libs"
+PACKAGECONFIG_DEFAULT = "dbus udev widgets tools libs"
 
 #SRC_URI_append = " file://res-touchscreen.rules"
 #SRC_URI_append = " file://qtLauncher"
 
-#QT_QPA_DEFAULT_PLATFORM ??= "eglfs"
-QT_QPA_DEFAULT_PLATFORM ??= "linuxfb"
+QT_QPA_DEFAULT_PLATFORM ??= "eglfs"
 
 # Set default QT_QPA_PLATFORM for all phytec boards
 do_configure_prepend() {
