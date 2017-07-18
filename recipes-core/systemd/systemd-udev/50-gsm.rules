@@ -1,2 +1,2 @@
-ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1519", ATTR{idProduct}=="0020", RUN+="/bin/systemctl --no-block start wvdial.service"
-ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="1519", ENV{ID_MODEL_ID}=="0020", RUN+="/bin/systemctl --no-block stop wvdial.service"
+ACTION=="add", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block start wvdial.service"
+ACTION=="remove", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block stop wvdial.service"

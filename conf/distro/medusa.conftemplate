@@ -48,8 +48,8 @@ IMAGE_INSTALL_remove_pn-medusa-image += "copy2rootfs"
 
 # Image appends
 IMAGE_INSTALL_append = " medusa-apps medusa-services"
-IMAGE_INSTALL_append = " iproute2 net-tools"
-IMAGE_INSTALL_append = " bluez5 ppp wvdial"
+IMAGE_INSTALL_append = " net-tools"
+IMAGE_INSTALL_append = " ppp wvdial"
 IMAGE_INSTALL_append = " gnupg pristine-tar-fwu xdelta3"
 IMAGE_INSTALL_append = " gdbserver tcf-agent"
 IMAGE_INSTALL_append = " strace"

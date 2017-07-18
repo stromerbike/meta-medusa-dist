@@ -3,7 +3,8 @@ LICENSE = "CLOSED"
 
 PR = "r0"
 
-RDEPENDS_${PN} += "bash"
+# can0 service depends on ip which is included in iproute2
+RDEPENDS_${PN} += "bash busybox iproute2"
 
 SRC_URI += " \
             file://can0.service \
@@ -11,13 +12,15 @@ SRC_URI += " \
             file://eth1.network \
             file://gsm.service \
             file://gsm.sh \
-            file://power.service \
-            file://power.sh \
+            file://mnt-data.service \
+            file://pwr.service \
+            file://pwr.sh \
             file://usb.service \
             file://usb.sh \
 "
 
 FILES_${PN}_append = " \
+    /mnt/* \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
     ${sysconfdir}/scripts/ \
@@ -30,7 +33,8 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_SERVICE_${PN} = " \
     can0.service \
     gsm.service \
-    power.service \
+    mnt-data.service \
+    pwr.service \
     usb.service \
 "
 
@@ -41,12 +45,16 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/gsm.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/power.service ${D}/${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/power.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/pwr.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
 
-    install -d ${D}${systemd_unitdir}/network/
+    install -d ${D}/mnt/ubi2
+    install -d ${D}/mnt/ubi3
+    install -m 0644 ${WORKDIR}/mnt-data.service ${D}/${systemd_system_unitdir}
+
+    install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
 }

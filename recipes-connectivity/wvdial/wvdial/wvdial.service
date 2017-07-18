@@ -4,10 +4,12 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/wvdial
+# wait for some seconds after ttyACM0 has been detected or dial command ATDT*99# will not succeed
+ExecStart=/bin/bash -c "/bin/sleep 5 && /usr/bin/wvdial"
 ExecStop=/bin/kill -TERM $MAINPID
 Restart=always
 RestartSec=5
+CPUQuota=5%
 
 [Install]
 WantedBy=multi-user.target
