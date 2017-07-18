@@ -20,7 +20,7 @@ PACKAGECONFIG_FONTS = "fontconfig"
 #PACKAGECONFIG_append = " pcre"
 
 #input devices
-#PACKAGECONFIG_append = " libinput xkbcommon-evdev"
+PACKAGECONFIG_append = " libinput xkbcommon-evdev"
 PACKAGECONFIG_DEFAULT = "dbus udev widgets tools libs"
 
 #SRC_URI_append = " file://res-touchscreen.rules"
