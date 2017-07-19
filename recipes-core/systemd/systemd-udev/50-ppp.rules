@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block start medusa-PortalCommunicator.service"
+ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block stop medusa-PortalCommunicator.service"
