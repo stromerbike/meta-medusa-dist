@@ -1,0 +1,11 @@
+[Unit]
+Description=ble
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/ble.sh start
+ExecStop=/etc/scripts/ble.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
