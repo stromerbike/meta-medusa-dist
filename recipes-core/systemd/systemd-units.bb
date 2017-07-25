@@ -16,6 +16,8 @@ SRC_URI += " \
             file://gsm.sh \
             file://mnt-data.service \
             file://mnt-data.sh \
+            file://mnt-rfs.service \
+            file://mnt-rfs.sh \
             file://pwr.service \
             file://pwr.sh \
             file://usb.service \
@@ -38,6 +40,7 @@ SYSTEMD_SERVICE_${PN} = " \
     can0.service \
     gsm.service \
     mnt-data.service \
+    mnt-rfs.service \
     pwr.service \
     usb.service \
 "
@@ -61,6 +64,10 @@ do_install_append() {
     install -d ${D}/mnt/data
     install -m 0644 ${WORKDIR}/mnt-data.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
+
+    install -d ${D}/mnt/rfs_inactive
+    install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
