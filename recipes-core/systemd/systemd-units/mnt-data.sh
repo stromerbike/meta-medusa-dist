@@ -1,7 +1,7 @@
 #! /bin/bash
 
 NAME=mnt-rfs
-DESC="Mounts the data partitions"
+DESC="Mount the data partitions"
 
 case $1 in
 start)

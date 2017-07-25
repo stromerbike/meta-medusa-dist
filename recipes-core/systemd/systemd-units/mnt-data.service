@@ -1,5 +1,5 @@
 [Unit]
-Description=Mounts the data partitions
+Description=Mount the data partitions
 
 [Service]
 Type=oneshot

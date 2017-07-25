@@ -1,5 +1,5 @@
 [Unit]
-Description=Mounts the inactive rfs partition
+Description=Mount the inactive rfs partition
 
 [Service]
 Type=oneshot

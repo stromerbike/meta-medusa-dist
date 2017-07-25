@@ -1,7 +1,7 @@
 #! /bin/bash
 
 NAME=mnt-rfs
-DESC="Mounts the inactive rfs partition"
+DESC="Mount the inactive rfs partition"
 
 case $1 in
 start)
