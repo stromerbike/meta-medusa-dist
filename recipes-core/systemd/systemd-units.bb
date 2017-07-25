@@ -15,6 +15,7 @@ SRC_URI += " \
             file://gsm.service \
             file://gsm.sh \
             file://mnt-data.service \
+            file://mnt-data.sh \
             file://pwr.service \
             file://pwr.sh \
             file://usb.service \
@@ -57,7 +58,9 @@ do_install_append() {
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
+    install -d ${D}/mnt/data
     install -m 0644 ${WORKDIR}/mnt-data.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/

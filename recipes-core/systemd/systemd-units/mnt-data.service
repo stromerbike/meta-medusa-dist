@@ -3,8 +3,8 @@ Description=Mounts the data partitions
 
 [Service]
 Type=oneshot
-ExecStart=/bin/bash -c "/bin/mount -t ubifs /dev/ubi0_2 /mnt/ubi2 && /bin/mount -t ubifs /dev/ubi0_3 /mnt/ubi3"
-ExecStop=/bin/bash -c "/bin/umount /mnt/ubi2 && /bin/umount /mnt/ubi3"
+ExecStart=/etc/scripts/mnt-data.sh start
+ExecStop=/etc/scripts/mnt-data.sh start
 RemainAfterExit=yes
 
 [Install]
