@@ -17,6 +17,8 @@ start)
 
     # hci0
     hciattach /dev/ttymxc2 texas 115200
+    hciconfig hci0 reset
+    hciconfig hci0 name "STROMER"
 ;;
 
 stop)
