@@ -14,6 +14,8 @@ SRC_URI += " \
             file://eth1.network \
             file://gsm.service \
             file://gsm.sh \
+            file://led.service \
+            file://led.sh \
             file://mnt-data.service \
             file://mnt-data.sh \
             file://mnt-rfs.service \
@@ -39,6 +41,7 @@ SYSTEMD_SERVICE_${PN} = " \
     ble.service \
     can0.service \
     gsm.service \
+    led.service \
     mnt-data.service \
     mnt-rfs.service \
     pwr.service \
@@ -54,6 +57,8 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/led.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/pwr.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}

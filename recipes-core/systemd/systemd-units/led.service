@@ -1,0 +1,11 @@
+[Unit]
+Description=led
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/led.sh start
+ExecStop=/etc/scripts/led.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
