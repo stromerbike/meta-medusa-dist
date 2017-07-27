@@ -1,2 +1,0 @@
-ACTION=="add", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block start wvdial.service"
-ACTION=="remove", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block stop wvdial.service"

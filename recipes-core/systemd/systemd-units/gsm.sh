@@ -23,6 +23,8 @@ start)
     echo "1" > /sys/class/gpio/gpio2/value
     sleep 0.03
     echo "0" > /sys/class/gpio/gpio2/value
+    # Wait for some seconds after ttyACM0 has been detected or dial command ATDT*99# will not succeed
+    sleep 5
 ;;
 
 stop)

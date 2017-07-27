@@ -24,6 +24,7 @@ SRC_URI += " \
             file://pwr.sh \
             file://usb.service \
             file://usb.sh \
+            file://wvdial.service \
 "
 
 FILES_${PN}_append = " \
@@ -46,6 +47,7 @@ SYSTEMD_SERVICE_${PN} = " \
     mnt-rfs.service \
     pwr.service \
     usb.service \
+    wvdial.service \
 "
 
 do_install_append() {
@@ -63,6 +65,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/wvdial.service ${D}/${systemd_system_unitdir}
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
