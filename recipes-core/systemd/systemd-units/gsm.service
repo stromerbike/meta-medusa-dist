@@ -8,4 +8,4 @@ ExecStop=/etc/scripts/gsm.sh stop
 RemainAfterExit=yes
 
 [Install]
-WantedBy=basic.target
+WantedBy=multi-user.target
