@@ -2,7 +2,7 @@
 Description=can0 interface setup
 
 [Service]
-Type=simple
+Type=oneshot
 RemainAfterExit=yes
 ExecStart=/sbin/ip link set can0 up type can bitrate 250000
 ExecStop=/sbin/ip link set can0 down
