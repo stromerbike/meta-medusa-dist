@@ -1,0 +1,10 @@
+[Unit]
+Description=fwu
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/fwu.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

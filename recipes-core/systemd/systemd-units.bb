@@ -7,11 +7,13 @@ PR = "r0"
 RDEPENDS_${PN} += "bash busybox iproute2"
 
 SRC_URI += " \
-            file://can0.service \
             file://ble.service \
             file://ble.sh \
+            file://can0.service \
             file://eth0.network \
             file://eth1.network \
+            file://fwu.service \
+            file://fwu.sh \
             file://gsm.service \
             file://gsm.sh \
             file://led.service \
@@ -41,6 +43,7 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_SERVICE_${PN} = " \
     ble.service \
     can0.service \
+    fwu.service \
     gsm.service \
     led.service \
     mnt-data.service \
@@ -57,6 +60,8 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/fwu.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}/${systemd_system_unitdir}
