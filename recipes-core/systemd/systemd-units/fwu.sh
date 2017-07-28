@@ -35,13 +35,6 @@ led2_red ()
     echo "255" > /sys/class/leds/rgb2_red/brightness
 }
 
-led2_off ()
-{
-    echo "0" > /sys/class/leds/rgb2_blue/brightness
-    echo "0" > /sys/class/leds/rgb2_green/brightness
-    echo "0" > /sys/class/leds/rgb2_red/brightness
-}
-
 while true
 do
     sleep 5
@@ -54,52 +47,76 @@ do
                 echo "Nothing to up- or downgrade"
                 led2_green
             else
-                echo "Purging files on inactive rfs partition..."
-                led2_blue
-                if rm -rf /mnt/rfs_inactive/*; then
-                    echo "...done"
-                    echo "Extracting firmware..."
-                    if tar -xvf /mnt/sda1/autoupdate/$firstFileName -C /mnt/rfs_inactive 2>&1 |
+                if mountpoint -q /mnt/rfs_inactive; then
+                    led2_blue
+                    echo "Stopping DataServer based applications..."
+                    systemctl stop medusa-DataServer
+                    echo "Purging files on inactive rfs partition..."
+                    rm -rvf /mnt/rfs_inactive/* 2>&1 |
                         while read line; do
                             x=$((x+1))
-                            if [ $(($x%2)) -eq 0 ]; then
-                                echo "0" > /sys/class/leds/rgb2_blue/brightness
-                            else
-                                echo "255" > /sys/class/leds/rgb2_blue/brightness
+                            if [ $(($x%100)) -eq 0 ]; then
+                                if [ $(cat /sys/class/leds/rgb2_blue/brightness) == "0" ]; then
+                                    echo "255" > /sys/class/leds/rgb2_blue/brightness
+                                else
+                                    echo "0" > /sys/class/leds/rgb2_blue/brightness
+                                fi
                             fi
-                        done; then
+                        done
+                    echo "...done"
+                    echo "Extracting firmware..."
+                    tar -xvf /mnt/sda1/autoupdate/$firstFileName -C /mnt/rfs_inactive 2>&1 |
+                        while read line; do
+                            x=$((x+1))
+                            if [ $(($x%100)) -eq 0 ]; then
+                                if [ $(cat /sys/class/leds/rgb2_blue/brightness) == "0" ]; then
+                                    echo "255" > /sys/class/leds/rgb2_blue/brightness
+                                else
+                                    echo "0" > /sys/class/leds/rgb2_blue/brightness
+                                fi
+                            fi
+                        done
+                    echo "...done"
+                    led2_blue
+                    echo "Unmounting inactive rfs paritition..."
+                    if umount /mnt/rfs_inactive; then
                         echo "...done"
                         if df -T | grep 'ubi0:part0'; then
                             echo "Setting partition 1 as active one..."
                             if barebox-state -s partition=1; then
                                 echo "...done"
                                 led2_green
+                                break
                             else
                                 echo "...ERROR"
                                 led2_red
+                                break
                             fi
                         elif df -T | grep 'ubi0:part1'; then
                             echo "Setting partition 0 as active one..."
                             if barebox-state -s partition=0; then
                                 echo "...done"
                                 led2_green
+                                break
                             else
                                 echo "...ERROR"
                                 led2_red
+                                break
                             fi
                         else
                             echo "...ERROR"
                             led2_red
+                            break
                         fi
                     else
                         echo "...ERROR"
                         led2_red
+                        break
                     fi
                 else
-                    echo "...ERROR"
                     led2_red
+                    echo "ERROR: Inactive rfs paritition not mounted"
                 fi
-                break
             fi
         fi
     else
