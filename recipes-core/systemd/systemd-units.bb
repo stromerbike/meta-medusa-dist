@@ -74,6 +74,7 @@ do_install_append() {
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
     install -d ${D}/mnt/data
+    install -d ${D}/mnt/data_backup
     install -m 0644 ${WORKDIR}/mnt-data.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
 
