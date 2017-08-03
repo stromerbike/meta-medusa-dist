@@ -1,0 +1,78 @@
+# Distro naming
+DISTRO = "medusa"
+DISTRO_NAME = "Stromer Medusa Distribution"
+DISTRO_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_GIT_STATUS}"
+
+# Image naming
+IMAGE_LINK_NAME = "${IMAGE_BASENAME}"
+IMAGE_NAME = "${IMAGE_BASENAME}-${MEDUSA_METADATA_VERSION}-${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_GIT_STATUS}"
+
+# SDK naming
+SDK_NAME = "${DISTRO}-${SDK_ARCH}"
+SDK_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_GIT_STATUS}"
+SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_GIT_STATUS}"
+
+# Distro features
+DISTRO_FEATURES = "systemd"
+
+# Machine features
+MACHINE_FEATURES_append = " 3g can bluetooth usbgadget usbhost wifi"
+
+# Virtual runtime settings
+VIRTUAL-RUNTIME_dev_manager = "udev"
+VIRTUAL-RUNTIME_init_manager = "systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
+VIRTUAL-RUNTIME_login_manager = "busybox"
+VIRTUAL-RUNTIME_syslog = ""
+VIRTUAL-RUNTIME_initscripts = ""
+
+# systemd settings
+SYSTEMD_DEFAULT_TARGET = "graphical.target"
+BAD_RECOMMENDATIONS += "systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
+
+# Remove QML
+RDEPENDS_qtbase_remove += "qtdeclarative-render2d"
+
+# Mask Escatec systemd recipes since we use our own optimizations
+BBMASK += "meta-medusa-bsp/recipes-core/systemd"
+
+# Mask Escatec packagegroups appends since we use our own image
+BBMASK += "meta-medusa-bsp/recipes-extended/packagegroups"
+
+# Mask Escatec service recipes since we use our own
+BBMASK += "meta-medusa-bsp/recipes-rootfs/copy2roofs"
+
+# Uncomment this to install SDMA firmware.
+#SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
+#IMAGE_INSTALL_append = " sdma-firmware"
+
+# Uncomment this to install alsa.
+#MACHINE_FEATURES_append = " alsa"
+#IMAGE_INSTALL_append = " alsa-lib"
+
+# Uncomment this to install qt exmaples.
+PACKAGECONFIG_append_pn-qtbase = " examples"
+IMAGE_INSTALL_append = " qtbase-examples"
+BBMASK += "meta-medusa-app/recipes-qt/"
+
+# Enable this to mount the image read-only
+#EXTRA_IMAGE_FEATURES = "read-only-rootfs"
+
+# Activate config checker
+INHERIT += "sanity"
+
+# Run QA tests on recipes
+INHERIT += "recipe_sanity"
+
+# Run QA tests on builds and packages and log them
+INHERIT += "insane"
+QA_LOG = "1"
+
+# Log information on images and packages
+INHERIT += "buildhistory"
+BUILDHISTORY_COMMIT = "1"
+INHERIT += "buildstats"
+
+# Phytec git mirrors
+#GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
+#GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
