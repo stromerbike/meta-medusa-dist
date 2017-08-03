@@ -1,0 +1,11 @@
+[Unit]
+Description=ppp
+
+[Service]
+Type=simple
+# Wait for some seconds after ttyACMx has been attached or command ATDT*99# will not succeed.
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/sbin/pppd debug nodetach call stromer
+ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
+RestartSec=5

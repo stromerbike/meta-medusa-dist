@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block start ppp.service"
+ACTION=="remove", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyACM0", RUN+="/bin/systemctl --no-block stop ppp.service"

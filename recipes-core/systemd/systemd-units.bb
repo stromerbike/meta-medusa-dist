@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox iproute2"
+RDEPENDS_${PN} += "bash busybox iproute2 ppp"
 
 SRC_URI += " \
             file://ble.service \
@@ -22,11 +22,11 @@ SRC_URI += " \
             file://mnt-data.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
+            file://ppp.service \
             file://pwr.service \
             file://pwr.sh \
             file://usb.service \
             file://usb.sh \
-            file://wvdial.service \
 "
 
 FILES_${PN}_append = " \
@@ -50,12 +50,12 @@ SYSTEMD_SERVICE_${PN} = " \
     mnt-rfs.service \
     pwr.service \
     usb.service \
-    wvdial.service \
 "
 
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/can0.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/ppp.service ${D}/${systemd_system_unitdir}
 
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}/${systemd_system_unitdir}
@@ -70,7 +70,6 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/wvdial.service ${D}/${systemd_system_unitdir}
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3

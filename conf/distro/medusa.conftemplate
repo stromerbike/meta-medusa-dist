@@ -39,6 +39,9 @@ IMAGE_INSTALL_remove_pn-medusa-image += "packagegroup-core-full-cmdline"
 # Remove by Stromer unused (but by Escatec used) packages
 IMAGE_INSTALL_remove_pn-medusa-image += "lrzsz minicom zile"
 
+# Remove wvdial
+IMAGE_INSTALL_remove_pn-medusa-image += "wvdial"
+
 # Mask Escatec systemd recipes since we use our own optimizations
 BBMASK += "meta-medusa-bsp/recipes-rootfs/systemd"
 
@@ -49,13 +52,13 @@ IMAGE_INSTALL_remove_pn-medusa-image += "copy2rootfs"
 # Image appends
 IMAGE_INSTALL_append = " medusa-apps medusa-services"
 IMAGE_INSTALL_append = " net-tools"
-IMAGE_INSTALL_append = " ppp wvdial"
+IMAGE_INSTALL_append = " ppp"
 IMAGE_INSTALL_append = " gnupg pristine-tar-fwu xdelta3"
 IMAGE_INSTALL_append = " gdbserver tcf-agent"
 IMAGE_INSTALL_append = " strace"
 IMAGE_INSTALL_append = " openssh openssh-sftp-server"
 IMAGE_INSTALL_append = " busybox can-utils dtc gps-utils htop nano rsync tree"
-IMAGE_INSTALL_append = " python python-argparse python-curses python-json"
+IMAGE_INSTALL_append = " python python-argparse python-json"
 
 # Uncomment this to install SDMA firmware.
 #SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
