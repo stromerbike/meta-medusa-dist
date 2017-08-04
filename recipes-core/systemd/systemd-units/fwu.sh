@@ -7,13 +7,6 @@ led1_blue ()
     echo "0" > /sys/class/leds/rgb1_red/brightness
 }
 
-led1_off ()
-{
-    echo "0" > /sys/class/leds/rgb1_blue/brightness
-    echo "0" > /sys/class/leds/rgb1_green/brightness
-    echo "0" > /sys/class/leds/rgb1_red/brightness
-}
-
 led2_blue ()
 {
     echo "255" > /sys/class/leds/rgb2_blue/brightness
@@ -119,7 +112,5 @@ do
                 fi
             fi
         fi
-    else
-        led1_off
     fi
 done
