@@ -31,12 +31,17 @@ led2_red ()
 while true
 do
     sleep 5
-    if [ -d "/mnt/sda1/autoupdate" ]; then
+    if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
         led1_blue
-        firstFileName=$(ls /mnt/sda1/autoupdate | head -n 1)
-        if [[ $firstFileName =~ ^medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.gz$ ]]; then
-            echo "Firmware $firstFileName found"
-            if [[ $firstFileName =~ .*$(cat /usr/bin/medusa/version).* ]]; then
+        firstFile=""
+        if [ -d "/mnt/sda/autoupdate" ]; then
+            firstFile="/mnt/sda/autoupdate/$(ls /mnt/sda/autoupdate | head -n 1)"
+        else
+            firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
+        fi
+        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.gz$ ]]; then
+            echo "Firmware $firstFile found"
+            if [[ $firstFile =~ .*$(cat /usr/bin/medusa/version).* ]]; then
                 echo "Nothing to up- or downgrade"
                 led2_green
             else
@@ -58,7 +63,7 @@ do
                         done
                     echo "...done"
                     echo "Extracting firmware..."
-                    tar -xvf /mnt/sda1/autoupdate/$firstFileName -C /mnt/rfs_inactive 2>&1 |
+                    tar -xvf $firstFile -C /mnt/rfs_inactive 2>&1 |
                         while read line; do
                             x=$((x+1))
                             if [ $(($x%100)) -eq 0 ]; then
