@@ -1,5 +1,5 @@
 [Unit]
-Description=power
+Description=pwr
 
 [Service]
 Type=oneshot

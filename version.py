@@ -18,10 +18,10 @@ def isFileContentChanged(filePath, newContent):
 
 if __name__ == '__main__':
     version = get_medusa_version()
-    git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S']).strip()
-    git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD']).strip()
-    git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
-    git_status = '-DIRTY' if subprocess.check_output(['git', 'status', '--porcelain']) else ''
+    git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
+    git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
+    git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
+    git_status = '-DIRTY' if subprocess.check_output(['git', 'status', '--porcelain'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..') else ''
 
     content = ''
 
