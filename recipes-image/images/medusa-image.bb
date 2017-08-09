@@ -39,7 +39,7 @@ IMAGE_INSTALL_append = " busybox \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \
-                         can-utils dtc evtest fbtest gps-utils htop mtd-utils nano rsync tree \
+                         can-utils dtc evtest fbtest gps-utils htop mtd-utils nano rsync tree wvdial \
                          python python-argparse python-json \
 "
 
