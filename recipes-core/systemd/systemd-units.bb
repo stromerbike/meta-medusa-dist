@@ -6,9 +6,12 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox iproute2 ppp"
+RDEPENDS_${PN} += "bash busybox fbida iproute2 ppp"
 
 SRC_URI += " \
+            file://images/busy.png \
+            file://images/done.png \
+            file://images/error.png \
             file://ble.service \
             file://ble.sh \
             file://can0.service \
@@ -35,6 +38,7 @@ FILES_${PN}_append = " \
     /mnt/* \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
+    ${sysconfdir}/images/ \
     ${sysconfdir}/scripts/ \
 "
 
@@ -62,8 +66,6 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/fwu.service ${D}/${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}/${systemd_system_unitdir}
@@ -83,6 +85,13 @@ do_install_append() {
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
+
+    install -d ${D}${sysconfdir}/images
+    install -m 0644 ${WORKDIR}/fwu.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/images/busy.png ${D}${sysconfdir}/images/
+    install -m 0644 ${WORKDIR}/images/done.png ${D}${sysconfdir}/images/
+    install -m 0644 ${WORKDIR}/images/error.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
