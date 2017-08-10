@@ -48,7 +48,7 @@ do
                 if mountpoint -q /mnt/rfs_inactive; then
                     led2_blue
                     echo "Stopping DataServer based applications..."
-                    systemctl stop medusa-DataServer
+                    systemctl stop medusa-DataServer || true
                     echo "Purging files on inactive rfs partition..."
                     rm -rvf /mnt/rfs_inactive/* 2>&1 |
                         while read line; do
