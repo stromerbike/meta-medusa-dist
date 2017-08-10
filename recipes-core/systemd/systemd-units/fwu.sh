@@ -50,7 +50,7 @@ do
                     systemctl stop medusa-DataServer
                     echo "Purging files on inactive rfs partition..."
                     led2_blue
-                    fbi -T 1 /etc/images/busy.png
+                    fbi --noverbose -T 1 /etc/images/busy.png
                     rm -rvf /mnt/rfs_inactive/* 2>&1 |
                         while read line; do
                             x=$((x+1))
@@ -84,44 +84,44 @@ do
                             echo "Setting partition 1 as active one..."
                             if barebox-state -s partition=1; then
                                 echo "...done"
-                                fbi -T 1 /etc/images/done.png
+                                fbi --noverbose -T 1 /etc/images/done.png
                                 led2_green
                                 break
                             else
                                 echo "...ERROR"
                                 led2_red
-                                fbi -T 1 /etc/images/error.png
+                                fbi --noverbose -T 1 /etc/images/error.png
                                 break
                             fi
                         elif df -T | grep 'ubi0:part1'; then
                             echo "Setting partition 0 as active one..."
                             if barebox-state -s partition=0; then
                                 echo "...done"
-                                fbi -T 1 /etc/images/done.png
+                                fbi --noverbose -T 1 /etc/images/done.png
                                 led2_green
                                 break
                             else
                                 echo "...ERROR"
                                 led2_red
-                                fbi -T 1 /etc/images/error.png
+                                fbi --noverbose -T 1 /etc/images/error.png
                                 break
                             fi
                         else
                             echo "...ERROR"
                             led2_red
-                            fbi -T 1 /etc/images/error.png
+                            fbi --noverbose -T 1 /etc/images/error.png
                             break
                         fi
                     else
                         echo "...ERROR"
                         led2_red
-                        fbi -T 1 /etc/images/error.png
+                        fbi --noverbose -T 1 /etc/images/error.png
                         break
                     fi
                 else
                     echo "ERROR: Inactive rfs paritition not mounted"
                     led2_red
-                    fbi -T 1 /etc/images/error.png
+                    fbi --noverbose -T 1 /etc/images/error.png
                 fi
             fi
         fi
