@@ -5,51 +5,51 @@ DESC="Firmware update over USB"
 
 led1_blue ()
 {
-    echo "255" > /sys/class/leds/rgb1_blue/brightness
-    echo "0" > /sys/class/leds/rgb1_green/brightness
-    echo "0" > /sys/class/leds/rgb1_red/brightness
+    echo "255" > /sys/class/leds/rgb1_blue/brightness || true
+    echo "0" > /sys/class/leds/rgb1_green/brightness || true
+    echo "0" > /sys/class/leds/rgb1_red/brightness || true
 }
 
 led1_off ()
 {
-    echo "0" > /sys/class/leds/rgb1_blue/brightness
-    echo "0" > /sys/class/leds/rgb1_green/brightness
-    echo "0" > /sys/class/leds/rgb1_red/brightness
+    echo "0" > /sys/class/leds/rgb1_blue/brightness || true
+    echo "0" > /sys/class/leds/rgb1_green/brightness || true
+    echo "0" > /sys/class/leds/rgb1_red/brightness || true
 }
 
 led2_blue ()
 {
-    echo "255" > /sys/class/leds/rgb2_blue/brightness
-    echo "0" > /sys/class/leds/rgb2_green/brightness
-    echo "0" > /sys/class/leds/rgb2_red/brightness
+    echo "255" > /sys/class/leds/rgb2_blue/brightness || true
+    echo "0" > /sys/class/leds/rgb2_green/brightness || true
+    echo "0" > /sys/class/leds/rgb2_red/brightness || true
 }
 
 led2_green ()
 {
-    echo "0" > /sys/class/leds/rgb2_blue/brightness
-    echo "255" > /sys/class/leds/rgb2_green/brightness
-    echo "0" > /sys/class/leds/rgb2_red/brightness
+    echo "0" > /sys/class/leds/rgb2_blue/brightness || true
+    echo "255" > /sys/class/leds/rgb2_green/brightness || true
+    echo "0" > /sys/class/leds/rgb2_red/brightness || true
 }
 
 led2_red ()
 {
-    echo "0" > /sys/class/leds/rgb2_blue/brightness
-    echo "0" > /sys/class/leds/rgb2_green/brightness
-    echo "255" > /sys/class/leds/rgb2_red/brightness
+    echo "0" > /sys/class/leds/rgb2_blue/brightness || true
+    echo "0" > /sys/class/leds/rgb2_green/brightness || true
+    echo "255" > /sys/class/leds/rgb2_red/brightness || true
 }
 
 led2_white ()
 {
-    echo "255" > /sys/class/leds/rgb2_blue/brightness
-    echo "255" > /sys/class/leds/rgb2_green/brightness
-    echo "255" > /sys/class/leds/rgb2_red/brightness
+    echo "255" > /sys/class/leds/rgb2_blue/brightness || true
+    echo "255" > /sys/class/leds/rgb2_green/brightness || true
+    echo "255" > /sys/class/leds/rgb2_red/brightness || true
 }
 
 led2_off ()
 {
-    echo "0" > /sys/class/leds/rgb2_blue/brightness
-    echo "0" > /sys/class/leds/rgb2_green/brightness
-    echo "0" > /sys/class/leds/rgb2_red/brightness
+    echo "0" > /sys/class/leds/rgb2_blue/brightness || true
+    echo "0" > /sys/class/leds/rgb2_green/brightness || true
+    echo "0" > /sys/class/leds/rgb2_red/brightness || true
 }
 
 display_done ()
