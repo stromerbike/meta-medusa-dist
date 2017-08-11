@@ -49,7 +49,6 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_SERVICE_${PN} = " \
     ble.service \
     can0.service \
-    fwu.service \
     gsm.service \
     led.service \
     mnt-data.service \

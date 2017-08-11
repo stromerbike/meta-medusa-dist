@@ -3,7 +3,9 @@ Description=fwu
 
 [Service]
 Type=oneshot
-ExecStart=/etc/scripts/fwu.sh
+ExecStartPre=/bin/sleep 3
+ExecStart=/etc/scripts/fwu.sh start
+ExecStop=/etc/scripts/fwu.sh stop
 RemainAfterExit=yes
 
 [Install]

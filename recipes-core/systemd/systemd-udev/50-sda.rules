@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sda", RUN+="/bin/systemctl --no-block start fwu.service"
+ACTION=="remove", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sda", RUN+="/bin/systemctl --no-block stop fwu.service"

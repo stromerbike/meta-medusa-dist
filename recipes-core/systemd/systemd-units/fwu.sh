@@ -1,8 +1,18 @@
 #! /bin/bash
 
+NAME=fwu
+DESC="Firmware update over USB"
+
 led1_blue ()
 {
     echo "255" > /sys/class/leds/rgb1_blue/brightness
+    echo "0" > /sys/class/leds/rgb1_green/brightness
+    echo "0" > /sys/class/leds/rgb1_red/brightness
+}
+
+led1_off ()
+{
+    echo "0" > /sys/class/leds/rgb1_blue/brightness
     echo "0" > /sys/class/leds/rgb1_green/brightness
     echo "0" > /sys/class/leds/rgb1_red/brightness
 }
@@ -28,9 +38,15 @@ led2_red ()
     echo "255" > /sys/class/leds/rgb2_red/brightness
 }
 
-while true
-do
-    sleep 5
+led2_off ()
+{
+    echo "0" > /sys/class/leds/rgb2_blue/brightness
+    echo "0" > /sys/class/leds/rgb2_green/brightness
+    echo "0" > /sys/class/leds/rgb2_red/brightness
+}
+
+case $1 in
+start)
     if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
         led1_blue
         firstFile=""
@@ -126,4 +142,14 @@ do
             fi
         fi
     fi
-done
+;;
+
+stop)
+    led1_off
+    led2_off
+;;
+
+*)
+    echo "Usage $0 {start|stop}"
+    exit
+esac
