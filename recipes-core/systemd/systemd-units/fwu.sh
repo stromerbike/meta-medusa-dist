@@ -38,11 +38,52 @@ led2_red ()
     echo "255" > /sys/class/leds/rgb2_red/brightness
 }
 
+led2_white ()
+{
+    echo "255" > /sys/class/leds/rgb2_blue/brightness
+    echo "255" > /sys/class/leds/rgb2_green/brightness
+    echo "255" > /sys/class/leds/rgb2_red/brightness
+}
+
 led2_off ()
 {
     echo "0" > /sys/class/leds/rgb2_blue/brightness
     echo "0" > /sys/class/leds/rgb2_green/brightness
     echo "0" > /sys/class/leds/rgb2_red/brightness
+}
+
+display_done ()
+{
+    echo "...done"
+    fbi --noverbose -T 1 /etc/images/done.png
+    led2_green
+}
+
+display_error ()
+{
+    echo "...ERROR"
+    led2_red
+    fbi --noverbose -T 1 /etc/images/error.png
+}
+
+part0_active ()
+{
+    echo "Setting partition 0 as active one..."
+    if barebox-state -s partition=0; then
+        display_done
+    else
+        display_error
+    fi
+}
+
+part1_active ()
+{
+    echo "Setting partition 1 as active one..."
+    if barebox-state -s partition=1; then
+        display_done
+    else
+        display_error
+    fi
 }
 
 case $1 in
@@ -56,7 +97,7 @@ start)
             firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
         fi
         if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.gz$ ]]; then
-            echo "Firmware $firstFile found"
+            echo "Firmware tarball $firstFile found"
             if [[ $firstFile =~ .*$(cat /usr/bin/medusa/version).rootfs.tar.gz$ ]]; then
                 echo "Nothing to up- or downgrade"
                 led2_green
@@ -96,48 +137,45 @@ start)
                     echo "Unmounting inactive rfs paritition..."
                     if umount /mnt/rfs_inactive; then
                         echo "...done"
+                        echo "Swapping active partition..."
                         if df -T | grep 'ubi0:part0'; then
-                            echo "Setting partition 1 as active one..."
-                            if barebox-state -s partition=1; then
-                                echo "...done"
-                                fbi --noverbose -T 1 /etc/images/done.png
-                                led2_green
-                                break
-                            else
-                                echo "...ERROR"
-                                led2_red
-                                fbi --noverbose -T 1 /etc/images/error.png
-                                break
-                            fi
+                            part1_active
                         elif df -T | grep 'ubi0:part1'; then
-                            echo "Setting partition 0 as active one..."
-                            if barebox-state -s partition=0; then
-                                echo "...done"
-                                fbi --noverbose -T 1 /etc/images/done.png
-                                led2_green
-                                break
-                            else
-                                echo "...ERROR"
-                                led2_red
-                                fbi --noverbose -T 1 /etc/images/error.png
-                                break
-                            fi
+                            part0_active
                         else
-                            echo "...ERROR"
-                            led2_red
-                            fbi --noverbose -T 1 /etc/images/error.png
-                            break
+                            display_error
                         fi
                     else
-                        echo "...ERROR"
-                        led2_red
-                        fbi --noverbose -T 1 /etc/images/error.png
-                        break
+                        display_error
                     fi
                 else
-                    echo "ERROR: Inactive rfs paritition not mounted"
-                    led2_red
-                    fbi --noverbose -T 1 /etc/images/error.png
+                    display_error
+                fi
+            fi
+        elif [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.ubifs$ ]]; then
+            echo "Firmware image $firstFile found"
+            if [[ $firstFile =~ .*$(cat /usr/bin/medusa/version).rootfs.ubifs$ ]]; then
+                echo "Nothing to up- or downgrade"
+                led2_green
+            else
+                echo "Stopping DataServer based applications..."
+                systemctl stop medusa-DataServer
+                led2_white
+                fbi --noverbose -T 1 /etc/images/busy.png
+                echo "Unmounting inactive rfs paritition..."
+                umount /mnt/rfs_inactive
+                echo "...done"
+                echo "Updating firmware..."
+                if df -T | grep 'ubi0:part0'; then
+                    ubiupdatevol /dev/ubi0_1 $firstFile
+                    echo "Swapping active partition..."
+                    part1_active
+                elif df -T | grep 'ubi0:part1'; then
+                    ubiupdatevol /dev/ubi0_0 $firstFile
+                    echo "Swapping active partition..."
+                    part0_active
+                else
+                    display_error
                 fi
             fi
         fi
