@@ -19,10 +19,10 @@ start)
     echo "497" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio497/direction
     echo "1" > /sys/class/gpio/gpio497/value
-    # Make pulse to start GSM module
+    # Wait for 3v7 to reach a stable value
+    sleep 0.1
+    # Start GSM module
     echo "1" > /sys/class/gpio/gpio2/value
-    sleep 0.03
-    echo "0" > /sys/class/gpio/gpio2/value
 ;;
 
 stop)
@@ -30,7 +30,14 @@ stop)
     echo "0" > /sys/class/gpio/gpio497/value
 ;;
 
+reload)
+    # Pulse GSM reset
+    echo "1" > /sys/class/gpio/gpio128/value
+    sleep 0.1
+    echo "0" > /sys/class/gpio/gpio128/value
+;;
+
 *)
-    echo "Usage $0 {start|stop}"
+    echo "Usage $0 {start|stop|reload}"
     exit
 esac
