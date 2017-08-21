@@ -34,12 +34,11 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 # python python-argparse python-json - python and some often used modules
 IMAGE_INSTALL_append = " busybox \
                          net-tools \
-                         ppp \
                          gnupg pristine-tar-fwu xdelta3 \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \
-                         can-utils dtc evtest fbtest gps-utils htop nano rsync tree wvdial \
+                         can-utils dtc evtest fbtest gps-utils htop nano rsync tree \
                          python python-argparse python-json \
 "
 

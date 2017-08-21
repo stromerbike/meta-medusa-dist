@@ -1,0 +1,17 @@
+[Unit]
+Description=wvdial internet dialer service
+After=gsm.service
+Requires=gsm.service
+PartOf=gsm.service
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wvdial
+ExecStop=/bin/kill -TERM $MAINPID
+ExecStopPost=/bin/systemctl reload gsm.service
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

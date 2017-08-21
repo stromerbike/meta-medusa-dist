@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox fbida iproute2 mtd-utils ppp"
+RDEPENDS_${PN} += "bash busybox fbida iproute2 mtd-utils ppp wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -27,11 +27,11 @@ SRC_URI += " \
             file://mnt-data.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
-            file://ppp.service \
             file://pwr.service \
             file://pwr.sh \
             file://usb.service \
             file://usb.sh \
+            file://wvdial.service \
 "
 
 FILES_${PN}_append = " \
@@ -60,7 +60,6 @@ SYSTEMD_SERVICE_${PN} = " \
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/can0.service ${D}/${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/ppp.service ${D}/${systemd_system_unitdir}
 
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}/${systemd_system_unitdir}
@@ -95,4 +94,5 @@ do_install_append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/wvdial.service ${D}/${systemd_system_unitdir}
 }

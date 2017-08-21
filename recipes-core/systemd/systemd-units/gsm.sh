@@ -23,6 +23,15 @@ start)
     sleep 0.1
     # Start GSM module
     echo "1" > /sys/class/gpio/gpio2/value
+    # Wait until ttyACM0 is present and then send something to get module out of endless newline sending mode.
+    # Remark: Endless newline sending mode does not happen every time. Cause yet unknown.
+    echo "Waiting for ttyACM0..."
+    while [ ! -e /dev/ttyACM0 ]; do
+        sleep 1
+    done
+    sleep 1
+    echo "...done"
+    echo "AT+STFU" > /dev/ttyACM0
 ;;
 
 stop)

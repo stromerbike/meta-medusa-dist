@@ -1,9 +1,0 @@
-/dev/ttyACM0
-460800
-connect "/usr/sbin/chat -v -f /etc/chatscripts/stromer"
-crtscts
-defaultroute
-noipdefault
-usepeerdns
-default-asyncmap
-noauth
