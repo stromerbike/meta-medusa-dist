@@ -12,7 +12,6 @@ BBLAYERS  ?= " \
   ${OEROOT}/meta-yocto-bsp \
   ${OEROOT}/../meta-openembedded/meta-oe \
   ${OEROOT}/../meta-openembedded/meta-python \
-  ${OEROOT}/../meta-openembedded/meta-networking \
   ${OEROOT}/../meta-qt5 \
   ${OEROOT}/../meta-phytec \
   ${OEROOT}/../meta-medusa-bsp \
