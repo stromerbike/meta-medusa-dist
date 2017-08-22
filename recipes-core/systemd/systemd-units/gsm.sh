@@ -3,6 +3,33 @@
 NAME=gsm
 DESC="Initialization of gsm chip"
 
+read_ttyACM0 ()
+{
+    # Read until module is out of endless newline sending mode (usually takes two attempts).
+    # Remark: Cause of endless newline sending mode yet unknown.
+    echo "Reading first lines from ttyACM0..."
+    done=0
+    while [ "$done" -eq 0 ]; do
+        if ! $(timeout -t 1 -s KILL head -n1 /dev/ttyACM0); then
+            done=1
+        else
+            echo "...read one line..."
+        fi
+    done
+    echo "...done"
+    echo "ttyACM0 has gone quiet"
+}
+
+wait_ttyACM0 ()
+{
+    echo "Waiting for ttyACM0..."
+    while [ ! -e /dev/ttyACM0 ]; do
+        sleep 1
+    done
+    sleep 1
+    echo "...done"
+}
+
 case $1 in
 start)
     # GSM power on
@@ -23,15 +50,10 @@ start)
     sleep 0.1
     # Start GSM module
     echo "1" > /sys/class/gpio/gpio2/value
-    # Wait until ttyACM0 is present and then send something to get module out of endless newline sending mode.
-    # Remark: Endless newline sending mode does not happen every time. Cause yet unknown.
-    echo "Waiting for ttyACM0..."
-    while [ ! -e /dev/ttyACM0 ]; do
-        sleep 1
-    done
-    sleep 1
-    echo "...done"
-    echo "AT+STFU" > /dev/ttyACM0
+    # Wait until ttyACM0 is present
+    wait_ttyACM0
+    # WORKAROUND: Stop endless newline sending mode
+    read_ttyACM0
 ;;
 
 stop)
@@ -44,6 +66,10 @@ reload)
     echo "1" > /sys/class/gpio/gpio128/value
     sleep 0.1
     echo "0" > /sys/class/gpio/gpio128/value
+    # Wait until ttyACM0 is present
+    wait_ttyACM0
+    # WORKAROUND: Stop endless newline sending mode
+    read_ttyACM0
 ;;
 
 *)
