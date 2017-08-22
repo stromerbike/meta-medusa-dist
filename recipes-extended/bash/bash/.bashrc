@@ -17,5 +17,6 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # stromer specific aliases
+alias version='/bin/cat /etc/os-release'
 alias rc='/usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json'
 alias ui='/usr/bin/medusa/EnergyBusControllerUi/EnergyBusControllerUi /usr/bin/medusa/TargetIpcConfiguration.json /usr/bin/medusa/EnergyBusControllerUi/config.json'
