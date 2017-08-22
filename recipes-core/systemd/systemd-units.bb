@@ -27,8 +27,10 @@ SRC_URI += " \
             file://mnt-data.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
-            file://pwr.service \
-            file://pwr.sh \
+            file://pwr-io.service \
+            file://pwr-io.sh \
+            file://pwr-sup.service \
+            file://pwr-sup.sh \
             file://usb.service \
             file://usb.sh \
             file://wvdial.service \
@@ -53,7 +55,8 @@ SYSTEMD_SERVICE_${PN} = " \
     led.service \
     mnt-data.service \
     mnt-rfs.service \
-    pwr.service \
+    pwr-io.service \
+    pwr-sup.service \
     usb.service \
 "
 
@@ -68,8 +71,10 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/pwr.service ${D}/${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/pwr.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/pwr-io.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/pwr-io.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/pwr-sup.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/pwr-sup.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
 

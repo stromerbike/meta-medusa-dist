@@ -1,0 +1,11 @@
+[Unit]
+Description=pwr-io
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/pwr-io.sh start
+ExecStop=/etc/scripts/pwr-io.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

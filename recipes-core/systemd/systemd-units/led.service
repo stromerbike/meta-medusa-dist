@@ -1,5 +1,7 @@
 [Unit]
 Description=led
+After=pwr-sup.service
+Requires=pwr-sup.service
 
 [Service]
 Type=oneshot

@@ -1,0 +1,11 @@
+[Unit]
+Description=pwr-sup
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/pwr-sup.sh start
+ExecStop=/etc/scripts/pwr-sup.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

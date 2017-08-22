@@ -1,5 +1,7 @@
 [Unit]
 Description=usb
+After=pwr-sup.service
+Requires=pwr-sup.service
 
 [Service]
 Type=oneshot
