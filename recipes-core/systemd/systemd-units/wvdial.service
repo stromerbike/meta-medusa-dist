@@ -11,7 +11,7 @@ ExecStart=/usr/bin/wvdial
 ExecStop=/bin/kill -TERM $MAINPID
 ExecStopPost=/bin/systemctl reload gsm.service
 Restart=always
-RestartSec=5
+RestartSec=30
 
 [Install]
 WantedBy=multi-user.target
