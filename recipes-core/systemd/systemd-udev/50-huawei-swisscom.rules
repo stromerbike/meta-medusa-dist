@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyUSB0", ENV{ID_MODEL}="HUAWEI_Mobile", RUN+="/bin/systemctl --no-block start wvdial-swisscom.service"
+ACTION=="remove", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/ttyUSB0", ENV{ID_MODEL}="HUAWEI_Mobile", RUN+="/bin/systemctl --no-block stop wvdial-swisscom.service"

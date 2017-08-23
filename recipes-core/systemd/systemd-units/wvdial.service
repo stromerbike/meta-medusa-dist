@@ -1,5 +1,5 @@
 [Unit]
-Description=wvdial internet dialer service
+Description=wvdial internet dialer service for stromer m2m
 After=gsm.service
 Requires=gsm.service
 PartOf=gsm.service

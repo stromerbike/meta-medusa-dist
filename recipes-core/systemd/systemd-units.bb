@@ -34,6 +34,7 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://wvdial.service \
+            file://wvdial-swisscom.service \
 "
 
 FILES_${PN}_append = " \
@@ -100,4 +101,5 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}/${systemd_system_unitdir}
 }
