@@ -8,7 +8,7 @@
 The medusa distro config can be generated via:
     python ../../../tools/yocto/meta-medusa-dist/version.py
 Whereas the version number can be supplied via:
-    MEDUSA_VERSION=x.x.x.x
+    MEDUSA_VERSION=uint8.uint8.uint8.uint8
 
 Set UTF-8 locale prior to calling bitbake:
     export LANG=en_US.UTF-8
