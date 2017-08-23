@@ -10,7 +10,7 @@ read_ttyACM0 ()
     echo "Reading first lines from ttyACM0..."
     done=0
     while [ "$done" -eq 0 ]; do
-        if ! $(timeout -t 1 -s KILL head -n1 /dev/ttyACM0); then
+        if ! $(timeout -t 1 -s KILL head -n1 /dev/ttyACM0 &>/dev/null); then
             done=1
         else
             echo "...read one line..."
