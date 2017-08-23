@@ -59,6 +59,7 @@ SYSTEMD_SERVICE_${PN} = " \
     pwr-io.service \
     pwr-sup.service \
     usb.service \
+    wvdial.service \
 "
 
 do_install_append() {
