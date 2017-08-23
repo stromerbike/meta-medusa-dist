@@ -1,6 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://system.conf \
+            file://timesyncd.conf \
 "
 
 RDEPENDS_${PN} += "systemd-udev systemd-units"
@@ -10,6 +11,7 @@ PACKAGECONFIG_remove = " xz ldconfig binfmt machined backlight quotacheck hostna
 
 do_install_append() {
     install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
+    install -m 0644 ${WORKDIR}/timesyncd.conf ${D}${sysconfdir}/systemd
 
     # disable virtual console
     rm ${D}${sysconfdir}/systemd/system/getty.target.wants/getty@tty1.service

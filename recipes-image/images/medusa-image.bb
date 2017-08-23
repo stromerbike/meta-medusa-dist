@@ -33,7 +33,7 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 # busybox can-utils dtc evtest fbtest gps-utils htop nano rsync tree - convenience and troubleshooting tools
 # python python-argparse python-json - python and some often used modules
 IMAGE_INSTALL_append = " busybox \
-                         net-tools \
+                         net-tools tzdata \
                          gnupg pristine-tar-fwu xdelta3 \
                          gdbserver tcf-agent \
                          perf strace \
