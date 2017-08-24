@@ -1,12 +1,12 @@
 import os
 import subprocess
 
-def get_medusa_version():
+def get_medusa_codename():
     try:
-        version = os.environ['MEDUSA_VERSION']
+        codename = os.environ['MEDUSA_CODENAME']
     except KeyError:
-        version = '4.0.0.255'
-    return version
+        codename = '4.0.0.255'
+    return codename
 
 def isFileContentChanged(filePath, newContent):
     if os.path.isfile(filePath):
@@ -17,7 +17,7 @@ def isFileContentChanged(filePath, newContent):
     return True
 
 if __name__ == '__main__':
-    version = get_medusa_version()
+    codename = get_medusa_codename()
     git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
     git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
     git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     with open(os.path.dirname(os.path.realpath(__file__)) + '/conf/distro/medusa.conftemplate', 'rt') as recipe_template:
         for line in recipe_template:
-            line = line.replace('${MEDUSA_METADATA_VERSION}', version)
+            line = line.replace('${MEDUSA_METADATA_CODENAME}', codename)
             line = line.replace('${MEDUSA_METADATA_GIT_DATE_TIME}', git_date_time)
             line = line.replace('${MEDUSA_METADATA_GIT_HASH_SHORT}', git_hash_short)
             line = line.replace('${MEDUSA_METADATA_GIT_HASH}', git_hash)
