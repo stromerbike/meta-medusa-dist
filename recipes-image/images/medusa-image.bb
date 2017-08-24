@@ -32,7 +32,8 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 # openssh openssh-sftp-server - ssh and sftp
 # busybox can-utils dtc evtest fbtest gps-utils htop nano rsync tree - convenience and troubleshooting tools
 # python python-argparse python-json - python and some often used modules
-IMAGE_INSTALL_append = " busybox \
+IMAGE_INSTALL_append = " medusa-version \
+                         busybox \
                          net-tools tzdata \
                          gnupg pristine-tar-fwu xdelta3 \
                          gdbserver tcf-agent \

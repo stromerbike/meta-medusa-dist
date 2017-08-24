@@ -98,7 +98,7 @@ start)
         fi
         if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.gz$ ]]; then
             echo "Firmware tarball $firstFile found"
-            if [[ $firstFile =~ .*$(cat /usr/bin/medusa/version).rootfs.tar.gz$ ]]; then
+            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.tar.gz$ ]]; then
                 echo "Nothing to up- or downgrade"
                 led2_green
             else
