@@ -54,7 +54,6 @@ led2_off ()
 
 display_done ()
 {
-    echo "...done"
     fbi --noverbose -T 1 /etc/images/done.png
     led2_green
 }
@@ -66,10 +65,31 @@ display_error ()
     fbi --noverbose -T 1 /etc/images/error.png
 }
 
+umount_sda ()
+{
+    if [ -d "/mnt/sda/autoupdate" ]; then
+        echo "Unmounting sda..."
+        if umount /mnt/sda; then
+            echo "...done"
+        else
+            echo "...ERROR"
+        fi
+    else
+        echo "Unmounting sda1..."
+        if umount /mnt/sda1; then
+            echo "...done"
+        else
+            echo "...ERROR"
+        fi
+    fi
+}
+
 part0_active ()
 {
     echo "Setting partition 0 as active one..."
     if barebox-state -s partition=0; then
+        echo "...done"
+        umount_sda
         display_done
     else
         display_error
@@ -80,6 +100,8 @@ part1_active ()
 {
     echo "Setting partition 1 as active one..."
     if barebox-state -s partition=1; then
+        echo "...done"
+        umount_sda
         display_done
     else
         display_error

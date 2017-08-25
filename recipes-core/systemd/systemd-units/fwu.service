@@ -2,11 +2,10 @@
 Description=fwu
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStartPre=/bin/sleep 3
 ExecStart=/etc/scripts/fwu.sh start
 ExecStop=/etc/scripts/fwu.sh stop
-RemainAfterExit=yes
 
 [Install]
 WantedBy=basic.target
