@@ -127,10 +127,12 @@ start)
                 if mountpoint -q /mnt/rfs_inactive; then
                     echo "Stopping DataServer based applications..."
                     systemctl stop medusa-DataServer
-                    echo "Purging files on inactive rfs partition..."
+                    echo "Extracting firmware..."
                     led2_blue
                     fbi --noverbose -T 1 /etc/images/busy.png
-                    rm -rvf /mnt/rfs_inactive/* 2>&1 |
+                    rm -rf /tmp/rfs_inactive || true
+                    mkdir /tmp/rfs_inactive
+                    tar -xvf $firstFile -C /tmp/rfs_inactive 2>&1 |
                         while read line; do
                             x=$((x+1))
                             if [ $(($x%100)) -eq 0 ]; then
@@ -142,8 +144,9 @@ start)
                             fi
                         done
                     echo "...done"
-                    echo "Extracting firmware..."
-                    tar -xvf $firstFile -C /mnt/rfs_inactive 2>&1 |
+                    echo "Rsyncing to inactive rfs partition..."
+                    cd /tmp/rfs_inactive
+                    rsync -av * /mnt/rfs_inactive --delete 2>&1 |
                         while read line; do
                             x=$((x+1))
                             if [ $(($x%100)) -eq 0 ]; then
