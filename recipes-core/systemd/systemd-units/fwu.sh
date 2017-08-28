@@ -179,7 +179,7 @@ start)
             fi
         elif [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.ubifs$ ]]; then
             echo "Firmware image $firstFile found"
-            if [[ $firstFile =~ .*$(cat /usr/bin/medusa/version).rootfs.ubifs$ ]]; then
+            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
                 echo "Nothing to up- or downgrade"
                 led2_green
             else
