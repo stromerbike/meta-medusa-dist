@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
-            file://nfs.cfg \
+            file://jtag-pm.patch \
             file://ppp-network.cfg \
             file://usb-devices.cfg \
             file://virtual-devices.cfg \
