@@ -63,6 +63,9 @@ PACKAGECONFIG_append_pn-qtbase = " examples"
 IMAGE_INSTALL_append = " qtbase-examples"
 BBMASK += "meta-medusa-app/recipes-qt/"
 
+# Uncomment this to enable JTAG in kernel.
+#SRC_URI_append_pn-linux-mainline = " file://jtag-pm.patch"
+
 # Enable this to mount the image read-only
 #EXTRA_IMAGE_FEATURES = "read-only-rootfs"
 
