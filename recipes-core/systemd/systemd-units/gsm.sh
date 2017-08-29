@@ -33,10 +33,10 @@ wait_ttyACM0 ()
 case $1 in
 start)
     # GSM power on
-    # GPIO1 IO02 => (1 -1) * 32 + 2 = 2
-    echo "2" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio2/direction
-    echo "0" > /sys/class/gpio/gpio2/value
+    # GPIO5 IO05 => (5 - 1) * 32 + 5 = 133
+    echo "133" > /sys/class/gpio/export
+    echo "out" > /sys/class/gpio/gpio133/direction
+    echo "0" > /sys/class/gpio/gpio133/value
     # GSM reset
     # GPIO5 IO00 => (5 - 1) * 32 = 128
     echo "128" > /sys/class/gpio/export
@@ -49,7 +49,7 @@ start)
     # Wait for 3v7 to reach a stable value
     sleep 0.1
     # Start GSM module
-    echo "1" > /sys/class/gpio/gpio2/value
+    echo "1" > /sys/class/gpio/gpio133/value
     # Wait until ttyACM0 is present
     wait_ttyACM0
     # WORKAROUND: Stop endless newline sending mode
