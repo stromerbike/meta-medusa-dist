@@ -1,5 +1,5 @@
 diff --git a/arch/arm/mach-imx/pm-imx6.c b/arch/arm/mach-imx/pm-imx6.c
-index e61b1d1027e1..14aa51b7eb0c 100644
+index fe708e2..483c9a9 100644
 --- a/arch/arm/mach-imx/pm-imx6.c
 +++ b/arch/arm/mach-imx/pm-imx6.c
 @@ -286,8 +286,6 @@ int imx6_set_lpm(enum mxc_cpu_pwr_mode mode)
