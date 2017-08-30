@@ -17,7 +17,7 @@ inherit cpan
 
 # https://github.com/kraj/poky/blob/krogoth/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
 # Depends on tar which is included in busybox
-RDEPENDS_${PN} = " busybox \
+RDEPENDS_${PN} = " tar \
                    xdelta3 \
                    perl \
                    perl-module-digest-sha \
