@@ -39,6 +39,7 @@ IMAGE_INSTALL_append = " medusa-version \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \
+                         dnsmasq hostapd iw \
                          can-utils dtc evtest fbtest gps-utils htop iperf nano tree \
                          python python-argparse python-json \
 "
