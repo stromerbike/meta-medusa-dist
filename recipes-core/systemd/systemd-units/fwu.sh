@@ -145,8 +145,7 @@ start)
                         done
                     echo "...done"
                     echo "Rsyncing to inactive rfs partition..."
-                    cd /tmp/rfs_inactive
-                    rsync -av * /mnt/rfs_inactive --delete 2>&1 |
+                    rsync -av --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/ 2>&1 |
                         while read line; do
                             x=$((x+1))
                             if [ $(($x%100)) -eq 0 ]; then
