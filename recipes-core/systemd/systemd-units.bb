@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox evtest fbida iproute2 mtd-utils ppp rsync wvdial"
+RDEPENDS_${PN} += "bash busybox coreutils evtest fbida iproute2 mtd-utils ppp rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
