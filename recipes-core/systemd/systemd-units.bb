@@ -12,6 +12,7 @@ SRC_URI += " \
             file://images/busy.png \
             file://images/done.png \
             file://images/error.png \
+            file://images/logo.png \
             file://ble.service \
             file://ble.sh \
             file://can0.service \
@@ -97,6 +98,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/images/busy.png ${D}${sysconfdir}/images/
     install -m 0644 ${WORKDIR}/images/done.png ${D}${sysconfdir}/images/
     install -m 0644 ${WORKDIR}/images/error.png ${D}${sysconfdir}/images/
+    install -m 0644 ${WORKDIR}/images/logo.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/

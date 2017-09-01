@@ -84,6 +84,18 @@ umount_sda ()
     fi
 }
 
+await_shutdown ()
+{
+    echo "Waiting for touch event..."
+    while evtest --query /dev/input/event1 EV_KEY BTN_TOUCH; do
+        sleep 0.1
+    done
+    echo "...done"
+    fbi --noverbose -T 1 /etc/images/logo.png
+    echo "Shutting down..."
+    shutdown now
+}
+
 part0_active ()
 {
     echo "Setting partition 0 as active one..."
@@ -91,6 +103,7 @@ part0_active ()
         echo "...done"
         umount_sda
         display_done
+        await_shutdown
     else
         display_error
     fi
@@ -103,6 +116,7 @@ part1_active ()
         echo "...done"
         umount_sda
         display_done
+        await_shutdown
     else
         display_error
     fi
