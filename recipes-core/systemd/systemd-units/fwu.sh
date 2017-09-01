@@ -132,40 +132,26 @@ start)
                     fbi --noverbose -T 1 /etc/images/busy.png
                     rm -rf /tmp/rfs_inactive || true
                     mkdir /tmp/rfs_inactive
-                    tar -xvf $firstFile -C /tmp/rfs_inactive 2>&1 |
-                        while read line; do
-                            x=$((x+1))
-                            if [ $(($x%100)) -eq 0 ]; then
-                                if [ $(cat /sys/class/leds/rgb2_blue/brightness) == "0" ]; then
-                                    echo "255" > /sys/class/leds/rgb2_blue/brightness
-                                else
-                                    echo "0" > /sys/class/leds/rgb2_blue/brightness
-                                fi
-                            fi
-                        done
-                    echo "...done"
-                    echo "Rsyncing to inactive rfs partition..."
-                    rsync -av --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/ 2>&1 |
-                        while read line; do
-                            x=$((x+1))
-                            if [ $(($x%100)) -eq 0 ]; then
-                                if [ $(cat /sys/class/leds/rgb2_blue/brightness) == "0" ]; then
-                                    echo "255" > /sys/class/leds/rgb2_blue/brightness
-                                else
-                                    echo "0" > /sys/class/leds/rgb2_blue/brightness
-                                fi
-                            fi
-                        done
-                    echo "...done"
-                    led2_blue
-                    echo "Unmounting inactive rfs paritition..."
-                    if umount /mnt/rfs_inactive; then
+                    if tar -xf $firstFile -C /tmp/rfs_inactive; then
                         echo "...done"
-                        echo "Swapping active partition..."
-                        if df -T | grep 'ubi0:part0'; then
-                            part1_active
-                        elif df -T | grep 'ubi0:part1'; then
-                            part0_active
+                        echo "Rsyncing to inactive rfs partition..."
+                        if rsync -a --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
+                            echo "...done"
+                            led2_blue
+                            echo "Unmounting inactive rfs paritition..."
+                            if umount /mnt/rfs_inactive; then
+                                echo "...done"
+                                echo "Swapping active partition..."
+                                if df -T | grep 'ubi0:part0'; then
+                                    part1_active
+                                elif df -T | grep 'ubi0:part1'; then
+                                    part0_active
+                                else
+                                    display_error
+                                fi
+                            else
+                                display_error
+                            fi
                         else
                             display_error
                         fi
@@ -187,17 +173,30 @@ start)
                 led2_white
                 fbi --noverbose -T 1 /etc/images/busy.png
                 echo "Unmounting inactive rfs paritition..."
-                umount /mnt/rfs_inactive
-                echo "...done"
-                echo "Updating firmware..."
-                if df -T | grep 'ubi0:part0'; then
-                    ubiupdatevol /dev/ubi0_1 $firstFile
-                    echo "Swapping active partition..."
-                    part1_active
-                elif df -T | grep 'ubi0:part1'; then
-                    ubiupdatevol /dev/ubi0_0 $firstFile
-                    echo "Swapping active partition..."
-                    part0_active
+                if umount /mnt/rfs_inactive; then
+                    echo "...done"
+                    echo "Updating firmware..."
+                    if df -T | grep 'ubi0:part0'; then
+                        echo "on ubi0_1..."
+                        if ubiupdatevol /dev/ubi0_1 $firstFile; then
+                            echo "...done"
+                            echo "Swapping active partition..."
+                            part1_active
+                        else
+                            display_error
+                        fi
+                    elif df -T | grep 'ubi0:part1'; then
+                        echo "on ubi0_0..."
+                        if ubiupdatevol /dev/ubi0_0 $firstFile; then
+                            echo "...done"
+                            echo "Swapping active partition..."
+                            part0_active
+                        else
+                            display_error
+                        fi
+                    else
+                        display_error
+                    fi
                 else
                     display_error
                 fi
