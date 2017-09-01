@@ -218,12 +218,7 @@ start)
     fi
 ;;
 
-stop)
-    led1_off
-    led2_off
-;;
-
 *)
-    echo "Usage $0 {start|stop}"
+    echo "Usage $0 start"
     exit
 esac
