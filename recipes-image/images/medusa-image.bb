@@ -40,7 +40,7 @@ IMAGE_INSTALL_append = " medusa-version \
                          perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw \
-                         can-utils dtc evtest fbtest gps-utils htop iperf nano tree \
+                         can-utils dtc fbtest gps-utils htop iperf nano tree \
                          python python-argparse python-json \
 "
 
