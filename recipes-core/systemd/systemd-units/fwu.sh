@@ -111,7 +111,6 @@ part1_active ()
 case $1 in
 start)
     if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
-        led1_blue
         firstFile=""
         if [ -d "/mnt/sda/autoupdate" ]; then
             firstFile="/mnt/sda/autoupdate/$(ls /mnt/sda/autoupdate | head -n 1)"
@@ -122,12 +121,12 @@ start)
             echo "Firmware tarball $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.tar.gz$ ]]; then
                 echo "Nothing to up- or downgrade"
-                led2_green
             else
                 if mountpoint -q /mnt/rfs_inactive; then
                     echo "Stopping DataServer based applications..."
                     systemctl stop medusa-DataServer
                     echo "Extracting firmware..."
+                    led1_blue
                     led2_blue
                     fbi --noverbose -T 1 /etc/images/busy.png
                     rm -rf /tmp/rfs_inactive || true
@@ -166,10 +165,10 @@ start)
             echo "Firmware image $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
                 echo "Nothing to up- or downgrade"
-                led2_green
             else
                 echo "Stopping DataServer based applications..."
                 systemctl stop medusa-DataServer
+                led1_blue
                 led2_white
                 fbi --noverbose -T 1 /etc/images/busy.png
                 echo "Unmounting inactive rfs paritition..."
