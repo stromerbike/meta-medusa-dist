@@ -10,7 +10,7 @@ wait_ttyACM0 ()
         sleep 1
     done
     # Wait for some seconds or dial command ATDT*99# will not succeed
-    sleep 3
+    sleep 1
     echo "...done"
 }
 
@@ -37,7 +37,7 @@ start)
     # Wait until ttyACM0 is present
     wait_ttyACM0
     # WORKAROUND: Read out any garbage from ttyACM0
-    timeout 1 microcom /dev/ttyACM0 &>/dev/null || true
+    timeout 3 microcom /dev/ttyACM0 &>/dev/null || true
 ;;
 
 stop)
