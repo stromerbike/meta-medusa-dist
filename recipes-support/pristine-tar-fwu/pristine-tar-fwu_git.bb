@@ -21,6 +21,7 @@ inherit cpan
 RDEPENDS_${PN} = " busybox \
                    tar \
                    xdelta3 \
+                   xz \
                    perl \
                    perl-module-digest-sha \
                    perl-module-file-find \
