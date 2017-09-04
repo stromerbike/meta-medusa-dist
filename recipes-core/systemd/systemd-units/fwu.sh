@@ -136,11 +136,11 @@ start)
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.tar.gz$ ]]; then
                 echo "Nothing to up- or downgrade"
             else
+                echo "Stopping DataServer based applications..."
+                systemctl stop medusa-DataServer
+                led1_blue
                 if mountpoint -q /mnt/rfs_inactive; then
-                    echo "Stopping DataServer based applications..."
-                    systemctl stop medusa-DataServer
                     echo "Extracting firmware..."
-                    led1_blue
                     led2_blue
                     fbi --noverbose -T 1 /etc/images/busy.png
                     rm -rf /tmp/rfs_inactive || true
