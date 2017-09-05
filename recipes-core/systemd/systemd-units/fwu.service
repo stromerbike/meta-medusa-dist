@@ -3,7 +3,7 @@ Description=fwu
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 3
+ExecStartPre=/bin/sleep 5
 ExecStart=/etc/scripts/fwu.sh start
 
 [Install]
