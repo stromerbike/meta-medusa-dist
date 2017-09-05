@@ -65,35 +65,35 @@ SYSTEMD_SERVICE_${PN} = " \
 
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/can0.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
 
     install -d ${D}${sysconfdir}/scripts
-    install -m 0644 ${WORKDIR}/ble.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/gsm.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/led.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/pwr-io.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/pwr-io.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/pwr-io.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/pwr-sup.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/pwr-sup.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/pwr-sup.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/usb.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
     install -d ${D}/mnt/data
     install -d ${D}/mnt/data_backup
-    install -m 0644 ${WORKDIR}/mnt-data.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/mnt-data.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/rfs_inactive
-    install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}${sysconfdir}/images
-    install -m 0644 ${WORKDIR}/fwu.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/fwu.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/images/busy.png ${D}${sysconfdir}/images/
     install -m 0644 ${WORKDIR}/images/done.png ${D}${sysconfdir}/images/
@@ -103,6 +103,6 @@ do_install_append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wvdial.service ${D}/${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
 }
