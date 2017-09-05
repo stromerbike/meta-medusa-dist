@@ -14,6 +14,17 @@ wait_ttyACM0 ()
     echo "...done"
 }
 
+workaround_ttyACM0 ()
+{
+    if ls -l `which timeout` | grep busybox > /dev/null; then
+        echo "Timeout provided by busybox"
+        timeout -t 3 microcom /dev/ttyACM0 &>/dev/null || true
+    else
+        echo "Timeout provided by coreutils"
+        timeout 3 microcom /dev/ttyACM0 &>/dev/null || true
+    fi
+}
+
 case $1 in
 start)
     # GSM power on
@@ -37,7 +48,7 @@ start)
     # Wait until ttyACM0 is present
     wait_ttyACM0
     # WORKAROUND: Read out any garbage from ttyACM0
-    timeout 3 microcom /dev/ttyACM0 &>/dev/null || true
+    workaround_ttyACM0
 ;;
 
 stop)
@@ -53,7 +64,7 @@ reload)
     # Wait until ttyACM0 is present
     wait_ttyACM0
     # WORKAROUND: Read out any garbage from ttyACM0
-    timeout 1 microcom /dev/ttyACM0 &>/dev/null || true
+    workaround_ttyACM0
 ;;
 
 *)
