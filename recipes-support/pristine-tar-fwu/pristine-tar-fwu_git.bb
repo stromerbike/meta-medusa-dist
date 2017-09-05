@@ -17,9 +17,7 @@ S = "${WORKDIR}/git"
 inherit cpan
 
 # https://github.com/kraj/poky/blob/krogoth/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
-# Depends on cp which is included in busybox
-RDEPENDS_${PN} = " busybox \
-                   tar \
+RDEPENDS_${PN} = " tar \
                    xdelta3 \
                    xz \
                    perl \
