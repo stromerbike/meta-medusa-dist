@@ -39,7 +39,7 @@ SRC_URI += " \
 "
 
 FILES_${PN}_append = " \
-    /mnt/* \
+    /mnt/ \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
     ${sysconfdir}/images/ \
