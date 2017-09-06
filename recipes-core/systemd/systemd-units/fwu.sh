@@ -214,6 +214,8 @@ start)
                     display_error
                 fi
             fi
+        else
+            echo "autoupdate folder does not contain the required file"
         fi
     fi
 ;;
