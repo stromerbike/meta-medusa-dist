@@ -5,4 +5,5 @@ SRC_URI += " \
             file://ppp-network.cfg \
             file://usb-devices.cfg \
             file://virtual-devices.cfg \
+            file://wifi-devices.cfg \
 "
