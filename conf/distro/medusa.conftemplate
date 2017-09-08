@@ -87,3 +87,7 @@ INHERIT += "buildstats"
 # Phytec git mirrors
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
+
+# Set empty root password
+INHERIT += "extrausers"
+EXTRA_USERS_PARAMS = "usermod -p '' root;"
