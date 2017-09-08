@@ -10,7 +10,7 @@ PV = "1.37+gitr${SRCPV}"
 DEPENDS = "zlib"
 
 SRC_URI = "git://github.com/tramseyer/${BPN}.git;protocol=git;branch=master"
-SRCREV = "43325d3339a86059c3970e38f6162e68ec286109"
+SRCREV = "54f0d005b96bf5601a3ec730f781379339b5f9a3"
 
 S = "${WORKDIR}/git"
 
