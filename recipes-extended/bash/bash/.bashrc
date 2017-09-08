@@ -21,6 +21,3 @@ alias version='/bin/cat /etc/medusa-version'
 alias rc='/usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json'
 alias tr='/usr/bin/medusa/TestRunner/TestRunner /usr/bin/medusa/TargetIpcConfiguration.json /usr/bin/medusa/TestRunner/config.json'
 alias ui='/usr/bin/medusa/EnergyBusControllerUi/EnergyBusControllerUi /usr/bin/medusa/TargetIpcConfiguration.json /usr/bin/medusa/EnergyBusControllerUi/config.json'
-
-# stromer specific exports
-export PRISTINE_ALL_XDELTA=xdelta3
