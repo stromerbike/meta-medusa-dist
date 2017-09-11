@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 
 PR = "r0"
 
-RDEPENDS_${PN} += "bash"
+# iproute2 contains ip tool which is used for SocketCAN
+RDEPENDS_${PN} += "bash iproute2"
 
 SRC_URI += " \
             file://50-huawei-swisscom.rules \
