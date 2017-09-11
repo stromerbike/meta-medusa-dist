@@ -24,9 +24,8 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 
 # Added packets from Stromer:
 # busybox - contains a lot of tools while maintining a small footprint
-# net-tools - contains ip tool which is used for SocketCAN
-# ppp - mobile communication
-# gnupg pristine-tar-fwu xdelta3 - firmware update
+# tzdata - timezone database
+# gnupg pristine-tar-fwu - firmware update
 # gdbserver tcf-agent - low level debugging
 # strace - debugging
 # openssh openssh-sftp-server - ssh and sftp
@@ -34,8 +33,8 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 # python python-argparse python-json - python and some often used modules
 IMAGE_INSTALL_append = " medusa-version \
                          busybox \
-                         net-tools tzdata \
-                         gnupg pristine-tar-fwu xdelta3 \
+                         tzdata \
+                         gnupg pristine-tar-fwu \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \
