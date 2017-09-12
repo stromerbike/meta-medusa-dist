@@ -155,12 +155,12 @@ start)
                     echo "Extracting firmware..."
                     led2_blue
                     fbi --noverbose -T 1 /etc/images/busy.png
-                    rm -rf /tmp/rfs_inactive || true
-                    mkdir /tmp/rfs_inactive
-                    if tar -xf $firstFile -C /tmp/rfs_inactive; then
+                    rm -rf /mnt/zram/rfs_inactive || true
+                    mkdir /mnt/zram/rfs_inactive
+                    if tar -xf $firstFile -C /mnt/zram/rfs_inactive; then
                         echo "...done"
                         echo "Rsyncing to inactive rfs partition..."
-                        if rsync -a --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
+                        if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
                             echo "...done"
                             led2_blue
                             echo "Unmounting inactive rfs paritition..."

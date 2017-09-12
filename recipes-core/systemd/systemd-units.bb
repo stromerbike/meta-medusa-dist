@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox evtest fbida iproute2 mtd-utils ppp rsync wvdial"
+RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -36,6 +36,8 @@ SRC_URI += " \
             file://usb.sh \
             file://wvdial.service \
             file://wvdial-swisscom.service \
+            file://zram.service \
+            file://zram.sh \
 "
 
 FILES_${PN}_append = " \
@@ -91,6 +93,10 @@ do_install_append() {
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
+
+    install -d ${D}/mnt/zram
+    install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}${sysconfdir}/images
     install -m 0644 ${WORKDIR}/fwu.service ${D}${systemd_system_unitdir}

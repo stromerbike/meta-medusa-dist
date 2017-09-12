@@ -1,5 +1,7 @@
 [Unit]
 Description=fwu
+After=zram.service
+Requires=zram.service
 
 [Service]
 Type=simple
