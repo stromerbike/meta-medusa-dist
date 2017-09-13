@@ -67,7 +67,7 @@ display_error ()
 
 purge_data ()
 {
-    if [ -f /mnt/sda/autoupdate-settings/purgedata ] || [ -f /mnt/sda1/autoupdate-settings/purgedata ]; then
+    if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
         echo "Purging database"
         rm /mnt/data/store.db
     else
