@@ -65,13 +65,13 @@ display_error ()
     fbi --noverbose -T 1 /etc/images/error.png
 }
 
-delete_data ()
+purge_data ()
 {
-    if [ -f /mnt/sda/autoupdate-settings/keepdata ] || [ -f /mnt/sda1/autoupdate-settings/keepdata ]; then
-        echo "Keeping database"
-    else
-        echo "Removing database"
+    if [ -f /mnt/sda/autoupdate-settings/purgedata ] || [ -f /mnt/sda1/autoupdate-settings/purgedata ]; then
+        echo "Purging database"
         rm /mnt/data/store.db
+    else
+        echo "Keeping database"
     fi
 }
 
@@ -111,7 +111,7 @@ part0_active ()
     echo "Setting partition 0 as active one..."
     if barebox-state -s partition=0; then
         echo "...done"
-        delete_data
+        purge_data
         umount_sda
         display_done
         await_shutdown
@@ -125,7 +125,7 @@ part1_active ()
     echo "Setting partition 1 as active one..."
     if barebox-state -s partition=1; then
         echo "...done"
-        delete_data
+        purge_data
         umount_sda
         display_done
         await_shutdown
