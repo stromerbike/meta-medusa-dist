@@ -32,7 +32,7 @@ VIRTUAL-RUNTIME_syslog = ""
 VIRTUAL-RUNTIME_initscripts = ""
 
 # systemd settings
-SYSTEMD_DEFAULT_TARGET = "graphical.target"
+SYSTEMD_DEFAULT_TARGET = "debug.target"
 BAD_RECOMMENDATIONS += "systemd-vconsole-setup systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
 
 # Remove QML

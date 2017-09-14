@@ -9,4 +9,4 @@ ExecReload=/etc/scripts/gsm.sh reload
 RemainAfterExit=yes
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=communication.target

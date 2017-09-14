@@ -1,5 +1,7 @@
 [Unit]
 Description=ble
+After=drive.target
+Wants=drive.target
 
 [Service]
 Type=oneshot
@@ -8,4 +10,4 @@ ExecStop=/etc/scripts/ble.sh stop
 RemainAfterExit=yes
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=communication.target

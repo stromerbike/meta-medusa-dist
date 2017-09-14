@@ -16,6 +16,9 @@ SRC_URI += " \
             file://ble.service \
             file://ble.sh \
             file://can0.service \
+            file://communication.target \
+            file://debug.target \
+            file://drive.target \
             file://eth0.network \
             file://eth1.network \
             file://fwu.service \
@@ -111,4 +114,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
+
+    install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
 }

@@ -6,6 +6,3 @@ Type=oneshot
 ExecStart=/etc/scripts/mnt-rfs.sh start
 ExecStop=/etc/scripts/mnt-rfs.sh stop
 RemainAfterExit=yes
-
-[Install]
-WantedBy=basic.target
