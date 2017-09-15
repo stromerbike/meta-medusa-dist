@@ -1,5 +1,7 @@
 [Unit]
 Description=can0 interface setup
+After=network.target
+Wants=network.target
 
 [Service]
 Type=oneshot
@@ -9,4 +11,4 @@ ExecStop=/sbin/ip link set can0 down
 ExecRestart=/sbin/ip link set can0 type can restart
 
 [Install]
-WantedBy=basic.target
+WantedBy=drive.target
