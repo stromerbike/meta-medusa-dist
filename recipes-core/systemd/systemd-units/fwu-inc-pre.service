@@ -1,0 +1,8 @@
+[Unit]
+Description=fwu-inc-pre
+After=mnt-rfs.service zram.service
+Requires=mnt-rfs.service zram.service
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/fwu-inc-pre.sh start

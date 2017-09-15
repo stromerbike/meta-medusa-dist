@@ -1,6 +1,6 @@
 #! /bin/bash
 
-NAME=fwu
+NAME=fwu-usb
 DESC="Firmware update over USB"
 
 led1_blue ()
@@ -167,9 +167,9 @@ start)
                             if umount /mnt/rfs_inactive; then
                                 echo "...done"
                                 echo "Swapping active partition..."
-                                if df -T | grep 'ubi0:part0'; then
+                                if df | grep 'ubi0:part0'; then
                                     part1_active
-                                elif df -T | grep 'ubi0:part1'; then
+                                elif df | grep 'ubi0:part1'; then
                                     part0_active
                                 else
                                     display_error
@@ -201,7 +201,7 @@ start)
                 if umount /mnt/rfs_inactive; then
                     echo "...done"
                     echo "Updating firmware..."
-                    if df -T | grep 'ubi0:part0'; then
+                    if df | grep 'ubi0:part0'; then
                         echo "on ubi0_1..."
                         if ubiupdatevol /dev/ubi0_1 $firstFile; then
                             echo "...done"
@@ -210,7 +210,7 @@ start)
                         else
                             display_error
                         fi
-                    elif df -T | grep 'ubi0:part1'; then
+                    elif df | grep 'ubi0:part1'; then
                         echo "on ubi0_0..."
                         if ubiupdatevol /dev/ubi0_0 $firstFile; then
                             echo "...done"

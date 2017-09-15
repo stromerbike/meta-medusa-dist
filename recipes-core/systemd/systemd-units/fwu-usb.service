@@ -1,9 +1,9 @@
 [Unit]
-Description=fwu
+Description=fwu-usb
 After=mnt-rfs.service zram.service
 Requires=mnt-rfs.service zram.service
 
 [Service]
 Type=simple
 ExecStartPre=/bin/sleep 5
-ExecStart=/etc/scripts/fwu.sh start
+ExecStart=/etc/scripts/fwu-usb.sh start

@@ -15,14 +15,17 @@ SRC_URI += " \
             file://images/logo.png \
             file://ble.service \
             file://ble.sh \
+            file://bmp280.service \
             file://can0.service \
             file://communication.target \
             file://debug.target \
             file://drive.target \
             file://eth0.network \
             file://eth1.network \
-            file://fwu.service \
-            file://fwu.sh \
+            file://fwu-inc-pre.service \
+            file://fwu-inc-pre.sh \
+            file://fwu-usb.service \
+            file://fwu-usb.sh \
             file://gsm.service \
             file://gsm.sh \
             file://led.service \
@@ -57,11 +60,11 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
     ble.service \
+    bmp280.service \
     can0.service \
     gsm.service \
     led.service \
     mnt-data.service \
-    mnt-rfs.service \
     pwr-io.service \
     pwr-sup.service \
     usb.service \
@@ -75,6 +78,7 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/bmp280.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
@@ -101,9 +105,13 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
 
+    install -m 0644 ${WORKDIR}/fwu-inc-pre.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-inc-pre.sh ${D}${sysconfdir}/scripts/
+
+    install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
+
     install -d ${D}${sysconfdir}/images
-    install -m 0644 ${WORKDIR}/fwu.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/images/busy.png ${D}${sysconfdir}/images/
     install -m 0644 ${WORKDIR}/images/done.png ${D}${sysconfdir}/images/
     install -m 0644 ${WORKDIR}/images/error.png ${D}${sysconfdir}/images/

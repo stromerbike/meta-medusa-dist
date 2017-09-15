@@ -1,0 +1,11 @@
+[Unit]
+Description=bmp280
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe bmp280-i2c
+ExecStop=/sbin/modprobe -r bmp280-i2c
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
