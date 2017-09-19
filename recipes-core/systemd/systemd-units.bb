@@ -43,6 +43,7 @@ SRC_URI += " \
             file://update.target \
             file://usb.service \
             file://usb.sh \
+            file://wlan0.network \
             file://wvdial.service \
             file://wvdial-swisscom.service \
             file://zram.service \
@@ -126,6 +127,7 @@ do_install_append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
 
