@@ -2,6 +2,7 @@
 Description=fwu-usb
 After=mnt-rfs.service zram.service
 Requires=mnt-rfs.service zram.service
+Wants=led.service
 
 [Service]
 Type=simple

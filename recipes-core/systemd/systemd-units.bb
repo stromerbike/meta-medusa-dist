@@ -22,6 +22,8 @@ SRC_URI += " \
             file://drive.target \
             file://eth0.network \
             file://eth1.network \
+            file://fwu-inc-chk.service \
+            file://fwu-inc-chk.sh \
             file://fwu-inc-pre.service \
             file://fwu-inc-pre.sh \
             file://fwu-usb.service \
@@ -38,6 +40,7 @@ SRC_URI += " \
             file://pwr-io.sh \
             file://pwr-sup.service \
             file://pwr-sup.sh \
+            file://update.target \
             file://usb.service \
             file://usb.sh \
             file://wvdial.service \
@@ -62,6 +65,7 @@ SYSTEMD_SERVICE_${PN} = " \
     ble.service \
     bmp280.service \
     can0.service \
+    fwu-inc-chk.service \
     gsm.service \
     led.service \
     mnt-data.service \
@@ -105,6 +109,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
 
+    install -m 0644 ${WORKDIR}/fwu-inc-chk.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-inc-chk.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/fwu-inc-pre.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-inc-pre.sh ${D}${sysconfdir}/scripts/
 
@@ -126,4 +132,5 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/update.target ${D}${systemd_system_unitdir}
 }

@@ -65,6 +65,16 @@ display_error ()
     fbi --noverbose -T 1 /etc/images/error.png
 }
 
+enable_writeaccess ()
+{
+    if [ -f /mnt/sda/autoupdate-settings/writeaccess* ] || [ -f /mnt/sda1/autoupdate-settings/writeaccess* ]; then
+        echo "Modifying fstab for write access"
+        sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
+    else
+        echo "Keeping fstab untouched"
+    fi
+}
+
 purge_data ()
 {
     if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
@@ -162,7 +172,7 @@ start)
                         echo "Rsyncing to inactive rfs partition..."
                         if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
                             echo "...done"
-                            led2_blue
+                            enable_writeaccess
                             echo "Unmounting inactive rfs paritition..."
                             if umount /mnt/rfs_inactive; then
                                 echo "...done"
@@ -191,7 +201,7 @@ start)
             echo "Firmware image $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
                 echo "Nothing to up- or downgrade"
-            else
+        else
                 echo "Stopping DataServer based applications..."
                 systemctl stop medusa-DataServer
                 led1_blue
