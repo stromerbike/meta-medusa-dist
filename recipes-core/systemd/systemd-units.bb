@@ -44,6 +44,7 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://wlan0.network \
+            file://wlan0.sh \
             file://wvdial.service \
             file://wvdial-swisscom.service \
             file://zram.service \
@@ -94,6 +95,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/pwr-sup.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
+    install -m 0755 ${WORKDIR}/wlan0.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
