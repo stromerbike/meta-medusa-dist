@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 NAME=fwu-usb
 DESC="Firmware update over USB"

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 NAME=fwu-inc-chk
 DESC="Checks if requirements are met for incremental firmware update and displays a warning if not"

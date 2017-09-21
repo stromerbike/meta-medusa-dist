@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 NAME=led
 DESC="Initialization of led chip"

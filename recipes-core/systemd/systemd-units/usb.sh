@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 NAME=usb
 DESC="Initialization of USB to OTG SDP mode"

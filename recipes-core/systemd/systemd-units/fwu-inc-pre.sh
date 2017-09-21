@@ -1,6 +1,4 @@
-#! /bin/bash
-
-#TODO: add firmware delta (includes checksum) and in tar.gz and ubifs image
+#!/bin/bash
 
 NAME=fwu-inc-pre
 DESC="Preparation for incremental firmware update"
