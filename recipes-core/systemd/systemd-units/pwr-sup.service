@@ -1,5 +1,7 @@
 [Unit]
 Description=pwr-sup
+After=gpio.service
+Requires=gpio.service
 
 [Service]
 Type=oneshot

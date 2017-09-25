@@ -34,7 +34,6 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 IMAGE_INSTALL_append = " medusa-version \
                          busybox \
                          tzdata \
-                         gnupg pristine-tar-fwu \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \

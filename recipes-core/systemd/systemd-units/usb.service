@@ -1,7 +1,7 @@
 [Unit]
 Description=usb
-After=pwr-sup.service
-Requires=pwr-sup.service
+After=gpio.service pwr-sup.service
+Requires=gpio.service pwr-sup.service
 
 [Service]
 Type=oneshot

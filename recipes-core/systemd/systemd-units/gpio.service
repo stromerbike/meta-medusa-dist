@@ -1,0 +1,11 @@
+[Unit]
+Description=gpio
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/gpio.sh start
+ExecStop=/etc/scripts/gpio.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
