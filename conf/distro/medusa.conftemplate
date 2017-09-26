@@ -59,9 +59,9 @@ BBMASK += "meta-medusa-bsp/recipes-rootfs/copy2roofs"
 #IMAGE_INSTALL_append = " alsa-lib"
 
 # Uncomment this to install qt exmaples.
-PACKAGECONFIG_append_pn-qtbase = " examples"
-IMAGE_INSTALL_append = " qtbase-examples"
-BBMASK += "meta-medusa-app/recipes-qt/"
+#PACKAGECONFIG_append_pn-qtbase = " examples"
+#IMAGE_INSTALL_append = " qtbase-examples"
+#BBMASK += "meta-medusa-app/recipes-qt/"
 
 # Uncomment this to enable JTAG in kernel.
 #SRC_URI_append_pn-linux-mainline = " file://jtag-pm.patch"
