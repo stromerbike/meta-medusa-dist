@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
+RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp pristine-tar-fwu rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -28,6 +28,8 @@ SRC_URI += " \
             file://fwu-inc-pre.sh \
             file://fwu-usb.service \
             file://fwu-usb.sh \
+            file://gpio.service \
+            file://gpio.sh \
             file://gsm.service \
             file://gsm.sh \
             file://led.service \
@@ -68,6 +70,7 @@ SYSTEMD_SERVICE_${PN} = " \
     bmp280.service \
     can0.service \
     fwu-inc-chk.service \
+    gpio.service \
     gsm.service \
     led.service \
     mnt-data.service \
@@ -85,6 +88,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/bmp280.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gpio.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/gpio.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}

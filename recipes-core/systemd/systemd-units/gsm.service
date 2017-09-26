@@ -1,5 +1,7 @@
 [Unit]
 Description=gsm
+After=gpio.service
+Requires=gpio.service
 
 [Service]
 Type=oneshot

@@ -1,6 +1,7 @@
 [Unit]
 Description=ble
-After=drive.target
+After=gpio.service drive.target
+Requires=gpio.service
 Wants=drive.target
 
 [Service]
