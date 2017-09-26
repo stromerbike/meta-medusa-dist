@@ -1,5 +1,6 @@
 [Unit]
 Description=zram
+After=drive.target
 
 [Service]
 Type=oneshot

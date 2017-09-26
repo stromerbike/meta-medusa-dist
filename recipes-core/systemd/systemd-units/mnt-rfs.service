@@ -1,5 +1,6 @@
 [Unit]
 Description=mnt-rfs
+After=drive.target
 
 [Service]
 Type=oneshot
