@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp pristine-tar-fwu rsync wvdial"
+RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -22,10 +22,6 @@ SRC_URI += " \
             file://drive.target \
             file://eth0.network \
             file://eth1.network \
-            file://fwu-inc-chk.service \
-            file://fwu-inc-chk.sh \
-            file://fwu-inc-pre.service \
-            file://fwu-inc-pre.sh \
             file://fwu-usb.service \
             file://fwu-usb.sh \
             file://gpio.service \
@@ -69,7 +65,6 @@ SYSTEMD_SERVICE_${PN} = " \
     ble.service \
     bmp280.service \
     can0.service \
-    fwu-inc-chk.service \
     gpio.service \
     gsm.service \
     led.service \
@@ -116,11 +111,6 @@ do_install_append() {
     install -d ${D}/mnt/zram
     install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
-
-    install -m 0644 ${WORKDIR}/fwu-inc-chk.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu-inc-chk.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/fwu-inc-pre.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu-inc-pre.sh ${D}${sysconfdir}/scripts/
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
