@@ -6,10 +6,10 @@ SRC_URI += " \
 
 RDEPENDS_${PN} += " grep"
 
-FILES_${PN}_append = " /home/root/"
+FILES_${PN}_append = " ${ROOT_HOME}"
 
 do_install_append() {
-    install -d ${D}/home/root
-    install -m 0644 ${WORKDIR}/.bashrc ${D}/home/root/.bashrc
-    install -m 0644 ${WORKDIR}/.profile ${D}/home/root/.profile
+    install -d ${D}${ROOT_HOME}
+    install -m 0644 ${WORKDIR}/.bashrc ${D}${ROOT_HOME}/.bashrc
+    install -m 0644 ${WORKDIR}/.profile ${D}${ROOT_HOME}/.profile
 }
