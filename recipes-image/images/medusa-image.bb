@@ -38,8 +38,7 @@ IMAGE_INSTALL_append = " medusa-version \
                          perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         can-utils dtc fbtest gps-utils htop iperf nano tree \
-                         python python-argparse python-json \
+                         can-utils dtc fbtest gps-utils htop iperf nano python tree \
 "
 
 # Do not install any locales
