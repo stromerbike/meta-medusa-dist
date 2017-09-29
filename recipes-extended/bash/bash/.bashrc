@@ -22,4 +22,5 @@ alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
 # stromer specific aliases
+alias srfs='/etc/scripts/switch-rfs.sh'
 alias version='/bin/cat /etc/medusa-version'
