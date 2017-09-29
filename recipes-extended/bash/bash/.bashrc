@@ -16,5 +16,10 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# some systemd aliases
+alias sstat='systemctl status -l'
+alias sstart='systemctl start'
+alias sstop='systemctl stop'
+
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
