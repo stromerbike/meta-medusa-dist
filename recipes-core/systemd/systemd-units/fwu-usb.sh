@@ -1,8 +1,5 @@
 #!/bin/bash
 
-NAME=fwu-usb
-DESC="Firmware update over USB"
-
 led1_blue ()
 {
     echo "255" > /sys/class/leds/rgb1_blue/brightness || true
@@ -144,46 +141,41 @@ part1_active ()
     fi
 }
 
-case $1 in
-start)
-    if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
-        firstFile=""
-        if [ -d "/mnt/sda/autoupdate" ]; then
-            firstFile="/mnt/sda/autoupdate/$(ls /mnt/sda/autoupdate | head -n 1)"
+if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
+    firstFile=""
+    if [ -d "/mnt/sda/autoupdate" ]; then
+        firstFile="/mnt/sda/autoupdate/$(ls /mnt/sda/autoupdate | head -n 1)"
+    else
+        firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
+    fi
+    if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz)$ ]]; then
+        echo "Firmware tarball $firstFile found"
+        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz)$ ]]; then
+            echo "Nothing to up- or downgrade"
         else
-            firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
-        fi
-        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz)$ ]]; then
-            echo "Firmware tarball $firstFile found"
-            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz)$ ]]; then
-                echo "Nothing to up- or downgrade"
-            else
-                echo "Stopping DataServer based applications..."
-                systemctl stop medusa-DataServer
-                led1_blue
-                if mountpoint -q /mnt/rfs_inactive; then
-                    echo "Extracting firmware..."
-                    led2_blue
-                    fbi --noverbose -T 1 /etc/images/busy.png
-                    rm -rf /mnt/zram/rfs_inactive || true
-                    mkdir /mnt/zram/rfs_inactive
-                    if tar -xf $firstFile -C /mnt/zram/rfs_inactive; then
+            echo "Stopping DataServer based applications..."
+            systemctl stop medusa-DataServer
+            led1_blue
+            if mountpoint -q /mnt/rfs_inactive; then
+                echo "Extracting firmware..."
+                led2_blue
+                fbi --noverbose -T 1 /etc/images/busy.png
+                rm -rf /mnt/zram/rfs_inactive || true
+                mkdir /mnt/zram/rfs_inactive
+                if tar -xf $firstFile -C /mnt/zram/rfs_inactive; then
+                    echo "...done"
+                    echo "Rsyncing to inactive rfs partition..."
+                    if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
                         echo "...done"
-                        echo "Rsyncing to inactive rfs partition..."
-                        if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
+                        enable_writeaccess
+                        echo "Syncing..."
+                        if sync; then
                             echo "...done"
-                            enable_writeaccess
-                            echo "Unmounting inactive rfs paritition..."
-                            if umount /mnt/rfs_inactive; then
-                                echo "...done"
-                                echo "Swapping active partition..."
-                                if df | grep 'ubi0:part0'; then
-                                    part1_active
-                                elif df | grep 'ubi0:part1'; then
-                                    part0_active
-                                else
-                                    display_error
-                                fi
+                            echo "Swapping active partition..."
+                            if df | grep 'ubi0:part0'; then
+                                part1_active
+                            elif df | grep 'ubi0:part1'; then
+                                part0_active
                             else
                                 display_error
                             fi
@@ -196,53 +188,50 @@ start)
                 else
                     display_error
                 fi
+            else
+                display_error
             fi
-        elif [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.ubifs$ ]]; then
-            echo "Firmware image $firstFile found"
-            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
-                echo "Nothing to up- or downgrade"
-        else
-                echo "Stopping DataServer based applications..."
-                systemctl stop medusa-DataServer
-                led1_blue
-                led2_white
-                fbi --noverbose -T 1 /etc/images/busy.png
-                echo "Unmounting inactive rfs paritition..."
-                if umount /mnt/rfs_inactive; then
-                    echo "...done"
-                    echo "Updating firmware..."
-                    if df | grep 'ubi0:part0'; then
-                        echo "on ubi0_1..."
-                        if ubiupdatevol /dev/ubi0_1 $firstFile; then
-                            echo "...done"
-                            echo "Swapping active partition..."
-                            part1_active
-                        else
-                            display_error
-                        fi
-                    elif df | grep 'ubi0:part1'; then
-                        echo "on ubi0_0..."
-                        if ubiupdatevol /dev/ubi0_0 $firstFile; then
-                            echo "...done"
-                            echo "Swapping active partition..."
-                            part0_active
-                        else
-                            display_error
-                        fi
+        fi
+    elif [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.ubifs$ ]]; then
+        echo "Firmware image $firstFile found"
+        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
+            echo "Nothing to up- or downgrade"
+    else
+            echo "Stopping DataServer based applications..."
+            systemctl stop medusa-DataServer
+            led1_blue
+            led2_white
+            fbi --noverbose -T 1 /etc/images/busy.png
+            echo "Unmounting inactive rfs paritition..."
+            if umount /mnt/rfs_inactive; then
+                echo "...done"
+                echo "Updating firmware..."
+                if df | grep 'ubi0:part0'; then
+                    echo "on ubi0_1..."
+                    if ubiupdatevol /dev/ubi0_1 $firstFile; then
+                        echo "...done"
+                        echo "Swapping active partition..."
+                        part1_active
+                    else
+                        display_error
+                    fi
+                elif df | grep 'ubi0:part1'; then
+                    echo "on ubi0_0..."
+                    if ubiupdatevol /dev/ubi0_0 $firstFile; then
+                        echo "...done"
+                        echo "Swapping active partition..."
+                        part0_active
                     else
                         display_error
                     fi
                 else
                     display_error
                 fi
+            else
+                display_error
             fi
-        else
-            echo "autoupdate folder does not contain the required file"
         fi
+    else
+        echo "autoupdate folder does not contain the required file"
     fi
-;;
-
-*)
-    echo "Usage $0 start"
-    exit
-esac
+fi
