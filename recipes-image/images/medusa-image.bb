@@ -23,24 +23,23 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 "
 
 # Added packets from Stromer:
-# busybox - contains a lot of tools while maintining a small footprint
+# busybox - contains a lot of tools while maintaining a small footprint
 # tzdata - timezone database
 # gnupg pristine-tar-fwu - firmware update
 # gdbserver tcf-agent - low level debugging
-# strace - debugging
+# perf strace - debugging
 # openssh openssh-sftp-server - ssh and sftp
-# busybox can-utils dtc evtest fbtest gps-utils htop nano rsync tree - convenience and troubleshooting tools
-# python python-argparse python-json - python and some often used modules
 IMAGE_INSTALL_append = " busybox \
                          tzdata \
                          gdbserver tcf-agent \
                          perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         can-utils dtc fbtest gps-utils htop iperf nano python tree \
+                         can-utils dtc fbtest gps-utils htop nano python tree \
 "
 
 # Do not install any locales
 IMAGE_LINGUAS = ""
 
-IMAGE_FSTYPES = "tar tar.gz ubifs"
+IMAGE_FSTYPES = "tar tar.gz tar.xz ubifs"
+XZ_COMPRESSION_LEVEL = "-9"
