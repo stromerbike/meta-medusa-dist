@@ -19,6 +19,8 @@ load(qt_config)
 EOF
 }
 
+SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patch"
+
 # A possible way of reducing Qt shared library size (some MB) and application startup time (some 100ms) is to selectively disable by applications unused features.
 # 5.9.2@73573fce295caef35da706a8c8c796ec18e6baf1: configure --list-features
 # abstractbutton .......... Widgets: Abstract base class of button widgets, providing functionality common to buttons.
