@@ -148,9 +148,9 @@ if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
     else
         firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
     fi
-    if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz)$ ]]; then
+    if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz|tar.xz)$ ]]; then
         echo "Firmware tarball $firstFile found"
-        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz)$ ]]; then
+        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
             echo "Nothing to up- or downgrade"
         else
             echo "Stopping DataServer based applications..."
