@@ -21,7 +21,7 @@ SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT
 DISTRO_FEATURES = "systemd"
 
 # Machine features
-MACHINE_FEATURES_append = " 3g can bluetooth usbgadget usbhost wifi"
+MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost wifi"
 
 # Virtual runtime settings
 VIRTUAL-RUNTIME_dev_manager = "udev"
@@ -33,7 +33,9 @@ VIRTUAL-RUNTIME_initscripts = ""
 
 # systemd settings
 SYSTEMD_DEFAULT_TARGET = "debug.target"
-BAD_RECOMMENDATIONS += "systemd-vconsole-setup systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
+
+# Prefer our own protobuf-lite recipe
+PREFERRED_RPROVIDER_protobuf-lite = "protobuf-lite"
 
 # Remove QML
 RDEPENDS_qtbase_remove += "qtdeclarative-render2d"
@@ -90,3 +92,14 @@ EXTRA_USERS_PARAMS = "usermod -p '' root;"
 
 # Mount rootfs as read-only for incremental firmware
 EXTRA_IMAGE_FEATURES = "read-only-rootfs"
+
+# rocko fixes
+BBMASK += "poky/meta/recipes-sato/images"
+BBMASK += "poky/meta/recipes-rt/images"
+BBMASK += "poky/meta/recipes-graphics/images"
+BBMASK += "poky/meta/recipes-extended/images"
+BBMASK += "poky/meta/recipes-core/ovmf"
+BBMASK += "poky/meta/recipes-core/images"
+BBMASK += "meta-phytec/recipes-bsp/u-boot/u-boot-mkimage_2016.03.bbappend"
+BBMASK += "meta-phytec/recipes-kernel/cryptodev/cryptodev-module_1.8.bbappend"
+BBMASK += "meta-phytec/dynamic-layers/qt5-layer/recipes-qt/qt5/qtdeclarative-render2d_%.bbappend"

@@ -1,0 +1,41 @@
+diff --git a/Makefile b/Makefile
+index 7110bab38..21bb6e55e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -306,6 +306,9 @@ AFLAGS          := -D__ASSEMBLY__
+ 
+ LDFLAGS_barebox	:= -Map barebox.map
+ 
++# Avoid 'Not enough room for program headers' error on binutils 2.28 onwards.
++LDFLAGS_barebox += $(call ld-option, --no-dynamic-linker)
++
+ # Read KERNELRELEASE from include/config/kernel.release (if it exists)
+ KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
+ KERNELVERSION = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
+diff --git a/images/Makefile b/images/Makefile
+index 0537af1f6..5072c11b0 100644
+--- a/images/Makefile
++++ b/images/Makefile
+@@ -53,6 +53,9 @@ extra-y += $(pbl-lds)
+ $(pbl-lds): $(obj)/../arch/$(ARCH)/lib/pbl.lds.S FORCE
+ 	$(call if_changed_dep,cpp_lds_S)
+ 
++# Avoid 'Not enough room for program headers' error on binutils 2.28 onwards.
++LDFLAGS += $(call ld-option, --no-dynamic-linker)
++
+ quiet_cmd_elf__ ?= LD      $@
+       cmd_elf__ ?= $(LD) $(LDFLAGS) --gc-sections -pie			\
+ 		-e $(2) -Map $@.map $(LDFLAGS_$(@F)) -o $@		\
+diff --git a/scripts/Kbuild.include b/scripts/Kbuild.include
+index c7faf67a2..310dcdc94 100644
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -148,7 +148,7 @@ cc-ldoption = $(call try-run,\
+ # ld-option
+ # Usage: LDFLAGS += $(call ld-option, -X)
+ ld-option = $(call try-run,\
+-	$(CC) /dev/null -c -o "$$TMPO" ; $(LD) $(1) "$$TMPO" -o "$$TMP",$(1),$(2))
++	$(CC) -x c /dev/null -c -o "$$TMPO" ; $(LD) $(1) "$$TMPO" -o "$$TMP",$(1),$(2))
+ 
+ # ar-option
+ # Usage: KBUILD_ARFLAGS := $(call ar-option,D)

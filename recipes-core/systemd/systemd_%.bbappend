@@ -6,8 +6,10 @@ SRC_URI += " \
 
 RDEPENDS_${PN} += "systemd-udev systemd-units"
 
+RRECOMMENDS_${PN}_remove = " systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
+
 PACKAGECONFIG_append = " networkd"
-PACKAGECONFIG_remove = " xz ldconfig binfmt machined backlight quotacheck hostnamed localed kdbus ima smack logind firstboot utmp polkit"
+PACKAGECONFIG_remove = " xz ldconfig binfmt machined backlight vconsole quotacheck hostnamed localed kdbus ima smack logind firstboot utmp polkit"
 
 do_install_append() {
     install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
