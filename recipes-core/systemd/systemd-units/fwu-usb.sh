@@ -168,8 +168,8 @@ if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
                     if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
                         echo "...done"
                         enable_writeaccess
-                        echo "Syncing..."
-                        if sync; then
+                        echo "Unmounting inactive rfs paritition..."
+                        if umount /mnt/rfs_inactive; then
                             echo "...done"
                             echo "Swapping active partition..."
                             if df | grep 'ubi0:part0'; then
