@@ -35,7 +35,7 @@ IMAGE_INSTALL_append = " busybox \
                          perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         can-utils dtc fbtest gps-utils htop nano python tree \
+                         can-utils dtc fbtest gps-utils htop iperf3 nano python tree \
 "
 
 # Do not install any locales
