@@ -1,6 +1,6 @@
 [Unit]
 Description=zram
-After=drive.target
+After=communication.target
 
 [Service]
 Type=oneshot

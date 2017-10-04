@@ -1,6 +1,6 @@
 [Unit]
 Description=mnt-rfs
-After=drive.target
+After=communication.target
 
 [Service]
 Type=oneshot
