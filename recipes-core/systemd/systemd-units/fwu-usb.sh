@@ -162,14 +162,14 @@ if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
                 fbi --noverbose -T 1 /etc/images/busy.png
                 rm -rf /mnt/zram/rfs_inactive || true
                 mkdir /mnt/zram/rfs_inactive
-                if tar -xf $firstFile -C /mnt/zram/rfs_inactive; then
+                if tar -xf $firstFile -C /mnt/zram/rfs_inactive --warning=no-timestamp; then
                     echo "...done"
                     echo "Rsyncing to inactive rfs partition..."
                     if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
                         echo "...done"
                         enable_writeaccess
-                        echo "Unmounting inactive rfs paritition..."
-                        if umount /mnt/rfs_inactive; then
+                        echo "Syncing..."
+                        if sync; then
                             echo "...done"
                             echo "Swapping active partition..."
                             if df | grep 'ubi0:part0'; then
