@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=gpio
 DESC="Initialization of internal and external (if present) gpio expander"

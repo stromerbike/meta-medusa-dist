@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=gsm
 DESC="Initialization of gsm chip"

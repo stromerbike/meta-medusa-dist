@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=zram
 DESC="Initialization of zram device"

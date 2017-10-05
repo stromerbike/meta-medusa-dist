@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=mnt-rfs
 DESC="Mount the data partitions"

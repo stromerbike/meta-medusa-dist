@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=led
 DESC="Initialization of led chip"

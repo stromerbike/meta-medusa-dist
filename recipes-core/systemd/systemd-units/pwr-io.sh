@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=pwr-io
 DESC="Initialization of 5V power supply for I/O operations"

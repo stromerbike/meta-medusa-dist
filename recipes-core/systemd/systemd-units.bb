@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
+RDEPENDS_${PN} += "busybox dash e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -15,7 +15,6 @@ SRC_URI += " \
             file://images/logo.png \
             file://ble.service \
             file://ble.sh \
-            file://bmp280.service \
             file://can0.service \
             file://communication.target \
             file://debug.target \
@@ -63,7 +62,6 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
     ble.service \
-    bmp280.service \
     can0.service \
     gpio.service \
     gsm.service \
@@ -82,7 +80,6 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/bmp280.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/gpio.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gpio.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}

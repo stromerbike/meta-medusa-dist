@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=pwr-sup
 DESC="Initialization of 5V power supply for power delivery"

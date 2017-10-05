@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 NAME=ble
 DESC="Initialization of bluetooth chip"

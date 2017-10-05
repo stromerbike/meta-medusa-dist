@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 ## set unique SSID
 if [ -e /sys/class/net/wlan0/address ]; then
