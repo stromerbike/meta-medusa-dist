@@ -7,3 +7,8 @@ Patches:
 
 Backports:
 - NONE
+
+Ideas and todo's for reducing boot time:
+- Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
+- Compile driver for BMP280 as Kernel module and load it after drive.target.
+- Set GPIO's to desired direction and possibly value already in device tree.
