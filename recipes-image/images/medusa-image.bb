@@ -23,13 +23,15 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devi
 "
 
 # Added packets from Stromer:
-# busybox - contains a lot of tools while maintaining a small footprint
+# busybox - contains a lot of tools in a single executable while providing a small footprint
+# coreutils util-linux - contains a lot of tools in separate small executables while providing fast execution time
 # tzdata - timezone database
 # gnupg pristine-tar-fwu - firmware update
 # gdbserver tcf-agent - low level debugging
 # perf strace - debugging
 # openssh openssh-sftp-server - ssh and sftp
 IMAGE_INSTALL_append = " busybox \
+                         coreutils util-linux \
                          tzdata \
                          gdbserver tcf-agent \
                          perf strace \
