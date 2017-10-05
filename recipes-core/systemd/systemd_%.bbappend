@@ -6,10 +6,9 @@ SRC_URI += " \
 
 RDEPENDS_${PN} += "systemd-udev systemd-units"
 
-RRECOMMENDS_${PN}_remove = " systemd-extra-utils udev-hwdb e2fsprogs-e2fsck kernel-module-ipv6"
+RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck kernel-module-autofs4 kernel-module-ipv6"
 
-PACKAGECONFIG_append = " networkd"
-PACKAGECONFIG_remove = " xz ldconfig binfmt machined backlight vconsole quotacheck hostnamed localed kdbus ima smack logind firstboot utmp polkit"
+PACKAGECONFIG_remove = " xz binfmt randomseed machined backlight vconsole quotacheck hostnamed hibernate localed ima smack logind firstboot utmp polkit resolved"
 
 do_install_append() {
     install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
@@ -23,4 +22,11 @@ do_install_append() {
     rm ${D}${base_bindir}/systemd-machine-id-setup
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
+    
+    # start timesyncd service after drive.target
+    sed -i 's/After=systemd-remount-fs.service systemd-tmpfiles-setup.service systemd-sysusers.service/After=systemd-remount-fs.service systemd-tmpfiles-setup.service systemd-sysusers.service drive.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
+    sed -i 's/Before=time-sync.target sysinit.target shutdown.target/Before=shutdown.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
+    sed -i 's/WantedBy=sysinit.target/WantedBy=communication.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
+    install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
+    mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 }
