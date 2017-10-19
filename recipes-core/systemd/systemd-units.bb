@@ -19,7 +19,6 @@ SRC_URI += " \
             file://communication.target \
             file://debug.target \
             file://drive.target \
-            file://eth0.network \
             file://eth1.network \
             file://fwu-usb.service \
             file://fwu-usb.sh \
@@ -119,7 +118,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/images/logo.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
