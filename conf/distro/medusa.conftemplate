@@ -19,6 +19,7 @@ SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT
 
 # Distro features
 DISTRO_FEATURES = "systemd"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
 # Machine features
 MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost wifi"
