@@ -32,6 +32,7 @@ SRC_URI += " \
             file://mnt-data.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
+            file://mnt-sda1.service \
             file://pwr-io.service \
             file://pwr-io.sh \
             file://pwr-sup.service \
@@ -103,6 +104,9 @@ do_install_append() {
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
+
+    install -d ${D}/mnt/sda1
+    install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
 
     install -d ${D}/mnt/zram
     install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}

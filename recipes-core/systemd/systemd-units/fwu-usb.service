@@ -6,5 +6,4 @@ Wants=led.service
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 5
 ExecStart=/etc/scripts/fwu-usb.sh

@@ -1,0 +1,10 @@
+[Unit]
+Description=mnt-sda1
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+ExecStart=/bin/mount /dev/sda1 /mnt/sda1
+ExecStartPost=/bin/systemctl --no-block start fwu-usb.service
+ExecStop=/bin/umount /mnt/sda1
+RemainAfterExit=yes
