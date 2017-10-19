@@ -9,7 +9,7 @@ wait_ttyACM0 ()
     while [ ! -e /dev/ttyACM0 ]; do
         sleep 1
     done
-    # Wait for some seconds or dial command ATDT*99# will not succeed
+    # Wait for some seconds in total or dial command ATDT*99# will not succeed
     sleep 1
     echo "...done"
 }
@@ -18,11 +18,14 @@ workaround_ttyACM0 ()
 {
     if ls -l `which timeout` | grep busybox > /dev/null; then
         echo "Timeout provided by busybox"
-        timeout -t 3 microcom /dev/ttyACM0 &>/dev/null || true
+        timeout -t 1 microcom /dev/ttyACM0 &>/dev/null || true
     else
         echo "Timeout provided by coreutils"
-        timeout 3 microcom /dev/ttyACM0 &>/dev/null || true
+        timeout 1 microcom /dev/ttyACM0 &>/dev/null || true
     fi
+    # Wait for some seconds in total or dial command ATDT*99# will not succeed
+    # Wait also for /dev/ttyACM0 to become idle after microcom was closed
+    sleep 3
 }
 
 case $1 in
