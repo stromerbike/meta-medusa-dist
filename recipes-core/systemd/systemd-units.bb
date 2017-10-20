@@ -13,8 +13,6 @@ SRC_URI += " \
             file://images/done.png \
             file://images/error.png \
             file://images/logo.png \
-            file://ble.service \
-            file://ble.sh \
             file://can0.service \
             file://communication.target \
             file://debug.target \
@@ -24,8 +22,6 @@ SRC_URI += " \
             file://fwu-usb.sh \
             file://gpio.service \
             file://gpio.sh \
-            file://gsm.service \
-            file://gsm.sh \
             file://led.service \
             file://led.sh \
             file://mnt-data.service \
@@ -41,7 +37,6 @@ SRC_URI += " \
             file://usb.sh \
             file://wlan0.network \
             file://wlan0.sh \
-            file://wvdial.service \
             file://wvdial-swisscom.service \
             file://zram.service \
             file://zram.sh \
@@ -60,16 +55,13 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
-    ble.service \
     can0.service \
     gpio.service \
-    gsm.service \
     led.service \
     mnt-data.service \
     pwr-io.service \
     pwr-sup.service \
     usb.service \
-    wvdial.service \
 "
 
 do_install_append() {
@@ -77,12 +69,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
 
     install -d ${D}${sysconfdir}/scripts
-    install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gpio.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gpio.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/pwr-io.service ${D}${systemd_system_unitdir}
@@ -120,7 +108,6 @@ do_install_append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
 
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
