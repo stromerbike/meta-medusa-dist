@@ -10,7 +10,10 @@ def get_medusa_codename():
 
 def get_medusa_variant():
     if subprocess.check_output(['git', 'status', '--porcelain'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..'):
-        variant = '-DIRTY'
+        try:
+            variant = os.environ['MEDUSA_VARIANT'] + '-DIRTY'
+        except KeyError:
+            variant = '-DIRTY'
     else:
         try:
             variant = os.environ['MEDUSA_VARIANT']
