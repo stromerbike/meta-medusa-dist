@@ -43,5 +43,9 @@ IMAGE_INSTALL_append = " busybox \
 # Do not install any locales
 IMAGE_LINGUAS = ""
 
+# Define desired image types and select best compression
 IMAGE_FSTYPES = "tar tar.gz tar.xz ubifs"
 XZ_COMPRESSION_LEVEL = "-9"
+
+# Ensure the member ordering in the created archive is uniform and reproducible (required for creating small incremental updates)
+IMAGE_CMD_TAR = "tar --sort=name"
