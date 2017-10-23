@@ -48,4 +48,5 @@ IMAGE_FSTYPES = "tar tar.gz tar.xz ubifs"
 XZ_COMPRESSION_LEVEL = "-9"
 
 # Ensure the member ordering in the created archive is uniform and reproducible (required for creating small incremental updates)
-IMAGE_CMD_TAR = "tar --sort=name"
+# Also use same datetime for all added files.
+IMAGE_CMD_TAR = "tar --sort=name --mtime=1970-01-01"
