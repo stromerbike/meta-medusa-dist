@@ -152,6 +152,7 @@ if [ -d "/mnt/sda1/autoupdate" ]; then
             echo "Stopping DataServer based applications..."
             systemctl stop medusa-DataServer
             led1_blue
+            echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
             if mountpoint -q /mnt/rfs_inactive; then
                 echo "Extracting firmware..."
                 led2_blue
@@ -197,6 +198,7 @@ if [ -d "/mnt/sda1/autoupdate" ]; then
             systemctl stop medusa-DataServer
             led1_blue
             led2_white
+            echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
             fbi --noverbose -T 1 /etc/images/busy.png
             echo "Unmounting inactive rfs paritition..."
             if umount /mnt/rfs_inactive; then
