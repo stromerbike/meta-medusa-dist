@@ -5,7 +5,6 @@ Wants=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/wvdial swisscom
-ExecStop=/bin/kill -TERM $MAINPID
 Restart=always
 RestartSec=30
 

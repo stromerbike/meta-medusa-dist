@@ -8,7 +8,6 @@ Wants=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/wvdial
-ExecStop=/bin/kill -TERM $MAINPID
 ExecStopPost=/bin/systemctl reload gsm.service
 Restart=always
 RestartSec=30
