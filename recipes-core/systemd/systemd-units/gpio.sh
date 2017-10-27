@@ -26,6 +26,11 @@ start)
 
     # load gpio expander driver
     modprobe gpio_pca953x
+    
+    # compatibility for V2 & V4, delete for release-stage
+    echo 498 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio498/direction
+    echo 1 > /sys/class/gpio/gpio498/value
 ;;
 
 stop)
