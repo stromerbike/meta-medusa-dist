@@ -75,10 +75,10 @@ enable_writeaccess ()
 purge_data ()
 {
     if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
-        echo "Purging database"
-        rm /mnt/data/store.db
+        echo "Purging data partition"
+        rm -rf /mnt/data/*
     else
-        echo "Keeping database"
+        echo "Keeping data partition"
     fi
 }
 
