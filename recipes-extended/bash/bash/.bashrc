@@ -16,8 +16,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# some system aliases
+alias sn='shutdown now'
+
 # some systemd aliases
-alias sstat='systemctl status -l'
+alias sstat='systemctl status -l -n25'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
