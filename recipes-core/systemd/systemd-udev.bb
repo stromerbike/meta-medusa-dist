@@ -11,7 +11,7 @@ RDEPENDS_${PN} += "bash iproute2"
 SRC_URI += " \
             file://50-huawei-swisscom.rules \
             file://50-ppp1.rules \
-            file://50-sda.rules \
+            file://50-sda1.rules \
             file://50-tty.rules \
             file://ip-route-default-ppp0.sh \
             file://ip-route-default-ppp1.sh \
@@ -25,7 +25,7 @@ FILES_${PN}_append = " \
 do_install () {
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-huawei-swisscom.rules ${D}${sysconfdir}/udev/rules.d/
-    install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-sda1.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-tty.rules ${D}${sysconfdir}/udev/rules.d/
 
     install -d ${D}${sysconfdir}/scripts

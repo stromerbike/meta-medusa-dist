@@ -5,10 +5,10 @@ Wants=network.target
 
 [Service]
 Type=oneshot
+ExecStart=/etc/scripts/can0.sh start
+ExecStop=/etc/scripts/can0.sh stop
+ExecReload=/etc/scripts/can0.sh reload
 RemainAfterExit=yes
-ExecStart=/sbin/ip link set can0 up type can bitrate 250000
-ExecStop=/sbin/ip link set can0 down
-ExecRestart=/sbin/ip link set can0 type can restart
 
 [Install]
 WantedBy=drive.target

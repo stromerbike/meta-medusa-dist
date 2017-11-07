@@ -16,6 +16,7 @@ SRC_URI += " \
             file://ble.service \
             file://ble.sh \
             file://can0.service \
+            file://can0.sh \
             file://communication.target \
             file://debug.target \
             file://drive.target \
@@ -33,6 +34,7 @@ SRC_URI += " \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
             file://mnt-sda1.service \
+            file://mnt-sda1.sh \
             file://update.target \
             file://usb.service \
             file://usb.sh \
@@ -69,11 +71,11 @@ SYSTEMD_SERVICE_${PN} = " \
 
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
-
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gpio.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gpio.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
@@ -97,6 +99,7 @@ do_install_append() {
 
     install -d ${D}/mnt/sda1
     install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-sda1.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/zram
     install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
