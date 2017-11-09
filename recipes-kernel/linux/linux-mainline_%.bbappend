@@ -9,7 +9,6 @@ SRC_URI += " \
             file://pca953x_irq.patch \
             file://ppp-network.cfg \
             file://usb-devices.cfg \
-            file://virtual-devices.cfg \
             file://wifi-devices.cfg \
 "
 

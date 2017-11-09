@@ -1,9 +1,0 @@
-[Unit]
-Description=zram
-After=communication.target
-
-[Service]
-Type=oneshot
-ExecStart=/etc/scripts/zram.sh start
-ExecStop=/etc/scripts/zram.sh stop
-RemainAfterExit=yes

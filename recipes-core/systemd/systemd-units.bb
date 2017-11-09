@@ -42,8 +42,6 @@ SRC_URI += " \
             file://wlan0.sh \
             file://wvdial.service \
             file://wvdial-swisscom.service \
-            file://zram.service \
-            file://zram.sh \
 "
 
 FILES_${PN}_append = " \
@@ -101,9 +99,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-sda1.sh ${D}${sysconfdir}/scripts/
 
-    install -d ${D}/mnt/zram
-    install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
