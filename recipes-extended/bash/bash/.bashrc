@@ -20,6 +20,7 @@ alias l='ls -CF'
 alias sn='shutdown now'
 
 # some systemd aliases
+alias jgrep='journalctl | grep'
 alias sstat='systemctl status -l -n25'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
