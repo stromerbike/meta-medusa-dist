@@ -162,7 +162,7 @@ if [ -d "/mnt/sda1/autoupdate" ]; then
                 if tar -xf $firstFile -C /tmp/rfs_inactive --warning=no-timestamp; then
                     echo "...done"
                     echo "Rsyncing to inactive rfs partition..."
-                    if rsync -a --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
+                    if rsync -a -c --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
                         echo "...done"
                         enable_writeaccess
                         echo "Syncing..."
