@@ -10,7 +10,7 @@ The medusa distro config can be generated via:
 Whereas the codename can be supplied via:
     MEDUSA_CODENAME=uint8.uint8.uint8.uint8
 And the variant can be supplied via:
-    MEDUSA_METADATA_VARIANT='{|-EXAMPLE1|-EXAMPLE2}'
+    MEDUSA_VARIANT='{|-EXAMPLE1|-EXAMPLE2}'
 
 Set UTF-8 locale prior to calling bitbake:
     export LANG=en_US.UTF-8
