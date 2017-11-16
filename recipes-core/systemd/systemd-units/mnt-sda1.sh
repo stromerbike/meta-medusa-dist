@@ -14,6 +14,7 @@ start)
             sleep 1
         fi
     done
+    sleep 1
 ;;
 
 stop)
