@@ -47,5 +47,5 @@ IMAGE_LINGUAS = ""
 IMAGE_FSTYPES = "tar tar.gz tar.xz ubifs"
 XZ_COMPRESSION_LEVEL = "-9"
 
-# Ensure the member ordering in the created archive is uniform and reproducible (required for creating small incremental updates)
+# Ensure the member ordering in the created archive is uniform and reproducible (required for creating small delta updates)
 IMAGE_CMD_TAR = "tar --sort=name"
