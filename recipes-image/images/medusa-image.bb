@@ -34,7 +34,7 @@ IMAGE_INSTALL_append = " busybox \
                          coreutils util-linux \
                          tzdata \
                          gdbserver tcf-agent \
-                         perf strace \
+                         gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
                          can-utils dtc fbgrab fbtest gps-utils htop iperf3 nano procps python screen tree \
