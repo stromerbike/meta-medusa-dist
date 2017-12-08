@@ -21,6 +21,7 @@ start)
 ;;
 
 stop)
+    killall hciattach
     echo "0" > /sys/class/gpio/gpio120/value
 ;;
 
