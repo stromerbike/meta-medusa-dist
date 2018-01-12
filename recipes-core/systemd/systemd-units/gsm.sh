@@ -44,8 +44,8 @@ start)
     echo "497" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio497/direction
     echo "1" > /sys/class/gpio/gpio497/value
-    # Wait for 3v7 to reach a stable value
-    sleep 0.1
+    # Wait for voltage to rise
+    sleep 0.2
     # Start GSM module
     echo "1" > /sys/class/gpio/gpio133/value
     # Wait until ttyACM0 is present
