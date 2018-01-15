@@ -152,6 +152,7 @@ do
             echo "Firmware tarball $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
                 echo "Nothing to up- or downgrade"
+                exit 0
             else
                 echo "Stopping DataServer based applications..."
                 systemctl stop medusa-DataServer
@@ -236,6 +237,8 @@ do
         else
             echo "autoupdate folder does not contain the required file"
         fi
+    else
+        echo "/mnt/sda1/autoupdate does not exist (yet)"
     fi
     sleep 1
 done
