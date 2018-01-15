@@ -25,7 +25,7 @@ workaround_ttyACM0 ()
     fi
     # Wait for some seconds in total or dial command ATDT*99# will not succeed
     # Wait also for /dev/ttyACM0 to become idle after microcom was closed
-    sleep 3
+    sleep 5
 }
 
 case $1 in
