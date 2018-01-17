@@ -8,9 +8,9 @@ Wants=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/wvdial
-ExecStopPost=/bin/systemctl reload gsm.service
+ExecStopPost=/bin/bash -c "/bin/echo -e \"AT+CEER\r\" | /bin/busybox microcom -t 2000 /dev/ttyACM0"
 Restart=always
-RestartSec=30
+RestartSec=10
 
 [Install]
 WantedBy=communication.target

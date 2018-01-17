@@ -9,8 +9,6 @@ wait_ttyACM0 ()
     while [ ! -e /dev/ttyACM0 ]; do
         sleep 1
     done
-    # Wait for some seconds in total or dial command ATDT*99# will not succeed
-    sleep 1
     echo "...done"
 }
 
@@ -23,9 +21,6 @@ workaround_ttyACM0 ()
         echo "Timeout provided by coreutils"
         timeout 1 microcom /dev/ttyACM0 &>/dev/null || true
     fi
-    # Wait for some seconds in total or dial command ATDT*99# will not succeed
-    # Wait also for /dev/ttyACM0 to become idle after microcom was closed
-    sleep 5
 }
 
 case $1 in
