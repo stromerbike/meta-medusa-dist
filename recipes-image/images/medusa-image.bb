@@ -15,11 +15,10 @@ LICENCE = "MIT"
 # dt-utils-barebox-state - linux packet for set/get shared barebox variables
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
-# minicom - communication program
-# lrzsz - transfer files via minicom
 # systemd-analyze - debug information collection
-IMAGE_INSTALL_append = " barebox dt-utils-barebox-state kernel-image kernel-devicetree \
-                         minicom lrzsz systemd-analyze \
+IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
+                         kernel-image kernel-devicetree \
+                         systemd-analyze \
 "
 
 # Added packets from Stromer:
@@ -46,7 +45,7 @@ IMAGE_INSTALL_append = " bareboximd \
 IMAGE_LINGUAS = ""
 
 # Define desired image types and select best compression
-IMAGE_FSTYPES = "tar tar.gz tar.xz ubifs"
+IMAGE_FSTYPES = "tar tar.xz ubifs"
 XZ_COMPRESSION_LEVEL = "-9"
 
 # Ensure the member ordering in the created archive is uniform and reproducible (required for creating small delta updates)
