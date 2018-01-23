@@ -8,7 +8,7 @@ inherit core-image
 
 SUMMARY = ""
 DESCRIPTION = "Medusa image"
-LICENCE = "MIT"
+LICENSE = "MIT"
 
 # Added packets from manufacturer:
 # barebox - bootloader
@@ -26,9 +26,8 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # busybox - contains a lot of tools in a single executable while providing a small footprint
 # coreutils util-linux - contains a lot of tools in separate small executables while providing fast execution time
 # tzdata - timezone database
-# gnupg pristine-tar-fwu - firmware update
 # gdbserver tcf-agent - low level debugging
-# perf strace - debugging
+# gdb perf strace - debugging
 # openssh openssh-sftp-server - ssh and sftp
 IMAGE_INSTALL_append = " bareboximd \
                          busybox \
