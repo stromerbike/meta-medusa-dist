@@ -33,7 +33,7 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 IMAGE_INSTALL_append = " bareboximd \
                          busybox \
                          coreutils util-linux \
-                         tzdata \
+                         tzdata tzdata-misc tzdata-posix tzdata-right tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          gdbserver tcf-agent \
                          gdb perf strace \
                          openssh openssh-sftp-server \
