@@ -51,7 +51,7 @@ led2_off ()
 
 display_done ()
 {
-    fbi --noverbose -T 2 /etc/images/done.png
+    fbi --noverbose -T 3 /etc/images/done.png
     led2_green
 }
 
@@ -59,7 +59,7 @@ display_error ()
 {
     echo "...ERROR"
     led2_red
-    fbi --noverbose -T 2 /etc/images/error.png
+    fbi --noverbose -T 3 /etc/images/error.png
 }
 
 enable_writeaccess ()
@@ -108,7 +108,7 @@ await_shutdown ()
         sleep 0.1
     done
     echo "...done"
-    fbi --noverbose -T 2 /etc/images/logo.png
+    fbi --noverbose -T 3 /etc/images/logo.png
     echo "Shutting down..."
     shutdown now
 }
@@ -161,7 +161,7 @@ do
                 if mountpoint -q /mnt/rfs_inactive; then
                     echo "Extracting firmware..."
                     led2_blue
-                    fbi --noverbose -T 2 /etc/images/busy.png
+                    fbi --noverbose -T 3 /etc/images/busy.png
                     rm -rf /tmp/rfs_inactive || true
                     mkdir /tmp/rfs_inactive
                     if tar -xf $firstFile -C /tmp/rfs_inactive --warning=no-timestamp; then
@@ -204,7 +204,7 @@ do
                 led1_blue
                 led2_white
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
-                fbi --noverbose -T 2 /etc/images/busy.png
+                fbi --noverbose -T 3 /etc/images/busy.png
                 echo "Unmounting inactive rfs paritition..."
                 if umount /mnt/rfs_inactive; then
                     echo "...done"
