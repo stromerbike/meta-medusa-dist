@@ -1,0 +1,13 @@
+diff --git a/src/basic/time-util.c b/src/basic/time-util.c
+index 68ba86f6a..217a4ddb3 100644
+--- a/src/basic/time-util.c
++++ b/src/basic/time-util.c
+@@ -1319,7 +1319,7 @@ int get_timezone(char **tz) {
+         char *z;
+         int r;
+ 
+-        r = readlink_malloc("/etc/localtime", &t);
++        r = chase_symlinks("/etc/localtime", NULL, 0, &t);
+         if (r < 0)
+                 return r; /* returns EINVAL if not a symlink */
+ 
