@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://id_rsa_medusa.pub \
             file://ssh_host_dsa_key \
             file://ssh_host_dsa_key.pub \
             file://ssh_host_ecdsa_key \
@@ -10,7 +11,13 @@ SRC_URI += " \
             file://ssh_host_rsa_key.pub \
 "
 
+USER="root"
+
 do_install_append() {
+    # install public part of ssh key
+    install -d ${D}/home/${USER}/.ssh/
+    install -m 0755 ${WORKDIR}/id_rsa_medusa.pub ${D}/home/${USER}/.ssh/authorized_keys
+
     # install keys used in sshd_config and sshd_config_readonly
     install -d ${D}${localstatedir}/ssh    
     for dir in ${sysconfdir} ${localstatedir}; do
@@ -24,10 +31,11 @@ do_install_append() {
         install -m 0644 ${WORKDIR}/ssh_host_rsa_key.pub ${D}$dir/ssh
     done
 
-    # allow root login and empty passwords
+    # allow root login
     sed -i 's/^[#[:space:]]*PermitRootLogin.*/PermitRootLogin yes/' ${D}${sysconfdir}/ssh/sshd_config*
-    sed -i 's/^[#[:space:]]*PermitEmptyPasswords.*/PermitEmptyPasswords yes/' ${D}${sysconfdir}/ssh/sshd_config*
 
     echo "\n# Restrict IP addresses to local, stromer and 89grad servers" | tee -a ${D}${sysconfdir}/ssh/sshd_config*
     echo "AllowUsers root@192.168.*.* root@10.3.*.* root@10.89.23.*" | tee -a ${D}${sysconfdir}/ssh/sshd_config*
 }
+
+FILES_${PN} += "/home/${USER}/.ssh/authorized_keys"
