@@ -4,7 +4,8 @@ SRC_URI += " \
 "
 
 do_install_append() {
-    gpg --homedir ${B} --import ${WORKDIR}/public.gpg
+    # do not use absolute path for --homedir to avoid "can't connect to the agent: File name too long" error
+    gpg --homedir . --import ${WORKDIR}/public.gpg
 
     # gpgv only needs pubring, gpg would also require trustdb.gpg
     install -m 0700 -d ${D}${sysconfdir}/gnupg
