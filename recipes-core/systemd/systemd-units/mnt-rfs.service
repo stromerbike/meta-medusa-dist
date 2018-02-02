@@ -1,6 +1,5 @@
 [Unit]
 Description=mnt-rfs
-After=communication.target
 
 [Service]
 Type=oneshot
