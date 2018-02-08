@@ -78,8 +78,12 @@ purge_data ()
 {
     if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
         if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
+            echo "Stopping DataServer application..."
+            systemctl stop medusa-DataServer || true
+            echo "...done"
             echo "Purging data partition"
             rm -rf /mnt/data/*
+            echo "...done"
         else
             echo "Keeping data partition"
         fi
@@ -181,8 +185,8 @@ do
                 else
                     echo "theft is false"
                 fi
-                echo "Stopping DataServer based applications..."
-                systemctl stop medusa-DataServer || true
+                echo "Stopping applications accessing LEDs or display..."
+                systemctl stop medusa-ActuatorSensorController medusa-Gui medusa-TestRunner* || true
                 echo "...done"
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
                 echo "Verifying signature..."
