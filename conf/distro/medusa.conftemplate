@@ -18,7 +18,7 @@ SDK_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT
 SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}"
 
 # Distro features
-DISTRO_FEATURES = "systemd"
+DISTRO_FEATURES = "pam systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
 # Machine features
@@ -87,9 +87,11 @@ INHERIT += "buildstats"
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
 
-# Set empty root password
+# Set empty root password and add user
 INHERIT += "extrausers"
-EXTRA_USERS_PARAMS = "usermod -p '' root;"
+EXTRA_USERS_PARAMS = "usermod -p '' root; \
+                      useradd -p '' user; \
+"
 
 # Mount rootfs as read-only for incremental firmware
 EXTRA_IMAGE_FEATURES = "read-only-rootfs"
