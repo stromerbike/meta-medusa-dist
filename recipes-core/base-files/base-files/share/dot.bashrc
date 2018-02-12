@@ -27,3 +27,4 @@ alias sstop='systemctl stop'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
+alias ui='/usr/bin/medusa/DiagnosticUi/DiagnosticUi /usr/bin/medusa/TargetIpcConfiguration.json /usr/bin/medusa/DiagnosticUi/config.json'
