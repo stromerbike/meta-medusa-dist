@@ -18,6 +18,7 @@ alias l='ls -CF'
 
 # some system aliases
 alias sn='shutdown now'
+alias re='reboot'
 
 # some systemd aliases
 alias jgrep='journalctl | grep'

@@ -16,9 +16,6 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# some system aliases
-alias sn='shutdown now'
-
 # some systemd aliases
 alias jgrep='journalctl | grep'
 alias sstat='systemctl status -l -n25'
