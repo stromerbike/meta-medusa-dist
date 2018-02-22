@@ -26,8 +26,11 @@ alias re='reboot'
 # some systemd aliases
 alias jgrep='journalctl | grep'
 alias sstat='systemctl status -l -n25'
+alias sstatm='systemctl status medusa-* | grep --color=always -B 1 Active:'
+alias sstatf='systemctl status fwu-* | grep --color=always -B 1 Active:'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
+alias ui='/usr/bin/medusa/DiagnosticUi/DiagnosticUi /usr/bin/medusa/TargetIpcConfiguration.json /usr/bin/medusa/DiagnosticUi/config.json'

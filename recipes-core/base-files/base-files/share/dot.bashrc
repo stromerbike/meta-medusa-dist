@@ -22,6 +22,8 @@ alias l='ls -CF'
 # some systemd aliases
 alias jgrep='journalctl | grep'
 alias sstat='systemctl status -l -n25'
+alias sstatm='systemctl status medusa-* | grep --color=always -B 1 Active:'
+alias sstatf='systemctl status fwu-* | grep --color=always -B 1 Active:'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
