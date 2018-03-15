@@ -1,8 +1,6 @@
-PACKAGECONFIG_append = " libinput linuxfb"
+PACKAGECONFIG_append = " libinput linuxfb no-opengl"
 PACKAGECONFIG_DEFAULT = "udev widgets libs"
 PACKAGECONFIG_SYSTEM = "libpng"
-
-QT_QPA_DEFAULT_PLATFORM ??= "eglfs"
 
 # Set default QT_QPA_PLATFORM for all phytec boards
 do_configure_prepend() {

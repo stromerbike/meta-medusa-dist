@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "busybox dash e2fsprogs-mke2fs evtest fbida iproute2 mtd-utils ppp rsync wvdial"
+RDEPENDS_${PN} += "bash busybox dash e2fsprogs-mke2fs evtest fbida gnupg iproute2 mtd-utils ppp rsync wvdial"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -14,6 +14,7 @@ SRC_URI += " \
             file://images/error.png \
             file://images/logo.png \
             file://can0.service \
+            file://can0.sh \
             file://communication.target \
             file://debug.target \
             file://drive.target \
@@ -28,18 +29,14 @@ SRC_URI += " \
             file://mnt-data.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
-            file://pwr-io.service \
-            file://pwr-io.sh \
-            file://pwr-sup.service \
-            file://pwr-sup.sh \
+            file://mnt-sda1.service \
+            file://mnt-sda1.sh \
             file://update.target \
             file://usb.service \
             file://usb.sh \
             file://wlan0.network \
             file://wlan0.sh \
             file://wvdial-swisscom.service \
-            file://zram.service \
-            file://zram.sh \
 "
 
 FILES_${PN}_append = " \
@@ -59,24 +56,18 @@ SYSTEMD_SERVICE_${PN} = " \
     gpio.service \
     led.service \
     mnt-data.service \
-    pwr-io.service \
-    pwr-sup.service \
     usb.service \
 "
 
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
-
     install -d ${D}${sysconfdir}/scripts
+    install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gpio.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gpio.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/pwr-io.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/pwr-io.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/pwr-sup.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/pwr-sup.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/wlan0.sh ${D}${sysconfdir}/scripts/
@@ -92,9 +83,10 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
 
-    install -d ${D}/mnt/zram
-    install -m 0644 ${WORKDIR}/zram.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/zram.sh ${D}${sysconfdir}/scripts/
+    install -d ${D}/mnt/sda1
+    install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-sda1.sh ${D}${sysconfdir}/scripts/
+
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/

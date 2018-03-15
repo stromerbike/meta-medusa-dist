@@ -4,7 +4,7 @@ SRC_URI += " \
             file://.profile \
 "
 
-RDEPENDS_${PN} += " grep medusa-scripts medusa-version"
+RDEPENDS_${PN} += " grep medusa-version"
 
 FILES_${PN}_append = " ${ROOT_HOME}"
 

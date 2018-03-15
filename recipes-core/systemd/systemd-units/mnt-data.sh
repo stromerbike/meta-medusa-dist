@@ -1,6 +1,6 @@
 #!/bin/dash
 
-NAME=mnt-rfs
+NAME=mnt-data
 DESC="Mount the data partitions"
 
 case $1 in

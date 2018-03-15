@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sda1", ENV{DEVTYPE}=="partition", RUN+="/bin/systemctl --no-block start mnt-sda1.service"
+ACTION=="remove", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sda1", ENV{DEVTYPE}=="partition", RUN+="/bin/systemctl --no-block stop mnt-sda1.service"

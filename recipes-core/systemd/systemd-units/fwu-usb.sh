@@ -1,5 +1,7 @@
 #!/bin/bash
 
+OPTION_PURGEDATA_IGNORE="no"
+
 led1_blue ()
 {
     echo "255" 2> /dev/null > /sys/class/leds/rgb1_blue/brightness
@@ -51,7 +53,7 @@ led2_off ()
 
 display_done ()
 {
-    fbi --noverbose -T 1 /etc/images/done.png
+    fbi --noverbose -T 3 /etc/images/done.png
     led2_green
 }
 
@@ -59,7 +61,7 @@ display_error ()
 {
     echo "...ERROR"
     led2_red
-    fbi --noverbose -T 1 /etc/images/error.png
+    fbi --noverbose -T 3 /etc/images/error.png
 }
 
 enable_writeaccess ()
@@ -74,11 +76,19 @@ enable_writeaccess ()
 
 purge_data ()
 {
-    if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
-        echo "Purging database"
-        rm /mnt/data/store.db
+    if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
+        if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
+            echo "Stopping DataServer application..."
+            systemctl stop medusa-DataServer || true
+            echo "...done"
+            echo "Purging data partition"
+            rm -rf /mnt/data/*
+            echo "...done"
+        else
+            echo "Keeping data partition"
+        fi
     else
-        echo "Keeping database"
+        echo "Ignoring data partition"
     fi
 }
 
@@ -108,7 +118,7 @@ await_shutdown ()
         sleep 0.1
     done
     echo "...done"
-    fbi --noverbose -T 1 /etc/images/logo.png
+    fbi --noverbose -T 3 /etc/images/logo.png
     echo "Shutting down..."
     shutdown now
 }
@@ -141,97 +151,98 @@ part1_active ()
     fi
 }
 
-if [ -d "/mnt/sda/autoupdate" ] || [ -d "/mnt/sda1/autoupdate" ]; then
-    firstFile=""
-    if [ -d "/mnt/sda/autoupdate" ]; then
-        firstFile="/mnt/sda/autoupdate/$(ls /mnt/sda/autoupdate | head -n 1)"
-    else
+# To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
+# Determine if timeout is provided by busybox or coreutils beforehand since they have a different syntax.
+TIMEOUT_CMD=""
+if ls -l `which timeout` | grep busybox > /dev/null; then
+    TIMEOUT_CMD="timeout -s KILL -t 5"
+else
+    TIMEOUT_CMD="timeout -s KILL 5"
+fi
+
+COUNTER=0
+while [ $COUNTER -lt 5 ];
+do
+    let COUNTER=COUNTER+1
+    if [ -d "/mnt/sda1/autoupdate" ]; then
+        firstFile=""
         firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
-    fi
-    if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz|tar.xz)$ ]]; then
-        echo "Firmware tarball $firstFile found"
-        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
-            echo "Nothing to up- or downgrade"
-        else
-            echo "Stopping DataServer based applications..."
-            systemctl stop medusa-DataServer
-            led1_blue
-            if mountpoint -q /mnt/rfs_inactive; then
-                echo "Extracting firmware..."
-                led2_blue
-                fbi --noverbose -T 1 /etc/images/busy.png
-                rm -rf /mnt/zram/rfs_inactive || true
-                mkdir /mnt/zram/rfs_inactive
-                if tar -xf $firstFile -C /mnt/zram/rfs_inactive --warning=no-timestamp; then
-                    echo "...done"
-                    echo "Rsyncing to inactive rfs partition..."
-                    if rsync -a --delete /mnt/zram/rfs_inactive/ /mnt/rfs_inactive/; then
+        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz|tar.xz)$ ]]; then
+            echo "Firmware tarball $firstFile found"
+            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
+                echo "Nothing to up- or downgrade"
+                exit 0
+            else
+                if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8001")" =~ true ]]; then
+                    echo "locked is true: purgedata will be ignored!"
+                    OPTION_PURGEDATA_IGNORE="yes"
+                else
+                    echo "locked is false"
+                fi
+                if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8002")" =~ true ]]; then
+                    echo "theft is true: purgedata will be ignored!"
+                    OPTION_PURGEDATA_IGNORE="yes"
+                else
+                    echo "theft is false"
+                fi
+                echo "Stopping applications accessing LEDs or display..."
+                systemctl stop medusa-ActuatorSensorController medusa-Gui medusa-TestRunner* || true
+                echo "...done"
+                echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
+                echo "Verifying signature..."
+                led1_blue
+                fbi --noverbose -T 3 /etc/images/busy.png
+                if gpgv --keyring /etc/gnupg/pubring.gpg "$firstFile.sig" "$firstFile"; then
+                    if mountpoint -q /mnt/rfs_inactive; then
                         echo "...done"
-                        enable_writeaccess
-                        echo "Syncing..."
-                        if sync; then
+                        led2_blue
+                        echo "Extracting firmware..."
+                        rm -rf /tmp/rfs_inactive || true
+                        mkdir /tmp/rfs_inactive
+                        if tar -xf $firstFile -C /tmp/rfs_inactive --warning=no-timestamp; then
                             echo "...done"
-                            echo "Swapping active partition..."
-                            if df | grep 'ubi0:part0'; then
-                                part1_active
-                            elif df | grep 'ubi0:part1'; then
-                                part0_active
+                            echo "Rsyncing to inactive rfs partition..."
+                            if rsync -a -c --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
+                                echo "...done"
+                                enable_writeaccess
+                                echo "Syncing..."
+                                if sync; then
+                                    echo "...done"
+                                    echo "Swapping active partition..."
+                                    if df | grep 'ubi0:part0'; then
+                                        part1_active
+                                    elif df | grep 'ubi0:part1'; then
+                                        part0_active
+                                    else
+                                        display_error
+                                        COUNTER=5
+                                    fi
+                                else
+                                    display_error
+                                    COUNTER=5
+                                fi
                             else
                                 display_error
+                                COUNTER=5
                             fi
                         else
                             display_error
+                            COUNTER=5
                         fi
                     else
                         display_error
+                        COUNTER=5
                     fi
                 else
                     display_error
+                    COUNTER=5
                 fi
-            else
-                display_error
             fi
-        fi
-    elif [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.ubifs$ ]]; then
-        echo "Firmware image $firstFile found"
-        if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.ubifs$ ]]; then
-            echo "Nothing to up- or downgrade"
-    else
-            echo "Stopping DataServer based applications..."
-            systemctl stop medusa-DataServer
-            led1_blue
-            led2_white
-            fbi --noverbose -T 1 /etc/images/busy.png
-            echo "Unmounting inactive rfs paritition..."
-            if umount /mnt/rfs_inactive; then
-                echo "...done"
-                echo "Updating firmware..."
-                if df | grep 'ubi0:part0'; then
-                    echo "on ubi0_1..."
-                    if ubiupdatevol /dev/ubi0_1 $firstFile; then
-                        echo "...done"
-                        echo "Swapping active partition..."
-                        part1_active
-                    else
-                        display_error
-                    fi
-                elif df | grep 'ubi0:part1'; then
-                    echo "on ubi0_0..."
-                    if ubiupdatevol /dev/ubi0_0 $firstFile; then
-                        echo "...done"
-                        echo "Swapping active partition..."
-                        part0_active
-                    else
-                        display_error
-                    fi
-                else
-                    display_error
-                fi
-            else
-                display_error
-            fi
+        else
+            echo "autoupdate folder does not contain the required file"
         fi
     else
-        echo "autoupdate folder does not contain the required file"
+        echo "/mnt/sda1/autoupdate does not exist (yet)"
     fi
-fi
+    sleep 1
+done

@@ -1,5 +1,8 @@
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
+# use a terminal which supports civis (invisible cursor)
+export TERM=xterm-256color
+
 # enable color support of ls and also add handy aliases
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
@@ -16,11 +19,15 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# some system aliases
+alias sn='shutdown now'
+alias re='reboot'
+
 # some systemd aliases
-alias sstat='systemctl status -l'
+alias jgrep='journalctl | grep'
+alias sstat='systemctl status -l -n25'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
 # stromer specific aliases
-alias srfs='/etc/scripts/switch-rfs.sh'
 alias version='/bin/cat /etc/medusa-version'
