@@ -9,6 +9,7 @@ Patches:
 Backports:
 - [linux-common: adapt to poky updates](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/9c7f4e1e366f8f0b936bdf7eb0a91ebe130bd279)
 - [linux-mainline_4.12.4-phy4.bb](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/blob/morty/recipes-kernel/linux/linux-mainline_4.12.4-phy4.bb)
+- [nano](https://github.com/openembedded/meta-openembedded/commit/100a00a32dae355aba6bfb49e72d6546b3cba81b)
 
 Ideas and todo's for reducing boot time:
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
