@@ -7,15 +7,13 @@ LICENSE = "UNLIC"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7246f848faa4e9c9fc0ea91122d6e680"
 
 PR = "r0"
-PV = "1.3+gitr${SRCPV}"
 
 SRC_URI = " \
-            git://github.com/KjellKod/${BPN}.git;protocol=git;branch=master \
-            file://0001-fix_version.patch \
+    https://github.com/KjellKod/g3log/archive/${PV}.tar.gz;downloadfilename=g3log_${PV}.tar.gz \
 "
-SRCREV = "82df2168aaa6b6f1e077de15356fde8fd6f918dc"
 
-S = "${WORKDIR}/git"
+SRC_URI[md5sum] = "027acefec860f14e06a4dee0db996263"
+SRC_URI[sha256sum] = "0da42ffcbade15b01c25683682a8f5703ec0adfe148d396057f01f1f020f3734"
 
 # add g3log to main packages
 # see https://lists.yoctoproject.org/pipermail/yocto/2013-December/017509.html
