@@ -10,6 +10,7 @@ PR = "r0"
 
 SRC_URI = " \
     https://github.com/KjellKod/g3log/archive/${PV}.tar.gz;downloadfilename=g3log_${PV}.tar.gz \
+    file://0001-fix_version.patch \
 "
 
 SRC_URI[md5sum] = "027acefec860f14e06a4dee0db996263"
