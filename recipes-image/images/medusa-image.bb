@@ -49,3 +49,8 @@ XZ_COMPRESSION_LEVEL = "-9"
 
 # Ensure the member ordering in the created archive is uniform and reproducible (required for creating small delta updates)
 IMAGE_CMD_TAR = "tar --sort=name"
+
+# Create debug file system
+#IMAGE_GEN_DEBUGFS = "1"
+#PACKAGE_DEBUG_SPLIT_STYLE = "debug-file-directory"
+#IMAGE_FSTYPES_DEBUGFS = "tar.xz"
