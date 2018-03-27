@@ -35,7 +35,6 @@ SRC_URI += " \
             file://mnt-rfs.sh \
             file://mnt-sda1.service \
             file://mnt-sda1.sh \
-            file://update.target \
             file://usb.service \
             file://usb.sh \
             file://wlan0.network \
@@ -118,5 +117,4 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/update.target ${D}${systemd_system_unitdir}
 }

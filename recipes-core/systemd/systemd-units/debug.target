@@ -1,4 +1,4 @@
 [Unit]
 Description=debug
-After=update.target
-Wants=update.target
+After=communication.target
+Wants=communication.target
