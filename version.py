@@ -5,7 +5,7 @@ def get_medusa_codename():
     try:
         codename = os.environ['MEDUSA_CODENAME']
     except KeyError:
-        codename = '4.0.0.255'
+        codename = '4.255.255.255'
     return codename
 
 def get_medusa_variant():
