@@ -6,12 +6,6 @@ Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
-Backports:
-- [bluez 5.48](https://github.com/kraj/poky/commit/20ccd395fec1c1d7240a513d37e2f67542e78e28)
-- [linux-common: adapt to poky updates](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/9c7f4e1e366f8f0b936bdf7eb0a91ebe130bd279)
-- [linux-mainline_4.12.4-phy4.bb](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/blob/morty/recipes-kernel/linux/linux-mainline_4.12.4-phy4.bb)
-- [nano](https://github.com/openembedded/meta-openembedded/commit/100a00a32dae355aba6bfb49e72d6546b3cba81b)
-
 Ideas and todo's for reducing boot time:
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
 - Compile driver for BMP280 as Kernel module and load it after drive.target.

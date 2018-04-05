@@ -7,13 +7,13 @@ BBFILES ?= ""
 
 OEROOT := "##OEROOT##"
 BBLAYERS  ?= " \
+  ${OEROOT}/../meta-medusa-backport \
   ${OEROOT}/meta \
   ${OEROOT}/meta-poky \
   ${OEROOT}/meta-yocto-bsp \
   ${OEROOT}/../meta-openembedded/meta-oe \
   ${OEROOT}/../meta-openembedded/meta-python \
   ${OEROOT}/../meta-openembedded/meta-networking \
-  ${OEROOT}/../meta-openembedded/meta-gnome \
   ${OEROOT}/../meta-qt5 \
   ${OEROOT}/../meta-phytec \
   ${OEROOT}/../meta-medusa-bsp \
