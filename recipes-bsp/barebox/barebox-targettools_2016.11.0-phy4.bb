@@ -1,22 +1,19 @@
 require barebox_${PV}.bb
 
-SUMMERY = "bareboximd userspace tool"
+SUMMERY = "barebox userspace tools"
 PROVIDES = "${PN}"
 FILESEXTRAPATHS_prepend := "${THISDIR}/barebox/:"
 
-COMPATIBLE_MACHINE = "imx6ul-medusa"
-
 PR = "${INC_PR}.0"
-
-SRC_URI += " \
-            file://0001-Fix-linking-with-new-ld,-based-on-u-boot.patch \
-"
 
 export TARGETCFLAGS="${TARGET_CC_ARCH} ${TOOLCHAIN_OPTIONS} ${CFLAGS} ${LDFLAGS}"
 INTREE_DEFCONFIG = "${INTREE_DEFCONFIG_pn-barebox}"
 
 do_configure_append() {
     # Compile target tools for barebox
+    kconfig_set BAREBOXENV_TARGET y
+    kconfig_set BAREBOXCRC32_TARGET y
+    kconfig_set KERNEL_INSTALL_TARGET y
     kconfig_set IMD y
     kconfig_set IMD_TARGET y
 }
@@ -27,6 +24,9 @@ do_install () {
     mkdir -p ${B}/
 
     install -d ${D}${base_sbindir}
+    install -m 744 ${B}/scripts/bareboxenv-target ${D}${base_sbindir}/bareboxenv
+    install -m 744 ${B}/scripts/bareboxcrc32-target ${D}${base_sbindir}/bareboxcrc32
+    install -m 744 ${B}/scripts/kernel-install-target ${D}${base_sbindir}/bareboxkernelinstall
     install -m 744 ${B}/scripts/bareboximd-target ${D}${base_sbindir}/bareboximd
 }
 

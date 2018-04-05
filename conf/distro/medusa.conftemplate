@@ -96,13 +96,14 @@ EXTRA_USERS_PARAMS = "usermod -p '' root; \
 # Mount rootfs as read-only for incremental firmware
 EXTRA_IMAGE_FEATURES = "read-only-rootfs"
 
-# rocko fixes
+# rocko and sumo fixes
 BBMASK += "poky/meta/recipes-sato/images"
 BBMASK += "poky/meta/recipes-rt/images"
 BBMASK += "poky/meta/recipes-graphics/images"
 BBMASK += "poky/meta/recipes-extended/images"
 BBMASK += "poky/meta/recipes-core/ovmf"
 BBMASK += "poky/meta/recipes-core/images"
+BBMASK += "meta-phytec/recipes-bsp/barebox"
 BBMASK += "meta-phytec/recipes-bsp/u-boot/u-boot-mkimage_2016.03.bbappend"
 BBMASK += "meta-phytec/recipes-kernel/cryptodev/cryptodev-module_1.8.bbappend"
 BBMASK += "meta-phytec/recipes-kernel/linux/linux-mainline_4.12.4-phy4.bb"
