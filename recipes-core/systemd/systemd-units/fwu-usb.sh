@@ -53,7 +53,7 @@ led2_off ()
 
 display_done ()
 {
-    fbi --noverbose -T 3 /etc/images/done.png
+    fbi --noverbose -T 1 /etc/images/done.png
     led2_green
 }
 
@@ -61,7 +61,7 @@ display_error ()
 {
     echo "...ERROR"
     led2_red
-    fbi --noverbose -T 3 /etc/images/error.png
+    fbi --noverbose -T 1 /etc/images/error.png
 }
 
 enable_writeaccess ()
@@ -118,7 +118,7 @@ await_shutdown ()
         sleep 0.1
     done
     echo "...done"
-    fbi --noverbose -T 3 /etc/images/logo.png
+    fbi --noverbose -T 1 /etc/images/logo.png
     echo "Shutting down..."
     shutdown now
 }
@@ -191,7 +191,7 @@ do
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
                 echo "Verifying signature..."
                 led1_blue
-                fbi --noverbose -T 3 /etc/images/busy.png
+                fbi --noverbose -T 1 /etc/images/busy.png
                 if gpgv --keyring /etc/gnupg/pubring.gpg "$firstFile.sig" "$firstFile"; then
                     if mountpoint -q /mnt/rfs_inactive; then
                         echo "...done"
