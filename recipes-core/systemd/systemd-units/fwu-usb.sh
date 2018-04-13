@@ -119,6 +119,8 @@ await_shutdown ()
     done
     echo "...done"
     fbi --noverbose -T 1 /etc/images/logo.png
+    clear > /dev/tty1 < /dev/tty1
+    echo Shutting down... > /dev/tty1
     echo "Shutting down..."
     shutdown now
 }
