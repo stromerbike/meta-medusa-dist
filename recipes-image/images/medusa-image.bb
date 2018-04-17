@@ -37,11 +37,11 @@ IMAGE_INSTALL_append = " bareboximd \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         bluez-tools can-utils dtc fbgrab fbset fbtest gps-utils htop iperf3 mt3339-utils-epoinfo nano procps python screen tree \
+                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano procps python screen tree \
 "
 
-# Do not install any locales
-IMAGE_LINGUAS = ""
+# Define locales to be installed
+IMAGE_LINGUAS = "en-us"
 
 # Define desired image types and select best compression
 IMAGE_FSTYPES = "tar tar.xz ubifs"

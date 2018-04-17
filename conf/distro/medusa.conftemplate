@@ -21,6 +21,9 @@ SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT
 DISTRO_FEATURES = "${DISTRO_FEATURES_LIBC} pam systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
+# Locales
+GLIBC_GENERATE_LOCALES = "en_US en_US.UTF-8"
+
 # Machine features
 MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost wifi"
 
