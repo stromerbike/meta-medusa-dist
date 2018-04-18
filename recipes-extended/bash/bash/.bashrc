@@ -24,7 +24,7 @@ alias sn='shutdown now'
 alias re='reboot'
 
 # some systemd aliases
-alias jgrep='journalctl | grep'
+alias jgrep='journalctl --no-hostname | grep'
 alias sstat='systemctl status -l -n25'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'

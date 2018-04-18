@@ -20,7 +20,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # some systemd aliases
-alias jgrep='journalctl | grep'
+alias jgrep='journalctl --no-hostname | grep'
 alias sstat='systemctl status -l -n25'
 
 # stromer specific aliases
