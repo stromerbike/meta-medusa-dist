@@ -9,7 +9,7 @@ RDEPENDS_${PN} += "systemd-udev systemd-units"
 
 RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck kernel-module-autofs4 kernel-module-ipv6"
 
-PACKAGECONFIG_remove = " xz binfmt randomseed machined backlight vconsole quotacheck hostnamed hibernate localed ima smack logind firstboot utmp polkit resolved"
+PACKAGECONFIG_remove = " xz binfmt randomseed machined backlight vconsole quotacheck hostnamed hibernate localed ima smack firstboot utmp polkit resolved"
 
 do_install_append() {
     install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
