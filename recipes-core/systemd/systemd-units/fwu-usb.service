@@ -7,3 +7,4 @@ Wants=led.service
 [Service]
 Type=simple
 ExecStart=/etc/scripts/fwu-usb.sh
+KillSignal=SIGHUP
