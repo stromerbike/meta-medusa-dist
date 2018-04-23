@@ -1,0 +1,10 @@
+[Unit]
+Description=peripheral-mpio
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/peripheral-mpio.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

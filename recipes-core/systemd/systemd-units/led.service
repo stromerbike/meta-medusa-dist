@@ -1,7 +1,5 @@
 [Unit]
 Description=led
-After=gpio.service
-Requires=gpio.service
 
 [Service]
 Type=oneshot
