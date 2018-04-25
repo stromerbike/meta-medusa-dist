@@ -10,6 +10,11 @@ start)
     echo "out" > /sys/class/gpio/gpio23/direction
     echo "1" > /sys/class/gpio/gpio23/value
 
+    # ILIM_SEL
+    echo "504" > /sys/class/gpio/export
+    echo "out" > /sys/class/gpio/gpio504/direction
+    echo "1" > /sys/class/gpio/gpio504/value
+
     # CTL2
     echo "506" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio506/direction
