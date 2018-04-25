@@ -56,14 +56,11 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
-    ble.service \
     can0.service \
     gpio.service \
-    gsm.service \
     led.service \
     mnt-data.service \
     usb.service \
-    wvdial.service \
 "
 
 do_install_append() {
