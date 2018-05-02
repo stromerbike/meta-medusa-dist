@@ -6,11 +6,11 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://GPL;md5=751419260aa954499f7abaabaa882bbe"
 
 PR = "r0"
-PV = "1.42.2+gitr${SRCPV}"
+PV = "1.42.3+gitr${SRCPV}"
 DEPENDS = "zlib"
 
 SRC_URI = "git://github.com/tramseyer/${BPN}.git;protocol=git;branch=master"
-SRCREV = "8eb3ee604ce3f8e1a0a22a06ace21a7590034f8d"
+SRCREV = "4781dbf84b94d79f225ecaefcab63d7986e783f5"
 
 S = "${WORKDIR}/git"
 
