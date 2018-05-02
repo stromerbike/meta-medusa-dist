@@ -6,18 +6,20 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://GPL;md5=751419260aa954499f7abaabaa882bbe"
 
 PR = "r0"
-PV = "1.42.1+gitr${SRCPV}"
+PV = "1.42.2+gitr${SRCPV}"
 DEPENDS = "zlib"
 
 SRC_URI = "git://github.com/tramseyer/${BPN}.git;protocol=git;branch=master"
-SRCREV = "8fc8795d87eb74e9e2511bc45e5ddddcb485ceb0"
+SRCREV = "8eb3ee604ce3f8e1a0a22a06ace21a7590034f8d"
 
 S = "${WORKDIR}/git"
 
 inherit cpan
 
 # https://github.com/kraj/poky/blob/morty/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
-RDEPENDS_${PN} = " tar (>= 1.29) \
+RDEPENDS_${PN} = " pv \
+                   rsync \
+                   tar (>= 1.29) \
                    xdelta3 \
                    xz \
                    perl \
