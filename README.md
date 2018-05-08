@@ -6,6 +6,12 @@ Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
+Busybox configuration (1.27.2):
+- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
+- set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Init Utilities ---> init" to N; Remark: To avoid conflicts with systemd's runlevel.
+- set "Init Utilities ---> linuxrc" to N; Remark: Not needed with systemd.
+
 Ideas and todo's for reducing boot time:
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
 - Compile driver for BMP280 as Kernel module and load it after drive.target.
