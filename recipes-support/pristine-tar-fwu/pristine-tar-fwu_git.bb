@@ -16,10 +16,12 @@ S = "${WORKDIR}/git"
 
 inherit cpan
 
+# tar 1.30 does not create the same output as tar 1.29 possibly due to changes to --numeric-owner (https://fossies.org/diffs/tar/1.29_vs_1.30/NEWS-diff.html)
+# older BSP's and the update server use tar 1.29 and therefore the same version has to be used in the BSP
 # https://github.com/kraj/poky/blob/morty/meta/recipes-devtools/perl/perl-rdepends_5.22.1.inc
 RDEPENDS_${PN} = " pv \
                    rsync \
-                   tar (>= 1.29) \
+                   tar (= 1.29-r0) \
                    xdelta3 \
                    xz \
                    perl \

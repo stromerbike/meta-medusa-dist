@@ -6,6 +6,9 @@ Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
+Fixed recipe version:
+- [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
+
 Busybox configuration (1.27.2):
 - git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
 - set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
