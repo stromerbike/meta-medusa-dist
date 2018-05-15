@@ -1,0 +1,16 @@
+diff --git a/gpsstatus b/gpsstatus
+index 78e3222..3f557f0 100755
+--- a/gpsstatus
++++ b/gpsstatus
+@@ -615,7 +615,10 @@ def main(stds):
+ 
+     stdscr = stds
+     stdscr.refresh()
+-    curses.curs_set(0)
++    try:
++        curses.curs_set(0)
++    except (curses.error):
++        pass
+ 
+     init_windows()
+ 
