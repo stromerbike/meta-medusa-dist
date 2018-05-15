@@ -37,7 +37,7 @@ IMAGE_INSTALL_append = " bareboximd \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano nmon procps python screen systemd-extra-utils tree \
+                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano ncurses-terminfo nmon procps python screen systemd-extra-utils tree \
 "
 
 # Define locales to be installed
