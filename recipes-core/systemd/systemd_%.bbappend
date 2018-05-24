@@ -25,7 +25,7 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
     
     # start timesyncd service after drive.target
-    sed -i 's/After=systemd-remount-fs.service systemd-tmpfiles-setup.service systemd-sysusers.service/After=systemd-remount-fs.service systemd-tmpfiles-setup.service systemd-sysusers.service drive.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
+    sed -i 's/After=systemd-remount-fs.service systemd-sysusers.service/After=systemd-remount-fs.service systemd-sysusers.service drive.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
     sed -i 's/Before=time-sync.target sysinit.target shutdown.target/Before=shutdown.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
     sed -i 's/WantedBy=sysinit.target/WantedBy=communication.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
