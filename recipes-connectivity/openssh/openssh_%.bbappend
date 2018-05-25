@@ -15,11 +15,11 @@ SRC_URI += " \
 do_install_append() {
     # install public part of ssh key for "root"
     install -d ${D}/home/root/.ssh/
-    install -m 0755 ${WORKDIR}/id_rsa_medusa_root.pub ${D}/home/root/.ssh/authorized_keys
+    install -m 0644 ${WORKDIR}/id_rsa_medusa_root.pub ${D}/home/root/.ssh/authorized_keys
 
     # install public part of ssh key for "user"
     install -d ${D}/home/user/.ssh/
-    install -m 0755 ${WORKDIR}/id_rsa_medusa_user.pub ${D}/home/user/.ssh/authorized_keys
+    install -m 0644 ${WORKDIR}/id_rsa_medusa_user.pub ${D}/home/user/.ssh/authorized_keys
 
     # install keys used in sshd_config and sshd_config_readonly
     install -d ${D}${localstatedir}/ssh    
@@ -36,6 +36,11 @@ do_install_append() {
 
     # allow root login
     sed -i 's/^[#[:space:]]*PermitRootLogin.*/PermitRootLogin yes/' ${D}${sysconfdir}/ssh/sshd_config*
+
+    # disallow password authentication
+    sed -i 's/^[#[:space:]]*PasswordAuthentication.*/PasswordAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
+    sed -i 's/^[#[:space:]]*ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
+    sed -i 's/^[#[:space:]]*UsePAM.*/UsePAM no/' ${D}${sysconfdir}/ssh/sshd_config*
 }
 
 FILES_${PN} += " \

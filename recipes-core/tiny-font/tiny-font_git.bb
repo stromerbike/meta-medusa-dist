@@ -10,7 +10,7 @@ SRCREV = "a238c565d10a7539a0f036c56e2739e713066316"
 
 S = "${WORKDIR}/git"
 
-SRC_URI = "\
+SRC_URI = " \
     git://github.com/nbah22/tiny-font.git;protocol=git \
 "
 

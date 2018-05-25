@@ -23,7 +23,7 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 
 # Added packets from Stromer:
 # bareboximd - tool for reading out bootloader version information from within userspace
-# busybox - contains a lot of tools in a single executable while providing a small footprint
+# busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
 # coreutils util-linux - contains a lot of tools in separate small executables while providing fast execution time
 # tzdata - timezone database
 # gdbserver tcf-agent - low level debugging
@@ -37,7 +37,7 @@ IMAGE_INSTALL_append = " bareboximd \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 less nano nmon procps python screen tree \
+                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano ncurses-tools nmon procps python screen systemd-extra-utils tree \
 "
 
 # Define locales to be installed

@@ -1,0 +1,12 @@
+diff --git a/eporetrieve b/eporetrieve
+index 58c9d23..47ae989 100755
+--- a/eporetrieve
++++ b/eporetrieve
+@@ -7,4 +7,4 @@ if [ -e $file ] ; then
+ 	mv $file $file.last
+ fi
+ 
+-wget -O${file} ftp://gtopagpsenduser01:enduser080807@125.227.104.212/${EPO}
+\ No newline at end of file
++wget -O${file} ftp://gtopagpsenduser01:enduser080807@ftp.gtop-tech.com/${EPO}
+\ No newline at end of file

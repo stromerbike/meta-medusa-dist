@@ -13,8 +13,8 @@ SRC_URI = " \
     file://0001-fix_version.patch \
 "
 
-SRC_URI[md5sum] = "027acefec860f14e06a4dee0db996263"
-SRC_URI[sha256sum] = "0da42ffcbade15b01c25683682a8f5703ec0adfe148d396057f01f1f020f3734"
+SRC_URI[md5sum] = "9c7d427b4624530c62914f77e87d3d55"
+SRC_URI[sha256sum] = "0ed1983654fdd8268e051274904128709c3d9df8234acf7916e9015199b0b247"
 
 # add g3log to main packages
 # see https://lists.yoctoproject.org/pipermail/yocto/2013-December/017509.html
@@ -30,5 +30,6 @@ inherit cmake
 EXTRA_OECMAKE = " \
                   -DCMAKE_BUILD_TYPE=Release \
                   -DUSE_DYNAMIC_LOGGING_LEVELS=1 \
+                  -DENABLE_FATAL_SIGNALHANDLING=OFF \
                   -DCPACK_INSTALL_PREFIX=${prefix} \
 "

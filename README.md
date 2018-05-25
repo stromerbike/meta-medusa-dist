@@ -6,6 +6,30 @@ Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
+Fixed recipe version:
+- [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
+
+Busybox configuration (1.27.2):
+- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
+- set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Init Utilities ---> init" to N; Remark: To avoid conflicts with systemd's runlevel.
+- set "Init Utilities ---> linuxrc" to N; Remark: Not needed with systemd.
+- set "Coreutils ---> link" to N; Remark: To avoid conflicts with coreutils.
+- set "Coreutils ---> nice" to N; Remark: To avoid conflicts with coreutils.
+- set "Coreutils ---> printenv" to N; Remark: To avoid conflicts with coreutils.
+- set "Coreutils ---> w" to N; Remark: To avoid conflicts with procps.
+- set "Linux System Utilities ---> cal" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> fallocate" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> fdformat" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> fsfreeze" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> ipcrm" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> ipcs" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> nsenter" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> rtcwake" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> script" to N; Remark: To avoid conflicts with util-linux.
+- set "Linux System Utilities ---> unshare" to N; Remark: To avoid conflicts with util-linux.
+- set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+
 Ideas and todo's for reducing boot time:
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
 - Compile driver for BMP280 as Kernel module and load it after drive.target.
