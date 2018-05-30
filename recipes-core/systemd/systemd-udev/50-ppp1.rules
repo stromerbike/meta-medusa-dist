@@ -1,2 +1,0 @@
-ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp1", RUN+="/etc/scripts/ip-route-default-ppp1.sh"
-ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp1", RUN+="/etc/scripts/ip-route-default-ppp0.sh"
