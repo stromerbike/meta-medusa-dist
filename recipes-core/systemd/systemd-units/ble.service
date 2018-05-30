@@ -1,6 +1,7 @@
 [Unit]
 Description=ble
-After=drive.target
+After=dbus.service drive.target
+Requires=dbus.service
 Wants=drive.target
 
 [Service]
