@@ -20,7 +20,7 @@ EOF
 SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patch"
 
 # A possible way of reducing Qt shared library size (some MB) and application startup time (some 100ms) is to selectively disable by applications unused features.
-# 5.9.2@73573fce295caef35da706a8c8c796ec18e6baf1: configure --list-features
+# 5.10.1@6c6ace9d23f90845fd424e474d38fe30f070775e: configure --list-features
 # abstractbutton .......... Widgets: Abstract base class of button widgets, providing functionality common to buttons.
 # abstractslider .......... Widgets: Common super class for widgets like QScrollBar, QSlider and QDial.
 # accessibility ........... Utilities: Provides accessibility support.
@@ -49,6 +49,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 # datawidgetmapper ........ ItemViews: Provides mapping between a section of a data model to widgets.
 # datestring .............. Data structures: Provides convertion between dates and strings.
 # datetimeedit ............ Widgets: Supports editing dates and times.
+# datetimeparser .......... Utilities: Provides support for parsing date-time texts.
 # desktopservices ......... Utilities: Provides methods for accessing common desktop services.
 # dial .................... Widgets: Provides a rounded range control, e.g., like a speedometer.
 # dialog .................. Dialogs: Base class of dialog windows.
@@ -89,7 +90,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 # imageformatplugin ....... Images: Provides a base for writing a image format plugins.
 # inputdialog ............. Dialogs: Provides a simple convenience dialog to get a single value from the user.
 # itemmodel ............... ItemViews: Provides the item model for item views
-# itemviews ............... ItemViews: Provides the model/view architecture managing the relationship between data and the way it is pre
+# itemviews ............... ItemViews: Provides the model/view architecture managing the relationship between data and the way it is presented to the user.
 # keysequenceedit ......... Widgets: Provides a widget for editing QKeySequences.
 # label ................... Widgets: Provides a text or image display.
 # lcdnumber ............... Widgets: Provides LCD-like digits.
@@ -127,7 +128,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 # resizehandler ........... Widgets: Provides an internal resize handler for dock widgets.
 # rubberband .............. Widgets: Supports using rubberbands to indicate selections and boundaries.
 # scrollarea .............. Widgets: Supports scrolling views onto widgets.
-# scrollbar ............... Widgets: Provides scrollbars allowing the user access parts of a document that is larger than the widget use
+# scrollbar ............... Widgets: Provides scrollbars allowing the user access parts of a document that is larger than the widget used to display it.
 # scroller ................ Widgets: Enables kinetic scrolling for any scrolling widget or graphics item.
 # sessionmanager .......... Kernel: Provides an interface to the windowing system's session management.
 # settings ................ File I/O: Provides persistent application settings.
@@ -163,7 +164,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 # textedit ................ Widgets: Supports rich text editing.
 # texthtmlparser .......... Kernel: Provides a parser for HTML.
 # textodfwriter ........... Kernel: Provides an ODF writer.
-# timezone ................ Utilities: Provides support for timezone handling.
+# timezone ................ Utilities: Provides support for time-zone handling.
 # toolbar ................. Widgets: Provides movable panels containing a set of controls.
 # toolbox ................. Widgets: Provides columns of tabbed widget items.
 # toolbutton .............. Widgets: Provides quick-access buttons to commands and options.
@@ -185,7 +186,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 # xmlstream ............... Kernel: Provides a simple streaming API for XML.
 # xmlstreamreader ......... Kernel: Provides a well-formed XML parser with a simple streaming API.
 # xmlstreamwriter ......... Kernel: Provides a XML writer with a simple streaming API.
-# As of 29th september 2017, our applications would work with the following configs:
+# As of release 4.1.1.0, our applications would work with the following configs:
 # QT_CONFIG_FLAGS += " \
 #        -feature-abstractbutton \
 #        -feature-abstractslider \
@@ -211,16 +212,17 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #     -no-feature-contextmenu \
 #        -feature-cssparser \
 #     -no-feature-cups \
-#     -no-feature-cursor \
+#        -feature-cursor \
 #     -no-feature-datawidgetmapper \
 #        -feature-datestring \
 #     -no-feature-datetimeedit \
+#     -no-feature-datetimeparser \
 #     -no-feature-desktopservices \
 #     -no-feature-dial \
 #        -feature-dialog \
 #        -feature-dialogbuttonbox \
 #     -no-feature-dirmodel \
-#     -no-feature-dockwidget \
+#        -feature-dockwidget \
 #     -no-feature-dom \
 #     -no-feature-draganddrop \
 #     -no-feature-effects \
@@ -236,8 +238,8 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #     -no-feature-fscompleter \
 #     -no-feature-ftp \
 #        -feature-gestures \
-#     -no-feature-graphicseffect \
-#     -no-feature-graphicsview \
+#        -feature-graphicseffect \
+#        -feature-graphicsview \
 #        -feature-groupbox \
 #     -no-feature-highdpiscaling \
 #        -feature-http \
@@ -245,29 +247,29 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #     -no-feature-identityproxymodel \
 #     -no-feature-im \
 #     -no-feature-image_heuristic_mask \
-#        -feature-image_text \
-#        -feature-imageformat_bmp \
-#        -feature-imageformat_jpeg \
+#     -no-feature-image_text \
+#     -no-feature-imageformat_bmp \
+#     -no-feature-imageformat_jpeg \
 #        -feature-imageformat_png \
 #     -no-feature-imageformat_ppm \
 #     -no-feature-imageformat_xbm \
 #     -no-feature-imageformat_xpm \
-#        -feature-imageformatplugin \
+#     -no-feature-imageformatplugin \
 #     -no-feature-inputdialog \
-#     -no-feature-itemmodel \
-#     -no-feature-itemviews \
+#        -feature-itemmodel \
+#        -feature-itemviews \
 #     -no-feature-keysequenceedit \
 #        -feature-label \
 #     -no-feature-lcdnumber \
 #        -feature-library \
 #     -no-feature-lineedit \
-#     -no-feature-listview \
-#     -no-feature-listwidget \
+#        -feature-listview \
+#        -feature-listwidget \
 #     -no-feature-localserver \
 #        -feature-mainwindow \
 #     -no-feature-mdiarea \
 #        -feature-menu \
-#     -no-feature-menubar \
+#        -feature-menubar \
 #        -feature-messagebox \
 #     -no-feature-mimetype \
 #     -no-feature-movie \
@@ -281,8 +283,8 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #     -no-feature-printer \
 #     -no-feature-printpreviewdialog \
 #     -no-feature-printpreviewwidget \
-#     -no-feature-process \
-#     -no-feature-processenvironment \
+#        -feature-process \
+#        -feature-processenvironment \
 #        -feature-progressbar \
 #     -no-feature-progressdialog \
 #        -feature-properties \
@@ -296,7 +298,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #        -feature-scrollbar \
 #        -feature-scroller \
 #     -no-feature-sessionmanager \
-#     -no-feature-settings \
+#        -feature-settings \
 #     -no-feature-sha3-fast \
 #     -no-feature-sharedmemory \
 #     -no-feature-shortcut \
@@ -317,12 +319,12 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #     -no-feature-syntaxhighlighter \
 #     -no-feature-systemsemaphore \
 #     -no-feature-systemtrayicon \
-#     -no-feature-tabbar \
+#        -feature-tabbar \
 #     -no-feature-tabletevent \
 #     -no-feature-tableview \
 #     -no-feature-tablewidget \
-#     -no-feature-tabwidget \
-#        -feature-temporaryfile \
+#        -feature-tabwidget \
+#     -no-feature-temporaryfile \
 #     -no-feature-textbrowser \
 #     -no-feature-textcodec \
 #        -feature-textdate \
@@ -335,7 +337,7 @@ SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patc
 #        -feature-toolbutton \
 #     -no-feature-tooltip \
 #     -no-feature-topleveldomain \
-#     -no-feature-translation \
+#        -feature-translation \
 #     -no-feature-treeview \
 #     -no-feature-treewidget \
 #     -no-feature-udpsocket \
