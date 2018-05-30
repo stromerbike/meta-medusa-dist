@@ -1,0 +1,8 @@
+[Unit]
+Description=mnt-data-backup
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/mnt-data-backup.sh start
+ExecStop=/etc/scripts/mnt-data-backup.sh start
+RemainAfterExit=yes

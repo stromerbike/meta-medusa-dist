@@ -27,6 +27,8 @@ SRC_URI += " \
             file://gsm.sh \
             file://led.service \
             file://led.sh \
+            file://mnt-data-backup.service \
+            file://mnt-data-backup.sh \
             file://mnt-data.service \
             file://mnt-data.sh \
             file://mnt-rfs.service \
@@ -99,6 +101,8 @@ do_install_append() {
     install -d ${D}/mnt/data_backup
     install -m 0644 ${WORKDIR}/mnt-data.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/mnt-data-backup.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-data-backup.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
