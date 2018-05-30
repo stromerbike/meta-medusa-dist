@@ -1,6 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
+            file://can-devices.cfg \
             file://cgroup.cfg \
             file://CVE-2017-1000251.patch \
             file://filesystems.cfg \
