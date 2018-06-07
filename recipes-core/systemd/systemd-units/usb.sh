@@ -10,10 +10,10 @@ start)
     echo "out" > /sys/class/gpio/gpio23/direction
     echo "1" > /sys/class/gpio/gpio23/value
 
-    # ILIM_SEL = ILIM_LO (1A)
+    # ILIM_SEL = ILIM_HI (1.5A)
     echo "504" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio504/direction
-    echo "0" > /sys/class/gpio/gpio504/value
+    echo "1" > /sys/class/gpio/gpio504/value
 
     # CTL2
     echo "506" > /sys/class/gpio/export
