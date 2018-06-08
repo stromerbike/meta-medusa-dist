@@ -29,6 +29,7 @@ Busybox configuration (1.27.2):
 - set "Linux System Utilities ---> script" to N; Remark: To avoid conflicts with util-linux.
 - set "Linux System Utilities ---> unshare" to N; Remark: To avoid conflicts with util-linux.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Process Utilities ---> lsof" to N; To avoid hiding the full blown lsof.
 
 Ideas and todo's for reducing boot time (to Gui):
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
