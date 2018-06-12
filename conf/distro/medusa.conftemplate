@@ -86,6 +86,11 @@ INHERIT += "buildhistory"
 BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
+# Mirrors
+MIRRORS += "\
+${SAVANNAH_GNU_MIRROR} http://savannah.spinellicreations.com \n \
+"
+
 # Phytec git mirrors
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
