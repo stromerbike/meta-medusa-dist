@@ -14,6 +14,7 @@ S = "${WORKDIR}/git"
 
 SRC_URI = " \
             git://github.com/dimhoff/mt333x-fw-utils.git;protocol=git \
+            file://MTK_AllInOne_DA_MT3318_v4.01.bin \
             file://MTK_AllInOne_DA_MT3329_v4.02.bin \
             file://MTK_AllInOne_DA_MT3333.bin \
             file://MTK_AllInOne_DA_MT3339_E3.bin \
