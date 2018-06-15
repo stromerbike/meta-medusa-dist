@@ -13,6 +13,8 @@ SRC_URI = " \
     file://0001-catch_curs_set_exception.patch \
     file://0002-Changed_the_ip_address_in_eporetrieve_to_host_name.patch \
     file://0003-Fix_variable_quoting_in_gpssend.patch \
+    file://0010-epoloader_adaptions.patch \
+    file://0011-epoinfo_adaptions.patch \
 "
 
 SRC_URI[md5sum] = "6eb9e03b661b4f3812a0253fef8777a6"

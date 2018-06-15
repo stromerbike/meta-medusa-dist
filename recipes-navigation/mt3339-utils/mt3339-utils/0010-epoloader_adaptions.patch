@@ -1,0 +1,92 @@
+diff --git a/epoloader b/epoloader
+index 4c12b0e..d907229 100755
+--- a/epoloader
++++ b/epoloader
+@@ -15,7 +15,7 @@ import serial
+ 
+ 
+ PREAMBLE = 0x2404
+-EPO_CMD = 0x02d2
++EPO_CMD = 0x02d3
+ EOW = 0x0a0d
+ UART_CMD = 253
+ SATS_PER_EPO = 32
+@@ -81,17 +81,22 @@ class rx_loop_thread(Thread):
+         Thread.__init__(self)
+         self.fg = fg
+         self.result = None;
++        self.running = False
+         self.killme = False
+         self.r = r
+ 
+     def getResult(self):
+         return self.result
+ 
++    def isRunning(self):
++        return self.running
++
+     def kill(self):
+         self.killme = True
+ 
+     def run(self):
+         self.fg.flushInput()
++        self.running = True
+         while True:
+             try:
+                 for line in self.fg:
+@@ -100,6 +105,7 @@ class rx_loop_thread(Thread):
+                         continue
+                     spl = line.strip()[1:-3].split(',')
+                     if spl[0] == self.r:
++                        print "  RX: %s" % line.strip()
+                         self.result = spl
+                         return
+             except:
+@@ -113,6 +119,8 @@ def send_and_wait(fg, string, timeout, r="PMTK001", retries=0):
+         thread = rx_loop_thread(fg, r)
+         thread.setDaemon(True)
+         thread.start()
++        while not thread.isRunning():
++            time.sleep(0.1)
+         send_string(fg, string);
+         thread.join(timeout)
+         if thread.isAlive():
+@@ -124,6 +132,7 @@ def send_and_wait(fg, string, timeout, r="PMTK001", retries=0):
+ 
+ 
+ def send_string(fg, string):
++    print "  TX: $%s*%02x" % (string, crc8(string))
+     fg.write("$%s*%02x\r\n" % (string, crc8(string)))
+     fg.flush()
+ 
+@@ -243,8 +252,14 @@ def main():
+             SAT_SET_SIZE = 60
+             FRAME_LENGTH = 191
+         elif header[0:3] == header[72:75]:
+-            print "Opening EPO Type II file"
+-            EPO_SET_SIZE = 2304
++            if "GR" not in args.input_file:
++                print "Opening EPO Type II file (GPS only)"
++                EPO_SET_SIZE = 2304
++                LSEQ_LENGTH = 11 # 10x3 + 1x2 = 32 GPS satellites
++            else:
++                print "Opening EPO Type II file (GPS and GLO)"
++                EPO_SET_SIZE = 4032
++                LSEQ_LENGTH = 19 # 18x3 + 1x2 = 32 GPS + 24 GLO satellites
+             SAT_SET_SIZE = 72
+             FRAME_LENGTH = 227
+         else:
+@@ -331,11 +346,11 @@ def main():
+ 
+     print "Sending %d EPO sets" % (file_size / EPO_SET_SIZE)
+     while total_read < file_size:
+-        for lseq in range(11):
++        for lseq in range(LSEQ_LENGTH):
+             buf = bytearray('\0' * FRAME_LENGTH)
+             struct.pack_into("<HHHH", buf, 0, PREAMBLE, FRAME_LENGTH, EPO_CMD, seq)
+             data_start = 8
+-            if lseq == 10:
++            if lseq == (LSEQ_LENGTH - 1):
+                 data_end = data_start + SAT_SET_SIZE * 2
+             else:
+                 data_end = data_start + SAT_SET_SIZE * 3

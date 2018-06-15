@@ -1,0 +1,19 @@
+diff --git a/epoinfo b/epoinfo
+index 5875f84..2676b98 100755
+--- a/epoinfo
++++ b/epoinfo
+@@ -54,8 +54,12 @@ def main():
+         print "Opening EPO Type I file"
+         EPO_SET_SIZE = 1920
+     elif header[0:3] == header[72:75]:
+-        print "Opening EPO Type II file"
+-        EPO_SET_SIZE = 2304;
++        if "GR" not in args.input_file:
++            print "Opening EPO Type II file (GPS only)"
++            EPO_SET_SIZE = 2304;
++        else:
++            print "Opening EPO Type II file (GPS and GLO)"
++            EPO_SET_SIZE = 4032
+     else:
+         print "Unknown file type."
+         return 1
