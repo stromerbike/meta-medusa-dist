@@ -16,4 +16,5 @@ inherit python-dir
 
 do_install_append() {
     ${STAGING_BINDIR_NATIVE}/python-native/python -m compileall ${D}${PYTHON_SITEPACKAGES_DIR}/gps
+    sed -i 's/After=chronyd.service/After=chronyd.service drive.target/' ${D}${systemd_system_unitdir}/gpsd.service
 }
