@@ -10,8 +10,6 @@ inherit pypi
 SRC_URI[md5sum] = "074abcceee0d795ba34ad6430f71d0e8"
 SRC_URI[sha256sum] = "a37836aa47d1b81c2db1a6b7a5e79926062b5d76bd962115a0e615551be2b48d"
 
-DEPENDS = "protobuf python python-setuptools-native"
-
 RDEPENDS_${PN} += " \
     ${PYTHON_PN}-datetime \
     ${PYTHON_PN}-json \
@@ -25,6 +23,3 @@ RDEPENDS_${PN} += " \
 
 # For usage in other recipies when compiling protobuf files (e.g. by grpcio-tools)
 BBCLASSEXTEND = "native"
-
-DISTUTILS_BUILD_ARGS += "--cpp_implementation"
-DISTUTILS_INSTALL_ARGS += "--cpp_implementation"
