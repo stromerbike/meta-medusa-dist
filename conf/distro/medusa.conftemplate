@@ -38,9 +38,6 @@ VIRTUAL-RUNTIME_initscripts = ""
 # systemd settings
 SYSTEMD_DEFAULT_TARGET = "debug.target"
 
-# Prefer our own protobuf-lite recipe
-PREFERRED_RPROVIDER_protobuf-lite = "protobuf-lite"
-
 # Remove QML
 RDEPENDS_qtbase_remove += "qtdeclarative-render2d"
 
