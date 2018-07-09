@@ -1,0 +1,13 @@
+diff --git a/systemd/gpsd.service b/systemd/gpsd.service
+index 2707ff90..83f812bc 100644
+--- a/systemd/gpsd.service
++++ b/systemd/gpsd.service
+@@ -2,7 +2,7 @@
+ Description=GPS (Global Positioning System) Daemon
+ Requires=gpsd.socket
+ # Needed with chrony SOCK refclock
+-After=chronyd.service
++After=chronyd.service drive.target
+ 
+ [Service]
+ Type=forking

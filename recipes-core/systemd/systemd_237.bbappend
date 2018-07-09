@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
             file://system.conf \
+            file://systemd-timesyncd.service.in.patch \
             file://timesyncd.conf \
 "
 
@@ -53,9 +54,6 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
 
     # start timesyncd service after drive.target
-    sed -i 's/After=systemd-remount-fs.service systemd-sysusers.service/After=systemd-remount-fs.service systemd-sysusers.service drive.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
-    sed -i 's/Before=time-sync.target sysinit.target shutdown.target/Before=shutdown.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
-    sed -i 's/WantedBy=sysinit.target/WantedBy=communication.target/' ${D}${systemd_system_unitdir}/systemd-timesyncd.service
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 }

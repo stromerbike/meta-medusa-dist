@@ -1,8 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://bluetooth.service.in.patch \
             file://main.conf \
             file://TIInit_6.7.16.bts \
-            file://bluetooth.service.in.patch \
 "
 
 FILES_${PN}_append = " ${base_libdir}/firmware/ti-connectivity/*.bts"

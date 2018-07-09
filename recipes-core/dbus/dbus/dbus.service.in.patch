@@ -1,0 +1,12 @@
+diff --git a/bus/dbus.service.in b/bus/dbus.service.in
+index ca0b7e96..2b088c78 100644
+--- a/bus/dbus.service.in
++++ b/bus/dbus.service.in
+@@ -2,6 +2,7 @@
+ Description=D-Bus System Message Bus
+ Documentation=man:dbus-daemon(1)
+ Requires=dbus.socket
++After=drive.target
+ 
+ [Service]
+ ExecStart=@EXPANDED_BINDIR@/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only

@@ -1,0 +1,21 @@
+diff --git a/units/systemd-timesyncd.service.in b/units/systemd-timesyncd.service.in
+index d3bc4e984..27bdfaf63 100644
+--- a/units/systemd-timesyncd.service.in
++++ b/units/systemd-timesyncd.service.in
+@@ -13,8 +13,8 @@ Documentation=man:systemd-timesyncd.service(8)
+ ConditionCapability=CAP_SYS_TIME
+ ConditionVirtualization=!container
+ DefaultDependencies=no
+-After=systemd-remount-fs.service systemd-sysusers.service
+-Before=time-sync.target sysinit.target shutdown.target
++After=systemd-remount-fs.service systemd-sysusers.service drive.target
++Before=shutdown.target
+ Conflicts=shutdown.target
+ Wants=time-sync.target
+ 
+@@ -43,4 +43,4 @@ LockPersonality=yes
+ StateDirectory=systemd/timesync
+ 
+ [Install]
+-WantedBy=sysinit.target
++WantedBy=communication.target
