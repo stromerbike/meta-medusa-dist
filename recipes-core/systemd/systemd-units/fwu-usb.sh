@@ -173,6 +173,9 @@ do
                 echo "Nothing to up- or downgrade"
                 exit 0
             else
+                echo "Starting DataServer..."
+                systemctl start medusa-DataServer || true
+                echo "...done"
                 if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8001")" =~ true ]]; then
                     echo "locked is true: purgedata will be ignored!"
                     OPTION_PURGEDATA_IGNORE="yes"
@@ -185,8 +188,8 @@ do
                 else
                     echo "theft is false"
                 fi
-                echo "Stopping applications accessing LEDs or display..."
-                systemctl stop medusa-ActuatorSensorController medusa-Gui medusa-TestRunner* || true
+                echo "Stopping DataServer based applications..."
+                systemctl stop medusa-DataServer || true
                 echo "...done"
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
                 echo "Verifying signature..."
