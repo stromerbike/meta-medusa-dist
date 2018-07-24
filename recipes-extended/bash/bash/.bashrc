@@ -25,5 +25,8 @@ alias sstat='systemctl status -l -n 25 --no-pager'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
+# some various aliases
+alias iptraf='iptraf-ng -s ppp0'
+
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
