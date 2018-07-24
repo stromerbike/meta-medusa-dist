@@ -29,7 +29,8 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # gdbserver tcf-agent - low level debugging
 # gdb perf strace - debugging
 # openssh openssh-sftp-server - ssh and sftp
-IMAGE_INSTALL_append = " bareboximd \
+IMAGE_INSTALL_append = " \
+                         bareboximd \
                          busybox \
                          coreutils util-linux \
                          tzdata tzdata-misc tzdata-posix tzdata-right tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
@@ -37,7 +38,7 @@ IMAGE_INSTALL_append = " bareboximd \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano ncurses-tools nmon procps python-modules screen systemd-extra-utils tree \
+                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iperf3 nano ncurses-tools nmon procps screen systemd-extra-utils tree \
 "
 
 # Define locales to be installed
