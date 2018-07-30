@@ -61,7 +61,7 @@ do_install_append() {
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
-    # Remark: Due to the UBIFS compression, SystemMaxUse can be much larger than the actual partition size (journald measures file size).
-    sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=400M/' ${D}${sysconfdir}/systemd/journald.conf
+    # Remark: Due to the UBIFS compression, SystemMaxUse can be somewhat larger than the actual partition size (journald measures the uncompressed file size).
+    sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=64M/' ${D}${sysconfdir}/systemd/journald.conf
     sed -i -e 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
 }
