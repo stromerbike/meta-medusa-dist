@@ -1,0 +1,16 @@
+[Unit]
+Description=mnt-log and journal persisting
+After=communication.target
+Wants=communication.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/mount -t ubifs /dev/ubi0_3 /mnt/log
+ExecStart=/bin/mkdir -p /mnt/log/journal /mnt/log/journal.wd
+ExecStart=/bin/mount -t overlay -o lowerdir=/var/log/journal,upperdir=/mnt/log/journal,workdir=/mnt/log/journal.wd overlay /var/log/journal
+ExecStart=/bin/journalctl --flush
+ExecStop=/bin/journalctl --sync
+RemainAfterExit=yes
+
+[Install]
+WantedBy=debug.target

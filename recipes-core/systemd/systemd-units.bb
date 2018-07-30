@@ -27,10 +27,9 @@ SRC_URI += " \
             file://gsm.sh \
             file://led.service \
             file://led.sh \
-            file://mnt-data-backup.service \
-            file://mnt-data-backup.sh \
             file://mnt-data.service \
             file://mnt-data.sh \
+            file://mnt-log.service \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
             file://mnt-sda1.service \
@@ -67,6 +66,7 @@ SYSTEMD_SERVICE_${PN} = " \
     gsm.service \
     led.service \
     mnt-data.service \
+    mnt-log.service \
     peripheral-mpio.service \
     peripheral-pwr.service \
     peripheral-stem.service \
@@ -98,11 +98,10 @@ do_install_append() {
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
     install -d ${D}/mnt/data
-    install -d ${D}/mnt/data_backup
+    install -d ${D}/mnt/log
     install -m 0644 ${WORKDIR}/mnt-data.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/mnt-data-backup.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/mnt-data-backup.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/mnt-log.service ${D}${systemd_system_unitdir}
 
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
@@ -111,7 +110,6 @@ do_install_append() {
     install -d ${D}/mnt/sda1
     install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-sda1.sh ${D}${sysconfdir}/scripts/
-
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/

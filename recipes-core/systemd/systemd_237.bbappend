@@ -41,6 +41,9 @@ do_install_append() {
     # disable virtual console service
     rm ${D}${sysconfdir}/systemd/system/getty.target.wants/getty@tty1.service
 
+    # disable journal flushing (since we do it ourselves)
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-flush.service
+
     # disable update done service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-update-done.service
 
@@ -56,4 +59,9 @@ do_install_append() {
     # start timesyncd service after drive.target
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
+
+    # allow journal to fill up log partition almost to its maximum
+    # Remark: Due to the UBIFS compression, SystemMaxUse can be much larger than the actual partition size (journald measures file size).
+    sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=400M/' ${D}${sysconfdir}/systemd/journald.conf
+    sed -i -e 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
 }

@@ -96,6 +96,9 @@ EXTRA_USERS_PARAMS = "usermod -p '' root; \
 # Mount rootfs as read-only for incremental firmware
 EXTRA_IMAGE_FEATURES = "debug-tweaks read-only-rootfs"
 
+# Do not symlink log to a volatile storage in order to have a persistent systemd journal
+VOLATILE_LOG_DIR = "no"
+
 # sumo fixes
 BBMASK += "poky/meta/recipes-sato/images"
 BBMASK += "poky/meta/recipes-rt/images"
