@@ -20,7 +20,8 @@ alias re='reboot'
 
 # some systemd aliases
 alias jctl='journalctl -f -o short-monotonic --no-hostname'
-alias jgrep='journalctl --no-hostname | grep'
+alias jgrep='journalctl -b --no-hostname | grep'
+alias jgrepall='journalctl --no-hostname | grep'
 alias sstat='systemctl status -l -n 25 --no-pager'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
