@@ -1,9 +1,9 @@
 [Unit]
-Description=mnt-sda1
+Description=mnt-usb
 
 [Service]
 Type=oneshot
-ExecStart=/etc/scripts/mnt-sda1.sh start
+ExecStart=/etc/scripts/mnt-usb.sh start
 ExecStartPost=/bin/systemctl --no-block start fwu-usb.service
-ExecStop=/etc/scripts/mnt-sda1.sh stop
+ExecStop=/etc/scripts/mnt-usb.sh stop
 RemainAfterExit=yes

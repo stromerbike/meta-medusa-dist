@@ -34,8 +34,8 @@ SRC_URI += " \
             file://mnt-log.service \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
-            file://mnt-sda1.service \
-            file://mnt-sda1.sh \
+            file://mnt-usb.service \
+            file://mnt-usb.sh \
             file://peripheral-mpio.service \
             file://peripheral-mpio.sh \
             file://peripheral-pwr.service \
@@ -109,9 +109,9 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-rfs.sh ${D}${sysconfdir}/scripts/
 
-    install -d ${D}/mnt/sda1
-    install -m 0644 ${WORKDIR}/mnt-sda1.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/mnt-sda1.sh ${D}${sysconfdir}/scripts/
+    install -d ${D}/mnt/usb
+    install -m 0644 ${WORKDIR}/mnt-usb.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-usb.sh ${D}${sysconfdir}/scripts/
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/

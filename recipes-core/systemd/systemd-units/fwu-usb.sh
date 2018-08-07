@@ -59,7 +59,7 @@ display_error ()
 
 enable_writeaccess ()
 {
-    if [ -f /mnt/sda/autoupdate-settings/writeaccess* ] || [ -f /mnt/sda1/autoupdate-settings/writeaccess* ]; then
+    if [ -f /mnt/usb/autoupdate-settings/writeaccess* ]; then
         echo "Modifying fstab for write access"
         sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
     else
@@ -70,7 +70,7 @@ enable_writeaccess ()
 purge_data ()
 {
     if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-        if [ -f /mnt/sda/autoupdate-settings/purgedata* ] || [ -f /mnt/sda1/autoupdate-settings/purgedata* ]; then
+        if [ -f /mnt/usb/autoupdate-settings/purgedata* ]; then
             echo "Stopping DataServer application..."
             systemctl stop medusa-DataServer || true
             echo "...done"
@@ -85,10 +85,10 @@ purge_data ()
     fi
 }
 
-umount_sda ()
+umount_usb ()
 {
-    echo "Unmounting sda1..."
-    if umount /mnt/sda1; then
+    echo "Unmounting usb..."
+    if umount /mnt/usb; then
         echo "...done"
     fi
 }
@@ -112,7 +112,7 @@ part0_active ()
         echo "...done"
         purge_data
         export_log
-        umount_sda
+        umount_usb
         display_done
         await_shutdown
     else
@@ -127,7 +127,7 @@ part1_active ()
         echo "...done"
         purge_data
         export_log
-        umount_sda
+        umount_usb
         display_done
         await_shutdown
     else
@@ -155,9 +155,9 @@ COUNTER=0
 while [ $COUNTER -lt 5 ];
 do
     let COUNTER=COUNTER+1
-    if [ -d "/mnt/sda1/autoupdate" ]; then
+    if [ -d "/mnt/usb/autoupdate" ]; then
         firstFile=""
-        firstFile="/mnt/sda1/autoupdate/$(ls /mnt/sda1/autoupdate | head -n 1)"
+        firstFile="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | head -n 1)"
         if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz|tar.xz)$ ]]; then
             echo "Firmware tarball $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
@@ -237,7 +237,7 @@ do
             echo "autoupdate folder does not contain the required file"
         fi
     else
-        echo "/mnt/sda1/autoupdate does not exist (yet)"
+        echo "/mnt/usb/autoupdate does not exist (yet)"
     fi
     sleep 1
 done

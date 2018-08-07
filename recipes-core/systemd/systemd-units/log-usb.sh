@@ -35,7 +35,7 @@ led2_off ()
     echo "0" 2> /dev/null > /sys/class/leds/rgb2_red/brightness
 }
 
-if [ -d "/mnt/sda1/log" ]; then
+if [ -d "/mnt/usb/log" ]; then
     led1_blue
 
     echo "Starting DataServer..."
@@ -57,21 +57,21 @@ if [ -d "/mnt/sda1/log" ]; then
 
     DATE="$(date --utc +"%Y-%m-%d-%H%M%S")"
 
-    LOGFILE="/mnt/sda1/log/${IDENTIFIER}_${DATE}_$(cat /etc/medusa-version).zip"
+    LOGFILE="/mnt/usb/log/${IDENTIFIER}_${DATE}_$(cat /etc/medusa-version).zip"
 
-    echo -n "Writing log to $LOGFILE..."
+    echo "Writing log to $LOGFILE..."
     led2_blue
     if journalctl -o short --no-hostname | gzip --fast > $LOGFILE; then
-        echo "done ($(stat -c%s $LOGFILE) bytes written)"
-        echo "Unmounting sda1..."
-        if umount /mnt/sda1; then
+        echo "...done ($(stat -c%s $LOGFILE) bytes written)"
+        echo "Unmounting usb..."
+        if umount /mnt/usb; then
             echo "...done"
         fi
         led1_off
         led2_off
         exit 0
     else
-        echo "ERROR ($(stat -c%s $LOGFILE) bytes written)"
+        echo "...ERROR ($(stat -c%s $LOGFILE) bytes written)"
         led2_red
         exit 1
     fi
