@@ -1,0 +1,8 @@
+[Unit]
+Description=log-usb
+After=mnt-log.service
+Wants=mnt-log.service led.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/log-usb.sh

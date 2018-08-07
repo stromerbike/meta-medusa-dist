@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox dash evtest fbida gnupg iproute2 ppp rsync wvdial"
+RDEPENDS_${PN} += "bash busybox dash evtest fbida gnupg gzip iproute2 ppp rsync wvdial xz"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -27,6 +27,8 @@ SRC_URI += " \
             file://gsm.sh \
             file://led.service \
             file://led.sh \
+            file://log-usb.service \
+            file://log-usb.sh \
             file://mnt-data.service \
             file://mnt-data.sh \
             file://mnt-log.service \
@@ -113,6 +115,8 @@ do_install_append() {
 
     install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/log-usb.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/log-usb.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}${sysconfdir}/images
     install -m 0644 ${WORKDIR}/images/busy.png ${D}${sysconfdir}/images/

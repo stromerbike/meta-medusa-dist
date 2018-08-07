@@ -37,13 +37,6 @@ led2_red ()
     echo "255" 2> /dev/null > /sys/class/leds/rgb2_red/brightness
 }
 
-led2_white ()
-{
-    echo "255" 2> /dev/null > /sys/class/leds/rgb2_blue/brightness
-    echo "255" 2> /dev/null > /sys/class/leds/rgb2_green/brightness
-    echo "255" 2> /dev/null > /sys/class/leds/rgb2_red/brightness
-}
-
 led2_off ()
 {
     echo "0" 2> /dev/null > /sys/class/leds/rgb2_blue/brightness
@@ -94,20 +87,9 @@ purge_data ()
 
 umount_sda ()
 {
-    if [ -d "/mnt/sda/autoupdate" ]; then
-        echo "Unmounting sda..."
-        if umount /mnt/sda; then
-            echo "...done"
-        else
-            echo "...ERROR"
-        fi
-    else
-        echo "Unmounting sda1..."
-        if umount /mnt/sda1; then
-            echo "...done"
-        else
-            echo "...ERROR"
-        fi
+    echo "Unmounting sda1..."
+    if umount /mnt/sda1; then
+        echo "...done"
     fi
 }
 
@@ -129,6 +111,7 @@ part0_active ()
     if barebox-state -s partition=0; then
         echo "...done"
         purge_data
+        export_log
         umount_sda
         display_done
         await_shutdown
@@ -143,12 +126,20 @@ part1_active ()
     if barebox-state -s partition=1; then
         echo "...done"
         purge_data
+        export_log
         umount_sda
         display_done
         await_shutdown
     else
         display_error
     fi
+}
+
+export_log ()
+{
+    echo "Exporting log..."
+    systemctl start log-usb || true
+    echo "...done"
 }
 
 # To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
@@ -171,6 +162,7 @@ do
             echo "Firmware tarball $firstFile found"
             if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
                 echo "Nothing to up- or downgrade"
+                export_log
                 exit 0
             else
                 echo "Starting DataServer..."
@@ -249,3 +241,5 @@ do
     fi
     sleep 1
 done
+
+export_log
