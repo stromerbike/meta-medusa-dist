@@ -61,7 +61,7 @@ if [ -d "/mnt/usb/log" ]; then
 
     echo "Writing log to $LOGFILE..."
     led2_blue
-    if journalctl -o short --no-hostname | gzip --fast > $LOGFILE; then
+    if journalctl -o short-precise --no-hostname | gzip --fast > $LOGFILE; then
         echo "...done ($(stat -c%s $LOGFILE) bytes written)"
         echo "Unmounting usb..."
         if umount /mnt/usb; then
