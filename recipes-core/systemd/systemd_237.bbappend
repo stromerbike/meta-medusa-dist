@@ -63,4 +63,7 @@ do_install_append() {
     # allow journal to fill up log partition almost to its maximum
     sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
     sed -i -e 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
+
+    # do not setup /var/log/journal as it is write protected
+    sed -i -e 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
 }
