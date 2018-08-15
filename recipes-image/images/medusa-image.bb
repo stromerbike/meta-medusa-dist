@@ -38,7 +38,7 @@ IMAGE_INSTALL_append = " \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iperf3 nano ncurses-tools nmon procps screen systemd-extra-utils tree \
+                         acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iperf3 less nano ncurses-tools nmon procps screen systemd-extra-utils tree \
 "
 
 # Define locales to be installed
