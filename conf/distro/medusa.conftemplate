@@ -89,8 +89,8 @@ INHERIT += "buildstats"
 
 # Set empty root password and add user
 INHERIT += "extrausers"
-EXTRA_USERS_PARAMS = "usermod -p '' root; \
-                      useradd -p '' user; usermod -G systemd-journal user; \
+EXTRA_USERS_PARAMS = "usermod -p '' root; usermod -s /bin/bash root; \
+                      useradd -p '' user; usermod -s /bin/bash user; usermod -G systemd-journal user; \
 "
 
 # Mount rootfs as read-only for incremental firmware
