@@ -41,6 +41,13 @@ do_install_append() {
     # disable virtual console service
     rm ${D}${sysconfdir}/systemd/system/getty.target.wants/getty@tty1.service
 
+    # remove unused mounts
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-kernel-config.mount
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-kernel-debug.mount
+
+    # disable journal catalog update (/var/lib/systemd/catalog/database is read-only)
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-catalog-update.service
+
     # disable journal flushing (since we do it ourselves)
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-flush.service
 
