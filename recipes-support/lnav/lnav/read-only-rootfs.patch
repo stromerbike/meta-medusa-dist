@@ -1,0 +1,26 @@
+diff --git a/src/lnav.cc b/src/lnav.cc
+index 26d423d..e0c1d28 100644
+--- a/src/lnav.cc
++++ b/src/lnav.cc
+@@ -3735,8 +3735,6 @@ int main(int argc, char *argv[])
+                 lnav_log_orig_termios = gt.get_termios();
+ 
+                 looper();
+-
+-                save_session();
+             }
+         }
+         catch (line_buffer::error & e) {
+diff --git a/src/log_format_loader.cc b/src/log_format_loader.cc
+index 68ad36c..ecf6689 100644
+--- a/src/log_format_loader.cc
++++ b/src/log_format_loader.cc
+@@ -819,8 +819,6 @@ void load_formats(const std::vector<std::string> &extra_paths,
+     struct userdata ud;
+     yajl_handle handle;
+ 
+-    write_sample_file();
+-
+     log_debug("Loading default formats");
+     handle = yajl_alloc(&ypc_builtin.ypc_callbacks, NULL, &ypc_builtin);
+     ud.ud_format_names = &retval;
