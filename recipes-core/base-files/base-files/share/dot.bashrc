@@ -15,11 +15,11 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # some systemd aliases
-alias jctl='journalctl -f -o short-monotonic --no-hostname'
-alias jgrep='journalctl -b --no-hostname | grep'
-alias jgrepf='journalctl -f -b --no-hostname | grep'
-alias jgrepall='journalctl --no-hostname | grep'
-alias sstat='systemctl status -l -n 25 --no-pager'
+alias jctl='lnav <(journalctl -f --no-hostname --no-pager)'
+alias jgrep='f(){ lnav <(journalctl -b --no-hostname --no-pager | grep --line-buffered "$@"); unset -f f; }; f'
+alias jgrepf='f(){ lnav <(journalctl -f --no-hostname --no-pager | grep --line-buffered "$@"); unset -f f; }; f'
+alias jgrepall='f(){ lnav <(journalctl --no-hostname --no-pager | grep --line-buffered "$@"); unset -f f; }; f'
+alias sstat='f(){ lnav <(systemctl status -l -n 25 --no-pager "$@"); unset -f f; }; f'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
