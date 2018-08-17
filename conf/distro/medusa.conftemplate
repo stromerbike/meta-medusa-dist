@@ -57,10 +57,6 @@ BBMASK += "meta-medusa-bsp/recipes-rootfs/copy2roofs"
 #SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
 #IMAGE_INSTALL_append = " sdma-firmware"
 
-# Uncomment this to install alsa.
-#MACHINE_FEATURES_append = " alsa"
-#IMAGE_INSTALL_append = " alsa-lib"
-
 # Uncomment this to install qt exmaples.
 #PACKAGECONFIG_append_pn-qtbase = " examples"
 #IMAGE_INSTALL_append = " qtbase-examples"

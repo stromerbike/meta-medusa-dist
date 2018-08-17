@@ -33,7 +33,6 @@ Busybox configuration (1.27.2):
 
 Ideas and todo's for reducing boot time (to Gui):
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
-- Compile driver for BMP280 as Kernel module and load it after drive.target.
 - Set GPIO's to desired direction and possibly value already in device tree.
 
 Ideas for reducing boot time (to drivable vehicle)
