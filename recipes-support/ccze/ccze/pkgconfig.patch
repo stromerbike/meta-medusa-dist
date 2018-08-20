@@ -1,0 +1,27 @@
+diff --git a/configure.ac b/configure.ac
+index eead899..6bf74b8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -102,15 +102,15 @@ AC_CHECK_LIB(ncurses, initscr, [], [AC_ERROR(NCurses library not found)])
+ AC_CHECK_FUNC(dlopen, [], [AC_CHECK_LIB(dl, dlopen)])
+ AC_CHECK_FUNC(getopt_long, [], [AC_CHECK_LIB(gnugetopt, getopt_long)])
+ 
+-if test -z "${PCRE_CONFIG}"; then
+-	AC_PATH_PROG(PCRE_CONFIG, pcre-config, no)
++if test -z "${PKG_CONFIG}"; then
++	AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+ fi
+-AC_MSG_CHECKING(for PCRE)
+-if test "${PCRE_CONFIG}" = "no"; then
+-	AC_ERROR(PCRE not found)
++AC_MSG_CHECKING(for PKG)
++if test "${PKG_CONFIG}" = "no"; then
++	AC_ERROR(PKG not found)
+ fi
+-PCRE_CFLAGS=$($PCRE_CONFIG --cflags)
+-PCRE_LIBS=$($PCRE_CONFIG --libs)
++PCRE_CFLAGS=$($PKG_CONFIG libpcre --cflags)
++PCRE_LIBS=$($PKG_CONFIG libpcre --libs)
+ AC_SUBST(PCRE_CFLAGS)
+ AC_SUBST(PCRE_LIBS)
+ AC_MSG_RESULT(found)

@@ -4,7 +4,7 @@ SRC_URI += " \
             file://.profile \
 "
 
-RDEPENDS_${PN} += " grep iptraf-ng lnav medusa-version"
+RDEPENDS_${PN} += " ccze grep iptraf-ng lnav medusa-version"
 
 FILES_${PN}_append = " ${ROOT_HOME}"
 
