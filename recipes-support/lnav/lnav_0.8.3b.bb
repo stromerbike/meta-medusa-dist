@@ -10,8 +10,8 @@ DEPENDS = "curl libpcre ncurses readline sqlite3 zlib"
 
 SRC_URI = " \
     https://github.com/tstack/lnav/archive/v${PV}.tar.gz;downloadfilename=lnav_${PV}.tar.gz \
-    file://read-only-rootfs.patch \
     file://use-native-gcc-only-for-bin2c-and-ptimec.patch \
+    ${@bb.utils.contains("IMAGE_FEATURES", "read-only-rootfs", "file://read-only-rootfs.patch", "", d)} \
 "
 
 SRC_URI[md5sum] = "4e35ca53ffebd566ba26bc22decf8aa2"
