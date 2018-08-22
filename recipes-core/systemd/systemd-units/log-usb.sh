@@ -57,21 +57,29 @@ if [ -d "/mnt/usb/log" ]; then
 
     DATE="$(date --utc +"%Y-%m-%d-%H%M%S")"
 
-    LOGFILE="/mnt/usb/log/${IDENTIFIER}_${DATE}_$(cat /etc/medusa-version).zip"
+    LOGFILE="/mnt/usb/log/${IDENTIFIER}_${DATE}_$(cat /etc/medusa-version)"
 
-    echo "Writing log to $LOGFILE..."
+    echo "Writing short log to $LOGFILE-short.zip..."
     led2_blue
-    if journalctl -o short-precise --no-hostname | gzip --fast > $LOGFILE; then
-        echo "...done ($(stat -c%s $LOGFILE) bytes written)"
-        echo "Unmounting usb..."
-        if umount /mnt/usb; then
-            echo "...done"
+    if journalctl -o short-precise --no-hostname --no-pager | gzip --fast > $LOGFILE-short.zip; then
+        echo "...done ($(stat -c%s $LOGFILE-short.zip) bytes written)"
+        echo "Writing json log to $LOGFILE-json.zip..."
+        if journalctl -o json --no-pager | gzip --fast > $LOGFILE-json.zip; then
+            echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+            echo "Unmounting usb..."
+            if umount /mnt/usb; then
+                echo "...done"
+            fi
+            led1_off
+            led2_off
+            exit 0
+        else
+            echo "...ERROR ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+            led2_red
+            exit 1
         fi
-        led1_off
-        led2_off
-        exit 0
     else
-        echo "...ERROR ($(stat -c%s $LOGFILE) bytes written)"
+        echo "...ERROR ($(stat -c%s $LOGFILE-short.zip) bytes written)"
         led2_red
         exit 1
     fi
