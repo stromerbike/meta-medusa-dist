@@ -14,7 +14,7 @@ SRC_URI = " \
     file://use-native-gcc-only-for-bin2c-and-ptimec.patch \
     ${@bb.utils.contains("IMAGE_FEATURES", "read-only-rootfs", "file://read-only-rootfs.patch", "", d)} \
 "
-SRCREV = "491c5a5496e38e524b21498a3bdad2a3ea6416bf"
+SRCREV = "265f80c60d7fc17263403bd43b97b3a509415e04"
 
 S = "${WORKDIR}/git"
 
