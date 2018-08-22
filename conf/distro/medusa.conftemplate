@@ -76,6 +76,12 @@ INHERIT += "buildhistory"
 BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
+# wvdial and wvstreams mirrors
+SRC_URI_remove_pn-wvdial = "http://${BPN}.googlecode.com/files/${BP}.tar.bz2"
+SRC_URI_append_pn-wvdial = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.bz2"
+SRC_URI_remove_pn-wvstreams = "http://${BPN}.googlecode.com/files/${BP}.tar.gz"
+SRC_URI_append_pn-wvstreams = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.gz"
+
 # Phytec git mirrors
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
