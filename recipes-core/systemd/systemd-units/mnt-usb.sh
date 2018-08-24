@@ -22,7 +22,7 @@ start)
         echo "Mounted sda instead"
         exit 0
     else
-        echo "Mounting of sda failed"
+        echo "<3>Mounting of sda failed"
         exit 1
     fi
 ;;

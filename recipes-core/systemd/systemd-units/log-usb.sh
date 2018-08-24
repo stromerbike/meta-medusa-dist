@@ -74,12 +74,12 @@ if [ -d "/mnt/usb/log" ]; then
             led2_off
             exit 0
         else
-            echo "...ERROR ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+            echo "<3>...ERROR ($(stat -c%s $LOGFILE-json.zip) bytes written)"
             led2_red
             exit 1
         fi
     else
-        echo "...ERROR ($(stat -c%s $LOGFILE-short.zip) bytes written)"
+        echo "<3>...ERROR ($(stat -c%s $LOGFILE-short.zip) bytes written)"
         led2_red
         exit 1
     fi
