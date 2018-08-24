@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox dash evtest fbida gnupg gzip iproute2 ppp rsync wvdial xz"
+RDEPENDS_${PN} += "bash busybox dash evtest fbida gnupg gzip iproute2 ppp rsync systemd (>= 236) wvdial xz"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -20,7 +20,7 @@ SRC_URI += " \
             file://communication.target \
             file://debug.target \
             file://drive.target \
-            file://eth1.network \
+            file://eth0.network \
             file://fwu-usb.service \
             file://fwu-usb.sh \
             file://gsm.service \
@@ -125,7 +125,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/images/logo.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/eth1.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
