@@ -75,6 +75,6 @@ do_install_append() {
     sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
     sed -i -e 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
 
-    # do not setup /var/log/journal as it is write protected
-    sed -i -e 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
+    # do not setup /var/log/journal and /var/spool since the file system is normally read-only
+    sed -i -e 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
 }
