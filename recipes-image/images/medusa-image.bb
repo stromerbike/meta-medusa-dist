@@ -53,5 +53,4 @@ IMAGE_CMD_TAR = "tar --sort=name"
 
 # Create debug file system
 #IMAGE_GEN_DEBUGFS = "1"
-#PACKAGE_DEBUG_SPLIT_STYLE = "debug-file-directory"
 #IMAGE_FSTYPES_DEBUGFS = "tar.xz"
