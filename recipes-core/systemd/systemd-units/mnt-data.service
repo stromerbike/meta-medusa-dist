@@ -1,8 +1,0 @@
-[Unit]
-Description=mnt-data
-
-[Service]
-Type=oneshot
-ExecStart=/etc/scripts/mnt-data.sh start
-ExecStop=/etc/scripts/mnt-data.sh stop
-RemainAfterExit=yes

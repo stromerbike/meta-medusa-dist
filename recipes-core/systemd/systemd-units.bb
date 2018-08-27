@@ -29,8 +29,7 @@ SRC_URI += " \
             file://led.sh \
             file://log-usb.service \
             file://log-usb.sh \
-            file://mnt-data.service \
-            file://mnt-data.sh \
+            file://mnt-data.mount \
             file://mnt-log.service \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
@@ -67,7 +66,7 @@ SYSTEMD_SERVICE_${PN} = " \
     can0.service \
     gsm.service \
     led.service \
-    mnt-data.service \
+    mnt-data.mount \
     mnt-log.service \
     peripheral-mpio.service \
     peripheral-pwr.service \
@@ -101,8 +100,7 @@ do_install_append() {
     install -d ${D}/mnt/ubi3
     install -d ${D}/mnt/data
     install -d ${D}/mnt/log
-    install -m 0644 ${WORKDIR}/mnt-data.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/mnt-data.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/mnt-data.mount ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/mnt-log.service ${D}${systemd_system_unitdir}
 
     install -d ${D}/mnt/rfs_inactive

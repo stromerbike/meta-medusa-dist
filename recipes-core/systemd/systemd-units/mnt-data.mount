@@ -1,0 +1,7 @@
+[Unit]
+Description=mnt-data
+
+[Mount]
+What=/dev/ubi0_2
+Where=/mnt/data
+Type=ubifs
