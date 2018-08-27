@@ -57,6 +57,10 @@ do_install_append() {
     # disable user sessions service
     rm ${D}${systemd_system_unitdir}/multi-user.target.wants/systemd-user-sessions.service
 
+    # remove udev rules for groups which do not exist to avoid errors
+    sed -i -e '/GROUP=\"kvm\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
+    sed -i -e '/GROUP=\"render\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
+
     # use fixed machine-id
     echo "1234567890abcdef1234567890abcdef" | tee ${D}${sysconfdir}/machine-id
     rm ${D}${base_bindir}/systemd-machine-id-setup
