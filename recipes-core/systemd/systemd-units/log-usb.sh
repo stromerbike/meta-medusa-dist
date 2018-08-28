@@ -61,10 +61,10 @@ if [ -d "/mnt/usb/log" ]; then
 
     echo "Writing short log to $LOGFILE-short.zip..."
     led2_blue
-    if journalctl -o short-precise --no-hostname --no-pager | gzip --fast > $LOGFILE-short.zip; then
+    if journalctl -a -o short-precise --no-hostname --no-pager | gzip --fast > $LOGFILE-short.zip; then
         echo "...done ($(stat -c%s $LOGFILE-short.zip) bytes written)"
         echo "Writing json log to $LOGFILE-json.zip..."
-        if journalctl -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip --fast > $LOGFILE-json.zip; then
+        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip --fast > $LOGFILE-json.zip; then
             echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
             echo "Unmounting usb..."
             if umount /mnt/usb; then
