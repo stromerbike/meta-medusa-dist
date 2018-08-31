@@ -3,7 +3,8 @@ Description=peripheral-mpio
 
 [Service]
 Type=oneshot
-ExecStart=/etc/scripts/peripheral-mpio.sh
+ExecStart=/etc/scripts/peripheral-mpio.sh start
+ExecStop=/etc/scripts/peripheral-mpio.sh stop
 RemainAfterExit=yes
 
 [Install]
