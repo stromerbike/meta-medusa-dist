@@ -24,7 +24,6 @@ PACKAGECONFIG_remove = " \
     polkit \
     quotacheck \
     randomseed \
-    #resolved \
     smack \
     sysusers \
     utmp \
