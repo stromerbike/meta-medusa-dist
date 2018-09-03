@@ -1,8 +1,13 @@
 diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
-index f799f65..db03225 100644
+index f799f65f0..fa56af6da 100644
 --- a/src/bluetooth.service.in
 +++ b/src/bluetooth.service.in
-@@ -6,7 +6,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
+@@ -2,11 +2,12 @@
+ Description=Bluetooth service
+ Documentation=man:bluetoothd(8)
+ ConditionPathIsDirectory=/sys/class/bluetooth
++RequiresMountsFor=/mnt/data
+ 
  [Service]
  Type=dbus
  BusName=org.bluez

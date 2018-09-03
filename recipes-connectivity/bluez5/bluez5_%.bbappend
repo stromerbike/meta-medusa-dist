@@ -5,6 +5,8 @@ SRC_URI += " \
             file://TIInit_6.7.16.bts \
 "
 
+EXTRA_OECONF += "--localstatedir=/mnt/data/var"
+
 FILES_${PN}_append = " ${base_libdir}/firmware/ti-connectivity/*.bts"
 
 do_install_append() {
