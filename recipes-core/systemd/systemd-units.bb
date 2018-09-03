@@ -125,7 +125,7 @@ do_install_append() {
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/bnep0.service ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
