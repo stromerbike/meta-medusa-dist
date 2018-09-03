@@ -16,8 +16,7 @@ start)
     echo "1" > /sys/class/gpio/gpio120/value
 
     # hci0
-    hciattach /dev/ttymxc2 texas 115200
-    hciconfig hci0 reset
+    hciattach /dev/ttymxc2 texas
 ;;
 
 stop)
