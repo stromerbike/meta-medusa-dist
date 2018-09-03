@@ -33,6 +33,8 @@ alias sstop='systemctl stop'
 
 # some various aliases
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
+alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
+alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
 alias iptraf='iptraf-ng -s ppp0'
 
 # stromer specific aliases

@@ -27,6 +27,8 @@ alias sstat='systemctl status -l -n 25 --no-pager'
 
 # some various aliases
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
+alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
+alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
