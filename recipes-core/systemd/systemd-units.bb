@@ -20,6 +20,7 @@ SRC_URI += " \
             file://communication.target \
             file://debug.target \
             file://drive.target \
+            file://bnep0.network \
             file://eth0.network \
             file://fwu-usb.service \
             file://fwu-usb.sh \
@@ -124,6 +125,7 @@ do_install_append() {
 
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/bnep0.service ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
