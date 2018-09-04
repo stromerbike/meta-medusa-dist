@@ -1,6 +1,6 @@
 #!/bin/dash
 
-NAME=gpio
+NAME=peripheral-stem
 DESC="Initialization of external gpio expander"
 
 case $1 in
