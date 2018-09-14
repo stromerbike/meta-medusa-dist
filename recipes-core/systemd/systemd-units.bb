@@ -47,6 +47,7 @@ SRC_URI += " \
             file://wlan0.network \
             file://wlan0.sh \
             file://wvdial.service \
+            file://wvdial-gsm-workaround.sh \
             file://wvdial-swisscom.service \
 "
 
@@ -73,7 +74,6 @@ SYSTEMD_SERVICE_${PN} = " \
     peripheral-pwr.service \
     peripheral-stem.service \
     usb.service \
-    wvdial.service \
 "
 
 do_install_append() {
@@ -128,6 +128,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/wvdial-gsm-workaround.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/wvdial-swisscom.service ${D}${systemd_system_unitdir}
 
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}

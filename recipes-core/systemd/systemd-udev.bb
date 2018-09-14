@@ -7,7 +7,8 @@ PR = "r0"
 
 SRC_URI += " \
             file://50-sda.rules \
-            file://50-tty.rules \
+            file://50-ttyacm0.rules \
+            file://50-ttymxc.rules \
 "
 
 FILES_${PN}_append = " \
@@ -17,5 +18,6 @@ FILES_${PN}_append = " \
 do_install () {
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/
-    install -m 0644 ${WORKDIR}/50-tty.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-ttyacm0.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-ttymxc.rules ${D}${sysconfdir}/udev/rules.d/
 }

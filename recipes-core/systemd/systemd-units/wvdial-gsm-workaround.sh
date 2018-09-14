@@ -1,7 +1,7 @@
 #!/bin/dash
 
 NAME=gsm
-DESC="Initialization of gsm chip"
+DESC="Controls the gsm chip's power"
 
 case $1 in
 start)
