@@ -9,7 +9,7 @@ start)
     do
         sleep 1
     done
-    ip link set can0 up type can bitrate 250000 restart-ms 100
+    ip link set can0 up type can bitrate 250000 restart-ms 5000
 ;;
 
 stop)

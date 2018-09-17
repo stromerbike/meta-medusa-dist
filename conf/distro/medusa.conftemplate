@@ -98,7 +98,6 @@ EXTRA_IMAGE_FEATURES = "debug-tweaks read-only-rootfs"
 # Do not symlink log to a volatile storage in order to have a persistent systemd journal
 VOLATILE_LOG_DIR = "no"
 
-
 # Install libpthread and libthread_db in /lib/.debug for gdb
 # Remark: Everything else in /lib/.debug is removed in glibc_%.bbappend
 IMAGE_INSTALL_append = " ${TCLIBC}-dbg "
