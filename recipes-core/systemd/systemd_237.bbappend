@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
             file://system.conf \
+            file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
             file://timesyncd.conf \
 "
@@ -66,8 +67,9 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
 
-    # start timesyncd service after drive.target
+    # start resolved and timesyncd service after drive.target
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
+    mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-resolved.service
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
