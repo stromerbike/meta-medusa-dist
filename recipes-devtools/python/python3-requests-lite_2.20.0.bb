@@ -1,12 +1,12 @@
 DESCRIPTION = "Lite version (without HTTPS) of Python HTTP for Humans."
 HOMEPAGE = "http://python-requests.org"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=bfbeafb85a2cee261510d65d5ec19156"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=a8d5a1d1c2d53025e2282c511033f6f7"
 
 S = "${WORKDIR}/git"
 
-SRCREV = "883caaf145fbe93bd0d208a6b864de9146087312"
-PV = "2.19.1+git${SRCPV}"
+SRCREV = "bd840450c0d1e9db3bf62382c15d96378cc3a056"
+PV = "2.20.0+git${SRCPV}"
 SRC_URI = "git://github.com/requests/requests.git;branch=master \
            file://require-urllib3-lite.patch \
 "

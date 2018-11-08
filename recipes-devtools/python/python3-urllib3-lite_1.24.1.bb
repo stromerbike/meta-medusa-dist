@@ -5,8 +5,8 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=ea114851ad9a8c311aac8728a681a067"
 
 S = "${WORKDIR}/git"
 
-SRCREV = "7c216f433e39e184b84cbfa49e41135a89e4baa0"
-PV = "1.23+git${SRCPV}"
+SRCREV = "a6ec68a5c5c5743c59fe5c62c635c929586c429b"
+PV = "1.24.1+git${SRCPV}"
 SRC_URI = "git://github.com/urllib3/urllib3.git;branch=release \
 "
 
