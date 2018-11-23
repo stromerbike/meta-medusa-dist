@@ -1,16 +1,9 @@
 SYSTEMD_AUTO_ENABLE_${PN} = "disable"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-SRC_URI = "git://git.savannah.gnu.org/gpsd.git \
-    file://0001-SConstruct-prefix-includepy-with-sysroot-and-drop-sy.patch \
-    file://0004-SConstruct-disable-html-and-man-docs-building-becaus.patch \
-    file://0001-include-sys-ttydefaults.h.patch \
-    file://gpsd.service.patch \
+SRC_URI += " \
+            file://gpsd.service.patch \
 "
-
-SRCREV = "18bc54e3ef722495a7ff84db7321c1a399806149"
-
-S = "${WORKDIR}/git"
 
 # As of version 3.17, gpsd cannot be built using python3 (should be possible in future with 3.18).
 # In order to still install -pygps for python3, the installation has to be done in a special way.
