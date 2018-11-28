@@ -3,11 +3,12 @@ Description=ble
 After=dbus.service drive.target
 Requires=dbus.service
 Wants=drive.target
+Before=bluetooth.service
 
 [Service]
 Type=oneshot
-ExecStart=/etc/scripts/ble.sh start
-ExecStop=/etc/scripts/ble.sh stop
+ExecStart=/etc/scripts/ble-attach.sh start
+ExecStop=/etc/scripts/ble-attach.sh stop
 RemainAfterExit=yes
 
 [Install]

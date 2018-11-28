@@ -13,8 +13,10 @@ SRC_URI += " \
             file://images/done.png \
             file://images/error.png \
             file://images/logo.png \
-            file://ble.service \
-            file://ble.sh \
+            file://ble-attach.service \
+            file://ble-attach.sh \
+            file://ble-revision.service \
+            file://ble-revision.sh \
             file://bnep0.network \
             file://can0.service \
             file://can0.sh \
@@ -63,7 +65,8 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
-    ble.service \
+    ble-attach.service \
+    ble-revision.service \
     can0.service \
     gsm.service \
     led.service \
@@ -78,8 +81,10 @@ SYSTEMD_SERVICE_${PN} = " \
 do_install_append() {
     install -d ${D}${systemd_system_unitdir}
     install -d ${D}${sysconfdir}/scripts
-    install -m 0644 ${WORKDIR}/ble.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/ble.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/ble-attach.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/ble-attach.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/ble-revision.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/ble-revision.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
