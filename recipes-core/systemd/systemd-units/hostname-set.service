@@ -1,0 +1,12 @@
+[Unit]
+Description=hostname-set
+Before=medusa-DataServer.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+ExecStart=/bin/dash -c "/bin/hostname $(/bin/cat /mnt/data/hostname) || true"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=drive.target

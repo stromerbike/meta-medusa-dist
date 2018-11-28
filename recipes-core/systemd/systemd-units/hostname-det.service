@@ -1,0 +1,13 @@
+[Unit]
+Description=hostname-det
+After=communication.target
+Wants=communication.target
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/hostname-det.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=debug.target

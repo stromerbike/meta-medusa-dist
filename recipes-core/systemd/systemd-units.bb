@@ -28,6 +28,9 @@ SRC_URI += " \
             file://fwu-usb.sh \
             file://gsm.service \
             file://gsm.sh \
+            file://hostname-det.service \
+            file://hostname-det.sh \
+            file://hostname-set.service \
             file://led.service \
             file://led.sh \
             file://log-usb.service \
@@ -69,6 +72,8 @@ SYSTEMD_SERVICE_${PN} = " \
     ble-revision.service \
     can0.service \
     gsm.service \
+    hostname-det.service \
+    hostname-set.service \
     led.service \
     mnt-data.mount \
     mnt-log.service \
@@ -89,6 +94,9 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-mpio.service ${D}${systemd_system_unitdir}
