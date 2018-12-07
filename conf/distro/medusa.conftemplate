@@ -38,8 +38,8 @@ VIRTUAL-RUNTIME_initscripts = ""
 # systemd settings
 SYSTEMD_DEFAULT_TARGET = "debug.target"
 
-# Remove QML
-RDEPENDS_qtbase_remove += "qtdeclarative-render2d"
+# Remove QML software renderer
+RDEPENDS_qtbase_remove += "opengldummy qtdeclarative-render2d"
 
 # Mask Escatec packagegroups appends since we use our own image
 BBMASK += "meta-medusa-bsp/recipes-extended/packagegroups"
@@ -103,13 +103,7 @@ VOLATILE_LOG_DIR = "no"
 IMAGE_INSTALL_append = " ${TCLIBC}-dbg "
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
-# sumo fixes
-BBMASK += "poky/meta/recipes-sato/images"
-BBMASK += "poky/meta/recipes-rt/images"
-BBMASK += "poky/meta/recipes-graphics/images"
-BBMASK += "poky/meta/recipes-extended/images"
-BBMASK += "poky/meta/recipes-core/ovmf"
-BBMASK += "poky/meta/recipes-core/images"
+# phytec "fixes"
 BBMASK += "meta-phytec/recipes-bsp/barebox"
 BBMASK += "meta-phytec/recipes-bsp/u-boot/u-boot-mkimage_2016.03.bbappend"
 BBMASK += "meta-phytec/recipes-kernel/cryptodev/cryptodev-module_1.8.bbappend"
