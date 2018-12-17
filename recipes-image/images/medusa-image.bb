@@ -38,7 +38,7 @@ IMAGE_INSTALL_append = " \
                          gdb perf strace \
                          openssh openssh-sftp-server \
                          python3-requests-lite python3-urllib3-lite \
-                         dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
+                         bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
                          acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iperf3 less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat systemd-extra-utils tree \
 "
 

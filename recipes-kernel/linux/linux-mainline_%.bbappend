@@ -6,7 +6,7 @@ SRC_URI += " \
             file://CVE-2017-1000251.patch \
             file://filesystems.cfg \
             file://jtag-pm.patch \
-            file://ppp-network.cfg \
+            file://network.cfg \
             file://SiseriffLTStd-Regular.otf \
             file://usb-devices.cfg \
             file://virtual-devices.cfg \
