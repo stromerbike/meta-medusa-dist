@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash busybox dash evtest fbida gnupg gzip iproute2 ppp rsync systemd (>= 236) wvdial xz"
+RDEPENDS_${PN} += "bash bluez5 busybox dash evtest fbida gnupg gzip iproute2 ppp rsync systemd (>= 236) wvdial xz"
 
 SRC_URI += " \
             file://images/busy.png \

@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 RDEPENDS_${PN} = "bash"
-RRECOMMENDS_${PN} = "dt-utils-barebox-state"
+RRECOMMENDS_${PN} = "bluez5 dt-utils-barebox-state"
 
 SRC_URI += " \
             file://hostname.sh \
