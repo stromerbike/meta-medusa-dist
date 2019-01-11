@@ -5,8 +5,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a8d5a1d1c2d53025e2282c511033f6f7"
 
 S = "${WORKDIR}/git"
 
-SRCREV = "6cfbe1aedd56f8c2f9ff8b968efe65b22669795b"
-PV = "2.20.1+git${SRCPV}"
+SRCREV = "5a1e738ea9c399c3f59977f2f98b083986d6037a"
+PV = "2.21.1+git${SRCPV}"
 SRC_URI = "git://github.com/requests/requests.git;branch=master \
            file://require-urllib3-lite.patch \
 "
