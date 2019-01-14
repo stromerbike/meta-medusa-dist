@@ -10,15 +10,19 @@ SUMMARY = ""
 DESCRIPTION = "Medusa image"
 LICENSE = "MIT"
 
-# Added packets from manufacturer:
+# Added packets from and for manufacturer:
 # barebox - bootloader
 # dt-utils-barebox-state - linux packet for set/get shared barebox variables
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
 # systemd-analyze - debug information collection
+# iperf3 - used during production for bandwidth test
+# medusa-version - used during production for optaining version
 IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
                          kernel-image kernel-devicetree \
                          systemd-analyze \
+                         iperf3 \
+                         medusa-version \
 "
 
 # Added packets from Stromer:
@@ -39,7 +43,7 @@ IMAGE_INSTALL_append = " \
                          openssh openssh-sftp-server \
                          python3-requests-lite python3-urllib3-lite \
                          bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iperf3 less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat systemd-extra-utils tree \
+                         acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat systemd-extra-utils tree \
 "
 
 # Define locales to be installed
