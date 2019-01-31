@@ -17,6 +17,9 @@ start)
 
     # hci0
     hciattach /dev/ttymxc2 texas
+
+    # Bluetooth daemon "/usr/libexec/bluetooth/bluetoothd" need to be started before the hci0 interface is up !!!
+    hciconfig hci0 down
 ;;
 
 stop)
