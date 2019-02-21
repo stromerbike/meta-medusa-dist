@@ -30,20 +30,22 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
 # coreutils util-linux - contains a lot of tools in separate small executables while providing fast execution time
 # tzdata - timezone database
-# gdbserver tcf-agent - low level debugging
+# acl fuse-exfat - extended filesystem support
 # gdb perf strace - debugging
+# gdbserver tcf-agent - low level debugging
 # openssh openssh-sftp-server - ssh and sftp
 IMAGE_INSTALL_append = " \
                          bareboximd \
                          busybox \
                          coreutils util-linux \
                          tzdata tzdata-misc tzdata-posix tzdata-right tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
-                         gdbserver tcf-agent \
+                         acl fuse-exfat \
                          gdb perf strace \
+                         gdbserver tcf-agent \
                          openssh openssh-sftp-server \
                          python3-requests-lite python3-urllib3-lite \
                          bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         acl bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat systemd-extra-utils tree \
+                         bluez-tools can-utils dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat systemd-extra-utils tree \
 "
 
 # Define locales to be installed
