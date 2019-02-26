@@ -8,6 +8,7 @@ RDEPENDS_${PN} = "bash"
 RRECOMMENDS_${PN} = "bluez5 dt-utils-barebox-state"
 
 SRC_URI += " \
+            file://ble-revision.sh \
             file://hostname.sh \
 "
 
@@ -17,5 +18,6 @@ FILES_${PN}_append = " \
 
 do_install () {
     install -d ${D}${sysconfdir}/scripts
+    install -m 0755 ${WORKDIR}/ble-revision.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/hostname.sh ${D}${sysconfdir}/scripts/
 }
