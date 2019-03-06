@@ -34,6 +34,8 @@ Busybox configuration (1.27.2):
 Ideas and todo's for reducing boot time (to Gui):
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
 - Set GPIO's to desired direction and possibly value already in device tree.
+- https://elinux.org/Boot_Time
+- https://elinux.org/Boot-up_Time_Reduction_Howto
 
 Ideas for reducing boot time (to drivable vehicle)
 - Make service (using cansend or better an own mini-application) sending CANopen SYNC messages to wake up nodes just after can0.service has been started.
