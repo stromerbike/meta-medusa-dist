@@ -2,9 +2,11 @@
 * text=auto
 
 # Ensure no CRLF line-endings, neither on checkout nor on checkin for specified file types.
+*.awk           text eol=lf
 *.bashrc        text eol=lf
 *.bb            text eol=lf
 *.bbappend      text eol=lf
+*.cfg           text eol=lf
 *.conf          text eol=lf
 *.diff          text eol=lf
 *.gitattributes text eol=lf
