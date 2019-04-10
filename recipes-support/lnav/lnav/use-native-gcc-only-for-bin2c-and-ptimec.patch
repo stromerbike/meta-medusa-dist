@@ -1,15 +1,18 @@
 diff --git a/configure.ac b/configure.ac
-index f36438b..63f35c6 100644
+index 148dbcc..e657e44 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -10,23 +10,6 @@ AC_CANONICAL_HOST
+@@ -10,26 +10,6 @@ AC_CANONICAL_HOST
  
  AX_CXX_COMPILE_STDCXX_14([noext], [mandatory])
  
--for defdir in /opt/local /usr/local /usr /; do
+-for defdir in /opt/local /usr/local; do
 -    if test -d "$defdir/include"; then
 -        CPPFLAGS="$CPPFLAGS -I$defdir/include"
 -    fi
+-done
+-
+-for defdir in /opt/local /usr/local /usr /; do
 -
 -    if test -d "$defdir/lib64"; then
 -        LDFLAGS="$LDFLAGS -L$defdir/lib64"
@@ -27,7 +30,7 @@ index f36438b..63f35c6 100644
  dnl you are building it)
  AS_CASE([x$srcdir],
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 6b38a15..de3ab7c 100644
+index 398dfe2..f96440f 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -1,7 +1,7 @@
@@ -52,7 +55,7 @@ index 6b38a15..de3ab7c 100644
  help.c: $(srcdir)/help.txt bin2c
  	$(BIN2C_V)./bin2c -z -c $(srcdir)/help.txt $@
  
-@@ -381,12 +387,6 @@ lnav_test_LDADD = \
+@@ -401,12 +407,6 @@ lnav_test_LDADD = \
  	$(TEXT2C_FILES) \
  	$(LDADD)
  
@@ -64,4 +67,5 @@ index 6b38a15..de3ab7c 100644
 -
  DISTCLEANFILES = \
  	data_scanner_re.cc \
- 	dump-pid-sh.c \
+ 	default-config-json.c \
+
