@@ -23,6 +23,4 @@ do_install_append() {
     mv ${D}${libdir}/python2.7/site-packages/* ${D}${libdir}/python3.7/site-packages/
     rm -r ${D}${libdir}/python2.7/
     ${STAGING_BINDIR_NATIVE}/python3-native/python3 -m compileall ${D}${libdir}/python3.7/site-packages/gps
-    ${STAGING_BINDIR_NATIVE}/python3-native/python3 -O -m compileall ${D}${libdir}/python3.7/site-packages/gps
-    ${STAGING_BINDIR_NATIVE}/python3-native/python3 -OO -m compileall ${D}${libdir}/python3.7/site-packages/gps
 }
