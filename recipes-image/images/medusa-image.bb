@@ -38,7 +38,7 @@ IMAGE_INSTALL_append = " \
                          bareboximd \
                          busybox \
                          coreutils util-linux \
-                         tzdata tzdata-misc tzdata-posix tzdata-right tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
+                         tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat \
                          gdb perf strace \
                          gdbserver tcf-agent \
