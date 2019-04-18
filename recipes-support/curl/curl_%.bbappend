@@ -1,1 +1,0 @@
-RRECOMMENDS_lib${BPN} = ""
