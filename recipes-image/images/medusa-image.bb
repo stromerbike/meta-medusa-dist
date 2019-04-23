@@ -17,7 +17,7 @@ LICENSE = "MIT"
 # kernel-devicetree - copy dtb into rootfs (boot directory)
 # systemd-analyze - debug information collection
 # iperf3 - used during production for bandwidth test
-# medusa-version - used during production for optaining version
+# medusa-version - used during production for obtaining version
 IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
                          kernel-image kernel-devicetree \
                          systemd-analyze \
