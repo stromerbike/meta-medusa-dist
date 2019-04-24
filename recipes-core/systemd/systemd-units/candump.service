@@ -1,0 +1,11 @@
+[Unit]
+Description=candump
+After=can0.service
+Requires=can0.service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c '/usr/bin/candump can0 -t d | /usr/bin/multilog s100000 n10 wcandump /tmp/candump'
+
+[Install]
+WantedBy=drive.target

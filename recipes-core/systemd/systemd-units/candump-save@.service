@@ -1,0 +1,9 @@
+[Unit]
+Description=candump-save
+After=candump.service
+Requires=candump.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/candump-save.sh %I

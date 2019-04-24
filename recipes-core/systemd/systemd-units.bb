@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += "bash bluez5 busybox dash evtest fbida gnupg-gpgv gzip iproute2 ppp rsync systemd (>= 236) wvdial xz"
+RDEPENDS_${PN} += "bash bluez5 busybox can-utils dash daemontools-encore evtest fbida gnupg-gpgv gawk gzip iproute2 inotify-tools ppp procps rsync systemd (>= 236) tar wvdial xz zip"
 
 SRC_URI += " \
             file://images/busy.png \
@@ -18,6 +18,10 @@ SRC_URI += " \
             file://bnep0.network \
             file://can0.service \
             file://can0.sh \
+            file://candump-save@.service \
+            file://candump-save.sh \
+            file://candump.service \
+            file://candump.awk \
             file://communication.target \
             file://debug.target \
             file://drive.target \
@@ -68,6 +72,7 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_SERVICE_${PN} = " \
     ble-attach.service \
     can0.service \
+    candump.service \
     gsm.service \
     hostname-det.service \
     hostname-set.service \
@@ -87,6 +92,10 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/ble-attach.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/candump-save@.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/candump-save.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/candump.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/candump.awk ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
