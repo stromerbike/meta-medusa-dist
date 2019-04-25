@@ -8,7 +8,7 @@ fi
 if mkdir "/tmp/candump.lock"; then
     echo "No candump-save service is already active"
 else
-    echo "<4>A candump-save service is already active"
+    echo "A candump-save service is already active"
     exit 1
 fi
 
