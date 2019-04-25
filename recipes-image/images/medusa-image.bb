@@ -16,11 +16,13 @@ LICENSE = "MIT"
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
 # systemd-analyze - debug information collection
+# bluez-tools - bt-adapter used during production for obtaining MAC
 # iperf3 - used during production for bandwidth test
 # medusa-version - used during production for obtaining version
 IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
                          kernel-image kernel-devicetree \
                          systemd-analyze \
+                         bluez-tools \
                          iperf3 \
                          medusa-version \
 "
@@ -45,7 +47,7 @@ IMAGE_INSTALL_append = " \
                          openssh openssh-sftp-server \
                          python3-requests-lite python3-urllib3-lite \
                          bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         bluez-tools dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
+                         dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
 "
 
 # Define locales to be installed
