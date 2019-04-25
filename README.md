@@ -17,7 +17,6 @@ Busybox configuration (1.27.2):
 - set "Coreutils ---> link" to N; Remark: To avoid conflicts with coreutils.
 - set "Coreutils ---> nice" to N; Remark: To avoid conflicts with coreutils.
 - set "Coreutils ---> printenv" to N; Remark: To avoid conflicts with coreutils.
-- set "Coreutils ---> w" to N; Remark: To avoid conflicts with procps.
 - set "Linux System Utilities ---> cal" to N; Remark: To avoid conflicts with util-linux.
 - set "Linux System Utilities ---> fallocate" to N; Remark: To avoid conflicts with util-linux.
 - set "Linux System Utilities ---> fdformat" to N; Remark: To avoid conflicts with util-linux.
