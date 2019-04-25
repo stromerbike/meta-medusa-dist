@@ -15,6 +15,9 @@ fi
 dir="/tmp/candump/"
 name="$1"
 
+echo "Waiting for 10 seconds to obtain some more candump"
+sleep 10
+
 inotifywait -t 10 -e attrib /tmp/candump/current &>/dev/null &
 pkill -SIGALRM multilog &
 wait
@@ -27,7 +30,7 @@ for file in "$dir"*; do
     fi
 done
 
-echo "Concatenating $previousLatest $latest and saving as xz-compressed PCAN trace file /mnt/data/candump/$name.trc.xz"
+echo "Concatenating $previousLatest $latest and saving as PCAN trace file /mnt/data/candump/$name.trc"
 cat $previousLatest $latest > $dir$name.candump
 awk -f /etc/scripts/candump.awk $dir$name.candump > $dir$name.trc
 rm $dir$name.candump
