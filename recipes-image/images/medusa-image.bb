@@ -47,7 +47,7 @@ IMAGE_INSTALL_append = " \
                          openssh openssh-sftp-server \
                          python3-requests-lite python3-urllib3-lite \
                          bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
-                         dtc fbgrab fbset fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
+                         dtc fbgrab fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
 "
 
 # Define locales to be installed
