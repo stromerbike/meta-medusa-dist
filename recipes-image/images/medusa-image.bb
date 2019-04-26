@@ -30,7 +30,6 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # Added packets from Stromer:
 # bareboximd - tool for reading out bootloader version information from within userspace
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
-# coreutils util-linux - contains a lot of tools in separate small executables while providing fast execution time
 # tzdata - timezone database
 # acl fuse-exfat - extended filesystem support
 # gdb perf strace - debugging
@@ -39,7 +38,6 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 IMAGE_INSTALL_append = " \
                          bareboximd \
                          busybox \
-                         coreutils util-linux \
                          tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat \
                          gdb perf strace \
