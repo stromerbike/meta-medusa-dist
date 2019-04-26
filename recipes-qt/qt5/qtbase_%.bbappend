@@ -2,6 +2,16 @@ PACKAGECONFIG_append = " libinput linuxfb no-opengl"
 PACKAGECONFIG_DEFAULT = "udev widgets libs"
 PACKAGECONFIG_SYSTEM = "libpng"
 
+# The creation of libQt5PrintSupport can currently not be avoided: https://bugreports.qt.io/browse/QTBUG-39634
+QT_CONFIG_FLAGS += " \
+    -no-feature-concurrent \
+    -no-feature-printer \
+    -no-feature-sql \
+    -no-feature-testlib \
+    -no-feature-vnc \
+    -no-feature-xml \
+"
+
 # Set default QT_QPA_PLATFORM for all phytec boards
 do_configure_prepend() {
         # adapt qmake.conf to our needs
