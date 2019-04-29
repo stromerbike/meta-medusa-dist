@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
+# candump-save preferably uses the more performant gawk over busybox awk 
 RDEPENDS_${PN} += "bash bluez5 busybox can-utils dash daemontools-encore evtest fbida gnupg-gpgv gawk gzip iproute2 inotify-tools ppp procps rsync systemd (>= 236) tar wvdial xz zip"
 
 SRC_URI += " \
