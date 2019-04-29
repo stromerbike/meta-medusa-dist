@@ -45,6 +45,6 @@ fi
 awk -f /etc/scripts/candump.awk $dir$name.candump > $dir$name.trc
 rm $dir$name.candump
 mkdir -p /mnt/data/candump
-mv $dir$name.trc /mnt/data/candump
+mv -f $dir$name.trc /mnt/data/candump/$name.trc
 
 rm -r "/tmp/candump.lock"
