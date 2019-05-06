@@ -5,6 +5,14 @@ SRC_URI += " \
             file://TIInit_6.7.16.bts \
 "
 
+PACKAGECONFIG_remove = " \
+    obex-profiles \
+    a2dp-profiles \
+    avrcp-profiles \
+    hid-profiles \
+    hog-profiles \
+"
+
 EXTRA_OECONF += "--localstatedir=/mnt/data/var"
 
 FILES_${PN}_append = " ${base_libdir}/firmware/ti-connectivity/*.bts"
