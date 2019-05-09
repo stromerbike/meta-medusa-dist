@@ -3,6 +3,8 @@ SRC_URI += " \
             file://defconfig.cfg \
 "
 
-SYSTEMD_AUTO_ENABLE_${PN}-syslog = "disable"
+SRC_URI_remove = "file://syslog.cfg"
+
+RRECOMMENDS_${PN} = ""
 
 INSANE_SKIP_${PN} += "already-stripped"

@@ -14,13 +14,22 @@ Busybox configuration (1.27.2):
 - set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
 - set "Init Utilities ---> init" to N; Remark: To avoid conflicts with systemd's runlevel.
 - set "Init Utilities ---> linuxrc" to N; Remark: Not needed with systemd.
+- set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
+- set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Network Utilities" ---> httpd" to No; Remark: Not needed.
+- set "Network Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
+- set "Network Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envdir" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> softlimit" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore).
+- set "System Logging Utilities ---> klogd to N"; Remark: Not needed with systemd-journald.
+- set "System Logging Utilities ---> logger to N"; Remark: Not needed with systemd-journald.
+- set "System Logging Utilities ---> logread to N"; Remark: Not needed with systemd-journald.
+- set "System Logging Utilities ---> syslogd to N"; Remark: Not needed with systemd-journald.
 
 Ideas and todo's for reducing boot time (to Gui):
 - Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
