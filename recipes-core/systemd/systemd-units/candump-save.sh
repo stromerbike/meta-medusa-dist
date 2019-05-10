@@ -39,7 +39,7 @@ if [ "$name" == "manual" ]; then
     cat $previousLatest $latest > $dir$name.candump
 else
     echo "Concatenating $previousLatest $latest and saving as size limited PCAN trace file /mnt/data/candump/$name.trc"
-    cat $previousLatest $latest | tail -n 5000 > $dir$name.candump
+    cat $previousLatest $latest | tail -n 10000 > $dir$name.candump
 fi
 
 awk -f /etc/scripts/candump.awk $dir$name.candump > $dir$name.trc
