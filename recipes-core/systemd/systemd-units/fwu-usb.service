@@ -1,8 +1,8 @@
 [Unit]
 Description=fwu-usb
-After=mnt-rfs.service
+After=mnt-rfs.service led.service drive.target
 Requires=mnt-rfs.service
-Wants=led.service
+Wants=led.service drive.target
 
 [Service]
 Type=simple

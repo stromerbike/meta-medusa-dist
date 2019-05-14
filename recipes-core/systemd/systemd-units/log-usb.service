@@ -1,7 +1,7 @@
 [Unit]
 Description=log-usb
-After=mnt-log.service
-Wants=mnt-log.service led.service
+After=mnt-log.service led.service drive.target
+Wants=mnt-log.service led.service drive.target
 
 [Service]
 Type=oneshot

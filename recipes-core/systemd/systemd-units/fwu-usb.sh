@@ -67,16 +67,42 @@ enable_writeaccess ()
     fi
 }
 
+check_purge_data_ignore ()
+{
+    if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8001")" =~ true ]]; then
+        echo "locked is true: purgedata will be ignored!"
+        OPTION_PURGEDATA_IGNORE="yes"
+    else
+        echo "locked is false"
+    fi
+    if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8002")" =~ true ]]; then
+        echo "theft is true: purgedata will be ignored!"
+        OPTION_PURGEDATA_IGNORE="yes"
+    else
+        echo "theft is false"
+    fi
+}
+
 purge_data ()
 {
-    if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-        if [ -f /mnt/usb/autoupdate-settings/purgedata* ]; then
-            echo "Stopping DataServer application..."
-            systemctl stop medusa-DataServer || true
+    if [ -f /mnt/usb/autoupdate-settings/purgedata* ]; then
+        if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
+            echo "Starting DataServer..."
+            systemctl start medusa-DataServer || true
             echo "...done"
-            echo "Purging data partition"
-            rm -rf /mnt/data/*
+            echo "Rechecking if purgedata shall be ignored..."
+            check_purge_data_ignore # recheck a second time in case fwu-usb has been aborted prematurely before (e.g. by pulling usb)
             echo "...done"
+            if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
+                echo "Stopping DataServer application..."
+                systemctl stop medusa-DataServer || true
+                echo "...done"
+                echo "Purging data partition"
+                rm -rf /mnt/data/*
+                echo "...done"
+            else
+                echo "Keeping data partition"
+            fi
         else
             echo "Keeping data partition"
         fi
@@ -165,22 +191,10 @@ do
                 export_log
                 exit 0
             else
-                echo "Starting DataServer..."
-                systemctl start medusa-DataServer || true
+                echo "Checking if purgedata shall be ignored..."
+                check_purge_data_ignore
                 echo "...done"
-                if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8001")" =~ true ]]; then
-                    echo "locked is true: purgedata will be ignored!"
-                    OPTION_PURGEDATA_IGNORE="yes"
-                else
-                    echo "locked is false"
-                fi
-                if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8002")" =~ true ]]; then
-                    echo "theft is true: purgedata will be ignored!"
-                    OPTION_PURGEDATA_IGNORE="yes"
-                else
-                    echo "theft is false"
-                fi
-                echo "Stopping DataServer based applications..."
+                echo "Stopping DataServer application..." # also stops DataServer based applications
                 systemctl stop medusa-DataServer || true
                 echo "...done"
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
