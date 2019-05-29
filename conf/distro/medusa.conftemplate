@@ -25,7 +25,7 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 GLIBC_GENERATE_LOCALES = "en_US.UTF-8"
 
 # Machine features
-MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost wifi"
+MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost"
 
 # Virtual runtime settings
 VIRTUAL-RUNTIME_dev_manager = "udev"

@@ -43,7 +43,6 @@ IMAGE_INSTALL_append = " \
                          gdb perf strace \
                          gdbserver tcf-agent \
                          openssh openssh-sftp-server \
-                         bridge-utils dnsmasq hostapd iw wpa-supplicant linux-firmware-rtl8192cu rfkill \
                          dtc fbgrab fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
 "
 
