@@ -3,3 +3,6 @@ Name=bnep0
 
 [Network]
 DHCP=ipv4
+
+[DHCPv4]
+UseHostname=false
