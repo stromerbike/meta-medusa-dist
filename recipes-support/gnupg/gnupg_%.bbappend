@@ -5,6 +5,8 @@ SRC_URI += " \
 
 RRECOMMENDS_${PN} = ""
 
+PACKAGECONFIG_remove = "gnutls"
+
 FILES_${PN} = "${bindir}/* ${datadir}/* ${libexecdir}/* ${sbindir}/*"
 
 RDEPENDS_${PN} = "${PN}-gpgv"
