@@ -60,6 +60,12 @@ if [ -d "/mnt/usb/log" ]; then
                 echo "Writing candump log to $LOGFILE-candump.zip..."
                 if zip -j $LOGFILE-candump.zip /mnt/data/candump/*; then
                     echo "...done ($(stat -c%s $LOGFILE-candump.zip) bytes written)"
+                    echo "Removing candump files..."
+                    if rm -rf /mnt/data/candump/*; then
+                        echo "...done"
+                    else
+                        echo "<4>...WARNING could not remove candump files"
+                    fi
                     unmount_usb
                 else
                     echo "<3>...ERROR ($(stat -c%s $LOGFILE-candump.zip) bytes written)"
