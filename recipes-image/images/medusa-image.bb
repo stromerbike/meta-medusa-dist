@@ -35,6 +35,7 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # systemd-analyze - debug information collection
 # gdb perf strace - debugging
 # gdbserver tcf-agent - low level debugging
+# openssh-scp openssh-sftp-server - scp and sftp
 IMAGE_INSTALL_append = " \
                          bareboximd \
                          busybox \
@@ -43,7 +44,7 @@ IMAGE_INSTALL_append = " \
                          systemd-analyze \
                          gdb perf strace \
                          gdbserver tcf-agent \
-                         openssh-scp \
+                         openssh-scp openssh-sftp-server \
                          dtc fbgrab fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
 "
 
