@@ -47,6 +47,7 @@ do_install_append() {
 
     # disable journal catalog update (/var/lib/systemd/catalog/database is read-only)
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-catalog-update.service
+    rm ${D}${nonarch_libdir}/systemd/catalog/systemd.*.catalog
 
     # disable journal flushing (since we do it ourselves)
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-flush.service
