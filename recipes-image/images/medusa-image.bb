@@ -15,13 +15,13 @@ LICENSE = "MIT"
 # dt-utils-barebox-state - linux packet for set/get shared barebox variables
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
-# systemd-analyze - debug information collection
+# openssh-sshd - ssh connection used during production
 # bluez-tools - bt-adapter used during production for obtaining MAC
 # iperf3 - used during production for bandwidth test
 # medusa-version - used during production for obtaining version
 IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
                          kernel-image kernel-devicetree \
-                         systemd-analyze \
+                         openssh-sshd \
                          bluez-tools \
                          iperf3 \
                          medusa-version \
@@ -32,17 +32,18 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
 # tzdata - timezone database
 # acl fuse-exfat - extended filesystem support
+# systemd-analyze - debug information collection
 # gdb perf strace - debugging
 # gdbserver tcf-agent - low level debugging
-# openssh openssh-sftp-server - ssh and sftp
 IMAGE_INSTALL_append = " \
                          bareboximd \
                          busybox \
                          tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat \
+                         systemd-analyze \
                          gdb perf strace \
                          gdbserver tcf-agent \
-                         openssh openssh-sftp-server \
+                         openssh-scp \
                          dtc fbgrab fbtest glibc-utils gps-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
 "
 
