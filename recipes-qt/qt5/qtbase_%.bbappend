@@ -1,6 +1,8 @@
 PACKAGECONFIG_append = " libinput linuxfb no-opengl"
-PACKAGECONFIG_DEFAULT = "udev widgets libs freetype"
+PACKAGECONFIG_DEFAULT = "udev widgets libs freetype ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
+
+PACKAGECONFIG[ltcg] = "-ltcg"
 
 # The creation of libQt5PrintSupport can currently not be avoided: https://bugreports.qt.io/browse/QTBUG-39634
 QT_CONFIG_FLAGS += " \
