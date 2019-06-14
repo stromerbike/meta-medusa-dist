@@ -1,0 +1,29 @@
+# DO NOT MODIFY THE NEXT LINE!, IT IS USED AS A MARKER FOR THE ACTUAL JSON MANIFEST
+# EOC
+{
+    "ntpath": {
+        "summary": "Python ntpath",
+        "rdepends": [
+            "core"
+        ],
+        "files": [
+            "${libdir}/python${PYTHON_MAJMIN}/ntpath.py"
+        ],
+        "cached": [
+            "${libdir}/python${PYTHON_MAJMIN}/__pycache__/ntpath.*.pyc"
+        ]
+    },
+    "pathlib": {
+        "summary": "Python pathlib",
+        "rdepends": [
+            "core",
+            "ntpath"
+        ],
+        "files": [
+            "${libdir}/python${PYTHON_MAJMIN}/pathlib.py"
+        ],
+        "cached": [
+            "${libdir}/python${PYTHON_MAJMIN}/__pycache__/pathlib.*.pyc"
+        ]
+    }
+}
