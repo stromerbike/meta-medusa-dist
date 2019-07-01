@@ -23,4 +23,5 @@ do_install_append() {
     mv ${D}${libdir}/python2.7/site-packages/* ${D}${libdir}/python3.7/site-packages/
     rm -r ${D}${libdir}/python2.7/
     ${STAGING_BINDIR_NATIVE}/python3-native/python3 -m compileall ${D}${libdir}/python3.7/site-packages/gps
+    rm -r ${D}${libdir}/python3.7/site-packages/gps-*.egg-info
 }

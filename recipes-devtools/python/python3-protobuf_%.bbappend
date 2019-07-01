@@ -9,3 +9,7 @@ RDEPENDS_${PN} += " python3-pickle"
 
 DISTUTILS_BUILD_ARGS += "--cpp_implementation"
 DISTUTILS_INSTALL_ARGS += "--cpp_implementation"
+
+do_install_append() {
+    rm -r ${D}${PYTHON_SITEPACKAGES_DIR}/protobuf-*.egg-info
+}
