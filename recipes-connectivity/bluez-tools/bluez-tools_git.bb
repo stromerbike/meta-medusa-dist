@@ -8,7 +8,7 @@ DEPENDS = "glib-2.0 dbus-glib readline"
 
 PR = "r0+gitr${SRCPV}"
 
-SRCREV = "7cb788c9c43facfd2d14ff50e16d6a19f033a6a7"
+SRCREV = "a80cecd0d73c86c7f7bc8f2b6a0987fae5136465"
 
 S = "${WORKDIR}/git"
 
