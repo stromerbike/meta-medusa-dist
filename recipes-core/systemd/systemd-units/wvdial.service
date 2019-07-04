@@ -7,7 +7,6 @@ Wants=network.target
 [Service]
 Type=simple
 ExecStartPre=/usr/bin/microcom -t 1000 /dev/ttyACM0 &>/dev/null
-ExecStartPre=/etc/scripts/wvdial-gsm-workaround.sh
 ExecStart=/bin/dash -c "/usr/bin/wvdial || true"
 ExecStopPost=/bin/dash -c "/bin/echo -e \"AT+CEER\r\" | microcom -t 2000 /dev/ttyACM0"
 Restart=always
