@@ -53,7 +53,6 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://wvdial.service \
-            file://wvdial-gsm-workaround.sh \
 "
 
 FILES_${PN}_append = " \
@@ -141,7 +140,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/wvdial-gsm-workaround.sh ${D}${sysconfdir}/scripts/
 
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}

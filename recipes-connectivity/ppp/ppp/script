@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/dash
 
-if [ "$PPP_IFACE" == "ppp0" ]; then
+if [ "$PPP_IFACE" = "ppp0" ]; then
     ip route add 10.89.23.0/24 dev ppp0
 fi
