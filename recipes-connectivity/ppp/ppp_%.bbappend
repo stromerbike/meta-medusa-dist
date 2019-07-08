@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-RDEPENDS_${PN} += "bash"
+RDEPENDS_${PN} += "dash"
 
 SRC_URI += " \
             file://script \
