@@ -76,6 +76,14 @@ INHERIT += "buildhistory"
 BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
+# fuse-exfat mirror
+SRC_URI_remove_pn-fuse-exfat = "${DEBIAN_MIRROR}/main/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
+SRC_URI_append_pn-fuse-exfat = "http://ports.ubuntu.com/ubuntu-ports/pool/universe/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
+
+# lsof mirror
+SRC_URI_remove_pn-lsof = "http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_${PV}.tar.bz2"
+SRC_URI_append_pn-lsof = "https://ftp.osuosl.org/pub/blfs/conglomeration/lsof/lsof_${PV}.tar.bz2"
+
 # wvdial and wvstreams mirrors
 SRC_URI_remove_pn-wvdial = "http://${BPN}.googlecode.com/files/${BP}.tar.bz2"
 SRC_URI_append_pn-wvdial = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.bz2"
