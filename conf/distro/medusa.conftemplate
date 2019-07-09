@@ -92,7 +92,7 @@ EXTRA_USERS_PARAMS = "usermod -p '' root; usermod -s /bin/bash root; \
                       useradd -p '' user; usermod -s /bin/bash user; usermod -G systemd-journal user; \
 "
 
-# Mount rootfs as read-only for incremental firmware
+# Mount rootfs as read-only for incremental firmware update
 EXTRA_IMAGE_FEATURES = "debug-tweaks read-only-rootfs"
 
 # Do not symlink log to a volatile storage in order to have a persistent systemd journal
@@ -102,11 +102,3 @@ VOLATILE_LOG_DIR = "no"
 # Remark: Everything else in /lib/.debug is removed in glibc_%.bbappend
 IMAGE_INSTALL_append = " ${TCLIBC}-dbg "
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
-
-# phytec "fixes"
-BBMASK += "meta-phytec/recipes-bsp/barebox"
-BBMASK += "meta-phytec/recipes-bsp/u-boot/u-boot-mkimage_2016.03.bbappend"
-BBMASK += "meta-phytec/recipes-kernel/cryptodev/cryptodev-module_1.8.bbappend"
-BBMASK += "meta-phytec/recipes-kernel/linux/linux-mainline_4.12.4-phy4.bb"
-BBMASK += "meta-phytec/recipes-multimedia/gstreamer-rockchip"
-BBMASK += "meta-phytec/dynamic-layers/qt5-layer/recipes-qt/qt5/qtdeclarative-render2d_%.bbappend"

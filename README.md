@@ -2,11 +2,12 @@ This is the repository of the distribution specific Yocto layer for the Stromer 
 
 Patches:
 - [CVE-2017-1000251 (BlueBorne)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3)
-- [Barebox with GCC 6.3 or newer](http://lists.infradead.org/pipermail/barebox/2017-May/030156.html)
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
 Fixed recipe version:
+- [sumo: dt-utils 2016.08.0](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/bd856199aaf116e828e354152f496344d26d25dd)
+- [morty: linux-mainline 4.12.4-phy4](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/c2cf1befc68f43dc06f2497fb09e450634c341fa)
 - [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
 
 Busybox configuration (1.27.2):
