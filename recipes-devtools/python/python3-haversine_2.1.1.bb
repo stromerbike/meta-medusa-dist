@@ -1,5 +1,5 @@
 HOMEPAGE = "https://github.com/mapado/haversine"
-SUMMARY = "Calculate the distance bewteen 2 points on Earth"
+SUMMARY = "Calculate the distance between 2 points on Earth."
 
 SECTION = "devel/python"
 LICENSE = "MIT"
