@@ -40,6 +40,7 @@ do_patch_append () {
 }
 
 KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PN}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}"
+KERNEL_IMAGE_BASE_NAME[vardepsexclude] += "DATETIME"
 do_deploy_append() {
     install -m 644 ${B}/.config ${DEPLOYDIR}/${KERNEL_IMAGE_BASE_NAME}.config
     ln -sf ${KERNEL_IMAGE_BASE_NAME}.config ${DEPLOYDIR}/${KERNEL_IMAGETYPE}.config
