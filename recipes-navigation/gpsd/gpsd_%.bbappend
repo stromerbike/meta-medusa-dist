@@ -5,6 +5,11 @@ SRC_URI += " \
             file://gpsd.service.patch \
 "
 
+EXTRA_OESCONS += " \
+    debug='false' \
+    nostrip='true' \
+"
+
 # As of version 3.17, gpsd cannot be built using python3 (should be possible in future with 3.18).
 # In order to still install -pygps for python3, the installation has to be done in a special way.
 DEPENDS_append = " python3-native (= 3.7.*)"
