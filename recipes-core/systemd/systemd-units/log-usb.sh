@@ -56,7 +56,7 @@ if [ -d "/mnt/usb/log" ]; then
         echo "Writing json log to $LOGFILE-json.zip..."
         if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip --fast > $LOGFILE-json.zip; then
             echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
-            if [ -d "/mnt/data/candump" ]; then
+            if [ -d "/mnt/data/candump" ] && [ ! -z "$(ls -A /mnt/data/candump)" ]; then
                 echo "Writing candump log to $LOGFILE-candump.zip..."
                 if zip -j $LOGFILE-candump.zip /mnt/data/candump/*; then
                     echo "...done ($(stat -c%s $LOGFILE-candump.zip) bytes written)"
