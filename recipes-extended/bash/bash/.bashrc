@@ -30,7 +30,7 @@ alias lnav='f(){ unset -f f; if [ -z $1 ]; then UNIT=""; else UNIT="-u $1"; fi; 
 alias lnavf='f(){ unset -f f; if [ -z $1 ]; then UNIT=""; else UNIT="-u $1"; fi; bash -c "TERM=xterm-256color lnav <(journalctl -a -b -f -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT $UNIT)"; }; f'
 alias lnavm='f(){ unset -f f; bash -c "TERM=xterm-256color lnav <(journalctl -a -b -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT -u medusa-*; journalctl -a -b -f -n 0 -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT -u medusa-*)"; }; f'
 alias lnavall='f(){ unset -f f; if [ -z $1 ]; then UNIT=""; else UNIT="-u $1"; fi; bash -c "TERM=xterm-256color lnav <(journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT $UNIT; journalctl -a -f -n 0 -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT $UNIT)"; }; f'
-alias sstat='systemctl status -l -n 25 --no-pager'
+alias sstat='f(){ unset -f f; systemctl status -l -n 25 --no-pager "$@" | ccze -A -o nolookups; }; f'
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
@@ -39,8 +39,8 @@ alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
 alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
 alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
 alias iptraf='iptraf-ng'
-alias pwget='wget -e use_proxy=yes -e http_proxy=10.89.23.31:8080'
 alias pcurl='curl -x 10.89.23.31:8080'
+alias pwget='wget -e use_proxy=yes -e http_proxy=10.89.23.31:8080'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
