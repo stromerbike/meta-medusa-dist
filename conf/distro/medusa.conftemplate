@@ -92,6 +92,7 @@ SRC_URI_append_pn-wvstreams = "https://storage.googleapis.com/google-code-archiv
 
 # Phytec git mirrors
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
+#GIT_URL_pn-barebox-targettools = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
 
 # Set empty root password and add user
