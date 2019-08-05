@@ -7,6 +7,22 @@ SRC_URI += " \
             file://timesyncd.conf \
 "
 
+# backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf
+SUMMARY_${PN}-journal-upload = "Send journal messages over the network"
+DESCRIPTION_${PN}-journal-upload = "systemd-journal-upload uploads journal entries to a specified URL."
+PACKAGES =+ " \
+    ${PN}-journal-upload \
+"
+SYSTEMD_PACKAGES += "${@bb.utils.contains('PACKAGECONFIG', 'journal-upload', '${PN}-journal-upload', '', d)}"
+FILES_${PN}-journal-upload = "${rootlibexecdir}/systemd/systemd-journal-upload \
+                              ${systemd_system_unitdir}/systemd-journal-upload.service \
+                              ${sysconfdir}/systemd/journal-upload.conf \
+                             "
+
+PACKAGECONFIG_append = " \
+    journal-upload \
+"
+
 RDEPENDS_${PN} += "systemd-udev systemd-units"
 
 RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck kernel-module-autofs4"

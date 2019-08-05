@@ -44,7 +44,7 @@ IMAGE_INSTALL_append = " busybox \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
                          iftop iproute2-ss ppp-tools socat tcpdump \
-                         bbu dtc fbgrab fbtest glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon procps screen sudo systemd-extra-utils tree \
+                         bbu dtc fbgrab fbtest glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon procps screen sudo systemd-extra-utils systemd-journal-upload tree \
 "
 
 # Define locales to be installed
