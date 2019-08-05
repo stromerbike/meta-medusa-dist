@@ -32,17 +32,19 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # tzdata - timezone database
 # acl fuse-exfat - extended filesystem support
 # systemd-analyze - debug information collection
-# gdb perf strace - debugging
+# gdb ltrace perf strace - debugging
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
+# iftop iproute2-ss ppp-tools socat tcpdump - networking tools
 IMAGE_INSTALL_append = " busybox \
                          tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat \
                          systemd-analyze \
-                         gdb perf strace \
+                         gdb ltrace perf strace \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
-                         bbu dtc fbgrab fbtest glibc-utils htop iftop iproute2-ss less lsof memtester mtd-utils-tests nano ncurses-tools nmon ppp-tools procps screen socat sudo systemd-extra-utils tree \
+                         iftop iproute2-ss ppp-tools socat tcpdump \
+                         bbu dtc fbgrab fbtest glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon procps screen sudo systemd-extra-utils tree \
 "
 
 # Define locales to be installed
