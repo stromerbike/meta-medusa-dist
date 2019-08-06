@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
             file://system.conf \
+            file://systemd-journal-upload.service.in.patch \
             file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
             file://timesyncd.conf \
