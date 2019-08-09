@@ -49,6 +49,7 @@ PACKAGECONFIG_remove = " \
     xz \
 "
 
+PACKAGECONFIG[bashcompletion] = ",-Dbashcompletiondir=no,"
 PACKAGECONFIG[hwdb] = "-Dhwdb=true,-Dhwdb=false,hwdb"
 
 do_install_append() {
