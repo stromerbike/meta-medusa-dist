@@ -18,11 +18,9 @@ RDEPENDS_${PN} += " \
     fbida \
     gnupg-gpgv \
     gawk \
-    gzip \
     iproute2 \
     inotify-tools \
     ppp \
-    procps \
     rsync \
     systemd (>= 236) \
     tar \
