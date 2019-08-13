@@ -16,20 +16,61 @@ Fixed recipe version:
 Busybox configuration (1.27.2):
 - git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
 - set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Archival Utilities ---> unlzma" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> lzcat" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> lzma -d" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> unxz" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> xzcat" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> xz -d" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> tar" to N; Remark: Not needed with tar.
+- set "Archival Utilities ---> tar Support old tar header format" to N;
+- set "Archival Utilities ---> tar Enable untarring of tarballs with checksums produced by buggy Sun tar" to N;
+- set "Archival Utilities ---> tar Support GNU tar extensions (long filenames)" to N;
+- set "Coreutils ---> groups" to N; Remark: Not needed with shadow-base.
+- set "Console Utilities ---> clear" to N; Remark: Not needed with ncurses-tools.
+- set "Console Utilities ---> reset" to N; Remark: Not needed with ncurses-tools.
+- set "Editors ---> awk" to N; Remark: Not needed with gawk.
+- set "Finding Utilities  ---> grep" to N; Remark: Not needed with grep.
+- set "Finding Utilities  ---> egrep" to N; Remark: Not needed with grep.
+- set "Finding Utilities  ---> fgrep" to N; Remark: Not needed with grep.
+- set "Init Utilities ---> halt" to N; Remark: Not needed with systemd.
+- set "Init Utilities ---> poweroff" to N; Remark: Not needed with systemd.
+- set "Init Utilities ---> reboot" to N; Remark: Not needed with systemd.
 - set "Init Utilities ---> init" to N; Remark: To avoid conflicts with systemd's runlevel.
 - set "Init Utilities ---> linuxrc" to N; Remark: Not needed with systemd.
+- set "Login/Password Management Utilities ---> getty" to N; Remark: Not needed with systemd/util-linux-agetty.
+- set "Login/Password Management Utilities ---> login" to N; Remark: Not needed with shadow-base.
+- set "Login/Password Management Utilities ---> su" to N; Remark: Not needed with shadow-base.
+- set "Login/Password Management Utilities ---> sulogin" to N; Remark: Not needed with shadow-base/util-linux-sulogin.
+- set "Linux Module Utilities ---> depmod" to N; Remark: Not needed with systemd/kmod.
+- set "Linux Module Utilities ---> insmod" to N; Remark: Not needed with systemd/kmod.
+- set "Linux Module Utilities ---> lsmod" to N; Remark: Not needed with systemd/kmod.
+- set "Linux Module Utilities ---> modinfo" to N; Remark: Not needed with systemd/kmod.
+- set "Linux Module Utilities ---> modprobe" to N; Remark: Not needed with systemd/kmod.
+- set "Linux Module Utilities ---> rmmod" to N; Remark: Not needed with systemd/kmod.
 - set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
 - set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
+- set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
-- set "Network Utilities" ---> httpd" to No; Remark: Not needed.
-- set "Network Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
-- set "Network Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
+- set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
+- set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
+- set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
+- set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
+- set "Networking Utilities" ---> httpd" to No; Remark: Not needed.
+- set "Networking Utilities" ---> ip" to No; Remark: Not needed with iproute2.
+- set "Networking Utilities" ---> ssl_client" to No; Remark: Not needed with openssl.
+- set "Networking Utilities" ---> wget" to No; Remark: Not needed with wget.
+- set "Networking Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
+- set "Networking Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envdir" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> softlimit" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore).
+- set "Shells ---> Choose which shell is aliased to 'sh' name" to none;
+- set "Shells ---> ash" to N; Remark: Not needed with bash.
+- set "Shells ---> hush" to N; Remark: Not needed with bash.
 - set "System Logging Utilities ---> klogd to N"; Remark: Not needed with systemd-journald.
 - set "System Logging Utilities ---> logger to N"; Remark: Not needed with systemd-journald.
 - set "System Logging Utilities ---> logread to N"; Remark: Not needed with systemd-journald.
