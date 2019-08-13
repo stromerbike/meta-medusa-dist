@@ -51,10 +51,10 @@ if [ -d "/mnt/usb/log" ]; then
     LOGFILE="/mnt/usb/log/$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
     echo "Writing short log to $LOGFILE-short.zip..."
     led2_blue
-    if journalctl -a -o short-precise --no-hostname --no-pager | gzip --fast > $LOGFILE-short.zip; then
+    if journalctl -a -o short-precise --no-hostname --no-pager | gzip > $LOGFILE-short.zip; then
         echo "...done ($(stat -c%s $LOGFILE-short.zip) bytes written)"
         echo "Writing json log to $LOGFILE-json.zip..."
-        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip --fast > $LOGFILE-json.zip; then
+        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.zip; then
             echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
             if [ -d "/mnt/data/candump" ] && [ ! -z "$(ls -A /mnt/data/candump)" ]; then
                 echo "Writing candump log to $LOGFILE-candump.zip..."
