@@ -31,7 +31,7 @@ MACHINE_FEATURES_append = " 3g bluetooth can usbgadget usbhost"
 VIRTUAL-RUNTIME_dev_manager = "udev"
 VIRTUAL-RUNTIME_init_manager = "systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
-VIRTUAL-RUNTIME_login_manager = "busybox"
+VIRTUAL-RUNTIME_login_manager = "shadow-base"
 VIRTUAL-RUNTIME_syslog = ""
 VIRTUAL-RUNTIME_initscripts = ""
 
