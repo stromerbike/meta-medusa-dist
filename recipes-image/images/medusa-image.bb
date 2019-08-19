@@ -4,7 +4,7 @@ IMAGE_INSTALL = " \
                   packagegroup-core-boot \
                   ${CORE_IMAGE_EXTRA_INSTALL} \
 "
-inherit core-image
+inherit core-image python3-dir
 
 SUMMARY = ""
 DESCRIPTION = "Medusa image"
@@ -46,6 +46,34 @@ IMAGE_INSTALL_append = " busybox \
                          iftop iproute2-ss ppp-tools socat tcpdump \
                          bbu dtc fbgrab fbtest glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon sudo systemd-extra-utils systemd-journal-upload \
 "
+
+# Revert installation of links in update-alternative scheme due to the following reasons:
+# - In a non-interactively used system, there is no use of having alternatives since the
+#   alternative with the highest priority will be used and all other alternatives are not.
+# - The update-alternative scheme creates symlinks and thus increases the amount of files in the image.
+#   Having more files in the images increases the time required to perform the installation of the image.
+# Remark: Doing this as ROOTFS_POSTPROCESS_COMMAND to avoid having influence on the SDK.
+resolve_symlinks_to_busybox() {
+    cat ${IMAGE_ROOTFS}/etc/busybox.links | while read FILE; do
+        # keep update-alternatives install scheme for
+        # passwd and chpasswd to avoid conflicts with shadow
+        # use update-alternatives install scheme for busybox timeout to make it
+        # distinguishable from coreutils timeout since it has an other syntax
+        if [ "$FILE" != "/usr/bin/passwd" ] && [ "$FILE" != "/usr/sbin/chpasswd" ] && [ "$FILE" != "/usr/bin/timeout" ]; then
+            if [ -f ${IMAGE_ROOTFS}$FILE.busybox ]; then
+                mv ${IMAGE_ROOTFS}$FILE.busybox ${IMAGE_ROOTFS}$FILE
+            fi
+        fi
+    done
+}
+ROOTFS_POSTPROCESS_COMMAND += "resolve_symlinks_to_busybox; "
+
+# Remove leftover files from python3.
+remove_development_files() {
+    rm -r ${IMAGE_ROOTFS}${libdir}/${PYTHON_DIR}/config-*
+    rm -r ${IMAGE_ROOTFS}${includedir}
+}
+ROOTFS_POSTPROCESS_COMMAND += "remove_development_files; "
 
 # Define locales to be installed
 IMAGE_LINGUAS = "en-us"
