@@ -10,6 +10,10 @@ RDEPENDS_${PN} += " python3-pickle"
 DISTUTILS_BUILD_ARGS += "--cpp_implementation"
 DISTUTILS_INSTALL_ARGS += "--cpp_implementation"
 
-do_install_append() {
+export PYTHONDONTWRITEBYTECODE = "1"
+
+do_install_append_class-target() {
+    ${STAGING_BINDIR_NATIVE}/${PYTHON_PN}-native/${PYTHON_PN} -m compileall -b ${D}${PYTHON_SITEPACKAGES_DIR}
+    find ${D}${PYTHON_SITEPACKAGES_DIR} -name "*.py" -delete
     rm -r ${D}${PYTHON_SITEPACKAGES_DIR}/protobuf-*.egg-info
 }

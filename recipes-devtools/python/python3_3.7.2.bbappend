@@ -4,14 +4,18 @@ RRECOMMENDS_${PN}-crypt_remove += "ca-certificates"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://dont-generate-optimized-bytecode.patch \
-            file://python3-manifest-additions.json \
+            file://only-generate-legacy-bytecode.patch \
+            file://python3-manifest-with-additions.json \
 "
+
+do_install_append_class-target() {
+    find ${D}${libdir}/python${PYTHON_MAJMIN} -name "*.py" -not -name "*_sysconfigdata*.py" -delete
+}
 
 python(){
     import collections, json
 
-    filename = os.path.join(d.getVar('THISDIR'), '../../../meta-medusa-dist/recipes-devtools/python', 'python3', 'python3-manifest-additions.json')
+    filename = os.path.join(d.getVar('THISDIR'), '../../../meta-medusa-dist/recipes-devtools/python', 'python3', 'python3-manifest-with-additions.json')
     # This python changes the datastore based on the contents of a file, so mark
     # that dependency.
     bb.parse.mark_dependency(d, filename)

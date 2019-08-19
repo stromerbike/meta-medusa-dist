@@ -27,6 +27,10 @@ do_install_append() {
     mkdir -p ${D}${libdir}/python3.7/site-packages
     mv ${D}${libdir}/python2.7/site-packages/* ${D}${libdir}/python3.7/site-packages/
     rm -r ${D}${libdir}/python2.7/
-    ${STAGING_BINDIR_NATIVE}/python3-native/python3 -m compileall ${D}${libdir}/python3.7/site-packages/gps
+}
+
+do_install_append_class-target() {
+    ${STAGING_BINDIR_NATIVE}/python3-native/python3 -m compileall -b ${D}${libdir}/python3.7/site-packages/gps
+    find ${D}${libdir}/python3.7/site-packages -name "*.py" -delete
     rm -r ${D}${libdir}/python3.7/site-packages/gps-*.egg-info
 }
