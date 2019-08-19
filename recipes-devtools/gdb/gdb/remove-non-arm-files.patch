@@ -1,0 +1,38 @@
+diff --git a/gdb/data-directory/Makefile.in b/gdb/data-directory/Makefile.in
+index 304d4b05c0..3df9d44fc3 100644
+--- a/gdb/data-directory/Makefile.in
++++ b/gdb/data-directory/Makefile.in
+@@ -49,21 +49,9 @@ GDB_DATADIR = @GDB_DATADIR@
+ SYSCALLS_DIR = syscalls
+ SYSCALLS_INSTALL_DIR = $(DESTDIR)$(GDB_DATADIR)/$(SYSCALLS_DIR)
+ GEN_SYSCALLS_FILES = \
+-	aarch64-linux.xml \
+-	amd64-linux.xml \
+ 	arm-linux.xml \
+-	i386-linux.xml \
+-	mips-n32-linux.xml \
+-	mips-n64-linux.xml \
+-	mips-o32-linux.xml \
+-	ppc-linux.xml \
+-	ppc64-linux.xml \
+-	s390-linux.xml \
+-	s390x-linux.xml \
+-	sparc-linux.xml \
+-	sparc64-linux.xml
+-
+-SYSCALLS_FILES = gdb-syscalls.dtd freebsd.xml $(GEN_SYSCALLS_FILES)
++
++SYSCALLS_FILES = gdb-syscalls.dtd $(GEN_SYSCALLS_FILES)
+ 
+ PYTHON_DIR = python
+ PYTHON_INSTALL_DIR = $(DESTDIR)$(GDB_DATADIR)/$(PYTHON_DIR)
+@@ -135,9 +123,6 @@ GUILD_COMPILE_FLAGS = \
+ 
+ SYSTEM_GDBINIT_DIR = system-gdbinit
+ SYSTEM_GDBINIT_INSTALL_DIR = $(DESTDIR)$(GDB_DATADIR)/$(SYSTEM_GDBINIT_DIR)
+-SYSTEM_GDBINIT_FILES = \
+-	elinos.py \
+-	wrs-linux.py
+ 
+ FLAGS_TO_PASS = \
+ 	"prefix=$(prefix)" \
