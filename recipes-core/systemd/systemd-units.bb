@@ -15,7 +15,7 @@ RDEPENDS_${PN} += " \
     dash \
     daemontools-encore \
     evtest \
-    fbida \
+    fbv \
     gnupg-gpgv \
     gawk \
     iproute2 \
