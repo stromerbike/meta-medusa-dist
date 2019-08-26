@@ -1,5 +1,5 @@
 PACKAGECONFIG_append = " libinput linuxfb no-opengl"
-PACKAGECONFIG_DEFAULT = "udev widgets libs freetype ltcg"
+PACKAGECONFIG_DEFAULT = "udev widgets libs ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
 
 PACKAGECONFIG[ltcg] = "-ltcg"
