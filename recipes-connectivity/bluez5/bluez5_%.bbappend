@@ -17,6 +17,14 @@ EXTRA_OECONF += "--localstatedir=/mnt/data/var"
 
 FILES_${PN}_append = " ${base_libdir}/firmware/ti-connectivity/*.bts"
 
+PACKAGES =+ "${PN}-misc"
+FILES_${PN}-misc += " \
+    ${bindir}/bccmd \
+    ${bindir}/bluemoon \
+    ${bindir}/ciptool \
+    ${bindir}/mpris-proxy \
+"
+
 do_install_append() {
     install -d ${D}/${base_libdir}/firmware/ti-connectivity
     install -m 0644 ${WORKDIR}/TIInit_6.7.16.bts ${D}/${base_libdir}/firmware/ti-connectivity
