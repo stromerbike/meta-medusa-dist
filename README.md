@@ -51,6 +51,7 @@ Busybox configuration (1.27.2):
 - set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
 - set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
 - set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
+- set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
 - set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
@@ -58,7 +59,7 @@ Busybox configuration (1.27.2):
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
 - set "Networking Utilities" ---> httpd" to No; Remark: Not needed.
 - set "Networking Utilities" ---> ip" to No; Remark: Not needed with iproute2.
-- set "Networking Utilities" ---> ssl_client" to No; Remark: Not needed with openssl.
+- set "Networking Utilities" ---> ssl_client" to No; Remark: Not needed (with openssl).
 - set "Networking Utilities" ---> wget" to No; Remark: Not needed with wget.
 - set "Networking Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
 - set "Networking Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
