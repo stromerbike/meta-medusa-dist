@@ -21,6 +21,12 @@ do_install_append() {
     install -d ${D}/home/user/.ssh/
     install -m 0644 ${WORKDIR}/id_rsa_medusa_user.pub ${D}/home/user/.ssh/authorized_keys
 
+    # remove stuff used for dynamic key creation
+    rm ${D}${libexecdir}/${BPN}/sshd_check_keys
+    rm ${D}${systemd_unitdir}/system/sshdgenkeys.service
+    sed -i '/After=sshdgenkeys.service/d' ${D}${systemd_unitdir}/system/sshd@.service
+    sed -i '/Wants=sshdgenkeys.service/d' ${D}${systemd_unitdir}/system/sshd@.service
+
     # install keys used in sshd_config and sshd_config_readonly
     install -d ${D}${localstatedir}/ssh    
     for dir in ${sysconfdir} ${localstatedir}; do
@@ -47,3 +53,6 @@ FILES_${PN} += " \
                 /home/root/.ssh/authorized_keys \
                 /home/user/.ssh/authorized_keys \
 "
+
+RDEPENDS_${PN}_remove += "${PN}-keygen"
+RDEPENDS_${PN}-sshd_remove += "${PN}-keygen"
