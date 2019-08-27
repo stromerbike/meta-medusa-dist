@@ -36,4 +36,7 @@ do_install () {
     done
 }
 
+PACKAGES =+ "multilog"
+FILES_multilog = "${bindir}/multilog"
+
 BBCLASSEXTEND = "native"

@@ -72,14 +72,14 @@ Busybox configuration (1.27.2):
 - set "Print Utilities" ---> lpq" to No; Remark: Not needed.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> chpst" to N; Remark: Not needed with systemd.
-- set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
-- set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
-- set "Runint Utilities ---> envdir" to N; Remark: To avoid conflicts with daemontools(-encore).
-- set "Runint Utilities ---> softlimit" to N; Remark: To avoid conflicts with daemontools(-encore).
+- set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
+- set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
+- set "Runint Utilities ---> envdir" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
+- set "Runint Utilities ---> softlimit" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
 - set "Runint Utilities ---> runsv" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> runsvdir" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> sv" to N; Remark: Not needed with systemd.
-- set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore).
+- set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
 - set "Shells ---> Choose which shell is aliased to 'sh' name" to none;
 - set "Shells ---> ash" to N; Remark: Not needed with bash.
 - set "Shells ---> hush" to N; Remark: Not needed with bash.

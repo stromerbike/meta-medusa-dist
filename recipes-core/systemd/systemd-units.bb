@@ -13,13 +13,13 @@ RDEPENDS_${PN} += " \
     busybox \
     can-utils \
     dash \
-    daemontools-encore \
     evtest \
     fbv \
     gnupg-gpgv \
     gawk \
     iproute2 \
     inotify-tools \
+    multilog \
     ppp \
     rsync \
     systemd (>= 236) \
