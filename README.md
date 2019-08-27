@@ -33,6 +33,7 @@ Busybox configuration (1.27.2):
 - set "Finding Utilities  ---> grep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> egrep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> fgrep" to N; Remark: Not needed with grep.
+- set "Init Utilities ---> bootchartd" to N; Remark: Not needed with systemd.
 - set "Init Utilities ---> halt" to N; Remark: Not needed with systemd.
 - set "Init Utilities ---> poweroff" to N; Remark: Not needed with systemd.
 - set "Init Utilities ---> reboot" to N; Remark: Not needed with systemd.
@@ -53,21 +54,31 @@ Busybox configuration (1.27.2):
 - set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
 - set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Miscellaneous Utilities ---> inotifyd" to No; Remark: Not needed with inotify-tools.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
 - set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
+- set "Networking Utilities" ---> dnsd" to No; Remark: Not needed with systemd-resolved.
 - set "Networking Utilities" ---> httpd" to No; Remark: Not needed.
 - set "Networking Utilities" ---> ip" to No; Remark: Not needed with iproute2.
+- set "Networking Utilities" ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
 - set "Networking Utilities" ---> ssl_client" to No; Remark: Not needed (with openssl).
 - set "Networking Utilities" ---> wget" to No; Remark: Not needed with wget.
 - set "Networking Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
 - set "Networking Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
+- set "Print Utilities" ---> lpd" to No; Remark: Not needed.
+- set "Print Utilities" ---> lpr" to No; Remark: Not needed.
+- set "Print Utilities" ---> lpq" to No; Remark: Not needed.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
+- set "Runint Utilities ---> chpst" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> envdir" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Runint Utilities ---> softlimit" to N; Remark: To avoid conflicts with daemontools(-encore).
+- set "Runint Utilities ---> runsv" to N; Remark: Not needed with systemd.
+- set "Runint Utilities ---> runsvdir" to N; Remark: Not needed with systemd.
+- set "Runint Utilities ---> sv" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore).
 - set "Shells ---> Choose which shell is aliased to 'sh' name" to none;
 - set "Shells ---> ash" to N; Remark: Not needed with bash.
