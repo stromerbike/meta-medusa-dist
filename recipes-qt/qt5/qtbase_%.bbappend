@@ -11,7 +11,6 @@ QT_CONFIG_FLAGS += " \
     -no-feature-printer \
     -no-feature-sql \
     -no-feature-testlib \
-    -no-feature-vnc \
     -no-feature-xml \
 "
 
