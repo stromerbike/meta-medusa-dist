@@ -15,22 +15,9 @@ QT_CONFIG_FLAGS += " \
     -no-feature-xml \
 "
 
-# Set default QT_QPA_PLATFORM for all phytec boards
-do_configure_prepend() {
-        # adapt qmake.conf to our needs
-        sed -i 's!load(qt_config)!!' ${S}/mkspecs/linux-oe-g++/qmake.conf
-
-        # Insert QT_QPA_PLATFORM into qmake.conf
-        cat >> ${S}/mkspecs/linux-oe-g++/qmake.conf <<EOF
-
-QT_QPA_DEFAULT_PLATFORM = ${QT_QPA_DEFAULT_PLATFORM}
-
-load(qt_config)
-
-EOF
-}
-
-SRC_URI_remove = "file://0001-Add-createDisplay-for-QEglFSKmsGbmIntegration.patch"
+# Set QT_QPA_PLATFORM
+QT_QPA_PLATFORM = "linuxfb"
+QT_CONFIG_FLAGS += "-qpa ${QT_QPA_PLATFORM}"
 
 # A possible way of reducing Qt shared library size (some MB) and application startup time (some 100ms) is to selectively disable by applications unused features.
 # 5.10.1@6c6ace9d23f90845fd424e474d38fe30f070775e: configure --list-features
