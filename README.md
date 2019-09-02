@@ -16,6 +16,7 @@ Fixed recipe version:
 Busybox configuration (1.27.2):
 - git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
 - set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Busybox Settings ---> Include busybox applet" to N; Remark: Not needed.
 - set "Archival Utilities ---> unlzma" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzcat" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzma -d" to N; Remark: Not needed with xz.
@@ -43,22 +44,37 @@ Busybox configuration (1.27.2):
 - set "Login/Password Management Utilities ---> login" to N; Remark: Not needed with shadow-base.
 - set "Login/Password Management Utilities ---> su" to N; Remark: Not needed with shadow-base.
 - set "Login/Password Management Utilities ---> sulogin" to N; Remark: Not needed with shadow-base/util-linux-sulogin.
+- set "Linux Ext2 FS Progs ---> chattr" to N; Remark: Not needed.
+- set "Linux Ext2 FS Progs ---> fsck" to N; Remark: Not needed.
+- set "Linux Ext2 FS Progs ---> lsattr" to N; Remark: Not needed.
 - set "Linux Module Utilities ---> depmod" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> insmod" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> lsmod" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> modinfo" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> modprobe" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> rmmod" to N; Remark: Not needed with systemd/kmod.
+- set "Linux System Utilities ---> eject" to N; Remark: Not needed without CDROM or SCSI.
 - set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
+- set "Linux System Utilities ---> lspci" to N; Remark: Not needed without PCI.
 - set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
+- set "Linux System Utilities ---> mke2fs" to N; Remark: Not needed.
+- set "Linux System Utilities ---> mkfs.ext2" to N; Remark: Not needed.
 - set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
-- set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed.
+- set "Linux System Utilities ---> rtcwake" to N; Remark: Not needed without RTC.
+- set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed without onboard speaker.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
+- set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Miscellaneous Utilities ---> hdparm" to No; Remark: Not needed without SATA/IDE.
 - set "Miscellaneous Utilities ---> inotifyd" to No; Remark: Not needed with inotify-tools.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
+- set "Miscellaneous Utilities ---> lsscsi" to No; Remark: Remark: Not needed without SCSI.
+- set "Miscellaneous Utilities ---> man" to No; Remark: Remark: Not needed.
+- set "Miscellaneous Utilities ---> mt" to No; Remark: Remark: Not needed.
 - set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
+- set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
 - set "Networking Utilities" ---> dnsd" to No; Remark: Not needed with systemd-resolved.
 - set "Networking Utilities" ---> httpd" to No; Remark: Not needed.
 - set "Networking Utilities" ---> ip" to No; Remark: Not needed with iproute2.
@@ -82,6 +98,7 @@ Busybox configuration (1.27.2):
 - set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
 - set "Shells ---> Choose which shell is aliased to 'sh' name" to none;
 - set "Shells ---> ash" to N; Remark: Not needed with bash.
+- set "Shells ---> cttyhack" to N; Remark: Not needed with systemd.
 - set "Shells ---> hush" to N; Remark: Not needed with bash.
 - set "System Logging Utilities ---> klogd to N"; Remark: Not needed with systemd-journald.
 - set "System Logging Utilities ---> logger to N"; Remark: Not needed with systemd-journald.
