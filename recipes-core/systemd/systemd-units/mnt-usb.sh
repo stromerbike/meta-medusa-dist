@@ -28,7 +28,17 @@ start)
 ;;
 
 stop)
-    umount /mnt/usb || true
+    if df -T | grep "/mnt/usb" | grep "fuseblk"; then
+        echo "Unmounting (-f) usb..."
+        if umount -f /mnt/usb; then
+            echo "...done"
+        fi
+    else
+        echo "Unmounting usb..."
+        if umount /mnt/usb; then
+            echo "...done"
+        fi
+    fi
 ;;
 
 *)
