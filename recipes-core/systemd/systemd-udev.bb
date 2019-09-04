@@ -9,6 +9,7 @@ SRC_URI += " \
             file://50-sda.rules \
             file://50-ttyacm0.rules \
             file://50-ttymxc.rules \
+            file://50-wlan0.rules \
 "
 
 FILES_${PN}_append = " \
@@ -20,4 +21,5 @@ do_install () {
     install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttyacm0.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttymxc.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-wlan0.rules ${D}${sysconfdir}/udev/rules.d/
 }

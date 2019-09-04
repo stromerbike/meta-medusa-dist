@@ -10,6 +10,7 @@ SRC_URI += " \
             file://SiseriffLTStd-Regular.otf \
             file://usb-devices.cfg \
             file://virtual-devices.cfg \
+            file://wifi-devices.cfg \
 "
 
 do_patch_append() {

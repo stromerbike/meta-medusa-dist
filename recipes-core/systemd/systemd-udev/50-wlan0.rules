@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", RUN+="/bin/systemctl --no-block start hostapd.service"
+ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", RUN+="/bin/systemctl --no-block stop hostapd.service"
