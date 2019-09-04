@@ -53,7 +53,6 @@ Busybox configuration (1.27.2):
 - set "Linux Module Utilities ---> modinfo" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> modprobe" to N; Remark: Not needed with systemd/kmod.
 - set "Linux Module Utilities ---> rmmod" to N; Remark: Not needed with systemd/kmod.
-- set "Linux System Utilities ---> eject" to N; Remark: Not needed without CDROM or SCSI.
 - set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
 - set "Linux System Utilities ---> lspci" to N; Remark: Not needed without PCI.
 - set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
@@ -65,10 +64,8 @@ Busybox configuration (1.27.2):
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
 - set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
-- set "Miscellaneous Utilities ---> hdparm" to No; Remark: Not needed without SATA/IDE.
 - set "Miscellaneous Utilities ---> inotifyd" to No; Remark: Not needed with inotify-tools.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
-- set "Miscellaneous Utilities ---> lsscsi" to No; Remark: Remark: Not needed without SCSI.
 - set "Miscellaneous Utilities ---> man" to No; Remark: Remark: Not needed.
 - set "Miscellaneous Utilities ---> mt" to No; Remark: Remark: Not needed.
 - set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
