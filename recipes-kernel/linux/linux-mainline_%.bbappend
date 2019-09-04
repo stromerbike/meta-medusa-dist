@@ -4,6 +4,7 @@ SRC_URI += " \
             file://can-devices.cfg \
             file://cgroup.cfg \
             file://CVE-2017-1000251.patch \
+            file://disable-unused.cfg \
             file://filesystems.cfg \
             file://network.cfg \
             file://SiseriffLTStd-Regular.otf \
