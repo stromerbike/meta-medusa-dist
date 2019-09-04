@@ -103,7 +103,6 @@ Busybox configuration (1.27.2):
 - set "System Logging Utilities ---> syslogd to N"; Remark: Not needed with systemd-journald.
 
 Ideas and todo's for reducing boot time (to Gui):
-- Strip down Qt to a bare minimum via QT_CONFIG_FLAGS in qtbase_%.bbappend.
 - Set GPIO's to desired direction and possibly value already in device tree.
 - https://elinux.org/Boot_Time
 - https://elinux.org/Boot-up_Time_Reduction_Howto
