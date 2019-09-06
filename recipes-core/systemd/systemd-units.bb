@@ -21,7 +21,7 @@ RDEPENDS_${PN} += " \
     inotify-tools \
     multilog \
     ppp \
-    rsync \
+    pv \
     systemd (>= 236) \
     tar \
     wvdial \

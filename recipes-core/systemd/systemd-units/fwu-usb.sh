@@ -59,7 +59,7 @@ display_error ()
 
 enable_writeaccess ()
 {
-    if [ -f /mnt/usb/autoupdate-settings/writeaccess* ]; then
+    if ! find /mnt/usb/autoupdate-settings/ -name "*writeaccess*" -exec false {} +; then
         echo "Modifying fstab for write access"
         sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
     else
@@ -85,7 +85,7 @@ check_purge_data_ignore ()
 
 purge_data ()
 {
-    if [ -f /mnt/usb/autoupdate-settings/purgedata* ]; then
+    if ! find /mnt/usb/autoupdate-settings/ -name "*purgedata*" -exec false {} +; then
         if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
             echo "Starting DataServer..."
             systemctl start medusa-DataServer || true
@@ -191,9 +191,9 @@ do
     if [ -d "/mnt/usb/autoupdate" ]; then
         firstFile=""
         firstFile="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | head -n 1)"
-        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.(tar|tar.gz|tar.xz)$ ]]; then
+        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
             echo "Firmware tarball $firstFile found"
-            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.(tar|tar.gz|tar.xz)$ ]]; then
+            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
                 echo "Nothing to up- or downgrade"
                 export_log
                 exit 0
@@ -207,21 +207,26 @@ do
                 echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
                 echo "Verifying signature..."
                 led1_blue
+                TERM=linux clear > /dev/tty1 < /dev/tty1
+                echo 0 > /sys/class/graphics/fbcon/rotate_all
+                /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
+                TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
+                echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
                 echo "" | fbv --noinfo /etc/images/busy.png
-                if gpgv --keyring /etc/gnupg/pubring.gpg "$firstFile.sig" "$firstFile"; then
+                echo -n "${firstFile: -44:-14}" > /dev/tty1
+                if pv -F "Verifying:  %p" "$firstFile" 2> /dev/tty1 | gpgv --keyring /etc/gnupg/pubring.gpg "$firstFile.sig" -; then
                     if mountpoint -q /mnt/rfs_inactive; then
                         echo "...done"
                         led2_blue
-                        echo "Extracting firmware..."
-                        rm -rf /tmp/rfs_inactive || true
-                        mkdir /tmp/rfs_inactive
-                        if tar -xf $firstFile -C /tmp/rfs_inactive --warning=no-timestamp; then
+                        echo "Cleaning up inactive partition..."
+                        if rm -rf /mnt/rfs_inactive/*; then
                             echo "...done"
-                            echo "Rsyncing to inactive rfs partition..."
-                            if rsync -a -c --delete /tmp/rfs_inactive/ /mnt/rfs_inactive/; then
+                            echo "Extracting firmware..."
+                            if pv -F "Extracting: %p" "$firstFile" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
                                 echo "...done"
                                 enable_writeaccess
                                 echo "Syncing..."
+                                echo -ne "Syncing...\r" > /dev/tty1
                                 if sync; then
                                     echo "...done"
                                     echo "Swapping active partition..."
