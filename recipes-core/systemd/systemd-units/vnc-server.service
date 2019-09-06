@@ -1,0 +1,6 @@
+[Unit]
+Description=vnc-server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -forever -nocursor -rawfb /dev/fb0 -pipeinput UINPUT:direct_abs=/dev/input/event1
