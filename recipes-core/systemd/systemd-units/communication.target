@@ -1,4 +1,4 @@
 [Unit]
 Description=communication
-After=drive.target
-Wants=drive.target
+After=check.target
+Wants=check.target

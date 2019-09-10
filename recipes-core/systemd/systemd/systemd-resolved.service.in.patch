@@ -8,7 +8,7 @@ index ef5398cbf..fbfafc9ad 100644
  DefaultDependencies=no
 -After=systemd-sysusers.service systemd-networkd.service
 -Before=network.target nss-lookup.target shutdown.target
-+After=systemd-sysusers.service systemd-networkd.service drive.target
++After=systemd-sysusers.service systemd-networkd.service check.target
 +Before=shutdown.target
  Conflicts=shutdown.target
  Wants=nss-lookup.target

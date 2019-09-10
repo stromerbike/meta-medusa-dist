@@ -86,7 +86,7 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
 
-    # start resolved and timesyncd service after drive.target
+    # start resolved and timesyncd service after check.target
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
     mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-resolved.service
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service

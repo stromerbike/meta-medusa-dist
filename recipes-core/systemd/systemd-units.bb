@@ -44,6 +44,7 @@ SRC_URI += " \
             file://candump-save.sh \
             file://candump.service \
             file://candump.awk \
+            file://check.target \
             file://communication.target \
             file://debug.target \
             file://drive.target \
@@ -168,6 +169,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
 
+    install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}

@@ -8,7 +8,7 @@ index d3bc4e984..27bdfaf63 100644
  DefaultDependencies=no
 -After=systemd-remount-fs.service systemd-sysusers.service
 -Before=time-sync.target sysinit.target shutdown.target
-+After=systemd-remount-fs.service systemd-sysusers.service drive.target
++After=systemd-remount-fs.service systemd-sysusers.service check.target
 +Before=shutdown.target
  Conflicts=shutdown.target
  Wants=time-sync.target

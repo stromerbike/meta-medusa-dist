@@ -1,8 +1,8 @@
 [Unit]
 Description=ble
-After=dbus.service drive.target
+After=dbus.service check.target
 Requires=dbus.service
-Wants=drive.target
+Wants=check.target
 Before=bluetooth.service
 
 [Service]
