@@ -59,11 +59,15 @@ display_error ()
 
 enable_writeaccess ()
 {
-    if [ -f /mnt/usb/autoupdate-settings/writeaccess ]; then
-        echo "Modifying fstab for write access"
-        sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
+    if [ -d "/mnt/usb/autoupdate-settings/" ]; then
+        if ! find /mnt/usb/autoupdate-settings/ -name "*writeaccess*" -exec false {} +; then
+            echo "Modifying fstab for write access"
+            sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
+        else
+            echo "Keeping fstab untouched"
+        fi
     else
-        echo "Keeping fstab untouched"
+        echo "Directory autoupdate-settings does not exist"
     fi
 }
 
@@ -85,29 +89,33 @@ check_purge_data_ignore ()
 
 purge_data ()
 {
-    if [ -f /mnt/usb/autoupdate-settings/purgedata ]; then
-        if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-            echo "Starting DataServer..."
-            systemctl start medusa-DataServer || true
-            echo "...done"
-            echo "Rechecking if purgedata shall be ignored..."
-            check_purge_data_ignore # recheck a second time in case fwu-usb has been aborted prematurely before (e.g. by pulling usb)
-            echo "...done"
+    if [ -d "/mnt/usb/autoupdate-settings/" ]; then
+        if ! find /mnt/usb/autoupdate-settings/ -name "*purgedata*" -exec false {} +; then
             if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-                echo "Stopping DataServer application..."
-                systemctl stop medusa-DataServer || true
+                echo "Starting DataServer..."
+                systemctl start medusa-DataServer || true
                 echo "...done"
-                echo "Purging data partition"
-                rm -rf /mnt/data/*
+                echo "Rechecking if purgedata shall be ignored..."
+                check_purge_data_ignore # recheck a second time in case fwu-usb has been aborted prematurely before (e.g. by pulling usb)
                 echo "...done"
+                if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
+                    echo "Stopping DataServer application..."
+                    systemctl stop medusa-DataServer || true
+                    echo "...done"
+                    echo "Purging data partition"
+                    rm -rf /mnt/data/*
+                    echo "...done"
+                else
+                    echo "Keeping data partition"
+                fi
             else
                 echo "Keeping data partition"
             fi
         else
-            echo "Keeping data partition"
+            echo "Ignoring data partition"
         fi
     else
-        echo "Ignoring data partition"
+        echo "Directory autoupdate-settings does not exist"
     fi
 }
 
