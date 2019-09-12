@@ -63,6 +63,8 @@ Busybox configuration (1.27.2):
 - set "Linux System Utilities ---> rtcwake" to N; Remark: Not needed without RTC.
 - set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed without onboard speaker.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
+- set "Miscellaneous Utilities ---> crond" to N; Remark: Not needed with systemd.
+- set "Miscellaneous Utilities ---> crontab" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
 - set "Miscellaneous Utilities ---> inotifyd" to No; Remark: Not needed with inotify-tools.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
@@ -72,17 +74,21 @@ Busybox configuration (1.27.2):
 - set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
-- set "Networking Utilities" ---> dnsd" to No; Remark: Not needed with systemd-resolved.
-- set "Networking Utilities" ---> httpd" to No; Remark: Not needed.
-- set "Networking Utilities" ---> ip" to No; Remark: Not needed with iproute2.
-- set "Networking Utilities" ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
-- set "Networking Utilities" ---> ssl_client" to No; Remark: Not needed (with openssl).
-- set "Networking Utilities" ---> wget" to No; Remark: Not needed with wget.
-- set "Networking Utilities" ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
-- set "Networking Utilities" ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
-- set "Print Utilities" ---> lpd" to No; Remark: Not needed.
-- set "Print Utilities" ---> lpr" to No; Remark: Not needed.
-- set "Print Utilities" ---> lpq" to No; Remark: Not needed.
+- set "Networking Utilities ---> dnsd" to No; Remark: Not needed with systemd-resolved.
+- set "Networking Utilities ---> httpd" to No; Remark: Not needed.
+- set "Networking Utilities ---> ip" to No; Remark: Not needed with iproute2.
+- set "Networking Utilities ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
+- set "Networking Utilities ---> ssl_client" to No; Remark: Not needed (with openssl).
+- set "Networking Utilities ---> wget" to No; Remark: Not needed with wget.
+- set "Networking Utilities ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
+- set "Networking Utilities ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
+- set "Print Utilities ---> lpd" to No; Remark: Not needed.
+- set "Print Utilities ---> lpr" to No; Remark: Not needed.
+- set "Print Utilities ---> lpq" to No; Remark: Not needed.
+- set "Mail Utilities ---> makemime" to No; Remark: Not needed.
+- set "Mail Utilities ---> popmaildir" to No; Remark: Not needed.
+- set "Mail Utilities ---> reformime" to No; Remark: Not needed.
+- set "Mail Utilities ---> sendmail" to No; Remark: Not needed.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> chpst" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
