@@ -14,15 +14,15 @@ Fixed recipe version:
 - [morty: linux-mainline 4.12.4-phy4](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/c2cf1befc68f43dc06f2497fb09e450634c341fa)
 - [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
 
-Busybox configuration (1.27.2):
-- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
-- set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
-- set "Busybox Settings ---> Include busybox applet" to N; Remark: Not needed.
-- set "Busybox Library Tuning ---> Enable locale support (system needs locale for this to work)" to y.
-- set "Busybox Library Tuning ---> Use libc routines for Unicode (else uses internal ones)" to y.
-- set "Busybox Library Tuning ---> Range of supported Unicode characters" to 1114111.
-- set "Busybox Library Tuning ---> Allow zero-width Unicode characters on output" to y.
-- set "Busybox Library Tuning ---> Allow wide Unicode characters on output" to y.
+Busybox configuration (1.30.1):
+- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_30_1 && make defconfig && make menuconfig
+- set "Settings ---> Include busybox applet" to N; Remark: Not needed.
+- set "Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Settings ---> Enable locale support (system needs locale for this to work)" to y.
+- set "Settings ---> Use libc routines for Unicode (else uses internal ones)" to y.
+- set "Settings ---> Range of supported Unicode characters" to 1114111.
+- set "Settings ---> Allow zero-width Unicode characters on output" to y.
+- set "Settings ---> Allow wide Unicode characters on output" to y.
 - set "Archival Utilities ---> unlzma" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzcat" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzma -d" to N; Remark: Not needed with xz.
@@ -79,6 +79,7 @@ Busybox configuration (1.27.2):
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
 - set "Networking Utilities ---> dnsd" to No; Remark: Not needed with systemd-resolved.
+- set "Networking Utilities ---> ftpd" to No; Remark: Not needed.
 - set "Networking Utilities ---> httpd" to No; Remark: Not needed.
 - set "Networking Utilities ---> ip" to No; Remark: Not needed with iproute2.
 - set "Networking Utilities ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
@@ -103,6 +104,8 @@ Busybox configuration (1.27.2):
 - set "Runint Utilities ---> runsvdir" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> sv" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> svc" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
+- set "Runint Utilities ---> svok" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
+- set "Runint Utilities ---> svlogd" to N; Remark: Not needed with systemd.
 - set "Shells ---> Choose which shell is aliased to 'sh' name" to none;
 - set "Shells ---> ash" to N; Remark: Not needed with bash.
 - set "Shells ---> cttyhack" to N; Remark: Not needed with systemd.
