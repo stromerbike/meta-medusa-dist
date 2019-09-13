@@ -18,6 +18,11 @@ Busybox configuration (1.27.2):
 - git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_27_2 && make defconfig && make menuconfig
 - set "Busybox Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
 - set "Busybox Settings ---> Include busybox applet" to N; Remark: Not needed.
+- set "Busybox Library Tuning ---> Enable locale support (system needs locale for this to work)" to y.
+- set "Busybox Library Tuning ---> Use libc routines for Unicode (else uses internal ones)" to y.
+- set "Busybox Library Tuning ---> Range of supported Unicode characters" to 1114111.
+- set "Busybox Library Tuning ---> Allow zero-width Unicode characters on output" to y.
+- set "Busybox Library Tuning ---> Allow wide Unicode characters on output" to y.
 - set "Archival Utilities ---> unlzma" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzcat" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> lzma -d" to N; Remark: Not needed with xz.
