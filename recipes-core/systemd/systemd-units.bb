@@ -104,6 +104,7 @@ SYSTEMD_SERVICE_${PN} = " \
     peripheral-pwr.service \
     peripheral-stem.service \
     usb.service \
+    vnc-server.service \
 "
 
 do_install_append() {

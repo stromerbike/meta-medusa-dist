@@ -1,7 +1,12 @@
 [Unit]
 Description=vnc-server
+After=communication.target
+Wants=communication.target
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/x11vnc -forever -nocursor -rawfb /dev/fb0 -pipeinput UINPUT:direct_abs=/dev/input/event1
 KillSignal=SIGINT
+
+[Install]
+WantedBy=debug.target
