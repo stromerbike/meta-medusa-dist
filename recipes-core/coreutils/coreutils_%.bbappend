@@ -6,7 +6,7 @@ do_install_append() {
     for i in link nice printenv; do mv ${D}${bindir}/$i ${D}${bindir}/$i.${BPN}; done
 }
 
-ALTERNATIVE_LINK_NAME[link] = "${base_bindir}/link"
+ALTERNATIVE_LINK_NAME[link] = "${bindir}/link"
 ALTERNATIVE_TARGET[link] = "${bindir}/link.${BPN}"
 ALTERNATIVE_LINK_NAME[link.1] = "${mandir}/man1/link.1"
 
