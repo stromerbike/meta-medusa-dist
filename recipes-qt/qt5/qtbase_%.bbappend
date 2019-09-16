@@ -1,3 +1,10 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+SRC_URI += " \
+            file://Fix-build-when-ftp-feature-is-disabled.patch \
+            file://Fix-build-without-features.cursor.patch \
+            file://Protect-HSTS-code-for-no-feature-settings-build.patch \
+"
+
 PACKAGECONFIG_append = " libinput linuxfb no-opengl"
 PACKAGECONFIG_DEFAULT = "udev widgets libs ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
@@ -194,12 +201,14 @@ QT_CONFIG_FLAGS += " \
     -no-feature-completer \
     -no-feature-contextmenu \
     -no-feature-cups \
+    -no-feature-cursor \
     -no-feature-datawidgetmapper \
     -no-feature-datetimeedit \
     -no-feature-datetimeparser \
     -no-feature-desktopservices \
     -no-feature-dial \
     -no-feature-dirmodel \
+    -no-feature-dockwidget \
     -no-feature-dom \
     -no-feature-draganddrop \
     -no-feature-effects \
@@ -211,6 +220,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-fontdialog \
     -no-feature-formlayout \
     -no-feature-fscompleter \
+    -no-feature-ftp \
     -no-feature-highdpiscaling \
     -no-feature-iconv \
     -no-feature-identityproxymodel \
@@ -245,6 +255,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-radiobutton \
     -no-feature-rubberband \
     -no-feature-sessionmanager \
+    -no-feature-settings \
     -no-feature-sha3-fast \
     -no-feature-sharedmemory \
     -no-feature-shortcut \
@@ -260,6 +271,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-syntaxhighlighter \
     -no-feature-systemsemaphore \
     -no-feature-systemtrayicon \
+    -no-feature-tabbar \
     -no-feature-tabletevent \
     -no-feature-tableview \
     -no-feature-tablewidget \

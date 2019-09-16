@@ -1,0 +1,130 @@
+diff --git a/src/widgets/widgets/qmainwindowlayout_p.h b/src/widgets/widgets/qmainwindowlayout_p.h
+index c61c4f6aa8..5a22fd3b7f 100644
+--- a/src/widgets/widgets/qmainwindowlayout_p.h
++++ b/src/widgets/widgets/qmainwindowlayout_p.h
+@@ -89,13 +89,15 @@ public:
+     QList<int> hoverSeparator;
+     QPoint hoverPos;
+ 
+-#if !defined(QT_NO_DOCKWIDGET) && !defined(QT_NO_CURSOR)
++#if QT_CONFIG(dockwidget)
++#if QT_CONFIG(cursor)
+     QCursor separatorCursor(const QList<int> &path);
+     void adjustCursor(const QPoint &pos);
+     QCursor oldCursor;
+     QCursor adjustedCursor;
+     bool hasOldCursor = false;
+     bool cursorAdjusted = false;
++#endif // QT_CONFIG(cursor)
+ 
+     QList<int> movingSeparator;
+     QPoint movingSeparatorOrigin, movingSeparatorPos;
+@@ -105,12 +107,12 @@ public:
+     bool separatorMove(const QPoint &pos);
+     bool endSeparatorMove(const QPoint &pos);
+ 
+-#endif
++#endif // QT_CONFIG(dockwidget)
+ 
+     bool windowEvent(QEvent *e);
+ };
+ 
+-#if !defined(QT_NO_DOCKWIDGET) && !defined(QT_NO_CURSOR)
++#if QT_CONFIG(dockwidget) && QT_CONFIG(cursor)
+ template <typename Layout>
+ QCursor QMainWindowLayoutSeparatorHelper<Layout>::separatorCursor(const QList<int> &path)
+ {
+@@ -183,12 +185,14 @@ void QMainWindowLayoutSeparatorHelper<Layout>::adjustCursor(const QPoint &pos)
+         }
+     }
+ }
++#endif // QT_CONFIG(cursor) && QT_CONFIG(dockwidget)
+ 
+ template <typename Layout>
+ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+ {
+     QWidget *w = window();
+     switch (event->type()) {
++#if QT_CONFIG(dockwidget)
+     case QEvent::Paint: {
+         QPainter p(w);
+         QRegion r = static_cast<QPaintEvent *>(event)->region();
+@@ -196,7 +200,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+         break;
+     }
+ 
+-#ifndef QT_NO_CURSOR
++#if QT_CONFIG(cursor)
+     case QEvent::HoverMove: {
+         adjustCursor(static_cast<QHoverEvent *>(event)->pos());
+         break;
+@@ -212,7 +216,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+     case QEvent::ShortcutOverride: // when a menu pops up
+         adjustCursor(QPoint(0, 0));
+         break;
+-#endif // QT_NO_CURSOR
++#endif // QT_CONFIG(cursor)
+ 
+     case QEvent::MouseButtonPress: {
+         QMouseEvent *e = static_cast<QMouseEvent *>(event);
+@@ -227,7 +231,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+     case QEvent::MouseMove: {
+         QMouseEvent *e = static_cast<QMouseEvent *>(event);
+ 
+-#ifndef QT_NO_CURSOR
++#if QT_CONFIG(cursor)
+         adjustCursor(e->pos());
+ #endif
+         if (e->buttons() & Qt::LeftButton) {
+@@ -251,7 +255,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+         break;
+     }
+ 
+-#if !defined(QT_NO_CURSOR)
++#if QT_CONFIG(cursor)
+     case QEvent::CursorChange:
+         // CursorChange events are triggered as mouse moves to new widgets even
+         // if the cursor doesn't actually change, so do not change oldCursor if
+@@ -264,7 +268,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+             w->setCursor(adjustedCursor);
+         }
+         break;
+-#endif
++#endif // QT_CONFIG(cursor)
+     case QEvent::Timer:
+         if (static_cast<QTimerEvent *>(event)->timerId() == separatorMoveTimer.timerId()) {
+             // let's move the separators
+@@ -284,12 +288,14 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::windowEvent(QEvent *event)
+             return true;
+         }
+         break;
++#endif // QT_CONFIG(dockwidget)
+     default:
+         break;
+     }
+     return false;
+ }
+ 
++#if QT_CONFIG(dockwidget)
+ template <typename Layout>
+ bool QMainWindowLayoutSeparatorHelper<Layout>::startSeparatorMove(const QPoint &pos)
+ {
+@@ -321,9 +327,7 @@ bool QMainWindowLayoutSeparatorHelper<Layout>::endSeparatorMove(const QPoint &)
+     layout()->savedState.clear();
+     return true;
+ }
+-#endif
+ 
+-#if QT_CONFIG(dockwidget)
+ class QDockWidgetGroupWindow : public QWidget
+ {
+     Q_OBJECT
+@@ -365,7 +369,7 @@ public:
+ private:
+     QLayout *lay() const { return const_cast<QDockWidgetGroupWindowItem *>(this)->widget()->layout(); }
+ };
+-#endif
++#endif // QT_CONFIG(dockwidget)
+ 
+ /* This data structure represents the state of all the tool-bars and dock-widgets. It's value based
+    so it can be easilly copied into a temporary variable. All operations are performed without moving
