@@ -3,8 +3,11 @@
     {
         startTimestamp = substr($1, 2, length($1) - 2)
         printf(";$FILEVERSION=1.3\n")
-        printf(";$STARTTIME=%u.%u\n", mktime(strftime("%Y %m %d 0 0 0", startTimestamp)) / 86400 + 25569, \
-                10000000000 / 86400 * (mktime(strftime("%Y %m %d %H %M %S", startTimestamp)) - mktime(strftime("%Y %m %d 0 0 0", startTimestamp))))
+        printf(";$STARTTIME=%u.%.0f\n", mktime(strftime("%Y %m %d 0 0 0", startTimestamp)) / 86400 + 25569, \
+                10000000000.0 / 86400.0 * (mktime(strftime("%Y %m %d %H %M %S", startTimestamp)) - mktime(strftime("%Y %m %d 0 0 0", startTimestamp))))
+        printf(";\n; Start time: %s\n", startTimestamp)
+        printf(";             %u\n", mktime(strftime("%Y %m %d %H %M %S", startTimestamp)))
+        printf(";             %s\n;\n", strftime("%Y-%m-%dT%H:%M:%S%z (%Z)", startTimestamp))
         currentTimeOffset = 0.0
     }
     else
