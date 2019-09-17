@@ -184,13 +184,7 @@ export_log ()
 }
 
 # To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
-# Determine if timeout is provided by busybox or coreutils beforehand since they have a different syntax.
-TIMEOUT_CMD=""
-if ls -l `which timeout` | grep busybox > /dev/null; then
-    TIMEOUT_CMD="timeout -s KILL -t 5"
-else
-    TIMEOUT_CMD="timeout -s KILL 5"
-fi
+TIMEOUT_CMD="timeout -s KILL 5"
 
 COUNTER=0
 while [ $COUNTER -lt 5 ];
