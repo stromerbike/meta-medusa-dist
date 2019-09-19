@@ -5,7 +5,7 @@ Requires=can0.service
 
 [Service]
 Type=simple
-ExecStart=/bin/dash -c '/usr/bin/candump can0 -t a | /usr/bin/multilog s10485760 n3 wcandump /tmp/candump'
+ExecStart=/bin/dash -c '/usr/bin/candump can0,0:0,#FFFFFFFF -t a | /usr/bin/multilog s10485760 n3 wcandump /tmp/candump'
 
 [Install]
 WantedBy=drive.target
