@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://Detect-system-time-zone-from-linked-symlinks.patch \
             file://Fix-build-when-ftp-feature-is-disabled.patch \
             file://Fix-build-without-features.cursor.patch \
             file://Protect-HSTS-code-for-no-feature-settings-build.patch \
