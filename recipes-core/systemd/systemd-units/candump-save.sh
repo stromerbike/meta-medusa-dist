@@ -61,6 +61,10 @@ fi
 
 rm "$dir$name.candump"
 mkdir -p /mnt/data/candump
+if [ ! -e "/tmp/candump.first" ]; then
+    cp "$dir$name.trc" "/mnt/data/candump/first.trc"
+    mkdir "/tmp/candump.first"
+fi
 mv -f "$dir$name.trc" "/mnt/data/candump/$name.trc"
 
 rm -r "/tmp/candump.lock"
