@@ -3,9 +3,11 @@ SRC_URI += " \
              file://rsyslog.conf \
 "
 
-PACKAGECONFIG_remove += "gnutls"
+PACKAGECONFIG_remove += "fmhttp gnutls imdiag imfile libgcrypt uuid"
+
+PACKAGECONFIG[fmhash] = "--enable-fmhash,--disable-fmhash,,"
 
 PACKAGECONFIG_append += "omprog"
-PACKAGECONFIG[omprog] = "--enable-omprog,--disable-omprog,"
+PACKAGECONFIG[omprog] = "--enable-omprog,--disable-omprog,,"
 
 SYSTEMD_AUTO_ENABLE = "disable"
