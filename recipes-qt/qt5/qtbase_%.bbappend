@@ -302,10 +302,6 @@ QT_CONFIG_FLAGS += " \
     -no-feature-xmlstreamwriter \
 "
 
-QT_CONFIG_FLAGS += " \
-    -no-feature-effects \
-"
-
 # Set QT_QPA_PLATFORM
 QT_QPA_PLATFORM = "linuxfb"
 QT_CONFIG_FLAGS += "-qpa ${QT_QPA_PLATFORM}"
