@@ -7,7 +7,7 @@ Modifications:
 Patches:
 - [CVE-2017-1000251 (BlueBorne)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3)
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
-- [systemd /etc/localtime symlinks chasing](https://github.com/tramseyer/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
+- [systemd /etc/localtime symlinks chasing](https://github.com/stromerbike/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
 
 Fixed recipe version:
 - [sumo: dt-utils 2016.08.0](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/bd856199aaf116e828e354152f496344d26d25dd)

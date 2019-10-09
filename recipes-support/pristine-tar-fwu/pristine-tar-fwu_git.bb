@@ -1,5 +1,5 @@
 SUMMARY = "pristine-tar can regenerate a pristine upstream tarball using only a small binary delta file and a revision control checkout of the upstream branch"
-HOMEPAGE = "https://github.com/tramseyer/pristine-tar-fwu"
+HOMEPAGE = "https://github.com/stromerbike/pristine-tar-fwu"
 SECTION = "console/utils"
 
 LICENSE = "GPLv2+"
@@ -9,7 +9,7 @@ PR = "r0"
 PV = "1.42.4+gitr${SRCPV}"
 DEPENDS = "zlib"
 
-SRC_URI = "git://github.com/tramseyer/${BPN}.git;protocol=git;branch=master"
+SRC_URI = "git://github.com/stromerbike/${BPN}.git;protocol=git;branch=master"
 SRCREV = "29da46c434358313c303a1f4a037ee874c745ebb"
 
 S = "${WORKDIR}/git"
