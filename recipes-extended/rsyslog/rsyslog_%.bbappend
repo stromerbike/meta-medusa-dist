@@ -10,4 +10,7 @@ PACKAGECONFIG[fmhash] = "--enable-fmhash,--disable-fmhash,,"
 PACKAGECONFIG_append += "omprog"
 PACKAGECONFIG[omprog] = "--enable-omprog,--disable-omprog,,"
 
+PACKAGECONFIG_append += "omhttp"
+PACKAGECONFIG[omhttp] = "--enable-omhttp,--disable-omhttp,,"
+
 SYSTEMD_AUTO_ENABLE = "disable"
