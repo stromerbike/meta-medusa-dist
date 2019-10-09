@@ -5,6 +5,7 @@ MACHINE ?= "imx6ul-medusa"
 DISTRO ?= "medusa"
 
 # License Handling
+COPY_LIC_MANIFEST = "1"
 #  - Uncomment for Freescale i.MX6 proprietary GPU libraries
 LICENSE_FLAGS_WHITELIST += "license-freescale_v6-february-2015_imx-gpu-viv"
 #  - Uncomment for Freescale i.MX6 legacy VPU firmware blobs
