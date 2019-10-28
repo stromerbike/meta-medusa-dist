@@ -11,6 +11,6 @@ PACKAGECONFIG_append += "omprog"
 PACKAGECONFIG[omprog] = "--enable-omprog,--disable-omprog,,"
 
 PACKAGECONFIG_append += "omhttp"
-PACKAGECONFIG[omhttp] = "--enable-omhttp,--disable-omhttp,,"
+PACKAGECONFIG[omhttp] = "--enable-omhttp,--disable-omhttp,curl,"
 
 SYSTEMD_AUTO_ENABLE = "disable"
