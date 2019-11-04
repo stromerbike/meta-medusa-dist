@@ -60,7 +60,7 @@ display_error ()
 enable_writeaccess ()
 {
     if [ -d "/mnt/usb/autoupdate-settings/" ]; then
-        if ! find /mnt/usb/autoupdate-settings/ -name "*writeaccess*" -exec false {} +; then
+        if ! find /mnt/usb/autoupdate-settings/ -iname "writeaccess*" -exec false {} +; then
             echo "Modifying fstab for write access"
             sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
         else
@@ -90,7 +90,7 @@ check_purge_data_ignore ()
 purge_data ()
 {
     if [ -d "/mnt/usb/autoupdate-settings/" ]; then
-        if ! find /mnt/usb/autoupdate-settings/ -name "*purgedata*" -exec false {} +; then
+        if ! find /mnt/usb/autoupdate-settings/ -iname "purgedata*" -exec false {} +; then
             if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
                 echo "Starting DataServer..."
                 systemctl start medusa-DataServer || true
