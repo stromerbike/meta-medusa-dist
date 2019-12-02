@@ -11,6 +11,7 @@ PACKAGECONFIG_remove = " \
     avrcp-profiles \
     hid-profiles \
     hog-profiles \
+    udev \
 "
 
 EXTRA_OECONF += "--localstatedir=/mnt/data/var"

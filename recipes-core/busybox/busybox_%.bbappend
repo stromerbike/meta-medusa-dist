@@ -1,7 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://defconfig.cfg \
-            file://libbb-mark-scripted_main-as-externally-visible.patch \
 "
 
 SRC_URI_remove = "file://syslog.cfg"

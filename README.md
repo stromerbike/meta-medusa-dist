@@ -14,8 +14,8 @@ Fixed recipe version:
 - [morty: linux-mainline 4.12.4-phy4](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/c2cf1befc68f43dc06f2497fb09e450634c341fa)
 - [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
 
-Busybox configuration (1.30.1):
-- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_30_1 && make defconfig && make menuconfig
+Busybox configuration (1.31.0):
+- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_31_0 && make defconfig && make menuconfig
 - set "Settings ---> Include busybox applet" to N; Remark: Not needed.
 - set "Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
 - set "Settings ---> Enable locale support (system needs locale for this to work)" to y.
@@ -70,7 +70,6 @@ Busybox configuration (1.30.1):
 - set "Miscellaneous Utilities ---> crond" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> crontab" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
-- set "Miscellaneous Utilities ---> inotifyd" to No; Remark: Not needed with inotify-tools.
 - set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
 - set "Miscellaneous Utilities ---> man" to No; Remark: Remark: Not needed.
 - set "Miscellaneous Utilities ---> mt" to No; Remark: Remark: Not needed.
@@ -87,6 +86,7 @@ Busybox configuration (1.30.1):
 - set "Networking Utilities ---> wget" to No; Remark: Not needed with wget.
 - set "Networking Utilities ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
 - set "Networking Utilities ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
+- set "Networking Utilities ---> udhcpc6" to No; Remark: Not needed with systemd-networkd.
 - set "Print Utilities ---> lpd" to No; Remark: Not needed.
 - set "Print Utilities ---> lpr" to No; Remark: Not needed.
 - set "Print Utilities ---> lpq" to No; Remark: Not needed.
