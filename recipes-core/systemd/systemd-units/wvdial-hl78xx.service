@@ -1,0 +1,11 @@
+[Unit]
+Description=wvdial internet dialer service for stromer m2m
+After=gsm.service ldattach-hl78xx.service
+PartOf=gsm.service ldattach-hl78xx.service
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/dash -c "wvdial hl78xx || true"
+Restart=always
+RestartSec=10

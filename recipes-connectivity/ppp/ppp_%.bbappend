@@ -9,6 +9,10 @@ SRC_URI += " \
 do_install_append() {
     install -m 0755 ${WORKDIR}/script ${D}${sysconfdir}/ppp/ip-up.d/
 
-    echo "noccp" >> ${D}${sysconfdir}/ppp/options
     echo "debug" >> ${D}${sysconfdir}/ppp/options
+
+    echo "noccp" >> ${D}${sysconfdir}/ppp/options.ttyACM0
+
+    echo "+ipv6" >> ${D}${sysconfdir}/ppp/options.gsmtty1
+    echo "ipv6cp-use-ipaddr" >> ${D}${sysconfdir}/ppp/options.gsmtty1
 }

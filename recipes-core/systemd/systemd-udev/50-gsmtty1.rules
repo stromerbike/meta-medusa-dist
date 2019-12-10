@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/gsmtty1", RUN+="/bin/systemctl --no-block start wvdial-hl78xx.service"
+ACTION=="remove", SUBSYSTEM=="tty", ENV{DEVNAME}=="/dev/gsmtty1", RUN+="/bin/systemctl --no-block stop wvdial-hl78xx.service"

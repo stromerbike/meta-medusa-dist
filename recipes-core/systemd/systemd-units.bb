@@ -18,10 +18,12 @@ RDEPENDS_${PN} += " \
     iproute2 \
     inotify-tools \
     multilog \
+    picocom \
     ppp \
     pv \
     systemd (>= 236) \
     tar \
+    util-linux-ldattach \
     wvdial \
     x11vnc \
     xz \
@@ -54,6 +56,7 @@ SRC_URI += " \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
+            file://ldattach-hl78xx.service \
             file://led.service \
             file://led.sh \
             file://log-usb.service \
@@ -75,6 +78,8 @@ SRC_URI += " \
             file://vnc-server.service \
             file://wlan0.network \
             file://wlan0.sh \
+            file://wvdial-hl78xx-usb.service \
+            file://wvdial-hl78xx.service \
             file://wvdial.service \
 "
 
@@ -123,6 +128,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-mpio.service ${D}${systemd_system_unitdir}
@@ -135,6 +141,9 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/vnc-server.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/wlan0.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/wvdial-hl78xx-usb.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/wvdial-hl78xx.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
@@ -166,7 +175,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
 
     install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}

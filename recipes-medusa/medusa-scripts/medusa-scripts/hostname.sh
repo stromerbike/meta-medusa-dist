@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ -e /dev/ttyACM5 ]; then
+if [ -e /dev/gsmtty4 ]; then
+    CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/gsmtty4)"
+elif [ -e /dev/ttyACM5 ]; then
     GARBAGE="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyACM5)"
     CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyACM5)"
 fi

@@ -21,20 +21,19 @@ start)
     echo "1" > /sys/class/gpio/gpio497/value
     # Wait for voltage to rise
     sleep 0.2
-    # Start GSM module
+    # Make pulse to start GSM module
     echo "1" > /sys/class/gpio/gpio133/value
+    sleep 0.1
+    echo "0" > /sys/class/gpio/gpio133/value
+    sleep 0.5
+    modprobe imx6ul_mod_uart
 ;;
 
 stop)
+    # Remove uart driver
+    rmmod imx6ul_mod_uart
     # Disable 3v7 voltage
     echo "0" > /sys/class/gpio/gpio497/value
-;;
-
-reload)
-    # Pulse GSM reset
-    echo "1" > /sys/class/gpio/gpio128/value
-    sleep 0.1
-    echo "0" > /sys/class/gpio/gpio128/value
 ;;
 
 *)
