@@ -29,6 +29,7 @@ alias lnavall='f(){ unset -f f; if [ -z $1 ]; then UNIT=""; else UNIT="-u $1"; f
 alias sstat='f(){ unset -f f; systemctl status -l -n 25 --no-pager "$@" | ccze -A -o nolookups; }; f'
 
 # some various aliases
+alias canbusload='canbusload can0@250000 -r -t -b -c'
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
 alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
 alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
