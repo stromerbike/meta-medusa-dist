@@ -1,5 +1,7 @@
 [Unit]
 Description=gsm
+After=check.target
+Wants=check.target
 
 [Service]
 Type=oneshot
