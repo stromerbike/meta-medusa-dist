@@ -1,6 +1,9 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
+            file://0001-tty-n_gsm-Allow-ADM-response-in-addition-to-UA-for-control-dlci.patch \
+            file://0002-tty-n_gsm-Fix-DLCI-handling-for-ADM-mode-if-debug-2-is-not-set.patch \
+            file://0003-tty-n_gsm-Fix-long-delays-with-control-frame-timeouts-in-ADM-mode.patch \
             file://can-devices.cfg \
             file://cgroup.cfg \
             file://CVE-2017-1000251.patch \
