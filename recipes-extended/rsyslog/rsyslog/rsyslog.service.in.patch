@@ -1,0 +1,27 @@
+diff --git a/rsyslog.service.in b/rsyslog.service.in
+index b761ae571..edd0eaa7a 100644
+--- a/rsyslog.service.in
++++ b/rsyslog.service.in
+@@ -1,11 +1,15 @@
+ [Unit]
+ Description=System Logging Service
+ Requires=syslog.socket
++Before=medusa-DataServer.service
++RequiresMountsFor=/mnt/data
++ConditionPathExists=/mnt/data/rsyslog.proxy
+ Documentation=man:rsyslogd(8)
+ Documentation=https://www.rsyslog.com/doc/
+ 
+ [Service]
+ Type=notify
++EnvironmentFile=/mnt/data/rsyslog.proxy
+ ExecStart=@sbindir@/rsyslogd -n -iNONE
+ StandardOutput=null
+ Restart=on-failure
+@@ -15,5 +19,5 @@ Restart=on-failure
+ LimitNOFILE=16384
+ 
+ [Install]
+-WantedBy=multi-user.target
++WantedBy=drive.target
+ Alias=syslog.service
