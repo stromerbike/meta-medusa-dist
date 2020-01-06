@@ -2,7 +2,7 @@ This is the repository of the distribution specific Yocto layer for the Stromer 
 
 Modifications:
 - linux-common.inc: added DATETIME to vardepsexclude for KERNEL_IMAGE_BASE_NAME
-- python3_3.7.2: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
+- python3_3.7.5: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
 
 Patches:
 - [CVE-2017-1000251 (BlueBorne)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3)
