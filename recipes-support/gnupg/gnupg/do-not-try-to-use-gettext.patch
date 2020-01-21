@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 382ef1df5..524201fdd 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -630,7 +630,7 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
+ PKG_PROG_PKG_CONFIG
+ 
+ 
+-try_gettext=yes
++try_gettext=no
+ require_iconv=yes
+ have_dosish_system=no
+ have_w32_system=no
