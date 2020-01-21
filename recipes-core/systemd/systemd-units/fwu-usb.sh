@@ -191,11 +191,11 @@ while [ $COUNTER -lt 5 ];
 do
     let COUNTER=COUNTER+1
     if [ -d "/mnt/usb/autoupdate" ]; then
-        firstFile=""
-        firstFile="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | head -n 1)"
-        if [[ $firstFile =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
-            echo "Firmware tarball $firstFile found"
-            if [[ $firstFile =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
+        firstTarXz=""
+        firstTarXz="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | grep .tar.xz | head -n 1)"
+        if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
+            echo "Firmware tarball $firstTarXz found"
+            if [[ $firstTarXz =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
                 echo "Nothing to up- or downgrade"
                 export_log
                 exit 0
@@ -215,8 +215,8 @@ do
                 TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
                 echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
                 echo "" | fbv --noinfo /etc/images/busy.png
-                echo -n "${firstFile: -44:-14}" > /dev/tty1
-                if pv -F "Verifying:  %p" "$firstFile" 2> /dev/tty1 | gpgv --keyring /etc/gnupg/pubring.gpg "$firstFile.sig" -; then
+                echo -n "${firstTarXz: -44:-14}" > /dev/tty1
+                if pv -F "Verifying:  %p" "$firstTarXz" 2> /dev/tty1 | gpgv --keyring /etc/gnupg/pubring.gpg "$firstTarXz.sig" -; then
                     if mountpoint -q /mnt/rfs_inactive; then
                         echo "...done"
                         led2_blue
@@ -224,7 +224,7 @@ do
                         if rm -rf /mnt/rfs_inactive/*; then
                             echo "...done"
                             echo "Extracting firmware..."
-                            if pv -F "Extracting: %p" "$firstFile" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
+                            if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
                                 echo "...done"
                                 enable_writeaccess
                                 echo "Syncing..."
