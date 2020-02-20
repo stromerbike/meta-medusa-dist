@@ -1,6 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
+            file://resolved.conf \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-resolved.service.in.patch \
@@ -53,6 +54,7 @@ PACKAGECONFIG[bashcompletion] = ",-Dbashcompletiondir=no,"
 PACKAGECONFIG[hwdb] = "-Dhwdb=true,-Dhwdb=false,hwdb"
 
 do_install_append() {
+    install -m 0644 ${WORKDIR}/resolved.conf ${D}${sysconfdir}/systemd
     install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
     install -m 0644 ${WORKDIR}/timesyncd.conf ${D}${sysconfdir}/systemd
 
