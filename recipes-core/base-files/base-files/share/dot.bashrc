@@ -36,8 +36,8 @@ alias canbusload='canbusload can0@250000 -r -t -b -c'
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
 alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
 alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
-alias pcurl='curl -x 10.89.23.31:8080'
-alias pwget='wget -e use_proxy=yes -e http_proxy=10.89.23.31:8080'
+alias pcurl='curl -x proxy.stromer.internal:8080'
+alias pwget='wget -e use_proxy=yes -e http_proxy=proxy.stromer.internal:8080'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
