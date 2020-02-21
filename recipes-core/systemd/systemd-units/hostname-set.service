@@ -1,11 +1,11 @@
 [Unit]
 Description=hostname-set
-Before=medusa-DataServer.service
+Before=rsyslog.service medusa-DataServer.service
 RequiresMountsFor=/mnt/data
 
 [Service]
 Type=oneshot
-ExecStart=/bin/dash -c "/bin/hostname $(/bin/cat /mnt/data/hostname) || true"
+ExecStart=/bin/dash -c "/bin/hostname -F /mnt/data/hostname || true"
 RemainAfterExit=yes
 
 [Install]
