@@ -23,6 +23,7 @@ RDEPENDS_${PN} += " \
     pv \
     systemd (>= 236) \
     tar \
+    usbutils \
     util-linux-ldattach \
     wvdial \
     x11vnc \
@@ -57,6 +58,7 @@ SRC_URI += " \
             file://hostname-det.sh \
             file://hostname-set.service \
             file://ldattach-hl78xx.service \
+            file://ldattach-hl78xx.sh \
             file://led.service \
             file://led.sh \
             file://log-usb.service \
@@ -129,6 +131,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/ldattach-hl78xx.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-mpio.service ${D}${systemd_system_unitdir}

@@ -6,7 +6,4 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 7
-ExecStartPre=/bin/dash -c '/bin/echo -e "AT+CMUX=0,0,7\r" | picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7'
-ExecStartPre=/sbin/modprobe n_gsm debug=0x2
-ExecStart=/usr/sbin/ldattach -d -8n1 -s 460800 GSM0710 /dev/ttymxc7
+ExecStart=/etc/scripts/ldattach-hl78xx.sh

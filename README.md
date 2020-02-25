@@ -60,6 +60,7 @@ Busybox configuration (1.31.0):
 - set "Linux Module Utilities ---> rmmod" to N; Remark: Not needed with systemd/kmod.
 - set "Linux System Utilities ---> hwclock" to N; Remark: Not needed without RTC.
 - set "Linux System Utilities ---> lspci" to N; Remark: Not needed without PCI.
+- set "Linux System Utilities ---> lsusb" to N; Remark: Not needed with usbutils.
 - set "Linux System Utilities ---> mdev" to N; Remark: Not needed with systemd-udevd.
 - set "Linux System Utilities ---> mke2fs" to N; Remark: Not needed.
 - set "Linux System Utilities ---> mkfs.ext2" to N; Remark: Not needed.
