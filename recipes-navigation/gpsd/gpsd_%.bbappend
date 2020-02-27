@@ -3,6 +3,7 @@ SYSTEMD_AUTO_ENABLE_${PN} = "disable"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://gpsd.service.patch \
+            file://gpsdctl-output-info-instead-of-error-on-action.patch \
 "
 
 EXTRA_OESCONS += " \
