@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+             file://omhttp.c.patch \
              file://50-stromer.conf \
              file://rsyslog.conf \
              file://rsyslog.service.in.patch \
