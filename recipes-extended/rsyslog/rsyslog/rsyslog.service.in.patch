@@ -1,8 +1,8 @@
 diff --git a/rsyslog.service.in b/rsyslog.service.in
-index b761ae571..1ba2eb01d 100644
+index b761ae571..6663f6679 100644
 --- a/rsyslog.service.in
 +++ b/rsyslog.service.in
-@@ -1,6 +1,7 @@
+@@ -1,11 +1,13 @@
  [Unit]
  Description=System Logging Service
  Requires=syslog.socket
@@ -10,7 +10,13 @@ index b761ae571..1ba2eb01d 100644
  Documentation=man:rsyslogd(8)
  Documentation=https://www.rsyslog.com/doc/
  
-@@ -15,5 +16,5 @@ Restart=on-failure
+ [Service]
+ Type=notify
++ExecStartPre=/bin/dash -c "mkdir -p /mnt/data/rsyslog"
+ ExecStart=@sbindir@/rsyslogd -n -iNONE
+ StandardOutput=null
+ Restart=on-failure
+@@ -15,5 +17,5 @@ Restart=on-failure
  LimitNOFILE=16384
  
  [Install]
