@@ -1,5 +1,5 @@
 diff --git a/rsyslog.service.in b/rsyslog.service.in
-index b761ae571..6663f6679 100644
+index b761ae571..60dd34278 100644
 --- a/rsyslog.service.in
 +++ b/rsyslog.service.in
 @@ -1,11 +1,13 @@
@@ -12,7 +12,7 @@ index b761ae571..6663f6679 100644
  
  [Service]
  Type=notify
-+ExecStartPre=/bin/dash -c "mkdir -p /mnt/data/rsyslog"
++ExecStartPre=/bin/mkdir -p /mnt/data/rsyslog
  ExecStart=@sbindir@/rsyslogd -n -iNONE
  StandardOutput=null
  Restart=on-failure
