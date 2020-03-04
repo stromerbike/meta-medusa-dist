@@ -57,6 +57,28 @@ unmount_usb ()
     exit 0
 }
 
+#extract_data ()
+#{
+#    LOGNAME=$1
+#    LOGFILE=$2
+#    LOGPATH=$3
+#
+#    if [ -d "$LOGPATH" ] && [ -n "$(ls -A "${LOGPATH}")" ]; then
+#        echo "Writing $LOGNAME to $LOGFILE-$LOGNAME.zip..."
+#        if zip -j "$LOGFILE"-"$LOGNAME".zip "${LOGPATH}"/*; then
+#            echo "...done ($(stat -c%s "$LOGFILE-$LOGNAME.zip") bytes written)"
+#            echo "Removing $LOGNAME files..."
+#            if rm -rf "${LOGPATH:?}/*"; then
+#                echo "...done"
+#            else
+#                echo "<4>...WARNING could not remove $LOGNAME files"
+#            fi
+#        else
+#            echo "<3>...ERROR ($(stat -c%s "$LOGFILE-$LOGNAME.zip") bytes written)"
+#        fi
+#    fi
+#}
+
 if [ -d "/mnt/usb/log" ]; then
     led1_blue
     LOGFILE="/mnt/usb/log/$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
