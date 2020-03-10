@@ -36,6 +36,7 @@ alias canbusload='canbusload can0@250000 -r -t -b -c'
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
 alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
 alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
+alias iperf3='f(){ unset -f f; iperf3 "$@" -c iperf.stromer.internal; }; f'
 alias pcurl='curl -x proxy.stromer.internal:8080'
 alias pwget='wget -e use_proxy=yes -e http_proxy=proxy.stromer.internal:8080'
 
