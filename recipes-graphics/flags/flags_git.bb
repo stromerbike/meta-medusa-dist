@@ -27,6 +27,7 @@ STROMER_COUNTRIES = " \
     FI \
     FR \
     GB \
+    GR \
     IE \
     IT \
     LU \
