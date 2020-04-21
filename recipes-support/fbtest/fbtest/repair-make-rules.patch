@@ -1,0 +1,26 @@
+diff --git a/Rules.make b/Rules.make
+index 51c4e94..be9a73a 100644
+--- a/Rules.make
++++ b/Rules.make
+@@ -1,11 +1,5 @@
+-
+-CC = $(CROSS_COMPILE)gcc
+-HOSTCC = gcc
+-
+ IFLAGS = -I$(TOPDIR)/include
+-#DFLAGS = -g
+-OFLAGS = -O3 -fomit-frame-pointer
+-CFLAGS = -Wall -Werror $(IFLAGS) $(DFLAGS) $(OFLAGS)
++CFLAGS += $(IFLAGS)
+ 
+ SRCS += $(wildcard *.c)
+ OBJS += $(subst .c,.o,$(SRCS))
+@@ -22,7 +16,7 @@ $(SUBDIRS):
+ 		$(MAKE) -C $@
+ 
+ $(TARGET):	$(OBJS) $(SUBDIRS)
+-		$(CC) -o $(TARGET) $(filter $(OBJS), $^) $(LIBS)
++		$(CC) -o $(TARGET) $(LDFLAGS) $(filter $(OBJS), $^) $(LIBS)
+ 
+ $(A_TARGET):	$(OBJS)
+ 		$(AR) -rcs $(A_TARGET) $(OBJS)
