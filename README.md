@@ -2,7 +2,7 @@ This is the repository of the distribution specific Yocto layer for the Stromer 
 
 Modifications:
 - linux-common.inc: added DATETIME to vardepsexclude for KERNEL_IMAGE_BASE_NAME
-- python3_3.7.5: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
+- python3_3.7.7: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
 
 Patches:
 - [CVE-2017-1000251 (BlueBorne)](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3)
@@ -78,12 +78,18 @@ Busybox configuration (1.31.0):
 - set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
+- set "Networking Utilities ---> arping" to No; Remark: Not needed with iputils.
+- set "Networking Utilities ---> ping" to No; Remark: Not needed with iputils.
+- set "Networking Utilities ---> ping6" to No; Remark: Not needed with iputils.
 - set "Networking Utilities ---> dnsd" to No; Remark: Not needed with systemd-resolved.
 - set "Networking Utilities ---> ftpd" to No; Remark: Not needed.
 - set "Networking Utilities ---> httpd" to No; Remark: Not needed.
 - set "Networking Utilities ---> ip" to No; Remark: Not needed with iproute2.
 - set "Networking Utilities ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
 - set "Networking Utilities ---> ssl_client" to No; Remark: Not needed (with openssl).
+- set "Networking Utilities ---> tftpd" to No; Remark: Not needed with iputils.
+- set "Networking Utilities ---> traceroute" to No; Remark: Not needed with iputils.
+- set "Networking Utilities ---> traceroute6" to No; Remark: Not needed with iputils.
 - set "Networking Utilities ---> wget" to No; Remark: Not needed with wget.
 - set "Networking Utilities ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
 - set "Networking Utilities ---> udhcpc" to No; Remark: Not needed with systemd-networkd.

@@ -36,7 +36,7 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu - wifi
-# iftop iproute2-ss iputils-tracepath ppp-tools socat tcpdump - networking tools
+# iftop iproute2-ss iputils ppp-tools socat tcpdump - networking tools
 IMAGE_INSTALL_append = " busybox \
                          tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat ntfs-3g \
@@ -45,7 +45,7 @@ IMAGE_INSTALL_append = " busybox \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8192cu \
-                         iftop iproute2-ss iputils-tracepath ppp-tools socat tcpdump \
+                         iftop iproute2-ss iputils ppp-tools socat tcpdump \
                          bbu dtc fbgrab fbtest glibc-utils htop interceptty less lsof memtester mtd-utils-tests nano ncurses-tools nmon rsyslog sudo systemd-extra-utils systemd-journal-upload \
 "
 
