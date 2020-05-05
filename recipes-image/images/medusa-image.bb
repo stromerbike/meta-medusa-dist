@@ -59,9 +59,7 @@ resolve_symlinks_to_busybox() {
     cat ${IMAGE_ROOTFS}/etc/busybox.links | while read FILE; do
         # keep update-alternatives install scheme for
         # passwd and chpasswd to avoid conflicts with shadow
-        # use update-alternatives install scheme for busybox timeout to make it
-        # distinguishable from coreutils timeout since it has an other syntax
-        if [ "$FILE" != "/usr/bin/passwd" ] && [ "$FILE" != "/usr/sbin/chpasswd" ] && [ "$FILE" != "/usr/bin/timeout" ]; then
+        if [ "$FILE" != "/usr/bin/passwd" ] && [ "$FILE" != "/usr/sbin/chpasswd" ]; then
             if [ -f ${IMAGE_ROOTFS}$FILE.busybox ]; then
                 mv ${IMAGE_ROOTFS}$FILE.busybox ${IMAGE_ROOTFS}$FILE
             fi
