@@ -88,6 +88,10 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
 
+    # use recommended mode of operation for resolved
+    rm ${D}${sysconfdir}/resolv-conf.systemd
+    ln -s ../run/systemd/resolve/stub-resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
+
     # start resolved and timesyncd service after check.target
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
     mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-resolved.service
