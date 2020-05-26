@@ -17,3 +17,8 @@ ALTERNATIVE_LINK_NAME[nice.1] = "${mandir}/man1/nice.1"
 ALTERNATIVE_LINK_NAME[printenv] = "${base_bindir}/printenv"
 ALTERNATIVE_TARGET[printenv] = "${bindir}/printenv.${BPN}"
 ALTERNATIVE_LINK_NAME[printenv.1] = "${mandir}/man1/printenv.1"
+
+bindir_progs_remove += "stdbuf"
+RDEPENDS_${PN} =+ "coreutils-stdbuf"
+PACKAGES =+ "coreutils-stdbuf coreutils-stdbuf-native"
+FILES_coreutils-stdbuf = "${bindir}/stdbuf ${libdir}/coreutils/libstdbuf.so"
