@@ -1,0 +1,368 @@
+diff --git a/TRANSIENT-SETTINGS.md b/TRANSIENT-SETTINGS.md
+index 3614456acf..9697aac227 100644
+--- a/TRANSIENT-SETTINGS.md
++++ b/TRANSIENT-SETTINGS.md
+@@ -253,6 +253,7 @@ All process killing settings are available for transient units:
+ ✓ SendSIGHUP=
+ ✓ KillMode=
+ ✓ KillSignal=
++✓ WatchdogSignal=
+ ```
+ 
+ ## Service Unit Settings
+diff --git a/man/systemd.kill.xml b/man/systemd.kill.xml
+index 1abcd6d8e7..aa3aaa3dec 100644
+--- a/man/systemd.kill.xml
++++ b/man/systemd.kill.xml
+@@ -167,6 +167,14 @@
+         </para></listitem>
+       </varlistentry>
+ 
++      <varlistentry>
++        <term><varname>WatchdogSignal=</varname></term>
++        <listitem><para>Specifies which signal to use to terminate the
++        service when the watchdog timeout expires (enabled through
++        <varname>WatchdogSec=</varname>). Defaults to <constant>SIGABRT</constant>.
++        </para></listitem>
++      </varlistentry>
++
+     </variablelist>
+   </refsect1>
+ 
+diff --git a/man/systemd.service.xml b/man/systemd.service.xml
+index e796245ae5..9111a7598f 100644
+--- a/man/systemd.service.xml
++++ b/man/systemd.service.xml
+@@ -590,7 +590,8 @@
+         "keep-alive ping"). If the time between two such calls is
+         larger than the configured time, then the service is placed in
+         a failed state and it will be terminated with
+-        <constant>SIGABRT</constant>. By setting
++        <constant>SIGABRT</constant> (or the signal specified by
++        <varname>WatchdogSignal=</varname>). By setting
+         <varname>Restart=</varname> to <option>on-failure</option>,
+         <option>on-watchdog</option>, <option>on-abnormal</option> or
+         <option>always</option>, the service will be automatically
+diff --git a/src/basic/unit-def.c b/src/basic/unit-def.c
+index 387533f597..8dc9f61c41 100644
+--- a/src/basic/unit-def.c
++++ b/src/basic/unit-def.c
+@@ -186,7 +186,7 @@ static const char* const service_state_table[_SERVICE_STATE_MAX] = {
+         [SERVICE_EXITED] = "exited",
+         [SERVICE_RELOAD] = "reload",
+         [SERVICE_STOP] = "stop",
+-        [SERVICE_STOP_SIGABRT] = "stop-sigabrt",
++        [SERVICE_STOP_WATCHDOG] = "stop-watchdog",
+         [SERVICE_STOP_SIGTERM] = "stop-sigterm",
+         [SERVICE_STOP_SIGKILL] = "stop-sigkill",
+         [SERVICE_STOP_POST] = "stop-post",
+diff --git a/src/basic/unit-def.h b/src/basic/unit-def.h
+index c142e069a6..d1a7da2597 100644
+--- a/src/basic/unit-def.h
++++ b/src/basic/unit-def.h
+@@ -126,7 +126,7 @@ typedef enum ServiceState {
+         SERVICE_EXITED,            /* Nothing is running anymore, but RemainAfterExit is true hence this is OK */
+         SERVICE_RELOAD,
+         SERVICE_STOP,              /* No STOP_PRE state, instead just register multiple STOP executables */
+-        SERVICE_STOP_SIGABRT,      /* Watchdog timeout */
++        SERVICE_STOP_WATCHDOG,
+         SERVICE_STOP_SIGTERM,
+         SERVICE_STOP_SIGKILL,
+         SERVICE_STOP_POST,
+diff --git a/src/core/dbus-kill.c b/src/core/dbus-kill.c
+index 53d0aad63b..b000428c36 100644
+--- a/src/core/dbus-kill.c
++++ b/src/core/dbus-kill.c
+@@ -32,11 +32,13 @@ const sd_bus_vtable bus_kill_vtable[] = {
+         SD_BUS_PROPERTY("KillSignal", "i", bus_property_get_int, offsetof(KillContext, kill_signal), SD_BUS_VTABLE_PROPERTY_CONST),
+         SD_BUS_PROPERTY("SendSIGKILL", "b", bus_property_get_bool, offsetof(KillContext, send_sigkill), SD_BUS_VTABLE_PROPERTY_CONST),
+         SD_BUS_PROPERTY("SendSIGHUP", "b", bus_property_get_bool,  offsetof(KillContext, send_sighup), SD_BUS_VTABLE_PROPERTY_CONST),
++        SD_BUS_PROPERTY("WatchdogSignal", "i", bus_property_get_int, offsetof(KillContext, watchdog_signal), SD_BUS_VTABLE_PROPERTY_CONST),
+         SD_BUS_VTABLE_END
+ };
+ 
+ static BUS_DEFINE_SET_TRANSIENT_PARSE(kill_mode, KillMode, kill_mode_from_string);
+ static BUS_DEFINE_SET_TRANSIENT_TO_STRING(kill_signal, "i", int32_t, int, "%" PRIi32, signal_to_string_with_check);
++static BUS_DEFINE_SET_TRANSIENT_TO_STRING(watchdog_signal, "i", int32_t, int, "%" PRIi32, signal_to_string_with_check);
+ 
+ int bus_kill_context_set_transient_property(
+                 Unit *u,
+@@ -65,5 +67,8 @@ int bus_kill_context_set_transient_property(
+         if (streq(name, "KillSignal"))
+                 return bus_set_transient_kill_signal(u, name, &c->kill_signal, message, flags, error);
+ 
++        if (streq(name, "WatchdogSignal"))
++                return bus_set_transient_watchdog_signal(u, name, &c->watchdog_signal, message, flags, error);
++
+         return 0;
+ }
+diff --git a/src/core/kill.c b/src/core/kill.c
+index 5dfcb780fa..0e95a3b9b1 100644
+--- a/src/core/kill.c
++++ b/src/core/kill.c
+@@ -29,6 +29,7 @@ void kill_context_init(KillContext *c) {
+         c->kill_signal = SIGTERM;
+         c->send_sigkill = true;
+         c->send_sighup = false;
++        c->watchdog_signal = SIGABRT;
+ }
+ 
+ void kill_context_dump(KillContext *c, FILE *f, const char *prefix) {
+diff --git a/src/core/kill.h b/src/core/kill.h
+index f0d6ec41e9..4f5ea29265 100644
+--- a/src/core/kill.h
++++ b/src/core/kill.h
+@@ -42,6 +42,7 @@ struct KillContext {
+         int kill_signal;
+         bool send_sigkill;
+         bool send_sighup;
++        int watchdog_signal;
+ };
+ 
+ typedef enum KillWho {
+diff --git a/src/core/load-fragment-gperf.gperf.m4 b/src/core/load-fragment-gperf.gperf.m4
+index dde5010e02..cadf0e6299 100644
+--- a/src/core/load-fragment-gperf.gperf.m4
++++ b/src/core/load-fragment-gperf.gperf.m4
+@@ -147,7 +147,8 @@ m4_define(`KILL_CONTEXT_CONFIG_ITEMS',
+ `$1.SendSIGKILL,                 config_parse_bool,                  0,                             offsetof($1, kill_context.send_sigkill)
+ $1.SendSIGHUP,                   config_parse_bool,                  0,                             offsetof($1, kill_context.send_sighup)
+ $1.KillMode,                     config_parse_kill_mode,             0,                             offsetof($1, kill_context.kill_mode)
+-$1.KillSignal,                   config_parse_signal,                0,                             offsetof($1, kill_context.kill_signal)'
++$1.KillSignal,                   config_parse_signal,                0,                             offsetof($1, kill_context.kill_signal)
++$1.WatchdogSignal,               config_parse_signal,                0,                             offsetof($1, kill_context.watchdog_signal)'
+ )m4_dnl
+ m4_define(`CGROUP_CONTEXT_CONFIG_ITEMS',
+ `$1.Slice,                       config_parse_unit_slice,            0,                             0
+diff --git a/src/core/service.c b/src/core/service.c
+index 6476dc68c5..5e796be01a 100644
+--- a/src/core/service.c
++++ b/src/core/service.c
+@@ -66,7 +66,7 @@ static const UnitActiveState state_translation_table[_SERVICE_STATE_MAX] = {
+         [SERVICE_EXITED] = UNIT_ACTIVE,
+         [SERVICE_RELOAD] = UNIT_RELOADING,
+         [SERVICE_STOP] = UNIT_DEACTIVATING,
+-        [SERVICE_STOP_SIGABRT] = UNIT_DEACTIVATING,
++        [SERVICE_STOP_WATCHDOG] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_SIGTERM] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_SIGKILL] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_POST] = UNIT_DEACTIVATING,
+@@ -87,7 +87,7 @@ static const UnitActiveState state_translation_table_idle[_SERVICE_STATE_MAX] =
+         [SERVICE_EXITED] = UNIT_ACTIVE,
+         [SERVICE_RELOAD] = UNIT_RELOADING,
+         [SERVICE_STOP] = UNIT_DEACTIVATING,
+-        [SERVICE_STOP_SIGABRT] = UNIT_DEACTIVATING,
++        [SERVICE_STOP_WATCHDOG] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_SIGTERM] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_SIGKILL] = UNIT_DEACTIVATING,
+         [SERVICE_STOP_POST] = UNIT_DEACTIVATING,
+@@ -1017,7 +1017,7 @@ static void service_set_state(Service *s, ServiceState state) {
+                     SERVICE_START_PRE, SERVICE_START, SERVICE_START_POST,
+                     SERVICE_RUNNING,
+                     SERVICE_RELOAD,
+-                    SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                    SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                     SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL,
+                     SERVICE_AUTO_RESTART))
+                 s->timer_event_source = sd_event_source_unref(s->timer_event_source);
+@@ -1025,7 +1025,7 @@ static void service_set_state(Service *s, ServiceState state) {
+         if (!IN_SET(state,
+                     SERVICE_START, SERVICE_START_POST,
+                     SERVICE_RUNNING, SERVICE_RELOAD,
+-                    SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                    SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                     SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL)) {
+                 service_unwatch_main_pid(s);
+                 s->main_command = NULL;
+@@ -1034,7 +1034,7 @@ static void service_set_state(Service *s, ServiceState state) {
+         if (!IN_SET(state,
+                     SERVICE_START_PRE, SERVICE_START, SERVICE_START_POST,
+                     SERVICE_RELOAD,
+-                    SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                    SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                     SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL)) {
+                 service_unwatch_control_pid(s);
+                 s->control_command = NULL;
+@@ -1047,7 +1047,7 @@ static void service_set_state(Service *s, ServiceState state) {
+         if (!IN_SET(state,
+                     SERVICE_START_PRE, SERVICE_START, SERVICE_START_POST,
+                     SERVICE_RUNNING, SERVICE_RELOAD,
+-                    SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                    SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                     SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL) &&
+             !(state == SERVICE_DEAD && UNIT(s)->job))
+                 service_close_socket_fd(s);
+@@ -1081,7 +1081,7 @@ static usec_t service_coldplug_timeout(Service *s) {
+                 return usec_add(UNIT(s)->active_enter_timestamp.monotonic, s->runtime_max_usec);
+ 
+         case SERVICE_STOP:
+-        case SERVICE_STOP_SIGABRT:
++        case SERVICE_STOP_WATCHDOG:
+         case SERVICE_STOP_SIGTERM:
+         case SERVICE_STOP_SIGKILL:
+         case SERVICE_STOP_POST:
+@@ -1116,7 +1116,7 @@ static int service_coldplug(Unit *u) {
+             (IN_SET(s->deserialized_state,
+                     SERVICE_START, SERVICE_START_POST,
+                     SERVICE_RUNNING, SERVICE_RELOAD,
+-                    SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                    SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                     SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL))) {
+                 r = unit_watch_pid(UNIT(s), s->main_pid);
+                 if (r < 0)
+@@ -1128,7 +1128,7 @@ static int service_coldplug(Unit *u) {
+             IN_SET(s->deserialized_state,
+                    SERVICE_START_PRE, SERVICE_START, SERVICE_START_POST,
+                    SERVICE_RELOAD,
+-                   SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                   SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                    SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL)) {
+                 r = unit_watch_pid(UNIT(s), s->control_pid);
+                 if (r < 0)
+@@ -1692,8 +1692,8 @@ fail:
+ static int state_to_kill_operation(ServiceState state) {
+         switch (state) {
+ 
+-        case SERVICE_STOP_SIGABRT:
+-                return KILL_ABORT;
++        case SERVICE_STOP_WATCHDOG:
++                return KILL_WATCHDOG;
+ 
+         case SERVICE_STOP_SIGTERM:
+         case SERVICE_FINAL_SIGTERM:
+@@ -1734,9 +1734,9 @@ static void service_enter_signal(Service *s, ServiceState state, ServiceResult f
+                         goto fail;
+ 
+                 service_set_state(s, state);
+-        } else if (IN_SET(state, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM) && s->kill_context.send_sigkill)
++        } else if (IN_SET(state, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM) && s->kill_context.send_sigkill)
+                 service_enter_signal(s, SERVICE_STOP_SIGKILL, SERVICE_SUCCESS);
+-        else if (IN_SET(state, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL))
++        else if (IN_SET(state, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL))
+                 service_enter_stop_post(s, SERVICE_SUCCESS);
+         else if (state == SERVICE_FINAL_SIGTERM && s->kill_context.send_sigkill)
+                 service_enter_signal(s, SERVICE_FINAL_SIGKILL, SERVICE_SUCCESS);
+@@ -1748,7 +1748,7 @@ static void service_enter_signal(Service *s, ServiceState state, ServiceResult f
+ fail:
+         log_unit_warning_errno(UNIT(s), r, "Failed to kill processes: %m");
+ 
+-        if (IN_SET(state, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL))
++        if (IN_SET(state, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL))
+                 service_enter_stop_post(s, SERVICE_FAILURE_RESOURCES);
+         else
+                 service_enter_dead(s, SERVICE_FAILURE_RESOURCES, true);
+@@ -2202,7 +2202,7 @@ static int service_start(Unit *u) {
+         /* We cannot fulfill this request right now, try again later
+          * please! */
+         if (IN_SET(s->state,
+-                   SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                   SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                    SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL))
+                 return -EAGAIN;
+ 
+@@ -2269,7 +2269,7 @@ static int service_stop(Unit *u) {
+ 
+         /* Already on it */
+         if (IN_SET(s->state,
+-                   SERVICE_STOP, SERVICE_STOP_SIGABRT, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
++                   SERVICE_STOP, SERVICE_STOP_WATCHDOG, SERVICE_STOP_SIGTERM, SERVICE_STOP_SIGKILL, SERVICE_STOP_POST,
+                    SERVICE_FINAL_SIGTERM, SERVICE_FINAL_SIGKILL))
+                 return 0;
+ 
+@@ -2967,7 +2967,7 @@ static void service_notify_cgroup_empty_event(Unit *u) {
+                 service_enter_running(s, SERVICE_SUCCESS);
+                 break;
+ 
+-        case SERVICE_STOP_SIGABRT:
++        case SERVICE_STOP_WATCHDOG:
+         case SERVICE_STOP_SIGTERM:
+         case SERVICE_STOP_SIGKILL:
+ 
+@@ -3112,7 +3112,7 @@ static void service_sigchld_event(Unit *u, pid_t pid, int code, int status) {
+                                 service_enter_running(s, f);
+                                 break;
+ 
+-                        case SERVICE_STOP_SIGABRT:
++                        case SERVICE_STOP_WATCHDOG:
+                         case SERVICE_STOP_SIGTERM:
+                         case SERVICE_STOP_SIGKILL:
+ 
+@@ -3247,7 +3247,7 @@ static void service_sigchld_event(Unit *u, pid_t pid, int code, int status) {
+                                 service_enter_signal(s, SERVICE_STOP_SIGTERM, f);
+                                 break;
+ 
+-                        case SERVICE_STOP_SIGABRT:
++                        case SERVICE_STOP_WATCHDOG:
+                         case SERVICE_STOP_SIGTERM:
+                         case SERVICE_STOP_SIGKILL:
+                                 if (main_pid_good(s) <= 0)
+@@ -3322,8 +3322,8 @@ static int service_dispatch_timer(sd_event_source *source, usec_t usec, void *us
+                 service_enter_signal(s, SERVICE_STOP_SIGTERM, SERVICE_FAILURE_TIMEOUT);
+                 break;
+ 
+-        case SERVICE_STOP_SIGABRT:
+-                log_unit_warning(UNIT(s), "State 'stop-sigabrt' timed out. Terminating.");
++        case SERVICE_STOP_WATCHDOG:
++                log_unit_warning(UNIT(s), "State 'stop-watchdog' timed out. Terminating.");
+                 service_enter_signal(s, SERVICE_STOP_SIGTERM, SERVICE_FAILURE_TIMEOUT);
+                 break;
+ 
+@@ -3397,7 +3397,7 @@ static int service_dispatch_watchdog(sd_event_source *source, usec_t usec, void
+                 log_unit_error(UNIT(s), "Watchdog timeout (limit %s)!",
+                                format_timespan(t, sizeof(t), watchdog_usec, 1));
+ 
+-                service_enter_signal(s, SERVICE_STOP_SIGABRT, SERVICE_FAILURE_WATCHDOG);
++                service_enter_signal(s, SERVICE_STOP_WATCHDOG, SERVICE_FAILURE_WATCHDOG);
+         } else
+                 log_unit_warning(UNIT(s), "Watchdog disabled! Ignoring watchdog timeout (limit %s)!",
+                                  format_timespan(t, sizeof(t), watchdog_usec, 1));
+@@ -3804,7 +3804,7 @@ static bool service_needs_console(Unit *u) {
+                       SERVICE_RUNNING,
+                       SERVICE_RELOAD,
+                       SERVICE_STOP,
+-                      SERVICE_STOP_SIGABRT,
++                      SERVICE_STOP_WATCHDOG,
+                       SERVICE_STOP_SIGTERM,
+                       SERVICE_STOP_SIGKILL,
+                       SERVICE_STOP_POST,
+diff --git a/src/core/unit.c b/src/core/unit.c
+index 932f05baa2..61e341722e 100644
+--- a/src/core/unit.c
++++ b/src/core/unit.c
+@@ -4462,8 +4462,8 @@ static int operation_to_signal(KillContext *c, KillOperation k) {
+         case KILL_KILL:
+                 return SIGKILL;
+ 
+-        case KILL_ABORT:
+-                return SIGABRT;
++        case KILL_WATCHDOG:
++                return c->watchdog_signal;
+ 
+         default:
+                 assert_not_reached("KillOperation unknown");
+diff --git a/src/core/unit.h b/src/core/unit.h
+index 8c79d4ed2e..e888004e12 100644
+--- a/src/core/unit.h
++++ b/src/core/unit.h
+@@ -41,7 +41,7 @@ typedef enum KillOperation {
+         KILL_TERMINATE,
+         KILL_TERMINATE_AND_LOG,
+         KILL_KILL,
+-        KILL_ABORT,
++        KILL_WATCHDOG,
+         _KILL_OPERATION_MAX,
+         _KILL_OPERATION_INVALID = -1
+ } KillOperation;
+diff --git a/src/shared/bus-unit-util.c b/src/shared/bus-unit-util.c
+index bc77c3abdb..09c6d13a69 100644
+--- a/src/shared/bus-unit-util.c
++++ b/src/shared/bus-unit-util.c
+@@ -1148,7 +1148,7 @@ static int bus_append_kill_property(sd_bus_message *m, const char *field, const
+ 
+                 return bus_append_parse_boolean(m, field, eq);
+ 
+-        if (streq(field, "KillSignal"))
++        if (STR_IN_SET(field, "KillSignal", "WatchdogSignal"))
+ 
+                 return bus_append_signal_from_string_try_harder(m, field, eq);
+ 
