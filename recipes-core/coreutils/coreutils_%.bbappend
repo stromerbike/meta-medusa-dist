@@ -19,6 +19,6 @@ ALTERNATIVE_TARGET[printenv] = "${bindir}/printenv.${BPN}"
 ALTERNATIVE_LINK_NAME[printenv.1] = "${mandir}/man1/printenv.1"
 
 bindir_progs_remove += "stdbuf"
-RDEPENDS_${PN} =+ "coreutils-stdbuf"
-PACKAGES =+ "coreutils-stdbuf coreutils-stdbuf-native"
+PACKAGE_BEFORE_PN_class-target += "coreutils-stdbuf"
 FILES_coreutils-stdbuf = "${bindir}/stdbuf ${libdir}/coreutils/libstdbuf.so"
+RDEPENDS_coreutils_class-target += "coreutils-stdbuf"
