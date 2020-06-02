@@ -1,0 +1,25 @@
+diff --git a/interceptty-nicedump b/interceptty-nicedump
+index aa4ad1e..2520ed0 100755
+--- a/interceptty-nicedump
++++ b/interceptty-nicedump
+@@ -4,6 +4,9 @@
+ 
+ #| = 1;
+ 
++use POSIX qw(strftime);
++use Time::HiRes qw(gettimeofday);
++
+ while (<>)
+ {
+   chomp;
+@@ -49,7 +52,9 @@ while (<>)
+ sub dumpnow
+ {
+   return if ($bufchars == 0);
+-  printf "%-s %-30s | %-10s\n",$dumpdir,$bufhex,$bufasc;
++  $datetime = strftime "%Y-%m-%dT%H:%M:%S", localtime;
++  $usec = (gettimeofday())[1];
++  printf "$datetime.%03d: %-s %-30s | %-10s\n",$usec/1000,$dumpdir,$bufhex,$bufasc;
+   $bufchars=0;
+   $bufhex="";
+   $bufasc="";

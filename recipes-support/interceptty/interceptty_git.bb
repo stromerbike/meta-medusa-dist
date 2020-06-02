@@ -10,6 +10,7 @@ PV = "0.6+gitr${SRCPV}"
 
 SRC_URI = " \
            git://github.com/geoffmeyers/${BPN}.git;protocol=git;branch=master \
+           file://interceptty-nicedump-print-timestamp.patch \
            file://Skip-host-file-system-checks-when-cross-compiling.patch \
 "
 SRCREV = "3b6fbbb748d6707a9287181eda66ff07b9629fab"
@@ -18,7 +19,9 @@ S = "${WORKDIR}/git"
 
 inherit autotools
 
-RDEPENDS_${PN} = "perl"
+PACKAGES =+ "${PN}-nicedump"
+RDEPENDS_${PN}-nicedump += "${PN} perl perl-module-time-hires"
+FILES_${PN}-nicedump = "${bindir}/${PN}-nicedump"
 
 do_configure_prepend() {
     cp ${S}/README.md ${S}/README
