@@ -22,7 +22,7 @@ fi
 
 echo "Commanding multilog to rotate logs and waiting up to 10s..."
 inotifywait -t 10 -e attrib /tmp/candump/current &>/dev/null &
-pkill -SIGALRM multilog &
+pkill -SIGALRM -fx "/usr/bin/multilog .* /tmp/candump" &
 wait
 echo "...done"
 
