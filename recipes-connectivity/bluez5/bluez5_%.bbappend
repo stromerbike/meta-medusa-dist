@@ -14,6 +14,12 @@ PACKAGECONFIG_remove = " \
     udev \
 "
 
+NOINST_TOOLS_READLINE = " \
+    tools/btmgmt \
+"
+NOINST_TOOLS_TESTING = ""
+NOINST_TOOLS_BT  = ""
+
 EXTRA_OECONF += "--localstatedir=/mnt/data/var"
 
 FILES_${PN}_append = " ${base_libdir}/firmware/ti-connectivity/*.bts"
