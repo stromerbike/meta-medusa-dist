@@ -5,7 +5,6 @@ SRC_URI += " \
             file://resolved.conf \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \
-            file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
             file://timesyncd.conf \
 "
@@ -95,7 +94,6 @@ do_install_append() {
 
     # start resolved and timesyncd service after check.target
     install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
-    mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-resolved.service
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
