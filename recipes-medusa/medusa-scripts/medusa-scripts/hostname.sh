@@ -5,6 +5,8 @@ if [ -e /dev/gsmtty4 ]; then
 elif [ -e /dev/ttyACM5 ]; then
     GARBAGE="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyACM5)"
     CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyACM5)"
+elif [ -f /tmp/imsi ]; then
+    CIMI="$(cat /tmp/imsi)"
 fi
 
 HOSTNAME="UNKNOWN"
