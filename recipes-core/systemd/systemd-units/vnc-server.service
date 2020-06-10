@@ -1,7 +1,7 @@
 [Unit]
 Description=vnc-server
-After=communication.target
-Wants=communication.target
+After=location.target
+Wants=location.target
 
 [Service]
 Type=simple

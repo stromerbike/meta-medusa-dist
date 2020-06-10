@@ -1,7 +1,7 @@
 [Unit]
 Description=mnt-log and journal persisting
-After=communication.target
-Wants=communication.target
+After=location.target
+Wants=location.target
 
 [Service]
 Type=oneshot

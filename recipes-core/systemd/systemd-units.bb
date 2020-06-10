@@ -17,6 +17,8 @@ RDEPENDS_${PN} += " \
     gnupg-gpgv \
     iproute2 \
     inotify-tools \
+    interceptty \
+    interceptty-nicedump \
     multilog \
     picocom \
     ppp \
@@ -38,6 +40,9 @@ SRC_URI += " \
             file://images/logo.png \
             file://ble-attach.service \
             file://ble-attach.sh \
+            file://btmon-save@.service \
+            file://btmon-save.sh \
+            file://btmon.service \
             file://bnep0.network \
             file://can0.service \
             file://can0.sh \
@@ -57,10 +62,14 @@ SRC_URI += " \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
+            file://interceptty-save@.service \
+            file://interceptty-save.sh \
+            file://interceptty@.service \
             file://ldattach-hl78xx.service \
             file://ldattach-hl78xx.sh \
             file://led.service \
             file://led.sh \
+            file://location.target \
             file://log-usb.service \
             file://log-usb.sh \
             file://mnt-data.mount \
@@ -99,6 +108,7 @@ NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
     ble-attach.service \
+    btmon.service \
     can0.service \
     candump.service \
     gsm.service \
@@ -119,6 +129,9 @@ do_install_append() {
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble-attach.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ble-attach.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/btmon-save@.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/btmon-save.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/btmon.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/can0.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/candump-save@.service ${D}${systemd_system_unitdir}
@@ -130,6 +143,9 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/interceptty-save@.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/interceptty-save.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/interceptty@.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ldattach-hl78xx.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
@@ -183,4 +199,5 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
 }

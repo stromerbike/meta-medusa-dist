@@ -57,28 +57,6 @@ unmount_usb ()
     exit 0
 }
 
-#extract_data ()
-#{
-#    LOGNAME=$1
-#    LOGFILE=$2
-#    LOGPATH=$3
-#
-#    if [ -d "$LOGPATH" ] && [ -n "$(ls -A "${LOGPATH}")" ]; then
-#        echo "Writing $LOGNAME to $LOGFILE-$LOGNAME.zip..."
-#        if zip -j "$LOGFILE"-"$LOGNAME".zip "${LOGPATH}"/*; then
-#            echo "...done ($(stat -c%s "$LOGFILE-$LOGNAME.zip") bytes written)"
-#            echo "Removing $LOGNAME files..."
-#            if rm -rf "${LOGPATH:?}/*"; then
-#                echo "...done"
-#            else
-#                echo "<4>...WARNING could not remove $LOGNAME files"
-#            fi
-#        else
-#            echo "<3>...ERROR ($(stat -c%s "$LOGFILE-$LOGNAME.zip") bytes written)"
-#        fi
-#    fi
-#}
-
 if [ -d "/mnt/usb/log" ]; then
     led1_blue
     LOGFILE="/mnt/usb/log/$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
@@ -89,26 +67,30 @@ if [ -d "/mnt/usb/log" ]; then
         echo "Writing json log to $LOGFILE-json.zip..."
         if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.zip; then
             echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
-            if [ -d "/mnt/data/candump" ] && [ ! -z "$(ls -A /mnt/data/candump)" ]; then
-                echo "Writing candump log to $LOGFILE-candump.zip..."
-                if zip -j $LOGFILE-candump.zip /mnt/data/candump/*; then
-                    echo "...done ($(stat -c%s $LOGFILE-candump.zip) bytes written)"
-                    echo "Removing candump files..."
-                    if rm -rf /mnt/data/candump/*; then
-                        echo "...done"
+            for i in btmon candump interceptty
+            do
+                if [ -d "/mnt/data/$i" ] && [ ! -z "$(ls -A /mnt/data/$i)" ]; then
+                    echo "Writing $i log to $LOGFILE-$i.zip..."
+                    if zip -j $LOGFILE-$i.zip /mnt/data/$i/*; then
+                        echo "...done ($(stat -c%s $LOGFILE-$i.zip) bytes written)"
+                        echo "Removing $i files..."
+                        if rm -rf /mnt/data/$i/*; then
+                            echo "...done"
+                        else
+                            echo "<4>...WARNING could not remove $i files"
+                        fi
                     else
-                        echo "<4>...WARNING could not remove candump files"
+                        echo "<3>...ERROR ($(stat -c%s $LOGFILE-$i.zip) bytes written)"
+                        unmount_usb
+                        led2_red
+                        exit 1
                     fi
-                    unmount_usb
-                else
-                    echo "<3>...ERROR ($(stat -c%s $LOGFILE-candump.zip) bytes written)"
-                    led2_red
-                    exit 1
                 fi
-            fi
+            done
             unmount_usb
         else
             echo "<3>...ERROR ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+            unmount_usb
             led2_red
             exit 1
         fi

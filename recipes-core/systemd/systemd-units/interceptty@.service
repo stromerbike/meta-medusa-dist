@@ -1,0 +1,6 @@
+[Unit]
+Description=interceptty
+
+[Service]
+Type=simple
+ExecStart=/bin/dash -c '/usr/bin/interceptty -v %I /dev/ttyDUMMY | interceptty-nicedump | /usr/bin/multilog s1048576 n3 winterceptty /tmp/interceptty'

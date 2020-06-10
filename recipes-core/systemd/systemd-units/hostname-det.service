@@ -1,7 +1,7 @@
 [Unit]
 Description=hostname-det
-After=communication.target
-Wants=communication.target
+After=location.target
+Wants=location.target
 RequiresMountsFor=/mnt/data
 
 [Service]

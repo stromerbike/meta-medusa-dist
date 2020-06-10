@@ -1,0 +1,9 @@
+[Unit]
+Description=btmon-save
+After=btmon.service
+Requires=btmon.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/btmon-save.sh %I

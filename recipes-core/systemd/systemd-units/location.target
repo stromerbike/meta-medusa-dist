@@ -1,0 +1,4 @@
+[Unit]
+Description=location
+After=communication.target
+Wants=communication.target

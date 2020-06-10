@@ -1,0 +1,9 @@
+[Unit]
+Description=interceptty-save
+After=interceptty@%i.service
+Requires=interceptty@%i.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/interceptty-save.sh %I
