@@ -1,0 +1,17 @@
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 7e5d652e4..e40c7ad92 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -387,6 +387,12 @@ static void read_by_type_read_complete_cb(struct gatt_db_attribute *attr,
+ 		goto done;
+ 	}
+ 
++	/* Invalid value */
++	if (NULL == value){
++		op->done = true;
++		goto done;
++	}
++
+ 	/* Encode the current value */
+ 	put_le16(handle, op->pdu + op->pdu_len);
+ 	memcpy(op->pdu + op->pdu_len + 2, value, op->value_len);

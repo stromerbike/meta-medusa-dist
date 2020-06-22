@@ -1,5 +1,5 @@
 diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
-index f799f65f0..fa56af6da 100644
+index f9faaa452..184d0dee2 100644
 --- a/src/bluetooth.service.in
 +++ b/src/bluetooth.service.in
 @@ -2,11 +2,12 @@
@@ -11,8 +11,9 @@ index f799f65f0..fa56af6da 100644
  [Service]
  Type=dbus
  BusName=org.bluez
--ExecStart=@libexecdir@/bluetoothd
-+ExecStart=@libexecdir@/bluetoothd --noplugin=hostname
+-ExecStart=@pkglibexecdir@/bluetoothd
++ExecStart=@pkglibexecdir@/bluetoothd --noplugin=hostname
  NotifyAccess=main
  #WatchdogSec=10
  #Restart=on-failure
+
