@@ -11,6 +11,8 @@ do_install_append() {
 
     echo "debug" >> ${D}${sysconfdir}/ppp/options
     echo "ipv6cp-use-ipaddr" >> ${D}${sysconfdir}/ppp/options
+    echo "mru 1460" >> ${D}${sysconfdir}/ppp/options
+    echo "mtu 1460" >> ${D}${sysconfdir}/ppp/options
 
     echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.gsmtty1
     echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.ttyACM0
