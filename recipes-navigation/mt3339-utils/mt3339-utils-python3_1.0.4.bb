@@ -4,7 +4,7 @@ SECTION = "console/utils"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f457cf0e901dfa16d32f5ca1999b7d9b"
 
-RDEPENDS_${PN} = "bash python3-io"
+RDEPENDS_${PN} = "bash coreutils-stdbuf python3-io"
 
 PR = "r0"
 
