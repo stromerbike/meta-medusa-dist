@@ -27,7 +27,7 @@ PACKAGECONFIG_append = " \
 
 RDEPENDS_${PN} += "systemd-udev systemd-units"
 
-RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck kernel-module-autofs4"
+RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck"
 
 PACKAGECONFIG_remove = " \
     backlight \
