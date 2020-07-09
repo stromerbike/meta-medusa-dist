@@ -1,0 +1,31 @@
+diff --git a/action.c b/action.c
+index 01063cad2..a558dcb6b 100644
+--- a/action.c
++++ b/action.c
+@@ -725,7 +725,7 @@ checkExternalStateFile(action_t *const pThis, wti_t *const pWti)
+ 		}
+ 	}
+ 	if(!strcmp(filebuf, "SUSPENDED")) {
+-		LogMsg(0, RS_RET_SUSPENDED, LOG_WARNING,
++		LogMsg(0, RS_RET_SUSPENDED, LOG_INFO,
+ 		      "action '%s' suspended (module '%s') by external state file",
+ 		      pThis->pszName, pThis->pMod->pszName);
+ 		actionRetry(pThis, pWti);
+@@ -768,7 +768,7 @@ static void ATTR_NONNULL() actionRetry(action_t * const pThis, wti_t * const pWt
+ {
+ 	setSuspendMessageConfVars(pThis);
+ 	actionSetState(pThis, pWti, ACT_STATE_RTRY);
+-	LogMsg(0, RS_RET_SUSPENDED, LOG_WARNING,
++	LogMsg(0, RS_RET_SUSPENDED, LOG_INFO,
+ 	      "action '%s' suspended (module '%s'), retry %d. There should "
+ 	      "be messages before this one giving the reason for suspension.",
+ 	      pThis->pszName, pThis->pMod->pszName,
+@@ -812,7 +812,7 @@ actionSuspend(action_t * const pThis, wti_t * const pWti)
+ 	   || (pThis->bReportSuspension && getActionNbrResRtry(pWti, pThis) == 0) ) {
+ 		ctime_r(&pThis->ttResumeRtry, timebuf);
+ 		timebuf[strlen(timebuf)-1] = '\0'; /* strip LF */
+-		LogMsg(0, RS_RET_SUSPENDED, LOG_WARNING,
++		LogMsg(0, RS_RET_SUSPENDED, LOG_INFO,
+ 			      "action '%s' suspended (module '%s'), next retry is %s, retry nbr %d. "
+ 			      "There should be messages before this one giving the reason for suspension.",
+ 			      pThis->pszName, pThis->pMod->pszName, timebuf,

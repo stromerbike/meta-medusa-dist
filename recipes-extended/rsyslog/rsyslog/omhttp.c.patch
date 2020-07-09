@@ -1,32 +1,22 @@
 diff --git a/contrib/omhttp/omhttp.c b/contrib/omhttp/omhttp.c
-index 433b28fed..647977b4b 100644
+index 3eff738f6..8f79aebb0 100644
 --- a/contrib/omhttp/omhttp.c
 +++ b/contrib/omhttp/omhttp.c
-@@ -1108,13 +1108,20 @@ curlPost(wrkrInstanceData_t *pWrkrData, uchar *message, int msglen, uchar **tpls
+@@ -809,7 +809,7 @@ checkResult(wrkrInstanceData_t *pWrkrData, uchar *reqmsg)
+ 	}
+ 
+ 	if (iRet != RS_RET_OK) {
+-		LogMsg(0, iRet, LOG_ERR, "omhttp: checkResult error http status code: %ld reply: %s",
++		LogMsg(0, iRet, LOG_INFO, "omhttp: checkResult error http status code: %ld reply: %s",
+ 			statusCode, pWrkrData->reply != NULL ? pWrkrData->reply : "NULL");
+ 
+ 		writeDataError(pWrkrData, pWrkrData->pData, reqmsg);
+@@ -1103,7 +1103,7 @@ curlPost(wrkrInstanceData_t *pWrkrData, uchar *message, int msglen, uchar **tpls
  
  	if (curlCode != CURLE_OK) {
  		STATSCOUNTER_INC(ctrHttpRequestFail, mutCtrHttpRequestFail);
 -		LogError(0, RS_RET_SUSPENDED,
--			"omhttp: suspending ourselves due to server failure %lld: %s",
--			(long long) curlCode, errbuf);
--		// Check the result here too and retry if needed, then we should suspend
--		// Usually in batch mode we clobber any iRet values, but probably not a great
--		// idea to keep hitting a dead server. The http status code will be 0 at this point.
--		checkResult(pWrkrData, message);
-+
-+        // suppress DNS resolve error
-+		if (6 == curlCode) {
-+			DBGPRINTF("omhttp: suspending ourselves due to server failure %lld: %s",
-+				(long long) curlCode, errbuf);
-+		} else{
-+		    LogError(0, RS_RET_SUSPENDED,
-+			    "omhttp: suspending ourselves due to server failure %lld: %s",
-+			    (long long) curlCode, errbuf);
-+		    // Check the result here too and retry if needed, then we should suspend
-+		    // Usually in batch mode we clobber any iRet values, but probably not a great
-+		    // idea to keep hitting a dead server. The http status code will be 0 at this point.
-+		    checkResult(pWrkrData, message);
-+        }
- 		ABORT_FINALIZE(RS_RET_SUSPENDED);
- 	} else {
- 		STATSCOUNTER_INC(ctrHttpRequestSuccess, mutCtrHttpRequestSuccess);
++		LogMsg(0, RS_RET_SUSPENDED, LOG_INFO,
+ 			"omhttp: suspending ourselves due to server failure %lld: %s",
+ 			(long long) curlCode, errbuf);
+ 		// Check the result here too and retry if needed, then we should suspend
