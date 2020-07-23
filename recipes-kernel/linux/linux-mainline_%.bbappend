@@ -5,6 +5,7 @@ SRC_URI += " \
             file://cgroup.cfg \
             file://disable-unused.cfg \
             file://filesystems.cfg \
+            file://gpiolib-sysfs.c.patch \
             file://network.cfg \
             file://SiseriffLTStd-Regular.otf \
             file://usb-devices.cfg \

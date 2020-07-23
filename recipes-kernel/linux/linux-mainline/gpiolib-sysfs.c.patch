@@ -1,0 +1,22 @@
+diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
+index 3f454eaf2101..61372784a959 100644
+--- a/drivers/gpio/gpiolib-sysfs.c
++++ b/drivers/gpio/gpiolib-sysfs.c
+@@ -459,7 +459,7 @@ static ssize_t export_store(struct class *class,
+ 	desc = gpio_to_valid_desc(gpio);
+ 	/* reject invalid GPIOs */
+ 	if (!desc) {
+-		pr_warn("%s: invalid GPIO %ld\n", __func__, gpio);
++		pr_info("%s: invalid GPIO %ld\n", __func__, gpio);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -502,7 +502,7 @@ static ssize_t unexport_store(struct class *class,
+ 	desc = gpio_to_valid_desc(gpio);
+ 	/* reject bogus commands (gpio_unexport ignores them) */
+ 	if (!desc) {
+-		pr_warn("%s: invalid GPIO %ld\n", __func__, gpio);
++		pr_info("%s: invalid GPIO %ld\n", __func__, gpio);
+ 		return -EINVAL;
+ 	}
+ 
