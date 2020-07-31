@@ -37,8 +37,8 @@ alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
 alias cless='f(){ unset -f f; ccze -A -o nolookups < "$@" | less -R; }; f'
 alias ctail='f(){ unset -f f; tail -f "$@" | ccze -A -o nolookups; }; f'
 alias iperf3='f(){ unset -f f; iperf3 "$@" -c iperf.stromer.internal; }; f'
-alias pcurl='curl -x proxy.stromer.internal:8080'
-alias pwget='wget -e use_proxy=yes -e http_proxy=proxy.stromer.internal:8080'
+alias pcurl='f(){ unset -f f; if [[ $* =~ .stromerbike.com ]]; then curl -x proxy.stromer.internal:8080 "$@"; else curl -x spz-util-00.intra.89grad.ch:3128 "$@"; fi; }; f'
+alias pwget='f(){ unset -f f; if [[ $* =~ .stromerbike.com ]]; then wget -e use_proxy=yes -e http_proxy=proxy.stromer.internal:8080 -e https_proxy=proxy.stromer.internal:8080 --ca-directory /etc/ssl/certs "$@"; else wget -e use_proxy=yes -e http_proxy=spz-util-00.intra.89grad.ch:3128 -e https_proxy=spz-util-00.intra.89grad.ch:3128 --ca-directory /etc/ssl/certs "$@"; fi; }; f'
 
 # stromer specific aliases
 alias version='/bin/cat /etc/medusa-version'
