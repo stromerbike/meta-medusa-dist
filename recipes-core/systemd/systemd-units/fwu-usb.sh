@@ -46,8 +46,8 @@ led2_off ()
 
 display_done ()
 {
-    echo "" | fbv --noinfo /etc/images/done.png
     led2_green
+    echo "" | fbv --noinfo /etc/images/done.png
 }
 
 display_error ()
@@ -55,6 +55,7 @@ display_error ()
     echo "...ERROR"
     led2_red
     echo "" | fbv --noinfo /etc/images/error.png
+    await_shutdown
 }
 
 enable_writeaccess ()
