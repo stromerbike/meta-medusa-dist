@@ -30,6 +30,7 @@ Busybox configuration (1.31.0):
 - set "Archival Utilities ---> tar Support old tar header format" to N;
 - set "Archival Utilities ---> tar Enable untarring of tarballs with checksums produced by buggy Sun tar" to N;
 - set "Archival Utilities ---> tar Support GNU tar extensions (long filenames)" to N;
+- set "Coreutils ---> Support %[num]N nanosecond format specifier" to y.
 - set "Coreutils ---> groups" to N; Remark: Not needed with shadow-base.
 - set "Console Utilities ---> clear" to N; Remark: Not needed with ncurses-tools.
 - set "Console Utilities ---> reset" to N; Remark: Not needed with ncurses-tools.
