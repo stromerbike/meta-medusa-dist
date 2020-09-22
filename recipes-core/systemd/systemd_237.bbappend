@@ -1,6 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://0099-Make-Watchdog-Signal-Configurable.patch \
             file://chase_symlinks_etc_localtime.patch \
             file://resolved.conf \
             file://system.conf \
