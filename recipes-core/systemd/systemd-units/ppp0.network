@@ -1,0 +1,6 @@
+[Match]
+Name=ppp0
+
+[Network]
+DNS=10.89.23.40
+DNS=10.89.23.41
