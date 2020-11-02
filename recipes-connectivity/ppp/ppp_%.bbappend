@@ -15,5 +15,6 @@ do_install_append() {
     echo "mtu 1460" >> ${D}${sysconfdir}/ppp/options
 
     echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.gsmtty1
-    echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.ttyGSM0
+    echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.ttyACM0
+    echo "nodefaultroute" >> ${D}${sysconfdir}/ppp/options.ttyACM1
 }
