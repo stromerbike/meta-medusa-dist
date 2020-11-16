@@ -7,23 +7,27 @@ LIC_FILES_CHKSUM = "file://Readme.markdown;beginline=175;md5=063a6c9f330bca206cb
 
 PR = "r0"
 PV = "1.6.0"
-#PV = "0.0.0+gitr${SRCPV}"
 
 SRC_URI = "git://github.com/nayuki/QR-Code-generator.git;protocol=git;branch=master"
 SRCREV = "71c75cfeb0f06788ebc43a39b704c39fcf5eba7c"
 
 S = "${WORKDIR}/git"
 
+FILES_{PN} += "${libdir}/lib${BPN}.so"
+FILES_SOLIBSDEV = ""
+
+INSANE_SKIP_${PN} = "dev-so"
+RPROVIDES_${PN} += "lib${BPN}.so"
+
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_compile() {
-    ${CC} -std=c++11 -O -shared -o lib${BPN}.so.${PV} -fPIC cpp/QrCode.cpp
+    ${CC} -std=c++11 -O -shared -fPIC -Wl,-soname,lib${BPN}.so.1 cpp/QrCode.cpp -o lib${BPN}.so.${PV}
 }
 
 do_install() {
     install -d ${D}${libdir}
-    install lib${BPN}.so.${PV} ${D}${libdir}
-    ln -s -r ${D}${libdir}/lib${BPN}.so.${PV} ${D}${libdir}/lib${BPN}.so
+    oe_soinstall lib${BPN}.so.${PV} ${D}${libdir}
     install -d ${D}${includedir}/${BPN}
     install cpp/QrCode.hpp ${D}${includedir}/${BPN}
 }
