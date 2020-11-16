@@ -13,7 +13,7 @@ SRCREV = "71c75cfeb0f06788ebc43a39b704c39fcf5eba7c"
 
 S = "${WORKDIR}/git"
 
-FILES_{PN} += "${libdir}/lib${BPN}.so"
+FILES_${PN} += "${libdir}/lib${BPN}.so"
 FILES_SOLIBSDEV = ""
 
 INSANE_SKIP_${PN} = "dev-so"
