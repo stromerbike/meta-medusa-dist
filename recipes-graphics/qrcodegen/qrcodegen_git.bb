@@ -6,7 +6,8 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://Readme.markdown;beginline=175;md5=063a6c9f330bca206cb38453ceb96785"
 
 PR = "r0"
-PV = "1.6.0+gitr${SRCPV}"
+BASEPV = "1.6.0"
+PV = "${BASEPV}+gitr${SRCPV}"
 
 SRC_URI = "git://github.com/nayuki/QR-Code-generator.git;protocol=git;branch=master"
 SRCREV = "71c75cfeb0f06788ebc43a39b704c39fcf5eba7c"
@@ -22,7 +23,7 @@ RPROVIDES_${PN} += "lib${BPN}.so"
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_compile() {
-    ${CC} -std=c++11 -O -shared -fPIC -Wl,-soname,lib${BPN}.so.1 cpp/QrCode.cpp -o lib${BPN}.so.${PV}
+    ${CC} -std=c++11 -O -shared -fPIC -Wl,-soname,lib${BPN}.so.1 cpp/QrCode.cpp -o lib${BPN}.so.${BASEPV}
 }
 
 do_install() {
