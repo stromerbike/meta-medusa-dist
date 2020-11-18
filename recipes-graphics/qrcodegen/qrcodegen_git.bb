@@ -28,7 +28,7 @@ do_compile() {
 
 do_install() {
     install -d ${D}${libdir}
-    oe_soinstall lib${BPN}.so.${PV} ${D}${libdir}
+    oe_soinstall lib${BPN}.so.${BASEPV} ${D}${libdir}
     install -d ${D}${includedir}/${BPN}
     install cpp/QrCode.hpp ${D}${includedir}/${BPN}
 }
