@@ -204,6 +204,9 @@ do
                 echo "Checking if purgedata shall be ignored..."
                 check_purge_data_ignore
                 echo "...done"
+                echo "Stopping other fwu services..."
+                systemctl stop fwu-chk fwu-delta-pre fwu-delta-run fwu-full fwu-reset || true
+                echo "...done"
                 echo "Stopping DataServer application..." # also stops DataServer based applications
                 systemctl stop medusa-DataServer || true
                 echo "...done"
