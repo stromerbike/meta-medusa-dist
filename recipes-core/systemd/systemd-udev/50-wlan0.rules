@@ -1,2 +1,7 @@
-ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", RUN+="/bin/systemctl --no-block start hostapd.service"
-ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", RUN+="/bin/systemctl --no-block stop hostapd.service"
+# Edimax Technology Co., Ltd EW-7811Un 802.11n Wireless Adapter [Realtek RTL8188CUS]
+ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", ATTRS{idVendor}=="7392", ATTRS{idProduct}=="7811", RUN+="/bin/systemctl --no-block start hostapd.service"
+
+# Realtek Semiconductor Corp. RTL8188ETV Wireless LAN 802.11n Network Adapter
+ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="0179", RUN+="/bin/systemctl --no-block start wpa_supplicant-wext@wlan0.service"
+
+ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="wlan0", RUN+="/bin/systemctl --no-block stop hostapd.service wpa_supplicant-wext@wlan0.service"

@@ -1,0 +1,7 @@
+[Match]
+Name=wlan0
+Driver=!r8188eu
+
+[Network]
+Address=192.168.5.11/24
+DHCPServer=yes

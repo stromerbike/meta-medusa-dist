@@ -88,6 +88,7 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
+            file://wlan0-ap.network \
             file://wlan0.network \
             file://wlan0.sh \
             file://wvdial-hl78xx-usb.service \
@@ -195,6 +196,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/ppp0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/wlan0-ap.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
 
     install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}
