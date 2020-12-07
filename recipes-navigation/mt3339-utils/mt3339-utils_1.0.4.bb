@@ -22,7 +22,7 @@ SRC_URI[sha256sum] = "9fa55db63bd8e1de142a0caa1b14094a131dd64e8f6510e5d922cbdfaf
 
 S = "${WORKDIR}/${PN}-${PV}"
 
-do_install () {
+do_install() {
     install -d ${D}${bindir}
     install -m 0755 ${S}/epoinfo ${D}${bindir}
     install -m 0755 ${S}/epoloader ${D}${bindir}

@@ -4,7 +4,7 @@ do_configure_append() {
     kconfig_set KERNEL_INSTALL_TARGET n
 }
 
-do_install () {
+do_install() {
     # remove all stuff from the barebox build
     rm -rf ${D}/
     mkdir -p ${B}/

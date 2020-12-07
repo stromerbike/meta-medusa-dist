@@ -22,7 +22,7 @@ SRC_URI = " \
 
 FILES_${PN} = "${sysconfdir}/mediatek/"
 
-do_install () {
+do_install() {
     install -d ${D}${sysconfdir}/mediatek/
     for file in $(find ${WORKDIR}/git -maxdepth 1 -type f -name "*.py"); do
         install -m 0755 "$file" ${D}${sysconfdir}/mediatek/

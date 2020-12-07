@@ -25,11 +25,11 @@ SRCREV = "b40600d9ee0aa6025f33f2644207e069315ca64c"
 
 S = "${WORKDIR}/git"
 
-do_configure () {
+do_configure() {
     ./makemake
 }
 
-do_install () {
+do_install() {
     install -d ${D}/${bindir}
     for APP in $(cat ${S}/BIN | cut -d: -f6); do
         install -m 755 ${S}/$APP ${D}/${bindir}

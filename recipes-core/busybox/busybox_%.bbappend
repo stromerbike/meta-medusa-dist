@@ -9,7 +9,7 @@ RRECOMMENDS_${PN} = ""
 
 INSANE_SKIP_${PN} += "already-stripped"
 
-do_install_prepend () {
+do_install_prepend() {
     if grep -q "CONFIG_FEATURE_INDIVIDUAL=y" ${B}/.config; then
         install -d ${D}${base_sbindir} ${D}${sbindir}
     fi

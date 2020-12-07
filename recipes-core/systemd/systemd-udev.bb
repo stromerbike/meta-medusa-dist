@@ -21,7 +21,7 @@ FILES_${PN}_append = " \
     ${sysconfdir}/udev/rules.d/ \
 "
 
-do_install () {
+do_install() {
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-gsmtty1.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/

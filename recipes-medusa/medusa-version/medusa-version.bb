@@ -6,7 +6,7 @@ PV = "${DISTRO_VERSION}"
 PR = "${DISTRO_CODENAME}"
 ERROR_QA_remove = "version-going-backwards"
 
-do_install () {
+do_install() {
     install -d ${D}${sysconfdir}
     echo "${DISTRO_CODENAME}-${DISTRO_VERSION}" > ${D}${sysconfdir}/medusa-version
 }

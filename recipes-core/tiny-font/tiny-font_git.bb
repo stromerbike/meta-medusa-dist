@@ -14,7 +14,7 @@ SRC_URI = " \
     git://github.com/nbah22/tiny-font.git;protocol=git \
 "
 
-do_install () {
+do_install() {
     install -d ${D}${datadir}/consolefonts
     install -m 0644 ${S}/font4x6.psf.gz ${D}${datadir}/consolefonts
 }

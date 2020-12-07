@@ -1,6 +1,6 @@
 FILES_${PN}_append = " ${ROOT_HOME}"
 
-do_install_append () {
+do_install_append() {
     install -d ${D}${ROOT_HOME}
     echo dns-resolution: no >> ${D}${ROOT_HOME}/.iftoprc
     echo port-display: on >> ${D}${ROOT_HOME}/.iftoprc
