@@ -39,6 +39,9 @@ done
 if [ "$name" == "manual" ]; then
     echo "Concatenating $previousLatest $latest and saving as full length PCAN trace file /mnt/data/candump/$name.trc"
     cat "$previousLatest" "$latest" > "$dir$name.candump"
+elif [ "$name" == "update" ]; then
+    echo "Concatenating $previousLatest $latest and saving as size limited PCAN trace file /mnt/data/candump/$name.trc"
+    cat "$previousLatest" "$latest" | tail -n 100000 > "$dir$name.candump"
 else
     echo "Concatenating $previousLatest $latest and saving as size limited PCAN trace file /mnt/data/candump/$name.trc"
     cat "$previousLatest" "$latest" | tail -n 10000 > "$dir$name.candump"
