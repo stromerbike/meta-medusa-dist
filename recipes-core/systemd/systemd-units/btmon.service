@@ -6,6 +6,8 @@ Requires=bluetooth.target
 [Service]
 Type=simple
 ExecStart=/bin/dash -c '/usr/bin/btmon -T | /usr/bin/multilog s1048576 n3 wbtmon /tmp/btmon'
+ExecStopPost=/bin/rm -rf /tmp/btmon
+Restart=always
 
 [Install]
 WantedBy=communication.target
