@@ -1,6 +1,5 @@
 #!/bin/dash
 
-sleep 7
 if lsusb -d 1199:c001; then
     echo "HL78xx in USB mode. No serial line discipline needed."
     exit 0
