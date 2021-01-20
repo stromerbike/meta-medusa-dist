@@ -75,6 +75,7 @@ Busybox configuration (1.31.0):
 - set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
+- set "Miscellaneous Utilities ---> rx" to No; Remark: Not needed with lrzsz.
 - set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
 - set "Networking Utilities ---> arping" to No; Remark: Not needed with iputils.
 - set "Networking Utilities ---> ping" to No; Remark: Not needed with iputils.
