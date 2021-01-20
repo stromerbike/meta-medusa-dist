@@ -5,6 +5,7 @@ Description=gsm
 Type=oneshot
 ExecStart=/etc/scripts/gsm.sh start
 ExecStop=/etc/scripts/gsm.sh stop
+ExecReload=/etc/scripts/gsm.sh reload
 RemainAfterExit=yes
 
 [Install]
