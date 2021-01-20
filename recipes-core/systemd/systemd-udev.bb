@@ -9,6 +9,7 @@ SRC_URI += " \
             file://50-gsmtty1.rules \
             file://50-sda.rules \
             file://50-ttygsm0.rules \
+            file://50-ttygsm1-hl78xx.rules \
             file://50-ttygsm2.rules \
             file://50-ttygsm4.rules \
             file://50-ttygsm5.rules \
@@ -26,6 +27,7 @@ do_install() {
     install -m 0644 ${WORKDIR}/50-gsmtty1.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm0.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-ttygsm1-hl78xx.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm2.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm4.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm5.rules ${D}${sysconfdir}/udev/rules.d/
