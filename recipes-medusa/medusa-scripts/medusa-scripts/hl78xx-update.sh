@@ -12,7 +12,7 @@ elif lsusb -d 1199:c001; then
     #SEND_COMMAND="microcom -t 1000"
     #SEND_INTERFACE="/dev/ttyACM1"
 else
-    CGMR=$(echo -e "AT+CGMR\r" | picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7 | grep ^HL78)
+    CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7 | grep ^HL78)
     if [ ! -z "$CGMR" ]; then
         echo "HL78xx in UART mode detected: $CGMR"
         SEND_COMMAND="picocom -qr -b 115200 -f h -x 1000"
@@ -21,7 +21,7 @@ else
 fi
 
 if [ ! -z "$SEND_COMMAND" ] && [ ! -z "$SEND_INTERFACE" ]; then
-    CGMR=$(echo -e "AT+CGMR\r" | $SEND_COMMAND $SEND_INTERFACE | grep ^HL78)
+    CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 $SEND_COMMAND $SEND_INTERFACE | grep ^HL78)
     if [[ $CGMR =~ ^HL78([0-9]+).([0-9]+.[0-9]+.[0-9]+.[0.9]+) ]]; then
         MODULE_VARIANT="${BASH_REMATCH[1]}"
         CURRENT_REVISION="${BASH_REMATCH[2]}"
@@ -33,13 +33,13 @@ if [ ! -z "$SEND_COMMAND" ] && [ ! -z "$SEND_INTERFACE" ]; then
                 echo "Applicable update file: $UPDATE_FILE"
                 UPDATE_FILE_SIZE="$(stat -c %s $UPDATE_FILE)"
                 echo "Update file size: $UPDATE_FILE_SIZE bytes"
-                if echo -e "AT+WDSI=4470\r" | $SEND_COMMAND $SEND_INTERFACE | grep OK; then
+                if echo -e "AT+WDSI=4470\r" | timeout -s KILL 2 $SEND_COMMAND $SEND_INTERFACE | grep OK; then
                     echo "Activated all indications"
                 else
                     echo "Could not activate all indications"
                     exit 11
                 fi
-                if echo -e "AT+WDSD=$UPDATE_FILE_SIZE\r" | $SEND_COMMAND $SEND_INTERFACE | grep AT+WDSD=$UPDATE_FILE_SIZE; then
+                if echo -e "AT+WDSD=$UPDATE_FILE_SIZE\r" | timeout -s KILL 2 $SEND_COMMAND $SEND_INTERFACE | grep AT+WDSD=$UPDATE_FILE_SIZE; then
                     echo "Sent file size"
                 else
                     echo "Could not send file size"
@@ -52,12 +52,12 @@ if [ ! -z "$SEND_COMMAND" ] && [ ! -z "$SEND_INTERFACE" ]; then
                     exit 11
                 fi
                 sleep 5
-                if echo -e "AT+WDSR=4\r" | $SEND_COMMAND $SEND_INTERFACE | grep "+WDSI: 14"; then
+                if echo -e "AT+WDSR=4\r" | timeout -s KILL 2 $SEND_COMMAND $SEND_INTERFACE | grep "+WDSI: 14"; then
                     echo "Accepted the installation and update will be launched"
-                    echo "Waiting 120s for the installation and reboot to complete"
-                    sleep 120
+                    echo "Waiting 180s for the installation and reboot to complete"
+                    sleep 180
                     echo "Reading back revision"
-                    CGMR=$(echo -e "AT+CGMR\r" | $SEND_COMMAND $SEND_INTERFACE | grep ^HL78)
+                    CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 $SEND_COMMAND $SEND_INTERFACE | grep ^HL78)
                     if [[ $CGMR =~ ^HL78([0-9]+).([0-9]+.[0-9]+.[0-9]+.[0.9]+) ]]; then
                         NEW_REVISION="${BASH_REMATCH[2]}"
                         if [[ "$NEW_REVISION" != "$CURRENT_REVISION" ]]; then
