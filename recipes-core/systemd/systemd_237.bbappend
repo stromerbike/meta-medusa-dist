@@ -5,6 +5,7 @@ SRC_URI += " \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
+            file://systemd-timesyncd_write_synchronized_file.patch \
             file://timesyncd.conf \
 "
 
