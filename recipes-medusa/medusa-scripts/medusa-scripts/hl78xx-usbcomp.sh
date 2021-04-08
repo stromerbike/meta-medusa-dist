@@ -52,7 +52,7 @@ elif lsusb -d 1199:c001; then
 else
     CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7 | grep ^HL78)
     if [[ $CGMR =~ HL78 ]]; then
-        echo "HL78xx (${CGMR//$'\r'/}) in UART mode detected issuing AT+KUSBCOMP=1,1,2,3 and restarting gsm service"
+        echo "HL78xx (${CGMR//$'\r'/}) in UART mode detected. issuing AT+KUSBCOMP=1,1,2,3."
         if echo -e "AT+KUSBCOMP=1,1,2,3\r" | timeout -s KILL 2 picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7 | grep AT+KUSBCOMP=1,1,2,3; then
             echo "USB mode activated. Resetting module via command."
             echo -e "AT+CFUN=1,1\r" | timeout -s KILL 2 picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7
