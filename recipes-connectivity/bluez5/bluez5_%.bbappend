@@ -4,6 +4,7 @@ SRC_URI += " \
             file://fix_coredump.patch \
             file://main.conf \
             file://TIInit_6.7.16.bts \
+            file://TIInit_6.12.26.bts \
 "
 
 PACKAGECONFIG_remove = " \
@@ -36,6 +37,7 @@ FILES_${PN}-misc += " \
 do_install_append() {
     install -d ${D}/${base_libdir}/firmware/ti-connectivity
     install -m 0644 ${WORKDIR}/TIInit_6.7.16.bts ${D}/${base_libdir}/firmware/ti-connectivity
+    install -m 0644 ${WORKDIR}/TIInit_6.12.26.bts ${D}/${base_libdir}/firmware/ti-connectivity
 
     install -m 0644 ${WORKDIR}/main.conf ${D}/${sysconfdir}/bluetooth/
 }
