@@ -5,10 +5,10 @@ DESC="Mount the inactive rfs partition"
 
 case $1 in
 start)
-    if df -T | grep 'ubi0:part0'; then
+    if df / | grep 'ubi0:part0'; then
         echo "Mounting inactive rfs partition ubi0_1..."
         mount -t ubifs /dev/ubi0_1 /mnt/rfs_inactive
-    elif df -T | grep 'ubi0:part1'; then
+    elif df / | grep 'ubi0:part1'; then
         echo "Mounting inactive rfs partition ubi0_0..."
         mount -t ubifs /dev/ubi0_0 /mnt/rfs_inactive
     else

@@ -254,9 +254,9 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
                             if purge_data; then
                                 echo "...done"
                                 echo "Swapping active partition..."
-                                if df | grep 'ubi0:part0'; then
+                                if df / | grep 'ubi0:part0'; then
                                     part1_active
-                                elif df | grep 'ubi0:part1'; then
+                                elif df / | grep 'ubi0:part1'; then
                                     part0_active
                                 else
                                     display_error
