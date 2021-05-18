@@ -1,9 +1,9 @@
 [Unit]
-Description=fwu-usb
+Description=fwu-usb-run
 After=mnt-rfs.service led.service check.target
 Requires=mnt-rfs.service
 Wants=led.service check.target
 
 [Service]
 Type=simple
-ExecStart=/etc/scripts/fwu-usb.sh
+ExecStart=/etc/scripts/fwu-usb-run.sh

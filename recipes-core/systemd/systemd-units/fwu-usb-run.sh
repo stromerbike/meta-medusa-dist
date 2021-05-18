@@ -2,6 +2,9 @@
 
 OPTION_PURGEDATA_IGNORE="no"
 
+# To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
+TIMEOUT_CMD="timeout -s KILL 5"
+
 led1_blue ()
 {
     echo "255" 2> /dev/null > /sys/class/leds/rgb1_blue/brightness
@@ -147,6 +150,13 @@ purge_data ()
     fi
 }
 
+export_log ()
+{
+    echo "Exporting log..."
+    systemctl start log-usb || true
+    echo "...done"
+}
+
 umount_usb ()
 {
     if df -T | grep "/mnt/usb" | grep "fuseblk"; then
@@ -202,105 +212,74 @@ part1_active ()
     fi
 }
 
-export_log ()
-{
-    echo "Exporting log..."
-    systemctl start log-usb || true
-    echo "...done"
-}
-
-# To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
-TIMEOUT_CMD="timeout -s KILL 5"
-
-COUNTER=0
-while [ $COUNTER -lt 5 ];
-do
-    let COUNTER=COUNTER+1
-    if [ -d "/mnt/usb/autoupdate" ]; then
-        firstTarXz=""
-        firstTarXz="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | grep .tar.xz | head -n 1)"
-        if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
-            echo "Firmware tarball $firstTarXz found"
-            if [[ ${firstTarXz/-purgedata/} =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
-                echo "Nothing to up- or downgrade"
-                export_log
-                exit 0
-            else
-                echo "Checking if purgedata shall be ignored..."
-                check_purge_data_ignore
+firstTarXz="/mnt/usb/autoupdate/$(ls /mnt/usb/autoupdate | grep .tar.xz | head -n 1)"
+if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
+    echo "Firmware tarball $firstTarXz found"
+    if [[ ${firstTarXz/-purgedata/} =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
+        echo "Nothing to up- or downgrade"
+        exit 0
+    else
+        echo "Checking if purgedata shall be ignored..."
+        check_purge_data_ignore
+        echo "...done"
+        echo "Stopping DataServer application..." # also stops DataServer based applications
+        systemctl stop medusa-DataServer || true
+        echo "...done"
+        echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
+        echo "Verifying signature..."
+        led1_blue
+        TERM=linux clear > /dev/tty1 < /dev/tty1
+        echo 0 > /sys/class/graphics/fbcon/rotate_all
+        /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
+        TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
+        echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
+        echo "" | fbv --noinfo /etc/images/busy.png
+        echo -n "${firstTarXz: -44:-14}" > /dev/tty1
+        if pv -F "Verifying:  %p" "$firstTarXz" 2> /dev/tty1 | gpgv --keyring /etc/gnupg/pubring.gpg "$firstTarXz.sig" -; then
+            if mountpoint -q /mnt/rfs_inactive; then
                 echo "...done"
-                echo "Stopping DataServer application..." # also stops DataServer based applications
-                systemctl stop medusa-DataServer || true
-                echo "...done"
-                echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
-                echo "Verifying signature..."
-                led1_blue
-                TERM=linux clear > /dev/tty1 < /dev/tty1
-                echo 0 > /sys/class/graphics/fbcon/rotate_all
-                /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
-                TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
-                echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
-                echo "" | fbv --noinfo /etc/images/busy.png
-                echo -n "${firstTarXz: -44:-14}" > /dev/tty1
-                if pv -F "Verifying:  %p" "$firstTarXz" 2> /dev/tty1 | gpgv --keyring /etc/gnupg/pubring.gpg "$firstTarXz.sig" -; then
-                    if mountpoint -q /mnt/rfs_inactive; then
+                led2_blue
+                echo "Cleaning up inactive partition..."
+                if rm -rf /mnt/rfs_inactive/*; then
+                    echo "...done"
+                    echo "Extracting firmware..."
+                    if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
                         echo "...done"
-                        led2_blue
-                        echo "Cleaning up inactive partition..."
-                        if rm -rf /mnt/rfs_inactive/*; then
+                        enable_writeaccess
+                        echo "Syncing..."
+                        echo -ne "Syncing...\r" > /dev/tty1
+                        if sync; then
                             echo "...done"
-                            echo "Extracting firmware..."
-                            if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
+                            echo "Purging data partition if desired and allowed..."
+                            if purge_data; then
                                 echo "...done"
-                                enable_writeaccess
-                                echo "Syncing..."
-                                echo -ne "Syncing...\r" > /dev/tty1
-                                if sync; then
-                                    echo "...done"
-                                    echo "Purging data partition if desired and allowed..."
-                                    if purge_data; then
-                                        echo "...done"
-                                        echo "Swapping active partition..."
-                                        if df | grep 'ubi0:part0'; then
-                                            part1_active
-                                        elif df | grep 'ubi0:part1'; then
-                                            part0_active
-                                        else
-                                            display_error
-                                            COUNTER=5
-                                        fi
-                                    else
-                                        display_error
-                                        COUNTER=5
-                                    fi
+                                echo "Swapping active partition..."
+                                if df | grep 'ubi0:part0'; then
+                                    part1_active
+                                elif df | grep 'ubi0:part1'; then
+                                    part0_active
                                 else
                                     display_error
-                                    COUNTER=5
                                 fi
                             else
                                 display_error
-                                COUNTER=5
                             fi
                         else
                             display_error
-                            COUNTER=5
                         fi
                     else
                         display_error
-                        COUNTER=5
                     fi
                 else
                     display_error
-                    COUNTER=5
                 fi
+            else
+                display_error
             fi
         else
-            echo "autoupdate folder does not contain the required file"
+            display_error
         fi
-    else
-        echo "/mnt/usb/autoupdate does not exist (yet)"
     fi
-    sleep 1
-done
-
-export_log
+else
+    echo "autoupdate folder does not contain the required file"
+fi

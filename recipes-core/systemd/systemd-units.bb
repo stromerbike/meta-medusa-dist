@@ -55,8 +55,10 @@ SRC_URI += " \
             file://debug.target \
             file://drive.target \
             file://eth0.network \
-            file://fwu-usb.service \
-            file://fwu-usb.sh \
+            file://fwu-usb-chk.service \
+            file://fwu-usb-chk.sh \
+            file://fwu-usb-run.service \
+            file://fwu-usb-run.sh \
             file://gsm.service \
             file://gsm.sh \
             file://hostname-det.service \
@@ -181,8 +183,10 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/mnt-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-usb.sh ${D}${sysconfdir}/scripts/
 
-    install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/fwu-usb-chk.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-usb-chk.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/fwu-usb-run.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-usb-run.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/log-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/log-usb.sh ${D}${sysconfdir}/scripts/
 
