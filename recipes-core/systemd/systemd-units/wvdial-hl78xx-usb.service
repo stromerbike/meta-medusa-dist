@@ -6,6 +6,6 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStart=/bin/dash -c "wvdial hl78xx-usb || true"
+ExecStart=/etc/scripts/wvdial.sh
 Restart=always
 RestartSec=10
