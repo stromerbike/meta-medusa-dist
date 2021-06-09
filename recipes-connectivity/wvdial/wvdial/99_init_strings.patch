@@ -1,0 +1,339 @@
+diff --git a/CHANGES b/CHANGES
+index 82654cf..f32a40c 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -198,7 +198,7 @@ Changes to WvDial since the initial release:
+ 	guessed it) "stupid" ISP's that give a login: prompt but don't let
+ 	you actually log in, but work fine anyway if you just use PAP.  Just
+ 	set "Stupid Mode = yes" in wvdial.conf.
+- - Up to 9 different init strings, via the config options Init1 through Init9.
++ - Up to 99 different init strings, via the config options Init1 through Init99.
+  - Change your dial prefix and dial command separately from the phone number,
+ 	possibly even in a separate [Dialer] section of wvdial.conf.  WvDial
+ 	now dials the modem like this:
+diff --git a/wvdial.conf.5 b/wvdial.conf.5
+index b3de6fc..b424899 100644
+--- a/wvdial.conf.5
++++ b/wvdial.conf.5
+@@ -69,7 +69,7 @@ The speed at which
+ .B wvdial
+ will communicate with your modem.  The default is 57600 baud.
+ .TP
+-.I "Init1 ... Init9"
++.I "Init1 ... Init99"
+ .B wvdial
+ can use up to nine initialization strings to set up your modem.  Before
+ dialing, these strings are sent to the modem in numerical order.  These are
+diff --git a/wvdialer.cc b/wvdialer.cc
+index 3a63451..a710d34 100644
+--- a/wvdialer.cc
++++ b/wvdialer.cc
+@@ -596,6 +596,96 @@ void WvDialer::load_options()
+     	{ "Init7",           &options.init7,        NULL, "",               0 },
+     	{ "Init8",           &options.init8,        NULL, "",               0 },
+     	{ "Init9",           &options.init9,        NULL, "",               0 },
++    	{ "Init10",          &options.init10,       NULL, "",               0 },
++    	{ "Init11",          &options.init11,       NULL, "",               0 },
++    	{ "Init12",          &options.init12,       NULL, "",               0 },
++    	{ "Init13",          &options.init13,       NULL, "",               0 },
++    	{ "Init14",          &options.init14,       NULL, "",               0 },
++    	{ "Init15",          &options.init15,       NULL, "",               0 },
++    	{ "Init16",          &options.init16,       NULL, "",               0 },
++    	{ "Init17",          &options.init17,       NULL, "",               0 },
++    	{ "Init18",          &options.init18,       NULL, "",               0 },
++    	{ "Init19",          &options.init19,       NULL, "",               0 },
++    	{ "Init20",          &options.init20,       NULL, "",               0 },
++    	{ "Init21",          &options.init21,       NULL, "",               0 },
++    	{ "Init22",          &options.init22,       NULL, "",               0 },
++    	{ "Init23",          &options.init23,       NULL, "",               0 },
++    	{ "Init24",          &options.init24,       NULL, "",               0 },
++    	{ "Init25",          &options.init25,       NULL, "",               0 },
++    	{ "Init26",          &options.init26,       NULL, "",               0 },
++    	{ "Init27",          &options.init27,       NULL, "",               0 },
++    	{ "Init28",          &options.init28,       NULL, "",               0 },
++    	{ "Init29",          &options.init29,       NULL, "",               0 },
++    	{ "Init30",          &options.init30,       NULL, "",               0 },
++    	{ "Init31",          &options.init31,       NULL, "",               0 },
++    	{ "Init32",          &options.init32,       NULL, "",               0 },
++    	{ "Init33",          &options.init33,       NULL, "",               0 },
++    	{ "Init34",          &options.init34,       NULL, "",               0 },
++    	{ "Init35",          &options.init35,       NULL, "",               0 },
++    	{ "Init36",          &options.init36,       NULL, "",               0 },
++    	{ "Init37",          &options.init37,       NULL, "",               0 },
++    	{ "Init38",          &options.init38,       NULL, "",               0 },
++    	{ "Init39",          &options.init39,       NULL, "",               0 },
++    	{ "Init40",          &options.init40,       NULL, "",               0 },
++    	{ "Init41",          &options.init41,       NULL, "",               0 },
++    	{ "Init42",          &options.init42,       NULL, "",               0 },
++    	{ "Init43",          &options.init43,       NULL, "",               0 },
++    	{ "Init44",          &options.init44,       NULL, "",               0 },
++    	{ "Init45",          &options.init45,       NULL, "",               0 },
++    	{ "Init46",          &options.init46,       NULL, "",               0 },
++    	{ "Init47",          &options.init47,       NULL, "",               0 },
++    	{ "Init48",          &options.init48,       NULL, "",               0 },
++    	{ "Init49",          &options.init49,       NULL, "",               0 },
++    	{ "Init50",          &options.init50,       NULL, "",               0 },
++    	{ "Init51",          &options.init51,       NULL, "",               0 },
++    	{ "Init52",          &options.init52,       NULL, "",               0 },
++    	{ "Init53",          &options.init53,       NULL, "",               0 },
++    	{ "Init54",          &options.init54,       NULL, "",               0 },
++    	{ "Init55",          &options.init55,       NULL, "",               0 },
++    	{ "Init56",          &options.init56,       NULL, "",               0 },
++    	{ "Init57",          &options.init57,       NULL, "",               0 },
++    	{ "Init58",          &options.init58,       NULL, "",               0 },
++    	{ "Init59",          &options.init59,       NULL, "",               0 },
++    	{ "Init60",          &options.init60,       NULL, "",               0 },
++    	{ "Init61",          &options.init61,       NULL, "",               0 },
++    	{ "Init62",          &options.init62,       NULL, "",               0 },
++    	{ "Init63",          &options.init63,       NULL, "",               0 },
++    	{ "Init64",          &options.init64,       NULL, "",               0 },
++    	{ "Init65",          &options.init65,       NULL, "",               0 },
++    	{ "Init66",          &options.init66,       NULL, "",               0 },
++    	{ "Init67",          &options.init67,       NULL, "",               0 },
++    	{ "Init68",          &options.init68,       NULL, "",               0 },
++    	{ "Init69",          &options.init69,       NULL, "",               0 },
++    	{ "Init70",          &options.init70,       NULL, "",               0 },
++    	{ "Init71",          &options.init71,       NULL, "",               0 },
++    	{ "Init72",          &options.init72,       NULL, "",               0 },
++    	{ "Init73",          &options.init73,       NULL, "",               0 },
++    	{ "Init74",          &options.init74,       NULL, "",               0 },
++    	{ "Init75",          &options.init75,       NULL, "",               0 },
++    	{ "Init76",          &options.init76,       NULL, "",               0 },
++    	{ "Init77",          &options.init77,       NULL, "",               0 },
++    	{ "Init78",          &options.init78,       NULL, "",               0 },
++    	{ "Init79",          &options.init79,       NULL, "",               0 },
++    	{ "Init80",          &options.init80,       NULL, "",               0 },
++    	{ "Init81",          &options.init81,       NULL, "",               0 },
++    	{ "Init82",          &options.init82,       NULL, "",               0 },
++    	{ "Init83",          &options.init83,       NULL, "",               0 },
++    	{ "Init84",          &options.init84,       NULL, "",               0 },
++    	{ "Init85",          &options.init85,       NULL, "",               0 },
++    	{ "Init86",          &options.init86,       NULL, "",               0 },
++    	{ "Init87",          &options.init87,       NULL, "",               0 },
++    	{ "Init88",          &options.init88,       NULL, "",               0 },
++    	{ "Init89",          &options.init89,       NULL, "",               0 },
++    	{ "Init90",          &options.init90,       NULL, "",               0 },
++    	{ "Init91",          &options.init91,       NULL, "",               0 },
++    	{ "Init92",          &options.init92,       NULL, "",               0 },
++    	{ "Init93",          &options.init93,       NULL, "",               0 },
++    	{ "Init94",          &options.init94,       NULL, "",               0 },
++    	{ "Init95",          &options.init95,       NULL, "",               0 },
++    	{ "Init96",          &options.init96,       NULL, "",               0 },
++    	{ "Init97",          &options.init97,       NULL, "",               0 },
++    	{ "Init98",          &options.init98,       NULL, "",               0 },
++    	{ "Init99",          &options.init99,       NULL, "",               0 },
+     	{ "Phone",           &options.phnum,        NULL, "",               0 },
+     	{ "Phone1",          &options.phnum1,       NULL, "",               0 },
+     	{ "Phone2",          &options.phnum2,       NULL, "",               0 },
+@@ -743,7 +833,7 @@ bool WvDialer::init_modem()
+ 	
+ 	// Send up to nine init strings, in order.
+ 	int	init_count;
+-	for( init_count=1; init_count<=9; init_count++ ) 
++	for( init_count=1; init_count<=99; init_count++ ) 
+ 	{
+ 	    WvString *this_str;
+ 	    switch( init_count ) 
+@@ -756,9 +846,99 @@ bool WvDialer::init_modem()
+ 	    case 6:    this_str = &options.init6;	break;
+ 	    case 7:    this_str = &options.init7;	break;
+ 	    case 8:    this_str = &options.init8;	break;
+-	    case 9:
++	    case 9:    this_str = &options.init9;	break;
++	    case 10:   this_str = &options.init10;	break;
++	    case 11:   this_str = &options.init11;	break;
++	    case 12:   this_str = &options.init12;	break;
++	    case 13:   this_str = &options.init13;	break;
++	    case 14:   this_str = &options.init14;	break;
++	    case 15:   this_str = &options.init15;	break;
++	    case 16:   this_str = &options.init16;	break;
++	    case 17:   this_str = &options.init17;	break;
++	    case 18:   this_str = &options.init18;	break;
++	    case 19:   this_str = &options.init19;	break;
++	    case 20:   this_str = &options.init20;	break;
++	    case 21:   this_str = &options.init21;	break;
++	    case 22:   this_str = &options.init22;	break;
++	    case 23:   this_str = &options.init23;	break;
++	    case 24:   this_str = &options.init24;	break;
++	    case 25:   this_str = &options.init25;	break;
++	    case 26:   this_str = &options.init26;	break;
++	    case 27:   this_str = &options.init27;	break;
++	    case 28:   this_str = &options.init28;	break;
++	    case 29:   this_str = &options.init29;	break;
++	    case 30:   this_str = &options.init30;	break;
++	    case 31:   this_str = &options.init31;	break;
++	    case 32:   this_str = &options.init32;	break;
++	    case 33:   this_str = &options.init33;	break;
++	    case 34:   this_str = &options.init34;	break;
++	    case 35:   this_str = &options.init35;	break;
++	    case 36:   this_str = &options.init36;	break;
++	    case 37:   this_str = &options.init37;	break;
++	    case 38:   this_str = &options.init38;	break;
++	    case 39:   this_str = &options.init39;	break;
++	    case 40:   this_str = &options.init40;	break;
++	    case 41:   this_str = &options.init41;	break;
++	    case 42:   this_str = &options.init42;	break;
++	    case 43:   this_str = &options.init43;	break;
++	    case 44:   this_str = &options.init44;	break;
++	    case 45:   this_str = &options.init45;	break;
++	    case 46:   this_str = &options.init46;	break;
++	    case 47:   this_str = &options.init47;	break;
++	    case 48:   this_str = &options.init48;	break;
++	    case 49:   this_str = &options.init49;	break;
++	    case 50:   this_str = &options.init50;	break;
++	    case 51:   this_str = &options.init51;	break;
++	    case 52:   this_str = &options.init52;	break;
++	    case 53:   this_str = &options.init53;	break;
++	    case 54:   this_str = &options.init54;	break;
++	    case 55:   this_str = &options.init55;	break;
++	    case 56:   this_str = &options.init56;	break;
++	    case 57:   this_str = &options.init57;	break;
++	    case 58:   this_str = &options.init58;	break;
++	    case 59:   this_str = &options.init59;	break;
++	    case 60:   this_str = &options.init60;	break;
++	    case 61:   this_str = &options.init61;	break;
++	    case 62:   this_str = &options.init62;	break;
++	    case 63:   this_str = &options.init63;	break;
++	    case 64:   this_str = &options.init64;	break;
++	    case 65:   this_str = &options.init65;	break;
++	    case 66:   this_str = &options.init66;	break;
++	    case 67:   this_str = &options.init67;	break;
++	    case 68:   this_str = &options.init68;	break;
++	    case 69:   this_str = &options.init69;	break;
++	    case 70:   this_str = &options.init70;	break;
++	    case 71:   this_str = &options.init71;	break;
++	    case 72:   this_str = &options.init72;	break;
++	    case 73:   this_str = &options.init73;	break;
++	    case 74:   this_str = &options.init74;	break;
++	    case 75:   this_str = &options.init75;	break;
++	    case 76:   this_str = &options.init76;	break;
++	    case 77:   this_str = &options.init77;	break;
++	    case 78:   this_str = &options.init78;	break;
++	    case 79:   this_str = &options.init79;	break;
++	    case 80:   this_str = &options.init80;	break;
++	    case 81:   this_str = &options.init81;	break;
++	    case 82:   this_str = &options.init82;	break;
++	    case 83:   this_str = &options.init83;	break;
++	    case 84:   this_str = &options.init84;	break;
++	    case 85:   this_str = &options.init85;	break;
++	    case 86:   this_str = &options.init86;	break;
++	    case 87:   this_str = &options.init87;	break;
++	    case 88:   this_str = &options.init88;	break;
++	    case 89:   this_str = &options.init89;	break;
++	    case 90:   this_str = &options.init90;	break;
++	    case 91:   this_str = &options.init91;	break;
++	    case 92:   this_str = &options.init92;	break;
++	    case 93:   this_str = &options.init93;	break;
++	    case 94:   this_str = &options.init94;	break;
++	    case 95:   this_str = &options.init95;	break;
++	    case 96:   this_str = &options.init96;	break;
++	    case 97:   this_str = &options.init97;	break;
++	    case 98:   this_str = &options.init98;	break;
++	    case 99:
+ 	    default:
+-		this_str = &options.init9;	break;
++		this_str = &options.init99;	break;
+ 	    }
+ 	    if( !! *this_str ) 
+ 	    {
+diff --git a/wvdialer.h b/wvdialer.h
+index 48534c3..6680904 100644
+--- a/wvdialer.h
++++ b/wvdialer.h
+@@ -102,6 +102,96 @@ public:
+ 	WvString	        init7;
+ 	WvString	        init8;
+ 	WvString	        init9;
++	WvString	        init10;
++	WvString	        init11;
++	WvString	        init12;
++	WvString	        init13;
++	WvString	        init14;
++	WvString	        init15;
++	WvString	        init16;
++	WvString	        init17;
++	WvString	        init18;
++	WvString	        init19;
++	WvString	        init20;
++	WvString	        init21;
++	WvString	        init22;
++	WvString	        init23;
++	WvString	        init24;
++	WvString	        init25;
++	WvString	        init26;
++	WvString	        init27;
++	WvString	        init28;
++	WvString	        init29;
++	WvString	        init30;
++	WvString	        init31;
++	WvString	        init32;
++	WvString	        init33;
++	WvString	        init34;
++	WvString	        init35;
++	WvString	        init36;
++	WvString	        init37;
++	WvString	        init38;
++	WvString	        init39;
++	WvString	        init40;
++	WvString	        init41;
++	WvString	        init42;
++	WvString	        init43;
++	WvString	        init44;
++	WvString	        init45;
++	WvString	        init46;
++	WvString	        init47;
++	WvString	        init48;
++	WvString	        init49;
++	WvString	        init50;
++	WvString	        init51;
++	WvString	        init52;
++	WvString	        init53;
++	WvString	        init54;
++	WvString	        init55;
++	WvString	        init56;
++	WvString	        init57;
++	WvString	        init58;
++	WvString	        init59;
++	WvString	        init60;
++	WvString	        init61;
++	WvString	        init62;
++	WvString	        init63;
++	WvString	        init64;
++	WvString	        init65;
++	WvString	        init66;
++	WvString	        init67;
++	WvString	        init68;
++	WvString	        init69;
++	WvString	        init70;
++	WvString	        init71;
++	WvString	        init72;
++	WvString	        init73;
++	WvString	        init74;
++	WvString	        init75;
++	WvString	        init76;
++	WvString	        init77;
++	WvString	        init78;
++	WvString	        init79;
++	WvString	        init80;
++	WvString	        init81;
++	WvString	        init82;
++	WvString	        init83;
++	WvString	        init84;
++	WvString	        init85;
++	WvString	        init86;
++	WvString	        init87;
++	WvString	        init88;
++	WvString	        init89;
++	WvString	        init90;
++	WvString	        init91;
++	WvString	        init92;
++	WvString	        init93;
++	WvString	        init94;
++	WvString	        init95;
++	WvString	        init96;
++	WvString	        init97;
++	WvString	        init98;
++	WvString	        init99;
+ 	WvString	        phnum;
+ 	WvString	        phnum1;
+ 	WvString	        phnum2;

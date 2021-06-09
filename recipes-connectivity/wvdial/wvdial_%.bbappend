@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://99_init_strings.patch \
             file://wvdial.conf \
 "
 
