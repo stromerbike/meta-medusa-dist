@@ -96,6 +96,7 @@ SRC_URI += " \
             file://wvdial-hl78xx-usb.service \
             file://wvdial-hl78xx.service \
             file://wvdial.service \
+            file://wvdial.sh \
 "
 
 FILES_${PN}_append = " \
@@ -167,6 +168,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/wvdial-hl78xx-usb.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/wvdial.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/ubi2
     install -d ${D}/mnt/ubi3
