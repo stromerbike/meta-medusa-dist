@@ -19,11 +19,11 @@ start)
     echo "497" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio497/direction
     echo "1" > /sys/class/gpio/gpio497/value
-    # Wait for voltage to rise
+    # Wait for voltage to rise (U22 is configured to soft start over 16ms)
     sleep 0.2
-    # Make pulse to start GSM module
+    # Make pulse to start GSM module (minimum assertion time is 25ms for HL85xx and unknown for HL78xx)
     echo "1" > /sys/class/gpio/gpio133/value
-    sleep 0.1
+    sleep 0.3
     echo "0" > /sys/class/gpio/gpio133/value
     sleep 0.5
     modprobe imx6ul_mod_uart
@@ -37,10 +37,14 @@ stop)
 ;;
 
 reload)
-    # Pulse GSM reset
+    # Pulse GSM reset (minimum assertion time is 10ms for HL85xx and 100us for HL78xx)
     echo "1" > /sys/class/gpio/gpio128/value
     sleep 0.1
     echo "0" > /sys/class/gpio/gpio128/value
+    # Make pulse to start GSM module (minimum assertion time is 25ms for HL85xx and unknown for HL78xx)
+    echo "1" > /sys/class/gpio/gpio133/value
+    sleep 0.3
+    echo "0" > /sys/class/gpio/gpio133/value
 ;;
 
 *)
