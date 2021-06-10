@@ -1,9 +1,13 @@
 #!/bin/bash
 
-UNRESPONSIVE_MODULE_COUNT_LIMIT=5
+UNFINISHED_REGISTRATION_COUNT_LIMIT=179 # (179+1)x5000ms equals 900 seconds
+
+UNRESPONSIVE_MODULE_COUNT_LIMIT=5 # (5+1)x5000ms equals 30 seconds
 
 UNSUCCESSFUL_DIALIN_COUNT_LIMIT=5
 UNSUCCESSFUL_DIALIN_COUNT=0
+
+NETWORK_REGISTRATION_EXEC_COMMAND_SUCCESSFUL="no"
 
 INTERFACE="ttyGSM0"
 NETWORK_REGISTRATION_EXEC_COMMAND="CREG=2"
@@ -31,11 +35,33 @@ function handleStaleLock() {
     fi
 }
 
+# Remark: The gsm-module and interceptty services are stopped outside the udev rule too,
+#         because the rule does not always seem to detect the remove event.
+#         Furthermore, USB interface errors can sometimes be observed if those services
+#         are still running when the module reset is being performed.
+#         The wvdial service is not stopped in order to have a control process running
+#         in case a reset (especially a hard reset) would not work.
 function resetSoft() {
     echo "Attempting to soft reset module..."
+    systemctl stop gsm-module.service || true
+    systemctl stop interceptty@* || true
     handleStaleLock
     if echo -e "AT+CFUN=1,1\r" | microcom -t 500 "/dev/$INTERFACE" | grep -m1 OK; then
+        NETWORK_REGISTRATION_EXEC_COMMAND_SUCCESSFUL="no"
         echo "...done"
+        sleep 5
+    else
+        echo "...error"
+    fi
+}
+function resetHard() {
+    echo "Attempting to hard reset module..."
+    systemctl stop gsm-module.service || true
+    systemctl stop interceptty@* || true
+    if systemctl reload gsm; then
+        NETWORK_REGISTRATION_EXEC_COMMAND_SUCCESSFUL="no"
+        echo "...done"
+        sleep 5
     else
         echo "...error"
     fi
@@ -43,32 +69,55 @@ function resetSoft() {
 
 while true;
 do
-    echo "Enabling network registration unsolicited result code"
-    handleStaleLock
-    echo -e "AT+$NETWORK_REGISTRATION_EXEC_COMMAND\r" | microcom -t 2000 "/dev/$INTERFACE"
-
     echo "Waiting for network registration to home network or roaming..."
+    UNFINISHED_REGISTRATION_COUNT=0
     UNRESPONSIVE_MODULE_COUNT=0
     while true;
     do
-        handleStaleLock
-        RESPONSE="$(echo -e "AT+$NETWORK_REGISTRATION_READ_COMMAND?\r" | microcom -t 5000 "/dev/$INTERFACE")"
-
-        if [[ $RESPONSE =~ \+CE?REG:\ (0|1|2|3|4|5),(1|5) ]]; then
-            echo "...registration done:"
-            echo "$RESPONSE"
-            UNRESPONSIVE_MODULE_COUNT=0
-            break
-        elif [[ "$RESPONSE" =~ (\+CE?REG:\ [^$'\r\n']+) ]]; then
-            echo "${BASH_REMATCH[1]}"
-            UNRESPONSIVE_MODULE_COUNT=0
-        else
-            if [ "$UNRESPONSIVE_MODULE_COUNT" -lt "$UNRESPONSIVE_MODULE_COUNT_LIMIT" ]; then
-                UNRESPONSIVE_MODULE_COUNT=$((UNRESPONSIVE_MODULE_COUNT + 1))
-                echo "Module unresponsive $UNRESPONSIVE_MODULE_COUNT time(s in a row)"
-            else
-                resetSoft
+        if [ -e "/dev/$INTERFACE" ]; then
+            if [ "$NETWORK_REGISTRATION_EXEC_COMMAND_SUCCESSFUL" == "no" ]; then
+                echo "Enabling network registration unsolicited result code..."
+                handleStaleLock
+                if echo -e "AT+$NETWORK_REGISTRATION_EXEC_COMMAND\r" | microcom -t 2000 "/dev/$INTERFACE" | grep -m1 OK; then
+                    NETWORK_REGISTRATION_EXEC_COMMAND_SUCCESSFUL="yes"
+                    echo "...done"
+                else
+                    echo "...error"
+                fi
             fi
+
+            handleStaleLock
+            RESPONSE="$(echo -e "AT+$NETWORK_REGISTRATION_READ_COMMAND?\r" | microcom -t 5000 "/dev/$INTERFACE")"
+            if [[ $RESPONSE =~ \+CE?REG:\ (0|1|2|3|4|5),(1|5) ]]; then
+                UNRESPONSIVE_MODULE_COUNT=0
+                echo "...registration done:"
+                echo "$RESPONSE"
+                break
+            elif [[ "$RESPONSE" =~ (\+CE?REG:\ [^$'\r\n']+) ]]; then
+                UNRESPONSIVE_MODULE_COUNT=0
+                echo "${BASH_REMATCH[1]}"
+                if [ "$UNFINISHED_REGISTRATION_COUNT" -lt "$UNFINISHED_REGISTRATION_COUNT_LIMIT" ]; then
+                    UNFINISHED_REGISTRATION_COUNT=$((UNFINISHED_REGISTRATION_COUNT + 1))
+                    echo "Registration unfinished for $UNFINISHED_REGISTRATION_COUNT time(s in a row)"
+                else
+                    UNFINISHED_REGISTRATION_COUNT=0
+                    UNRESPONSIVE_MODULE_COUNT=0
+                    resetSoft
+                fi
+            else
+                echo "$RESPONSE"
+                if [ "$UNRESPONSIVE_MODULE_COUNT" -lt "$UNRESPONSIVE_MODULE_COUNT_LIMIT" ]; then
+                    UNRESPONSIVE_MODULE_COUNT=$((UNRESPONSIVE_MODULE_COUNT + 1))
+                    echo "Module unresponsive for $UNRESPONSIVE_MODULE_COUNT time(s in a row)"
+                else
+                    UNFINISHED_REGISTRATION_COUNT=0
+                    UNRESPONSIVE_MODULE_COUNT=0
+                    resetHard
+                fi
+            fi
+        else
+            echo "Interface /dev/$INTERFACE does not exist"
+            sleep 5
         fi
     done
 
