@@ -18,7 +18,7 @@ start)
     # hci0
     hciattach /dev/ttymxc2 texas
 
-    # Bluetooth daemon "/usr/libexec/bluetooth/bluetoothd" needs to be started before the hci0 interface is up !!!
+    # Bluetooth daemon "/usr/libexec/bluetooth/bluetoothd" needs to be started before the hci0 interface is up !!! (ScUr: Not sure if still applicable)
     hciconfig hci0 down
 ;;
 
@@ -27,7 +27,19 @@ stop)
     echo "0" > /sys/class/gpio/gpio120/value
 ;;
 
+reset)
+    killall hciattach
+    
+    # do BLE_nSHUTD reset
+    echo "0" > /sys/class/gpio/gpio120/value
+    sleep 1
+    echo "1" > /sys/class/gpio/gpio120/value
+
+    # hci0
+    hciattach /dev/ttymxc2 texas
+;;
+
 *)
-    echo "Usage $0 {start|stop}"
+    echo "Usage $0 {start|stop|reset}"
     exit
 esac
