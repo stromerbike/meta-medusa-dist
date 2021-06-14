@@ -27,7 +27,7 @@ stop)
     echo "0" > /sys/class/gpio/gpio120/value
 ;;
 
-reset)
+reload)
     killall hciattach
     
     # do BLE_nSHUTD reset
@@ -40,6 +40,6 @@ reset)
 ;;
 
 *)
-    echo "Usage $0 {start|stop|reset}"
+    echo "Usage $0 {start|stop|reload}"
     exit
 esac

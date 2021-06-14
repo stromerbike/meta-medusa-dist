@@ -9,6 +9,7 @@ Before=bluetooth.service
 Type=oneshot
 ExecStart=/etc/scripts/ble-attach.sh start
 ExecStop=/etc/scripts/ble-attach.sh stop
+ExecReload=/etc/scripts/ble-attach.sh reload
 RemainAfterExit=yes
 
 [Install]
