@@ -10,7 +10,7 @@ elif [ -f /tmp/imsi ]; then
 fi
 
 HOSTNAME="UNKNOWN"
-if [[ $CIMI =~ ([0-9]+) ]]; then
+if [[ $CIMI =~ (22801[0-9]+) ]]; then
     HOSTNAME="${BASH_REMATCH[1]}"
 else
     OUTPUT=$(hcitool -i hci0 cmd 0x04 0x0009 2>/dev/null)
