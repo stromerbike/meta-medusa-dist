@@ -4,7 +4,10 @@ if lsusb -d 1519:0020; then
     echo "HL85xxx in USB mode detected"
 elif lsusb -d 1199:c001; then
     echo "HL78xx in USB mode detected"
-    if ! fuser -s /dev/ttyACM0; then
+    if [ -e /dev/ttyACM0 ]; then
+        fuser -k /dev/ttyACM0
+    fi
+    if [ -e /var/lock/LCK..ttyACM0 ]; then
         rm -fv /var/lock/LCK..ttyACM0
     fi
     KUSBCOMP=$(echo -e "AT+KUSBCOMP?\r" | timeout -s KILL 2 microcom -t 1000 /dev/ttyACM0 | grep +KUSBCOMP:)

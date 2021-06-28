@@ -32,6 +32,7 @@ echo "FULL_RESPONSE: $FULL_RESPONSE"
 echo "NETWORK_REGISTRATION_READ_COMMAND: $NETWORK_REGISTRATION_READ_COMMAND"
 echo "WVDIAL_CONFIG_SECTION: $WVDIAL_CONFIG_SECTION"
 
+# This function realizes a forceful microcom cleanup.
 function prepareComport() {
     if [ -e "/dev/$INTERFACE" ]; then
         fuser -k "/dev/$INTERFACE"
@@ -41,6 +42,7 @@ function prepareComport() {
     fi
 }
 
+# This function realizes a graceful microcom shutdown.
 function cleanupComport() {
     if [ -e "/dev/$INTERFACE" ]; then
         fuser -s -k -TERM "/dev/$INTERFACE"
