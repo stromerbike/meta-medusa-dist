@@ -7,6 +7,7 @@ SRC_URI += " \
             file://systemd-timesyncd.service.in.patch \
             file://systemd-timesyncd_write_synchronized_file.patch \
             file://timesyncd.conf \
+            file://time-sync-wait_service.patch \
 "
 
 # backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf
@@ -71,6 +72,9 @@ do_install_append() {
 
     # disable journal flushing (since we do it ourselves)
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-flush.service
+
+    # disable time wait sync service (since we start it ourselves)
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-time-wait-sync.service
 
     # disable update done service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-update-done.service
