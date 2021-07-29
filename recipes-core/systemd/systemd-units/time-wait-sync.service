@@ -1,0 +1,9 @@
+[Unit]
+Description=time-wait-sync
+After=medusa-DataServer.service systemd-time-wait-sync.service
+Requires=medusa-DataServer.service systemd-time-wait-sync.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "set 98210: true"
+RemainAfterExit=yes

@@ -87,6 +87,7 @@ SRC_URI += " \
             file://peripheral-stem.service \
             file://peripheral-stem.sh \
             file://ppp0.network \
+            file://time-wait-sync.service \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
@@ -161,6 +162,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/peripheral-pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-stem.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/peripheral-stem.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/time-wait-sync.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/vnc-server.service ${D}${systemd_system_unitdir}
