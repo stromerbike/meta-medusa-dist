@@ -7,7 +7,6 @@ SRC_URI = " \
             file://AppFW_flash.bin \
             file://package_version \
             file://partmap.bin \
-            file://sft \
             file://SHA256SUMS \
             file://sysHeader.bin.alt1250 \
             file://sysHeader_backup.bin.alt1250 \
