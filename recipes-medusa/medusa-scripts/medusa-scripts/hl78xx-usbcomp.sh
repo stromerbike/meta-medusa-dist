@@ -14,6 +14,7 @@ elif lsusb -d 1199:c001; then
     if [ $? -eq 0 ]; then
         if [[ $KUSBCOMP =~ \+KUSBCOMP:\ 1,1,2,3 ]]; then
             echo "USB mode with desired interface assignments: $KUSBCOMP"
+            exit 0
         else
             echo "USB mode with undesired interface assignments: $KUSBCOMP"
             echo -e "AT+KUSBCOMP=1,1,2,3\r" | timeout -s KILL 2 microcom -t 1000 /dev/ttyACM0 >/dev/null

@@ -104,7 +104,13 @@ if [ ! -z "$SEND_COMMAND" ] && [ ! -z "$SEND_INTERFACE" ]; then
                 fi
             else
                 echo "No applicable update file found"
-                exit 0
+                if [[ "$CURRENT_REVISION" > "4.3.9.0" ]]; then
+                    echo "Current revision is new enough"
+                    exit 0
+                else
+                    echo "Current revision is too old"
+                    exit 11
+                fi
             fi
         else
             echo "Checksums not valid"
