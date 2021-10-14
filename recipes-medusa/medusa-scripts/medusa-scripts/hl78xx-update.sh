@@ -81,23 +81,28 @@ if [ ! -z "$SEND_COMMAND" ] && [ ! -z "$SEND_INTERFACE" ]; then
                 sleep 5
                 if echo -e "AT+WDSR=4\r" | timeout -s KILL 2 $SEND_COMMAND "/dev/$SEND_INTERFACE" | grep "+WDSI: 14"; then
                     echo "Accepted the installation and update will be launched"
-                    echo "Waiting 180s for the installation and reboot to complete"
-                    sleep 180
-                    echo "Reading back revision"
-                    CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 $SEND_COMMAND "/dev/$SEND_INTERFACE" | grep ^HL78)
-                    if [[ $CGMR =~ ^HL78([0-9]+).([0-9]+.[0-9]+.[0-9]+.[0.9]+) ]]; then
-                        NEW_REVISION="${BASH_REMATCH[2]}"
-                        if [[ "$NEW_REVISION" != "$CURRENT_REVISION" ]]; then
-                            echo "Revision has changed to $NEW_REVISION"
-                            exit 0
+                    echo "Waiting up to 300s for the installation to complete"
+                    COUNTER=0
+                    while [ $COUNTER -lt 30 ];
+                    do
+                        COUNTER=$((COUNTER+1))
+                        sleep 8
+                        CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 $SEND_COMMAND "/dev/$SEND_INTERFACE" | grep ^HL78)
+                        if [[ $CGMR =~ ^HL78([0-9]+).([0-9]+.[0-9]+.[0-9]+.[0.9]+) ]]; then
+                            NEW_REVISION="${BASH_REMATCH[2]}"
+                            if [[ "$NEW_REVISION" != "$CURRENT_REVISION" ]]; then
+                                echo "Revision has changed to $NEW_REVISION"
+                                exit 0
+                            else
+                                echo "Revision has not changed from $CURRENT_REVISION"
+                                exit 11
+                            fi
                         else
-                            echo "Revision has not changed from $CURRENT_REVISION"
-                            exit 11
+                            echo "Not yet complete ($((COUNTER*10))s)"
                         fi
-                    else
-                        echo "Could not read back revision"
-                        exit 11
-                    fi
+                    done
+                    echo "Could not read back revision"
+                    exit 11
                 else
                     echo "Could not accept the installation and update will not be launched"
                     exit 11
