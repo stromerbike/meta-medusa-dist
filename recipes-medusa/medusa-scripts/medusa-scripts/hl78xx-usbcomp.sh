@@ -2,6 +2,7 @@
 
 if lsusb -d 1519:0020; then
     echo "HL85xxx in USB mode detected"
+    exit 0
 elif lsusb -d 1199:c001; then
     echo "HL78xx in USB mode detected"
     if [ -e /dev/ttyACM0 ]; then
