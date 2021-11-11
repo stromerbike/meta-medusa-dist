@@ -124,7 +124,6 @@ SYSTEMD_SERVICE_${PN} = " \
     mnt-log.service \
     peripheral-mpio.service \
     peripheral-pwr.service \
-    peripheral-stem.service \
     usb.service \
     vnc-server.service \
 "

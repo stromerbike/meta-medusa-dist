@@ -1,14 +1,8 @@
 [Unit]
 Description=peripheral-stem
-After=peripheral-mpio.service peripheral-pwr.service
-Requires=peripheral-mpio.service
-BindsTo=peripheral-pwr.service
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/etc/scripts/peripheral-stem.sh start
 ExecStop=/etc/scripts/peripheral-stem.sh stop
 RemainAfterExit=yes
-
-[Install]
-WantedBy=basic.target
