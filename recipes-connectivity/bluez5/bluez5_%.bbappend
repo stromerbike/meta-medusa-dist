@@ -1,6 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://bluetooth.service.in.patch \
+            file://dont-warn-for-unset-config-option.patch \
             file://fix_coredump.patch \
             file://main.conf \
             file://TIInit_6.7.16.bts \
