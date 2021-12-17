@@ -112,11 +112,11 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
-    ble-attach.service \
-    btmon.service \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'ble-attach.service')} \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
     candump.service \
-    gsm.service \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
     led.service \
@@ -209,4 +209,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
+    
+    if echo "${DISTRO_VERSION}" | grep -EMV; then
+        sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh
+    fi
 }
