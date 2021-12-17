@@ -112,11 +112,8 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE_${PN} = " \
-    ble-attach.service \
-    btmon.service \
     can0.service \
     candump.service \
-    gsm.service \
     hostname-det.service \
     hostname-set.service \
     led.service \
