@@ -210,7 +210,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
     
-    if echo "${DISTRO_VERSION}" | grep -EMV; then
+    if echo "${DISTRO_VERSION}" | grep EMV; then
         sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh
     fi
 }
