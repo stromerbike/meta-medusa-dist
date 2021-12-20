@@ -5,7 +5,7 @@ if lsusb -d 1519:0020; then
     exit 0
 elif lsusb -d 1199:c001; then
     echo "HL78xx in USB mode detected"
-    echo "Run hl78xx-usbcomp.sh first"
+    echo "Run hl78xx-usbcomp-revert.sh first"
     exit 11
 else
     CGMR=$(echo -e "AT+CGMR\r" | timeout -s KILL 2 picocom -qr -b 115200 -f h -x 1000 /dev/ttymxc7 | grep ^HL78)
