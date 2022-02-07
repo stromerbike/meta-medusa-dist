@@ -64,7 +64,7 @@ display_error ()
 enable_writeaccess ()
 {
     if [ -d "/mnt/usb/autoupdate-settings/" ]; then
-        if ! find /mnt/usb/autoupdate-settings/ -iname "writeaccess*" -exec false {} +; then
+        if find /mnt/usb/autoupdate-settings/ -maxdepth 1 -mindepth 1 -type f -iname "writeaccess*" | grep -i "writeaccess"; then
             echo "Modifying fstab for write access"
             sed -i -e '/^[#[:space:]]*\/dev\/root/{s/[[:space:]]ro/ defaults/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' /mnt/rfs_inactive/etc/fstab
         else
@@ -96,7 +96,7 @@ purge_data ()
     OPTION_PURGEDATA="no"
 
     if [ -d "/mnt/usb/autoupdate/" ]; then
-        if ! find /mnt/usb/autoupdate/ -iname "*-purgedata.rootfs.tar.xz" -exec false {} +; then
+        if find /mnt/usb/autoupdate/ -maxdepth 1 -mindepth 1 -type f -iname "*-purgedata.rootfs.tar.xz" | grep -i "purgedata.rootfs.tar.xz"; then
             OPTION_PURGEDATA="yes"
             echo "Request for purgedata via /mnt/usb/autoupdate/*-purgedata.rootfs.tar.xz"
         else
@@ -107,7 +107,7 @@ purge_data ()
     fi
 
     if [ -d "/mnt/usb/autoupdate-settings/" ]; then
-        if ! find /mnt/usb/autoupdate-settings/ -iname "purgedata*" -exec false {} +; then
+        if find /mnt/usb/autoupdate-settings/ -maxdepth 1 -mindepth 1 -type f -iname "purgedata*" | grep -i "purgedata"; then
             OPTION_PURGEDATA="yes"
             echo "Request for purgedata via /mnt/usb/autoupdate-settings/purgedata*"
         else
