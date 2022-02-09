@@ -1,0 +1,20 @@
+diff --git a/wvdialer.cc b/wvdialer.cc
+index 3a63451..ba5a1d1 100644
+--- a/wvdialer.cc
++++ b/wvdialer.cc
+@@ -786,8 +786,15 @@ bool WvDialer::init_modem()
+ 		    }
+ 		    break;
+ 		case 1:
++		    if (strstr(*this_str, "ATZ") != NULL)
++		    {
++		    log( "Bad init string ATZ. But continuing anyway.\n" );
++		    }
++		    else
++		    {
+ 		    err( "Bad init string.\n" );
+ 		    goto end_outer;
++		    }
+ 		}
+ 	    }
+ 	}
