@@ -81,7 +81,6 @@ SRC_URI += " \
             file://peripheral-pwr.sh \
             file://peripheral-stem.service \
             file://peripheral-stem.sh \
-            file://ppp0.network \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
@@ -192,7 +191,6 @@ do_install_append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/ppp0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0-ap.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
 
@@ -201,7 +199,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
-    
+
     if echo "${DISTRO_VERSION}" | grep EMV; then
         sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh
     fi
