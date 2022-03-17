@@ -106,4 +106,15 @@ do_install_append() {
 
     # do not setup /var/log/journal and /var/spool since the file system is normally read-only
     sed -i -e 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
+    install -m 0644 ${WORKDIR}/systemd-udev-trigger.service ${D}${systemd_system_unitdir}/
+
+    sed -i -e '/After=swap.target/d' ${D}${systemd_system_unitdir}/tmp.mount
+    sed -i -e 's/swap.target//' ${D}${systemd_system_unitdir}/sysinit.target
+
+    # Remove unussed generators
+    rm ${D}${systemd_unitdir}/system-generators/systemd-debug-generator
+    rm ${D}${systemd_unitdir}/system-generators/systemd-gpt-auto-generator
+    rm ${D}${systemd_unitdir}/system-generators/systemd-rc-local-generator
+    rm ${D}${systemd_unitdir}/system-generators/systemd-system-update-generator
+    rm ${D}${systemd_unitdir}/system-generators/systemd-sysv-generator
 }
