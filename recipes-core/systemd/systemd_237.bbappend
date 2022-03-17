@@ -8,6 +8,7 @@ SRC_URI += " \
             file://systemd-timesyncd_write_synchronized_file.patch \
             file://timesyncd.conf \
             file://time-sync-wait_service_with_watchfile.patch \
+            file://systemd-udev-trigger.service \
 "
 
 # backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf

@@ -1,4 +1,6 @@
 [Unit]
 Description=drive
-After=graphical.target
-Wants=graphical.target
+DefaultDependencies=no
+Wants=basic.target early-init.target
+After=early-init.target
+Before=remote-fs.target gsm.service rsyslog.service usb.service sshd.socket gpsd.socket network.target network-pre.target communication.target systemd-udev-trigger.service systemd-networkd.service fwu-chk.service

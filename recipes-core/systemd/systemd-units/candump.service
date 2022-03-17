@@ -2,6 +2,7 @@
 Description=candump
 After=can0.service
 Requires=can0.service
+DefaultDependencies=no
 
 [Service]
 Type=simple

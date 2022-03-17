@@ -1,7 +1,7 @@
 [Unit]
 Description=peripheral-pwr
 After=peripheral-mpio.service
-Wants=peripheral-mpio.service
+DefaultDependencies=no
 
 [Service]
 Type=oneshot
@@ -10,4 +10,4 @@ ExecStop=/etc/scripts/peripheral-pwr.sh stop
 RemainAfterExit=yes
 
 [Install]
-WantedBy=basic.target
+WantedBy=early-init.target

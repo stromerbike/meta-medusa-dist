@@ -1,4 +1,4 @@
 [Unit]
 Description=debug
-After=location.target
-Wants=location.target
+After=location.target multi-user.target
+Wants=location.target multi-user.target

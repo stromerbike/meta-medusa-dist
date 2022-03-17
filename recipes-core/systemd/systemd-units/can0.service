@@ -1,7 +1,7 @@
 [Unit]
 Description=can0 interface setup
-After=network.target
-Wants=network.target
+DefaultDependencies=no
+After=peripheral-stem.service
 
 [Service]
 Type=oneshot
@@ -11,4 +11,4 @@ ExecReload=/etc/scripts/can0.sh reload
 RemainAfterExit=yes
 
 [Install]
-WantedBy=drive.target
+WantedBy=early-init.target

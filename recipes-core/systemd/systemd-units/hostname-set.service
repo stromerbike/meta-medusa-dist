@@ -1,6 +1,5 @@
 [Unit]
 Description=hostname-set
-Before=rsyslog.service medusa-DataServer.service
 RequiresMountsFor=/mnt/data
 
 [Service]

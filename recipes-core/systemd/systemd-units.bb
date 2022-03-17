@@ -53,6 +53,7 @@ SRC_URI += " \
             file://debug.target \
             file://drive.target \
             file://eth0.network \
+            file://early-init.target \
             file://fwu-usb-chk.service \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
@@ -81,6 +82,7 @@ SRC_URI += " \
             file://peripheral-pwr.sh \
             file://peripheral-stem.service \
             file://peripheral-stem.sh \
+            file://systemd-udev-early-trigger.service \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
@@ -151,6 +153,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/peripheral-pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-stem.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/peripheral-stem.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/systemd-udev-early-trigger.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/vnc-server.service ${D}${systemd_system_unitdir}
@@ -199,6 +202,7 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/early-init.target ${D}${systemd_system_unitdir}
 
     if echo "${DISTRO_VERSION}" | grep EMV; then
         sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh

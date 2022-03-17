@@ -1,8 +1,13 @@
 [Unit]
 Description=peripheral-stem
+After=peripheral-pwr.service
+DefaultDependencies=no
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/etc/scripts/peripheral-stem.sh start
 ExecStop=/etc/scripts/peripheral-stem.sh stop
 RemainAfterExit=yes
+
+[Install]
+WantedBy=early-init.target

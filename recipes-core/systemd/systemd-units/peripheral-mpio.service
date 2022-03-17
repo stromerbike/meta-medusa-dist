@@ -1,5 +1,8 @@
 [Unit]
 Description=peripheral-mpio
+DefaultDependencies=no
+Wants=systemd-udev-early-trigger.service
+After=systemd-udev-early-trigger.service
 
 [Service]
 Type=oneshot
@@ -7,4 +10,4 @@ ExecStart=/etc/scripts/peripheral-mpio.sh
 RemainAfterExit=yes
 
 [Install]
-WantedBy=basic.target
+WantedBy=early-init.target
