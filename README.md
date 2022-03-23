@@ -123,6 +123,7 @@ Busybox configuration (1.31.0):
 
 Ideas and todo's for reducing boot time (to Gui):
 - Set GPIO's to desired direction and possibly value already in device tree.
+- If the above is not possible, set direction to "low" / "high" instead of "out" followed by a "0" / "1" (generally a good idea to ensure glitch free operation).
 - https://elinux.org/Boot_Time
 - https://elinux.org/Boot-up_Time_Reduction_Howto
 
