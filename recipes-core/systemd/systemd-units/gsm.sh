@@ -5,34 +5,32 @@ DESC="Initialization of gsm chip"
 
 case $1 in
 start)
-    # GSM power on
+    # GSM_ON_N (to gate of V13 on PWR_ON_N = ~GSM_ON_N)
     # GPIO5 IO05 => (5 - 1) * 32 + 5 = 133
     echo "133" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio133/direction
-    echo "0" > /sys/class/gpio/gpio133/value
-    # GSM reset
+    echo "low" > /sys/class/gpio/gpio133/direction
+    # GSM_RESET (to gate of V10 on RESET_IN_N = ~GSM_RESET)
     # GPIO5 IO00 => (5 - 1) * 32 = 128
     echo "128" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio128/direction
-    echo "0" > /sys/class/gpio/gpio128/value
-    # 3v7_ON enable voltage (GPIO expander)
+    echo "high" > /sys/class/gpio/gpio128/direction
+    # 3V7_ON (to enable pin of U22)
     echo "497" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio497/direction
-    echo "1" > /sys/class/gpio/gpio497/value
-    # Wait for voltage to rise (U22 is configured to soft start over 16ms)
+    echo "high" > /sys/class/gpio/gpio497/direction
+    # Wait for 3V7 voltage to rise (U22 is configured via C162 to soft start over 16ms)
     sleep 0.2
-    # Make pulse to start GSM module (minimum assertion time is 25ms for HL85xx and unknown for HL78xx)
+    # Release GSM_RESET to start HL78xx (HL85xx should not care)
+    echo "0" > /sys/class/gpio/gpio128/value
+    # Assert GSM_ON_N to start HL85xx (HL78xx should not care)
     echo "1" > /sys/class/gpio/gpio133/value
-    sleep 0.3
-    echo "0" > /sys/class/gpio/gpio133/value
+    # Probe UART driver
     sleep 0.5
     modprobe imx6ul_mod_uart
 ;;
 
 stop)
-    # Remove uart driver
+    # Remove UART driver
     rmmod imx6ul_mod_uart
-    # Disable 3v7 voltage
+    # Disable 3V7 voltage
     echo "0" > /sys/class/gpio/gpio497/value
 ;;
 
@@ -41,10 +39,6 @@ reload)
     echo "1" > /sys/class/gpio/gpio128/value
     sleep 0.1
     echo "0" > /sys/class/gpio/gpio128/value
-    # Make pulse to start GSM module (minimum assertion time is 25ms for HL85xx and unknown for HL78xx)
-    echo "1" > /sys/class/gpio/gpio133/value
-    sleep 0.3
-    echo "0" > /sys/class/gpio/gpio133/value
 ;;
 
 *)
