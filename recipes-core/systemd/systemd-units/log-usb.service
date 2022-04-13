@@ -2,6 +2,7 @@
 Description=log-usb
 After=mnt-log.service led.service hostname-set.service check.target
 Wants=mnt-log.service led.service hostname-set.service check.target
+BindsTo=mnt-usb.service
 
 [Service]
 Type=oneshot

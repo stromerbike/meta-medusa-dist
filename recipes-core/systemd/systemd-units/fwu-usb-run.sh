@@ -228,6 +228,7 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
         echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
         echo "Verifying signature..."
         led1_blue
+        led2_off
         TERM=linux clear > /dev/tty1 < /dev/tty1
         echo 0 > /sys/class/graphics/fbcon/rotate_all
         /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
