@@ -27,7 +27,7 @@ do_install() {
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-gsmtty1.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ppp0.rules ${D}${sysconfdir}/udev/rules.d/
-    install -m 0644 ${WORKDIR}/50-sda.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-sd.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm0.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm1-hl78xx.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm2.rules ${D}${sysconfdir}/udev/rules.d/
