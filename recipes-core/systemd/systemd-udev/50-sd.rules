@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sd*", RUN+="/bin/systemctl --no-block start mnt-usb.service"
+ACTION=="remove", SUBSYSTEM=="block", ENV{DEVNAME}=="/dev/sd*", RUN+="/bin/systemctl --no-block stop mnt-usb.service"

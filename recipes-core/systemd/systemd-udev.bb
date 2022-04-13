@@ -8,7 +8,7 @@ PR = "r0"
 SRC_URI += " \
             file://50-gsmtty1.rules \
             file://50-ppp0.rules \
-            file://50-sda.rules \
+            file://50-sd.rules \
             file://50-ttygsm0.rules \
             file://50-ttygsm1-hl78xx.rules \
             file://50-ttygsm2.rules \
