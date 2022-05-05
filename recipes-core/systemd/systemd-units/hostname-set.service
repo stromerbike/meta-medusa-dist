@@ -1,6 +1,8 @@
 [Unit]
 Description=hostname-set
 RequiresMountsFor=/mnt/data
+DefaultDependencies=no
+Before=rsyslog.service
 
 [Service]
 Type=oneshot
