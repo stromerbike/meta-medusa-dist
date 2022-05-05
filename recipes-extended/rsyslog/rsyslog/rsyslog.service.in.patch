@@ -2,11 +2,12 @@ diff --git a/rsyslog.service.in b/rsyslog.service.in
 index b761ae571..8a537d0e0 100644
 --- a/rsyslog.service.in
 +++ b/rsyslog.service.in
-@@ -1,11 +1,13 @@
+@@ -1,11 +1,14 @@
  [Unit]
  Description=System Logging Service
  Requires=syslog.socket
 +RequiresMountsFor=/mnt/data
++DefaultDependencies=no
  Documentation=man:rsyslogd(8)
  Documentation=https://www.rsyslog.com/doc/
  
