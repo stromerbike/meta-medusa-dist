@@ -1,3 +1,4 @@
 [Unit]
 Description=Early init target for everything which needs to run for medusa
+Before=rsyslog.service
 Wants=drive.target
