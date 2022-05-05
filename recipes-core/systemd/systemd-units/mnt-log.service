@@ -12,6 +12,9 @@ ExecStart=/bin/mount -t overlay -o lowerdir=/var/log/journal,upperdir=/mnt/log/j
 ExecStart=/bin/systemd-tmpfiles --create --prefix=/var/log/journal
 ExecStart=/bin/journalctl --flush
 ExecStop=/bin/journalctl --sync
+ExecStop=/bin/umount -l /var/log/journal
+ExecStop=/bin/umount /mnt/log
+ExecStop=/bin/umount -l /tmp
 RemainAfterExit=yes
 
 [Install]
