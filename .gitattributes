@@ -25,4 +25,7 @@
 *.sample        text eol=lf
 *.service       text eol=lf
 *.sh            text eol=lf
+*.sha256        text eol=lf
 *.txt           text eol=lf
+package_version text eol=lf
+SHA256SUMS      text eol=lf
