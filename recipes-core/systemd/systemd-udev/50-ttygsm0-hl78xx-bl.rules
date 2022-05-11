@@ -1,0 +1,2 @@
+SUBSYSTEMS=="usb", ENV{.LOCAL_bInterfaceNumber}="$attr{bInterfaceNumber}"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="216f", ATTRS{idProduct}=="0051", ENV{.LOCAL_bInterfaceNumber}=="00", SYMLINK+="ttyGSMBL"
