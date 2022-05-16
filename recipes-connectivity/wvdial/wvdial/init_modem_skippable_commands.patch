@@ -1,0 +1,42 @@
+diff --git a/wvdialer.cc b/wvdialer.cc
+index 3a63451..ba5a1d1 100644
+--- a/wvdialer.cc
++++ b/wvdialer.cc
+@@ -786,8 +786,35 @@ bool WvDialer::init_modem()
+ 		    }
+ 		    break;
+ 		case 1:
+-		    err( "Bad init string.\n" );
+-		    goto end_outer;
++		    if (strstr(*this_str, "ATZ") != NULL)
++		    {
++		    log( "Bad init string ATZ. But continuing anyway.\n" );
++		    }
++		    else if (strstr(*this_str, "AT+KSELACQ?") != NULL)
++		    {
++		    log( "Bad init string AT+KSELACQ?. But continuing anyway.\n" );
++		    }
++		    else if (strstr(*this_str, "AT+COPS?") != NULL)
++		    {
++		    log( "Bad init string AT+COPS?. But continuing anyway.\n" );
++		    }
++		    else if (strstr(*this_str, "AT+KBND?") != NULL)
++		    {
++		    log( "Bad init string AT+KBND?. But continuing anyway.\n" );
++		    }
++		    else if (strstr(*this_str, "AT+KCELL=") != NULL)
++		    {
++		    log( "Bad init string AT+KCELL=. But continuing anyway.\n" );
++		    }
++		    else if (strstr(*this_str, "AT+CSQ") != NULL)
++		    {
++		    log( "Bad init string AT+CSQ. But continuing anyway.\n" );
++		    }
++		    else
++		    {
++ 		    err( "Bad init string.\n" );
++ 		    goto end_outer;
++		    }
+ 		}
+ 	    }
+ 	}

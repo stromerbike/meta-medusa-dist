@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://99_init_strings.patch \
-            file://atz_no_err.patch \
+            file://init_modem_skippable_commands.patch \
             file://wvdial.conf \
 "
 
