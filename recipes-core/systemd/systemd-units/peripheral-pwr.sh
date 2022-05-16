@@ -12,7 +12,7 @@ start)
     echo 1 > /sys/class/gpio/gpio114/value
 
     # turn on the 5V_OUT supply voltage
-    echo 498 > /sys/class/gpio/export
+    test -e /sys/class/gpio/gpio498 || echo 498 > /sys/class/gpio/export
     echo out > /sys/class/gpio/gpio498/direction
     echo 1 > /sys/class/gpio/gpio498/value
 ;;

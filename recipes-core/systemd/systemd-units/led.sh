@@ -6,7 +6,7 @@ DESC="Initialization of led chip"
 case $1 in
 start)
     # Enable led chip
-    echo "500" > /sys/class/gpio/export
+    test -e /sys/class/gpio/gpio500 || echo "500" > /sys/class/gpio/export
     echo "out" > /sys/class/gpio/gpio500/direction
     echo "1" > /sys/class/gpio/gpio500/value
     # Load driver
