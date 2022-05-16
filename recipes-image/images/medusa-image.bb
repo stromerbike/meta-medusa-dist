@@ -46,7 +46,7 @@ IMAGE_INSTALL_append = " busybox \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wpa-supplicant \
                          bind-utils iftop iproute2-ss iputils nmap ppp-tools socat tcpdump \
-                         dtc fbgrab fbtest glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon rsyslog sudo systemd-extra-utils systemd-journal-upload \
+                         dtc fbgrab glibc-utils htop less lsof memtester mtd-utils-tests nano ncurses-tools nmon rsyslog sudo systemd-extra-utils systemd-journal-upload \
 "
 
 # Revert installation of links in update-alternative scheme due to the following reasons:
