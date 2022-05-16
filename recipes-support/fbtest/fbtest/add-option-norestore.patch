@@ -1,0 +1,83 @@
+diff --git a/fb.c b/fb.c
+index c22bdec..9fdc7e9 100644
+--- a/fb.c
++++ b/fb.c
+@@ -488,10 +488,10 @@ void fb_init(void)
+ 	free(saved_ ## name);						\
+     } while (0)
+ 
+-void fb_cleanup(void)
++void fb_cleanup(int no_restore)
+ {
+     Debug("fb_cleanup()\n");
+-    if (saved_fb)
++    if (saved_fb && !no_restore)
+ 	fb_restore();
+     if (fb)
+ 	fb_unmap();
+diff --git a/include/fb.h b/include/fb.h
+index 1df4e48..cec6825 100644
+--- a/include/fb.h
++++ b/include/fb.h
+@@ -35,7 +35,7 @@ extern void fb_unmap(void);
+      */
+ 
+ extern void fb_init(void);
+-extern void fb_cleanup(void);
++extern void fb_cleanup(int no_restore);
+ 
+ 
+     /*
+diff --git a/main.c b/main.c
+index a13c800..913c373 100644
+--- a/main.c
++++ b/main.c
+@@ -32,6 +32,7 @@ int Opt_Debug = 0;
+ int Opt_List = 0;
+ int Opt_Quiet = 0;
+ int Opt_Verbose = 0;
++int Opt_NoRestore = 0;
+ 
+ 
+     /*
+@@ -50,6 +51,7 @@ static void Usage(void)
+ 	   "    -l, --list       List tests only, don't run them\n"
+ 	   "    -q, --quiet      Suppress messages\n"
+ 	   "    -v, --verbose    Enable verbose mode\n"
++	   "    -r, --norestore  Skip restoring frame buffer device\n"
+ 	   "\n",
+ 	   ProgramName, DEFAULT_FBDEV);
+     exit(1);
+@@ -102,6 +104,10 @@ int main(int argc, char *argv[])
+ 	    Opt_Verbose = 1;
+ 	    argv++;
+ 	    argc--;
++	} else if (!strcmp(argv[1], "-r") || !strcmp(argv[1], "--norestore")) {
++	    Opt_NoRestore = 1;
++	    argv++;
++	    argc--;
+ 	} else
+ 	    Usage();
+     }
+@@ -140,7 +146,7 @@ int main(int argc, char *argv[])
+ 		argc--;
+ 		argv++;
+ 	    }
+-	fb_cleanup();
++	fb_cleanup(Opt_NoRestore);
+     }
+     exit(0);
+ }
+diff --git a/util.c b/util.c
+index cdf89b3..9c714a7 100644
+--- a/util.c
++++ b/util.c
+@@ -114,7 +114,7 @@ void Fatal(const char *fmt, ...)
+     va_start(ap, fmt);
+     PrintMessage(TXT_FATAL, fmt, ap);
+     va_end(ap);
+-    fb_cleanup();
++    fb_cleanup(0);
+     exit(1);
+ }
+ 

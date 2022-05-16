@@ -9,9 +9,10 @@ PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git \
            file://0001-provide-a-pre-generated-penguin.c-to-get-rid-of-this.patch \
+           file://add-option-norestore.patch \
            file://repair-make-rules.patch \
 "
-SRCREV = "1dda6d8a1ac1ff1c7b93e89f6ee7020f24be8ee8"
+SRCREV = "dbf4e0bd06410e54617f847f8f33a5280f1b8c93"
 
 S = "${WORKDIR}/git"
 
