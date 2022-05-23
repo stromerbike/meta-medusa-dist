@@ -1,16 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
-            file://can-devices.cfg \
-            file://cgroup.cfg \
-            file://disable-unused.cfg \
-            file://filesystems.cfg \
             file://gpiolib-sysfs.c.patch \
-            file://network.cfg \
             file://SiseriffLTStd-Regular.otf \
-            file://usb-devices.cfg \
-            file://virtual-devices.cfg \
-            file://wifi-devices.cfg \
 "
 
 do_patch_append() {
