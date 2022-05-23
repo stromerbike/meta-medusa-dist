@@ -49,7 +49,7 @@ function cleanupComport() {
     fi
 }
 
-# Remark: The gsm-module and interceptty services are stopped outside the udev rule too,
+# Remark: The gsm-module service is stopped outside the udev rule too,
 #         because the rule does not always seem to detect the remove event.
 #         Furthermore, USB interface errors can sometimes be observed if those services
 #         are still running when the module reset is being performed.
@@ -58,7 +58,6 @@ function cleanupComport() {
 function resetSoft() {
     echo "Attempting to soft reset module..."
     systemctl stop gsm-module.service || true
-    systemctl stop interceptty@* || true
     prepareComport
     if grep -m1 OK <(echo -e "AT+CFUN=1,1\r" | microcom -t 2000 "/dev/$INTERFACE"); then
         INITIAL_LISTENING_PERIOD_DONE="no"
@@ -72,7 +71,6 @@ function resetSoft() {
 function resetHard() {
     echo "Attempting to hard reset module..."
     systemctl stop gsm-module.service || true
-    systemctl stop interceptty@* || true
     if systemctl reload gsm; then
         INITIAL_LISTENING_PERIOD_DONE="no"
         echo "...done"

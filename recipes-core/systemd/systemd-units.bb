@@ -17,8 +17,6 @@ RDEPENDS_${PN} += " \
     gnupg-gpgv \
     iproute2 \
     inotify-tools \
-    interceptty \
-    interceptty-nicedump \
     multilog \
     picocom \
     ppp \
@@ -64,9 +62,6 @@ SRC_URI += " \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
-            file://interceptty-save@.service \
-            file://interceptty-save.sh \
-            file://interceptty@.service \
             file://ldattach-hl78xx.service \
             file://ldattach-hl78xx.sh \
             file://led.service \
@@ -147,9 +142,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/interceptty-save@.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/interceptty-save.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/interceptty@.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ldattach-hl78xx.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}

@@ -67,7 +67,7 @@ if [ -d "/mnt/usb/log" ]; then
         echo "Writing json log to $LOGFILE-json.zip..."
         if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.zip; then
             echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
-            for i in btmon candump interceptty
+            for i in btmon candump
             do
                 if [ -d "/mnt/data/$i" ] && [ ! -z "$(ls -A /mnt/data/$i)" ]; then
                     echo "Writing $i log to $LOGFILE-$i.zip..."
