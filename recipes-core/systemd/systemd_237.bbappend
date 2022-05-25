@@ -5,10 +5,8 @@ SRC_URI += " \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
-            file://systemd-timesyncd_write_synchronized_file.patch \
             file://systemd-udev-trigger.service.in.patch \
             file://timesyncd.conf \
-            file://time-sync-wait_service_with_watchfile.patch \
 "
 
 # backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf
