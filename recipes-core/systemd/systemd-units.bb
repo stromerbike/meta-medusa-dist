@@ -52,8 +52,8 @@ SRC_URI += " \
             file://communication.target \
             file://debug.target \
             file://drive.target \
-            file://eth0.network \
             file://early-init.target \
+            file://eth0.network \
             file://fwu-usb-chk.service \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
@@ -201,8 +201,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/early-init.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
 
     if echo "${DISTRO_VERSION}" | grep EMV; then
         sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh
