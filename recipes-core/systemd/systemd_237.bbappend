@@ -72,9 +72,6 @@ do_install_append() {
     # disable journal flushing (since we do it ourselves)
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-journal-flush.service
 
-    # disable time wait sync service (since we start it ourselves)
-    rm ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-time-wait-sync.service
-
     # disable update done service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-update-done.service
 
