@@ -1,7 +1,6 @@
 [Unit]
 Description=can0 interface setup
 DefaultDependencies=no
-After=peripheral-pwr.service
 
 [Service]
 Type=oneshot
