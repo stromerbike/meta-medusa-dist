@@ -6,9 +6,9 @@ SRC_URI += " \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
             file://systemd-timesyncd_write_synchronized_file.patch \
+            file://systemd-udev-trigger.service.in.patch \
             file://timesyncd.conf \
             file://time-sync-wait_service_with_watchfile.patch \
-            file://systemd-udev-trigger.service \
 "
 
 # backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf
@@ -84,8 +84,8 @@ do_install_append() {
     rm ${D}${systemd_system_unitdir}/multi-user.target.wants/systemd-user-sessions.service
 
     # remove udev rules for groups which do not exist to avoid errors
-    sed -i -e '/GROUP=\"kvm\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
-    sed -i -e '/GROUP=\"render\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
+    sed -i '/GROUP=\"kvm\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
+    sed -i '/GROUP=\"render\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
 
     # use fixed machine-id
     echo "1234567890abcdef1234567890abcdef" | tee ${D}${sysconfdir}/machine-id
@@ -102,17 +102,17 @@ do_install_append() {
     mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
-    sed -i -e 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
-    sed -i -e 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
+    sed -i 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
+    sed -i 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
 
     # do not setup /var/log/journal and /var/spool since the file system is normally read-only
-    sed -i -e 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
-    install -m 0644 ${WORKDIR}/systemd-udev-trigger.service ${D}${systemd_system_unitdir}/
+    sed -i 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
 
-    sed -i -e '/After=swap.target/d' ${D}${systemd_system_unitdir}/tmp.mount
-    sed -i -e 's/swap.target//' ${D}${systemd_system_unitdir}/sysinit.target
+    # disable swap.target
+    sed -i '/After=swap.target/d' ${D}${systemd_system_unitdir}/tmp.mount
+    sed -i 's/swap.target//' ${D}${systemd_system_unitdir}/sysinit.target
 
-    # Remove unussed generators
+    # remove unused generators
     rm ${D}${systemd_unitdir}/system-generators/systemd-debug-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-gpt-auto-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-rc-local-generator
