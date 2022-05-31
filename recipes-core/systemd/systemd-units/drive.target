@@ -1,5 +1,5 @@
 [Unit]
 Description=drive
 DefaultDependencies=no
-Wants=basic.target early-init.target
+Wants=early-init.target
 After=early-init.target
