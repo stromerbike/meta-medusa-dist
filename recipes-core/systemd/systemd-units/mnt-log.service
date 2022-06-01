@@ -1,7 +1,6 @@
 [Unit]
 Description=mnt-log and journal persisting
-After=location.target medusa-BackendCommunicator.service
-Wants=location.target medusa-BackendCommunicator.service
+After=location.target
 
 [Service]
 Type=oneshot
