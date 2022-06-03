@@ -11,8 +11,9 @@ SRC_URI += " \
             file://ble-revision.sh \
             file://hl78xx-update.sh \
             file://hl78xx-update-revert.sh \
-            file://hl78xx-usbcomp.sh\
-            file://hl78xx-usbcomp-revert.sh\
+            file://hl78xx-usbcomp.sh \
+            file://hl78xx-usbcomp-revert.sh \
+            file://hlxxxx-common.sh \
             file://hostname.sh \
 "
 
@@ -27,5 +28,6 @@ do_install() {
     install -m 0755 ${WORKDIR}/hl78xx-update-revert.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/hl78xx-usbcomp.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/hl78xx-usbcomp-revert.sh ${D}${sysconfdir}/scripts/
+    install -m 0755 ${WORKDIR}/hlxxxx-common.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/hostname.sh ${D}${sysconfdir}/scripts/
 }
