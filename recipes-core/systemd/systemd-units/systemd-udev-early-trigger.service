@@ -18,6 +18,7 @@ ConditionPathIsReadWrite=/sys
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+ExecStartPre=/sbin/modprobe st1633
 ExecStart=/bin/udevadm trigger -s input --action=add ; /bin/udevadm trigger -s ubi --action=add
 
 [Install]
