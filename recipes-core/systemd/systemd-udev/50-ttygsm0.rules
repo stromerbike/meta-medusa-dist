@@ -2,4 +2,3 @@ SUBSYSTEMS=="usb", ENV{.LOCAL_bInterfaceNumber}="$attr{bInterfaceNumber}"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1519", ATTRS{idProduct}=="0020", ENV{.LOCAL_bInterfaceNumber}=="00", SYMLINK+="ttyGSM0"
 
 ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="1519", ATTRS{idProduct}=="0020", ENV{.LOCAL_bInterfaceNumber}=="00", RUN+="/bin/systemctl --no-block start wvdial.service"
-ACTION=="remove", SUBSYSTEM=="tty", ATTRS{idVendor}=="1519", ATTRS{idProduct}=="0020", RUN+="/bin/systemctl --no-block stop wvdial.service"

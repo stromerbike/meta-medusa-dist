@@ -2,4 +2,3 @@ SUBSYSTEMS=="usb", ENV{.LOCAL_bInterfaceNumber}="$attr{bInterfaceNumber}"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1199", ATTRS{idProduct}=="c001", ENV{.LOCAL_bInterfaceNumber}=="02", SYMLINK+="ttyGSM1"
 
 ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="1199", ATTRS{idProduct}=="c001", ENV{.LOCAL_bInterfaceNumber}=="02", RUN+="/bin/systemctl --no-block start wvdial-hl78xx-usb.service"
-ACTION=="remove", SUBSYSTEM=="tty", ATTRS{idVendor}=="1199", ATTRS{idProduct}=="c001", RUN+="/bin/systemctl --no-block stop wvdial-hl78xx-usb.service"
