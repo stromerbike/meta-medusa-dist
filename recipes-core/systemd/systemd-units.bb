@@ -17,6 +17,7 @@ RDEPENDS_${PN} += " \
     gnupg-gpgv \
     iproute2 \
     inotify-tools \
+    medusa-scripts \
     multilog \
     picocom \
     ppp \
