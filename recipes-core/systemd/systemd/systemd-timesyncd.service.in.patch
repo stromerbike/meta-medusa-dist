@@ -8,7 +8,7 @@ index d3bc4e984..27bdfaf63 100644
  DefaultDependencies=no
 -After=systemd-remount-fs.service systemd-sysusers.service
 -Before=time-sync.target sysinit.target shutdown.target
-+After=systemd-remount-fs.service systemd-sysusers.service check.target
++After=systemd-remount-fs.service systemd-sysusers.service gps.target
 +Before=time-sync.target shutdown.target
  Conflicts=shutdown.target
  Wants=time-sync.target
@@ -18,4 +18,4 @@ index d3bc4e984..27bdfaf63 100644
  
  [Install]
 -WantedBy=sysinit.target
-+WantedBy=communication.target
++WantedBy=gsm.target

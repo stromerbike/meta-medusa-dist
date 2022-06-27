@@ -1,7 +1,7 @@
 [Unit]
 Description=vnc-server
-After=location.target
-Wants=location.target
+After=late-init.target
+Wants=late-init.target
 
 [Service]
 Type=simple

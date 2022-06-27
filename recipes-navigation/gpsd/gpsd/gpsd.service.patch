@@ -7,7 +7,7 @@ index 2707ff90..83f812bc 100644
  Requires=gpsd.socket
  # Needed with chrony SOCK refclock
 -After=chronyd.service
-+After=chronyd.service check.target
++After=chronyd.service ble.target
  
  [Service]
  Type=forking

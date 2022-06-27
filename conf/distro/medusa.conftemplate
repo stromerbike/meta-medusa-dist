@@ -37,7 +37,7 @@ VIRTUAL-RUNTIME_syslog = ""
 VIRTUAL-RUNTIME_initscripts = ""
 
 # systemd settings
-SYSTEMD_DEFAULT_TARGET = "debug.target"
+SYSTEMD_DEFAULT_TARGET = "started.target"
 
 # Remove QML software renderer
 RDEPENDS_qtbase_remove += "opengldummy qtdeclarative-render2d"

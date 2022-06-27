@@ -10,4 +10,4 @@ ExecStopPost=/bin/rm -rf /tmp/btmon
 Restart=always
 
 [Install]
-WantedBy=communication.target
+WantedBy=ble.target

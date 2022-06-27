@@ -1,5 +1,7 @@
 [Unit]
 Description=gsm
+After=ble.target
+Wants=ble.target
 RequiresMountsFor=/mnt/data
 
 [Service]
@@ -10,4 +12,4 @@ ExecReload=/etc/scripts/gsm.sh reload
 RemainAfterExit=yes
 
 [Install]
-WantedBy=communication.target
+WantedBy=gsm.target

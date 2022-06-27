@@ -4,6 +4,7 @@ SRC_URI += " \
             file://resolved.conf \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \
+            file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
             file://systemd-udev-trigger.service.in.patch \
             file://timesyncd.conf \
@@ -92,9 +93,10 @@ do_install_append() {
     rm ${D}${sysconfdir}/resolv-conf.systemd
     ln -s ../run/systemd/resolve/stub-resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
 
-    # start resolved and timesyncd service after check.target
-    install -d ${D}${sysconfdir}/systemd/system/communication.target.wants
-    mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/communication.target.wants/systemd-timesyncd.service
+    # start resolved and timesyncd service after gps.target
+    install -d ${D}${sysconfdir}/systemd/system/gsm.target.wants
+    mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/gsm.target.wants/systemd-resolved.service
+    mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/gsm.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
     sed -i 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf

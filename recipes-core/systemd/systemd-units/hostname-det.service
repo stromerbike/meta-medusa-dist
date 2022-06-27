@@ -1,7 +1,7 @@
 [Unit]
 Description=hostname-det
-After=location.target
-Wants=location.target
+After=gsm.target
+Wants=gsm.target
 RequiresMountsFor=/mnt/data
 
 [Service]
@@ -10,4 +10,4 @@ ExecStart=/etc/scripts/hostname-det.sh
 RemainAfterExit=yes
 
 [Install]
-WantedBy=debug.target
+WantedBy=late-init.target

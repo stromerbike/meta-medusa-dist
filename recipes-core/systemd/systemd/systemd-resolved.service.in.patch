@@ -1,0 +1,20 @@
+diff --git a/units/systemd-resolved.service.in b/units/systemd-resolved.service.in
+index c4c7f1feef..e7f847c44b 100644
+--- a/units/systemd-resolved.service.in
++++ b/units/systemd-resolved.service.in
+@@ -14,7 +14,7 @@ Documentation=https://www.freedesktop.org/wiki/Software/systemd/resolved
+ Documentation=https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+ Documentation=https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+ DefaultDependencies=no
+-After=systemd-sysusers.service systemd-networkd.service
++After=systemd-sysusers.service systemd-networkd.service gps.target
+ Before=network.target nss-lookup.target shutdown.target
+ Conflicts=shutdown.target
+ Wants=nss-lookup.target
+@@ -45,5 +45,5 @@ RuntimeDirectory=systemd/resolve
+ RuntimeDirectoryPreserve=yes
+ 
+ [Install]
+-WantedBy=multi-user.target
++WantedBy=gsm.target
+ Alias=dbus-org.freedesktop.resolve1.service

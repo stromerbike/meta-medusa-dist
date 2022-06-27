@@ -1,0 +1,12 @@
+[Unit]
+Description=cpupower set nondemand governor
+After=debug.target
+Wants=debug.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpupower -c all frequency-set -g ondemand
+RemainAfterExit=yes
+
+[Install]
+WantedBy=started.target

@@ -1,6 +1,6 @@
 [Unit]
 Description=mnt-log and journal persisting
-After=location.target
+After=late-init.target
 
 [Service]
 Type=oneshot

@@ -13,4 +13,4 @@ ExecReload=/etc/scripts/ble-attach.sh reload
 RemainAfterExit=yes
 
 [Install]
-WantedBy=communication.target
+WantedBy=ble.target

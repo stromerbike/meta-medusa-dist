@@ -1,0 +1,4 @@
+[Unit]
+Description=gsm
+After=gps.target
+Wants=gps.target

@@ -1,4 +1,4 @@
 [Unit]
-Description=communication
+Description=ble
 After=check.target
 Wants=check.target

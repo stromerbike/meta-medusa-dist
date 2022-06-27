@@ -11,6 +11,7 @@ RDEPENDS_${PN} += " \
     bluez5 \
     busybox \
     can-utils \
+    cpupower \
     dash \
     evtest \
     fbv \
@@ -39,6 +40,7 @@ SRC_URI += " \
             file://images/logo.png \
             file://ble-attach.service \
             file://ble-attach.sh \
+            file://ble.target \
             file://btmon-save@.service \
             file://btmon-save.sh \
             file://btmon.service \
@@ -50,7 +52,8 @@ SRC_URI += " \
             file://candump.service \
             file://candump.awk \
             file://check.target \
-            file://communication.target \
+            file://gsm.target \
+            file://cpupower.service \
             file://debug.target \
             file://drive.target \
             file://early-init.target \
@@ -59,16 +62,17 @@ SRC_URI += " \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
             file://fwu-usb-run.sh \
+            file://gps.target \
             file://gsm.service \
             file://gsm.sh \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
+            file://late-init.target \
             file://ldattach-hl78xx.service \
             file://ldattach-hl78xx.sh \
             file://led.service \
             file://led.sh \
-            file://location.target \
             file://log-usb.service \
             file://log-usb.sh \
             file://mnt-data.mount \
@@ -84,6 +88,7 @@ SRC_URI += " \
             file://peripheral-stem.service \
             file://peripheral-stem.sh \
             file://systemd-udev-early-trigger.service \
+            file://started.target \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
@@ -113,6 +118,7 @@ SYSTEMD_SERVICE_${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
     candump.service \
+    cpupower.service \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
@@ -139,6 +145,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/candump-save.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/candump.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/candump.awk ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/cpupower.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
@@ -198,12 +205,15 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/wlan0-ap.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
 
+    install -m 0644 ${WORKDIR}/ble.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/communication.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gsm.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/early-init.target ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/location.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gps.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/late-init.target ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/started.target ${D}${systemd_system_unitdir}
 
     if echo "${DISTRO_VERSION}" | grep EMV; then
         sed -i '/504/d' ${D}${sysconfdir}/scripts/usb.sh

@@ -1,0 +1,4 @@
+[Unit]
+Description=gps
+After=ble.target
+Wants=ble.target
