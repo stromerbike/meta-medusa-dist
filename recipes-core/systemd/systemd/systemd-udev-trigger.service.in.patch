@@ -19,4 +19,4 @@ index 3cdde94446..4db4885fd1 100644
  Type=oneshot
  RemainAfterExit=yes
 -ExecStart=@rootbindir@/udevadm trigger --type=subsystems --action=add ; @rootbindir@/udevadm trigger --type=devices --action=add
-+ExecStart=@rootbindir@/udevadm trigger --type=subsystems -S input -S ubi --action=add ; @rootbindir@/udevadm trigger -S input -S ubi --type=devices --action=add
++ExecStart=@rootbindir@/udevadm trigger --type=subsystems --action=add ; @rootbindir@/udevadm trigger -S input -S ubi --type=devices --action=add
