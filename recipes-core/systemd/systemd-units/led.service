@@ -1,7 +1,6 @@
 [Unit]
 Description=led
 DefaultDependencies=no
-Before=early-init.target
 After=can0.service
 
 [Service]
@@ -11,4 +10,4 @@ ExecStop=/etc/scripts/led.sh stop
 RemainAfterExit=yes
 
 [Install]
-WantedBy=early-init.target
+WantedBy=drive.target

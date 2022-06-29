@@ -1,6 +1,7 @@
 [Unit]
 Description=can0 interface setup
 DefaultDependencies=no
+After=sysinit.target
 
 [Service]
 Type=oneshot
@@ -10,4 +11,4 @@ ExecReload=/etc/scripts/can0.sh reload
 RemainAfterExit=yes
 
 [Install]
-WantedBy=early-init.target
+WantedBy=drive.target

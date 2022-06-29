@@ -56,7 +56,6 @@ SRC_URI += " \
             file://cpupower.service \
             file://debug.target \
             file://drive.target \
-            file://early-init.target \
             file://eth0.network \
             file://fwu-usb-chk.service \
             file://fwu-usb-chk.sh \
@@ -210,7 +209,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/gsm.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/debug.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/drive.target ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/early-init.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/gps.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/late-init.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/started.target ${D}${systemd_system_unitdir}

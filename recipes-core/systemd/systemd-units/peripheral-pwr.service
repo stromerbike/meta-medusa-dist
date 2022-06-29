@@ -10,4 +10,4 @@ ExecStop=/etc/scripts/peripheral-pwr.sh stop
 RemainAfterExit=yes
 
 [Install]
-WantedBy=early-init.target
+WantedBy=sysinit.target

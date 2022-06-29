@@ -10,4 +10,4 @@ ExecStart=/etc/scripts/peripheral-mpio.sh
 RemainAfterExit=yes
 
 [Install]
-WantedBy=early-init.target
+WantedBy=sysinit.target

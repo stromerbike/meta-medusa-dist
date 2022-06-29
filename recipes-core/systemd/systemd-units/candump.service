@@ -11,4 +11,4 @@ ExecStopPost=/bin/rm -rf /tmp/candump
 Restart=always
 
 [Install]
-WantedBy=early-init.target
+WantedBy=sysinit.target

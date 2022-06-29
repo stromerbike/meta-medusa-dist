@@ -3,4 +3,4 @@ Description=check
 After=drive.target
 Wants=drive.target
 DefaultDependencies=no
-Before=remote-fs.target gsm.service usb.service sshd.socket gpsd.socket network.target network-pre.target ble.target systemd-udev-trigger.service systemd-networkd.service fwu-chk.service
+Before=remote-fs.target usb.service sshd.socket gpsd.socket network.target network-pre.target ble.target systemd-udev-trigger.service systemd-networkd.service fwu-chk.service
