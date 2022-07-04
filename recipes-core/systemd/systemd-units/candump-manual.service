@@ -1,5 +1,5 @@
 [Unit]
-Description=candump manual
+Description=candump-manual
 After=can0.service local-fs.target
 Requires=can0.service
 DefaultDependencies=no

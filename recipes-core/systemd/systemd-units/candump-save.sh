@@ -10,6 +10,13 @@ TMPDIR="/tmp/candump"
 DATADIR="/mnt/data/candump"
 NUMFILESMAX=50
 
+terminationRequested=0
+function catchTerminationRequest() {
+    echo "SIGTERM caught"
+    terminationRequested=1
+}
+trap catchTerminationRequest SIGTERM
+
 if [ "$NAME" == "manual" ]; then
     TMPDIR="/tmp/candump-manual"
 else
@@ -19,8 +26,18 @@ else
         echo "A non-manual candump-save service is already active"
         exit 0
     fi
-    echo "Waiting for 10 seconds to obtain some more candump"
-    sleep 10
+    echo "Waiting for 10 seconds to obtain some more candump..."
+    counter=0
+    while [ $counter -lt 10 ] && [ $terminationRequested -eq 0 ];
+    do
+        let counter=counter+1
+        sleep 1
+    done
+    if [ $terminationRequested -eq 0 ]; then
+        echo "...done"
+    else
+        echo "...skipped"
+    fi
 fi
 
 echo "Commanding multilog to rotate logs and waiting up to 10s..."

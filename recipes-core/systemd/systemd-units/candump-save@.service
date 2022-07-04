@@ -7,3 +7,4 @@ RequiresMountsFor=/mnt/data
 [Service]
 Type=simple
 ExecStart=/etc/scripts/candump-save.sh %I
+KillMode=mixed
