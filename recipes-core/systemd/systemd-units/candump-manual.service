@@ -1,0 +1,14 @@
+[Unit]
+Description=candump manual
+After=can0.service local-fs.target
+Requires=can0.service
+DefaultDependencies=no
+
+[Service]
+Type=simple
+ExecStart=/bin/dash -c '/usr/bin/candump can0,0:0,#FFFFFFFF -t a | /usr/bin/multilog s16777216 n3 wcandump /tmp/candump-manual'
+ExecStopPost=/bin/rm -rf /tmp/candump-manual
+Restart=always
+
+[Install]
+WantedBy=sysinit.target

@@ -49,6 +49,7 @@ SRC_URI += " \
             file://can0.sh \
             file://candump-save@.service \
             file://candump-save.sh \
+            file://candump-manual.service \
             file://candump.service \
             file://candump.awk \
             file://check.target \
@@ -116,6 +117,7 @@ SYSTEMD_SERVICE_${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'ble-attach.service')} \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
+    candump-manual.service \
     candump.service \
     cpupower.service \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
@@ -142,6 +144,7 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/can0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/candump-save@.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/candump-save.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/candump-manual.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/candump.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/candump.awk ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/cpupower.service ${D}${systemd_system_unitdir}
