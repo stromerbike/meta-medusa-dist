@@ -1,0 +1,1 @@
+ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block stop systemd-networkd-wait-online@ppp0.service"

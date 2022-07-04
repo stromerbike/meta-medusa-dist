@@ -7,6 +7,7 @@ PR = "r0"
 
 SRC_URI += " \
             file://50-gsmtty1.rules \
+            file://50-ppp0.rules \
             file://50-sd.rules \
             file://50-ttygsm0-hl78xx-bl.rules \
             file://50-ttygsm0.rules \
@@ -26,6 +27,7 @@ FILES_${PN}_append = " \
 do_install() {
     install -d ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-gsmtty1.rules ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${WORKDIR}/50-ppp0.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-sd.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm0-hl78xx-bl.rules ${D}${sysconfdir}/udev/rules.d/
     install -m 0644 ${WORKDIR}/50-ttygsm0.rules ${D}${sysconfdir}/udev/rules.d/
