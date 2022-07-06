@@ -1,5 +1,5 @@
 SUMMARY = "This is CCZE, a fast log colorizer written in C, intended to be a drop-in replacement for colorize (http://colorize.raszi.hu)."
-HOMEPAGE = "https://github.com/madhouse/ccze"
+HOMEPAGE = "https://github.com/stromerbike/ccze"
 SECTION = "console/utils"
 
 LICENSE = "GPLv2"
@@ -10,7 +10,7 @@ PV = "0.2.1-2+gitr${SRCPV}"
 DEPENDS = "libpcre ncurses"
 
 SRC_URI = " \
-           git://github.com/madhouse/${BPN}.git;protocol=git;branch=master \
+           git://github.com/stromerbike/${BPN}.git;protocol=git;branch=master \
            file://pkgconfig.patch \
 "
 SRCREV = "7c7927fba98275c10ae614bd8c1a1367f87a258c"
