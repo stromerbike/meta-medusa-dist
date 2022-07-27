@@ -2,7 +2,9 @@
 
 source /etc/scripts/hlxxxx-common.sh
 
-UNFINISHED_REGISTRATION_COUNT_LIMIT=99 # (99+1)x3s equals 300 seconds
+# Especially when the module is in a network where the prefered radio access technology is not supported,
+# it shall be given enough time to search for a supported fallback before being reset.
+UNFINISHED_REGISTRATION_COUNT_LIMIT=199 # (199+1)x3s equals 600 seconds
 
 UNRESPONSIVE_MODULE_COUNT_LIMIT=5 # (5+1)x(2000ms+3s) equals 30 seconds
 
@@ -17,7 +19,6 @@ CURRENT_REVISION_ZEROED=""
 CGMR_READOUT_DONE="no"
 OPERATOR_SELECTION_DONE="no"
 SIM_SELECTION_DONE="no"
-RAT_SELECTION_DONE="no"
 PRL_SELECTION_DONE="no"
 
 INTERFACE="ttyGSM0"
@@ -30,7 +31,6 @@ if lsusb -d 1519:0020 >/dev/null; then
     CGMR_READOUT_DONE="yes"
     OPERATOR_SELECTION_DONE="yes"
     SIM_SELECTION_DONE="yes"
-    RAT_SELECTION_DONE="yes"
     PRL_SELECTION_DONE="yes"
 elif lsusb -d 1199:c001 >/dev/null; then
     echo "HL78xx in USB mode detected"
@@ -173,40 +173,6 @@ do
                 fi
             fi
 
-            if [ "$CGMR_READOUT_DONE" == "yes" ] && [ "$RAT_SELECTION_DONE" == "no" ]; then
-                echo "--> Querying RAT selection..."
-                prepareComport
-                RESPONSE="$(grep -m1 "+KSRAT:\|ERROR" <(echo -e "AT+KSRAT?\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
-                cleanupComport
-                cat $FULL_RESPONSE
-                # Legacy command AT+KSRAT
-                # If legacy operation compatibility is not needed, AT+KSRAT should be kept at its default setting (0).
-                # 0: CAT-M
-                # 1: NB-IoT
-                # 2: GSM
-                if [[ $RESPONSE =~ \+KSRAT:\ 0 ]]; then
-                    echo "...RAT selection is set correctly"
-                    RAT_SELECTION_DONE="yes"
-                elif [[ $RESPONSE =~ (\+KSRAT:\ [^$'\r\n']+) ]]; then
-                    echo "...RAT selection has to be adjusted..."
-                    prepareComport
-                    RESPONSE="$(grep -m1 "OK\|ERROR" <(echo -e "AT+KSRAT=0\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
-                    cleanupComport
-                    cat $FULL_RESPONSE
-                    if [[ $RESPONSE =~ OK ]]; then
-                        echo "...done"
-                        RAT_SELECTION_DONE="yes"
-                        if [ $((10#$CURRENT_REVISION_ZEROED)) -lt 4005004000 ]; then
-                            echo "A soft reset will be carried out."
-                            IS_SOFT_RESET_REQUIRED="yes" # HL78xx fimware versions before 4.5.4.0 require a reset to take effect
-                        fi
-                    else
-                        echo "...error"
-                    fi
-                else
-                    echo "...RAT selection could not be read"
-                fi
-            fi
             if [ "$CGMR_READOUT_DONE" == "yes" ] && [ "$PRL_SELECTION_DONE" == "no" ]; then
                 if [ $((10#$CURRENT_REVISION_ZEROED)) -ge 4006009004 ]; then # 4.6.9.4 and newer
                     echo "--> AT+KSELACQ supported. Querying PRL selection..."
@@ -247,7 +213,7 @@ do
                 fi
             fi
 
-            if [ "$OPERATOR_SELECTION_DONE" == "yes" ] && [ "$SIM_SELECTION_DONE" == "yes" ] && [ "$RAT_SELECTION_DONE" == "yes" ] && [ "$PRL_SELECTION_DONE" == "yes" ]; then
+            if [ "$OPERATOR_SELECTION_DONE" == "yes" ] && [ "$SIM_SELECTION_DONE" == "yes" ] && [ "$PRL_SELECTION_DONE" == "yes" ]; then
                 if [ "$IS_SOFT_RESET_REQUIRED" == "yes" ]; then
                     IS_SOFT_RESET_REQUIRED="no"
                     UNFINISHED_REGISTRATION_COUNT=0
