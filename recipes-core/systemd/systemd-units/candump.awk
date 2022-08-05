@@ -91,7 +91,6 @@
             else if ("1A" == $8) printf "end of frame\n"
             else if ("12" == $8) printf "intermission\n"
             printf("%u) %.3f 1 Error %s - 4 00 %s 00 00", NR, currentTimeOffset * 1000, type, position)
-            
         }
         else if ("20000010" == $3)
         {
