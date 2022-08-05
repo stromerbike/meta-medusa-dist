@@ -8,6 +8,7 @@ fi
 NAME="$1"
 TMPDIR="/tmp/candump"
 DATADIR="/mnt/data/candump"
+USBDATADIR="/mnt/usb/candump"
 NUMFILESMAX=50
 
 terminationRequested=0
@@ -41,11 +42,13 @@ else
 fi
 
 echo "Commanding multilog to rotate logs and waiting up to 10s..."
-inotifywait -t 10 -e attrib "$TMPDIR/current" &>/dev/null &
+inotifywait -t 10 -e attrib "$TMPDIR/state" &>/dev/null &
 pkill -SIGALRM -fx "/usr/bin/multilog .* $TMPDIR" &
 wait
 echo "...done"
 
+# Remark: If this service was called before multilog has rotated logs at least once
+# on its own, previousLatest will be empty and thus cat will only take latest.
 unset -v latest
 unset -v previousLatest
 for file in "$TMPDIR/"*; do
@@ -54,12 +57,47 @@ for file in "$TMPDIR/"*; do
     fi
 done
 
-# Remark: If this service was called before multilog has rotated logs at least once
-# on its own, previousLatest will be empty and thus cat will only take latest.
 if [ "$NAME" == "manual" ]; then
-    echo "Concatenating $previousLatest $latest with full length to $TMPDIR/$NAME.candump..."
-    cat "$previousLatest" "$latest" > "$TMPDIR/$NAME.candump"
-    echo "...done"
+    TERM=linux clear > /dev/tty1 < /dev/tty1
+    echo 0 > /sys/class/graphics/fbcon/rotate_all
+    /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
+    TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
+    echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
+    echo "" | fbv --noinfo /etc/images/busy.png
+    if [ -d "$USBDATADIR" ]; then
+        echo "Concatenating all chunks to $USBDATADIR/$NAME.candump..."
+        ls -1tr "$TMPDIR/"*.lzo | xargs lzop -dc | pv -F "Saving: %p %b" 2> /dev/tty1 > "$USBDATADIR/$NAME.candump"
+        echo "...done"
+        TMPDIR="$USBDATADIR"
+        echo "Setting TMPDIR to $USBDATADIR"
+        cp /etc/scripts/candump.awk "$USBDATADIR"
+        cp /usr/share/gnuwin/awk.exe "$USBDATADIR"
+        echo "awk.exe -f candump.awk manual.candump > manual.trc" > "$USBDATADIR/convert.bat"
+        echo "awk -f candump.awk manual.candump > manual.trc" > "$USBDATADIR/convert.sh"
+        echo "Syncing..."
+        if sync; then
+            echo "...done"
+        fi
+        if df -T | grep "/mnt/usb" | grep "fuseblk"; then
+            echo "Unmounting (-f) usb..."
+            if umount -f /mnt/usb; then
+                echo "...done"
+            fi
+        else
+            echo "Unmounting usb..."
+            if umount /mnt/usb; then
+                echo "...done"
+            fi
+        fi
+    else
+        echo "Concatenating up to 10 chunks to $TMPDIR/$NAME.candump..."
+        ls -1tr "$TMPDIR/"*.lzo | tail -n 10 | xargs lzop -dc > "$TMPDIR/$NAME.candump"
+        echo "...done"
+        echo "Converting $TMPDIR/$NAME.candump to PCAN trace file $TMPDIR/$NAME.trc..."
+        pv -F "Converting: %p" "$TMPDIR/$NAME.candump" 2> /dev/tty1 | awk -f /etc/scripts/candump.awk - > "$TMPDIR/$NAME.trc"
+        echo "...done"
+    fi
+    TERM=linux clear > /dev/tty1 < /dev/tty1
 elif [ "$NAME" == "update" ]; then
     echo "Concatenating $previousLatest $latest with a maximum length of 100000 to $TMPDIR/$NAME.candump..."
     cat "$previousLatest" "$latest" | tail -n 100000 > "$TMPDIR/$NAME.candump"
@@ -70,24 +108,17 @@ else
     echo "...done"
 fi
 
-echo "Converting $TMPDIR/$NAME.candump to PCAN trace file $TMPDIR/$NAME.trc..."
-if [ "$NAME" == "manual" ]; then
-    TERM=linux clear > /dev/tty1 < /dev/tty1
-    echo 0 > /sys/class/graphics/fbcon/rotate_all
-    /usr/sbin/setfont /usr/share/consolefonts/cp850-8x16.psfu.gz -C /dev/tty1
-    TERM=linux setterm -blank 0 -powerdown 0 -powersave off > /dev/tty1 < /dev/tty1
-    echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
-    echo "" | fbv --noinfo /etc/images/busy.png
-    echo "${previousLatest: -30}" > /dev/tty1
-    echo "${latest: -30}" > /dev/tty1
-    pv -F "Saving: %p" "$TMPDIR/$NAME.candump" 2> /dev/tty1 | awk -f /etc/scripts/candump.awk - > "$TMPDIR/$NAME.trc"
-    TERM=linux clear > /dev/tty1 < /dev/tty1
-else
+if [ "$NAME" != "manual" ]; then
+    echo "Converting $TMPDIR/$NAME.candump to PCAN trace file $TMPDIR/$NAME.trc..."
     awk -f /etc/scripts/candump.awk "$TMPDIR/$NAME.candump" > "$TMPDIR/$NAME.trc"
+    echo "...done"
 fi
-echo "...done"
 
-rm "$TMPDIR/$NAME.candump"
+if [ "$TMPDIR" != "$USBDATADIR" ]; then
+    rm -v "$TMPDIR/$NAME.candump"
+else
+    echo "Keeping $TMPDIR/$NAME.candump"
+fi
 
 mkdir -p $DATADIR
 echo "Scanning $DATADIR for latest sequence number and creating a list of files..."
@@ -138,9 +169,13 @@ if [ "$NAME" != "manual" ] && [ "$NAME" != "update" ]; then
     mv -f "$TMPDIR/$NAME.trc" "$DATADIR/${nextSeqNum}_$NAME.trc"
     echo "...done"
 else
-    echo "Moving PCAN trace file as $NAME.trc to persistent storage..."
-    mv -f "$TMPDIR/$NAME.trc" "$DATADIR/$NAME.trc"
-    echo "...done"
+    if [ "$TMPDIR" != "$USBDATADIR" ]; then
+        echo "Moving PCAN trace file as $NAME.trc to persistent storage..."
+        mv -f "$TMPDIR/$NAME.trc" "$DATADIR/$NAME.trc"
+        echo "...done"
+    else
+        echo "PCAN trace file $NAME.trc already on persistent storage"
+    fi
 fi
 
 if [ "$NAME" != "manual" ]; then

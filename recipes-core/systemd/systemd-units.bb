@@ -18,6 +18,7 @@ RDEPENDS_${PN} += " \
     gnupg-gpgv \
     iproute2 \
     inotify-tools \
+    lzop \
     medusa-scripts \
     multilog \
     picocom \
@@ -32,6 +33,8 @@ RDEPENDS_${PN} += " \
     xz \
     zip \
 "
+
+RRECOMMENDS_${PN} = "gnuwin-gawk"
 
 SRC_URI += " \
             file://images/busy.png \
