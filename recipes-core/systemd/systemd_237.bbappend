@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
             file://introduce-wait-online@.service-for-specific-interface.patch \
+            file://move_state_file_to_data_partition.patch \
             file://resolved.conf \
             file://system.conf \
             file://systemd-journal-upload.service.in.patch \

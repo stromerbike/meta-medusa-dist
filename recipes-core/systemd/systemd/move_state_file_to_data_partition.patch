@@ -1,0 +1,63 @@
+diff --git a/man/systemd-timesyncd.service.xml b/man/systemd-timesyncd.service.xml
+index e9b5c25780..f88bab5ed7 100644
+--- a/man/systemd-timesyncd.service.xml
++++ b/man/systemd-timesyncd.service.xml
+@@ -90,7 +90,7 @@
+ 
+     <variablelist>
+       <varlistentry>
+-        <term><filename>/var/lib/systemd/timesync/clock</filename></term>
++        <term><filename>/mnt/data/timesync/clock</filename></term>
+ 
+         <listitem>
+           <para>This file contains the timestamp of the last successful
+diff --git a/src/timesync/timesyncd-manager.c b/src/timesync/timesyncd-manager.c
+index a6d336c461..3281d09c76 100644
+--- a/src/timesync/timesyncd-manager.c
++++ b/src/timesync/timesyncd-manager.c
+@@ -367,7 +367,7 @@ static int manager_adjust_clock(Manager *m, double offset, int leap_sec) {
+                 return -errno;
+ 
+         /* If touch fails, there isn't much we can do. Maybe it'll work next time. */
+-        (void) touch("/var/lib/systemd/timesync/clock");
++        (void) touch("/mnt/data/timesync/clock");
+ 
+         m->drift_ppm = tmx.freq / 65536;
+ 
+diff --git a/src/timesync/timesyncd.c b/src/timesync/timesyncd.c
+index bea800171b..2345c3802c 100644
+--- a/src/timesync/timesyncd.c
++++ b/src/timesync/timesyncd.c
+@@ -46,7 +46,7 @@ static int load_clock_timestamp(uid_t uid, gid_t gid) {
+          * systems lacking a battery backed RTC. We also will adjust
+          * the time to at least the build time of systemd. */
+ 
+-        fd = open("/var/lib/systemd/timesync/clock", O_RDWR|O_CLOEXEC, 0644);
++        fd = open("/mnt/data/timesync/clock", O_RDWR|O_CLOEXEC, 0644);
+         if (fd >= 0) {
+                 struct stat st;
+                 usec_t stamp;
+@@ -71,12 +71,12 @@ static int load_clock_timestamp(uid_t uid, gid_t gid) {
+                 }
+ 
+         } else {
+-                r = mkdir_safe_label("/var/lib/systemd/timesync", 0755, uid, gid, true);
++                r = mkdir_safe_label("/mnt/data/timesync", 0755, uid, gid, true);
+                 if (r < 0)
+                         return log_error_errno(r, "Failed to create state directory: %m");
+ 
+                 /* create stamp file with the compiled-in date */
+-                (void) touch_file("/var/lib/systemd/timesync/clock", false, min, uid, gid, 0644);
++                (void) touch_file("/mnt/data/timesync/clock", false, min, uid, gid, 0644);
+         }
+ 
+         ct = now(CLOCK_REALTIME);
+@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
+ 
+         /* if we got an authoritative time, store it in the file system */
+         if (m->sync)
+-                (void) touch("/var/lib/systemd/timesync/clock");
++                (void) touch("/mnt/data/timesync/clock");
+ 
+         sd_event_get_exit_code(m->event, &r);
+ 
