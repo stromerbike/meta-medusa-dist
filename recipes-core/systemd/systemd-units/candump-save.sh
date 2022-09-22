@@ -65,15 +65,16 @@ if [ "$NAME" == "manual" ]; then
     echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" > /dev/tty1
     echo "" | fbv --noinfo /etc/images/busy.png
     if [ -d "$USBDATADIR" ]; then
-        echo "Concatenating all chunks to $USBDATADIR/$NAME.candump..."
-        ls -1tr "$TMPDIR/"*.lzo | xargs lzop -dc | pv -F "Saving: %p %b" 2> /dev/tty1 > "$USBDATADIR/$NAME.candump"
+        PREFIX="$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
+        echo "Concatenating all chunks to $USBDATADIR/$PREFIX-$NAME.candump..."
+        ls -1tr "$TMPDIR/"*.lzo | xargs lzop -dc | pv -F "Saving: %p %b" 2> /dev/tty1 > "$USBDATADIR/$PREFIX-$NAME.candump"
         echo "...done"
         TMPDIR="$USBDATADIR"
         echo "Setting TMPDIR to $USBDATADIR"
         cp /etc/scripts/candump.awk "$USBDATADIR"
         cp /usr/share/gnuwin/awk.exe "$USBDATADIR"
-        echo "awk.exe -f candump.awk manual.candump > manual.trc" > "$USBDATADIR/convert.bat"
-        echo "awk -f candump.awk manual.candump > manual.trc" > "$USBDATADIR/convert.sh"
+        echo "awk.exe -f candump.awk $PREFIX-$NAME.candump > $PREFIX-$NAME.trc" > "$USBDATADIR/$PREFIX-convert.bat"
+        echo "awk -f candump.awk $PREFIX-$NAME.candump > $PREFIX-$NAME.trc" > "$USBDATADIR/$PREFIX-convert.sh"
         echo "Syncing..."
         if sync; then
             echo "...done"
