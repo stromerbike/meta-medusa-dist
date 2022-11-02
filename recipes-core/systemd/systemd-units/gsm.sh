@@ -53,6 +53,8 @@ start)
             POWER_UP_SEQUENCE="HL78xx"
         elif [[ "$MANUFACTURER_ITEM" =~ 2118610 ]]; then
             POWER_UP_SEQUENCE="HL78xx"
+        elif [[ "$MANUFACTURER_ITEM" =~ 2118697 ]]; then
+            POWER_UP_SEQUENCE="HL78xx"
         else
             echo "Using cached label for type detection fallback: $STROMER_LABEL"
             if [[ "$STROMER_LABEL" =~ ^401023- ]]; then
