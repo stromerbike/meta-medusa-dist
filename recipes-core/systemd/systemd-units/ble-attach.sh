@@ -29,14 +29,19 @@ stop)
 
 reload)
     killall hciattach
+    hciconfig hci0 down
+    btmgmt power off
     
     # do BLE_nSHUTD reset
     echo "0" > /sys/class/gpio/gpio120/value
-    sleep 1
+    sleep 0.1
     echo "1" > /sys/class/gpio/gpio120/value
 
     # hci0
     hciattach /dev/ttymxc2 texas
+
+    btmgmt power on
+    hciconfig hci0 up
 ;;
 
 *)
