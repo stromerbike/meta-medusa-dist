@@ -1,0 +1,14 @@
+[Unit]
+Description=gps
+After=ble.target
+Wants=ble.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/gps.sh start
+ExecStop=/etc/scripts/gps.sh stop
+ExecReload=/etc/scripts/gps.sh reload
+RemainAfterExit=yes
+
+[Install]
+WantedBy=gps.target

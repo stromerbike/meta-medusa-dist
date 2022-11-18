@@ -56,7 +56,6 @@ SRC_URI += " \
             file://candump.service \
             file://candump.awk \
             file://check.target \
-            file://gsm.target \
             file://cpupower.service \
             file://debug.target \
             file://drive.target \
@@ -65,9 +64,12 @@ SRC_URI += " \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
             file://fwu-usb-run.sh \
+            file://gps.service \
+            file://gps.sh \
             file://gps.target \
             file://gsm.service \
             file://gsm.sh \
+            file://gsm.target \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
@@ -151,6 +153,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/candump.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/candump.awk ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/cpupower.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gps.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/gps.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gsm.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
