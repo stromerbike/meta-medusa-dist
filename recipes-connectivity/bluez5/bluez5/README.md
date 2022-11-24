@@ -14,3 +14,4 @@ CC2564_C
 https://www.ti.com/tool/CC256XC-BT-SP
 Changes made from original Linux-bts (with "TI HCITester" program):
 - Change baud from 115200baud to 4Mbaud
+- Enabled BT 5.1: Remove VS command for default BT core spec 5.1
