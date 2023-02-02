@@ -223,7 +223,11 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
         check_purge_data_ignore
         echo "...done"
         echo "Stopping DataServer application..." # also stops DataServer based applications
-        systemctl stop medusa-DataServer || true
+        until ! systemctl is-active medusa-DataServer.service
+        do
+            systemctl stop medusa-DataServer.service || true
+            sleep 1
+        done
         echo "...done"
         echo "100" 2> /dev/null > /sys/class/backlight/background/brightness
         echo "Verifying signature..."
