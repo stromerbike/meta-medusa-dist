@@ -38,6 +38,12 @@ alias sstat='f(){ unset -f f; systemctl status -l -n 25 --no-pager "$@" | ccze -
 alias sstart='systemctl start'
 alias sstop='systemctl stop'
 
+# some kernel aliases
+alias dt='dtc -I fs /proc/device-tree'
+alias dtbs='dtc -I dtb -O dts'
+alias dtsb='dtc -I dts -O dtb'
+alias kconfig='cat /proc/config.gz | gunzip'
+
 # some various aliases
 alias canbusload='canbusload can0@250000 -r -t -b -c'
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'

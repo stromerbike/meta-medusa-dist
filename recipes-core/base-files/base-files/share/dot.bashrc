@@ -31,6 +31,12 @@ alias lnavm='f(){ unset -f f; bash -c "TERM=xterm-256color lnav <(journalctl -a 
 alias lnavall='f(){ unset -f f; if [ -z $1 ]; then UNIT=""; else UNIT="-u $1"; fi; bash -c "TERM=xterm-256color lnav <(journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT $UNIT; journalctl -a -f -n 0 -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT $UNIT)"; }; f'
 alias sstat='f(){ unset -f f; systemctl status -l -n 25 --no-pager "$@" | ccze -A -o nolookups; }; f'
 
+# some kernel aliases
+alias dt='dtc -I fs /proc/device-tree'
+alias dtbs='dtc -I dtb -O dts'
+alias dtsb='dtc -I dts -O dtb'
+alias kconfig='cat /proc/config.gz | gunzip'
+
 # some various aliases
 alias canbusload='canbusload can0@250000 -r -t -b -c'
 alias ccat='f(){ unset -f f; cat "$@" | ccze -A -o nolookups; }; f'
