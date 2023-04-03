@@ -1,16 +1,18 @@
 #!/bin/bash
 
-if [ -e /dev/gsmtty4 ]; then
-    CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/gsmtty4)"
+if [ -f /tmp/imsi ]; then
+    CIMI="$(cat /tmp/imsi)"
 elif [ -e /dev/ttyGSM5 ]; then
     GARBAGE="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyGSM5)"
     CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/ttyGSM5)"
-elif [ -f /tmp/imsi ]; then
-    CIMI="$(cat /tmp/imsi)"
+    echo "$CIMI"
+elif [ -e /dev/gsmtty4 ]; then
+    CIMI="$(echo -e "AT+CIMI\r" | microcom -t 2000 /dev/gsmtty4)"
+    echo "$CIMI"
 fi
 
 HOSTNAME="UNKNOWN"
-if [[ $CIMI =~ (22801[0-9]+) ]]; then
+if [[ $CIMI =~ (22801[0-9]{10}) ]]; then
     HOSTNAME="${BASH_REMATCH[1]}"
 else
     OUTPUT=$(hcitool -i hci0 cmd 0x04 0x0009 2>/dev/null)
