@@ -5,8 +5,8 @@ DESC="Initialization of gsm chip"
 
 case $1 in
 start)
-    POWER_UP_SEQUENCE_DEFAULT="HL85xx_HL78xx-USB"
-    POWER_UP_SEQUENCE="$POWER_UP_SEQUENCE_DEFAULT" # Works for the HL85xx and seems to work for the HL78xx in USB mode
+    POWER_UP_SEQUENCE_DEFAULT="HL85xx-USB_HL78xx-USB"
+    POWER_UP_SEQUENCE="$POWER_UP_SEQUENCE_DEFAULT" # Works for the HL85xx and the HL78xx in USB mode
 
     # For any device migrating from older firmware versions where neither cgmr nor
     # barebox-state are cached on the data partition, the device-tree fallback is
@@ -23,6 +23,8 @@ start)
         echo "Using cached cgmr for type detection: $(cat /mnt/data/cgmr)"
         if [[ "$CGMR" =~ ^HL78 ]]; then
             POWER_UP_SEQUENCE="HL78xx"
+        elif [[ "$CGMR" =~ ^[A-Z]?HL8 ]]; then
+            POWER_UP_SEQUENCE="HL85xx"
         fi
     elif [ -f /mnt/data/barebox-state ]; then
         BAREBOX_STATE=$(cat /mnt/data/barebox-state)
@@ -36,9 +38,9 @@ start)
         fi
         echo "Using cached item for type detection fallback: $MANUFACTURER_ITEM"
         if [[ "$MANUFACTURER_ITEM" =~ 0054726 ]]; then
-            : # HL8548
+            POWER_UP_SEQUENCE="HL85xx" # HL8548
         elif [[ "$MANUFACTURER_ITEM" =~ 3008744 ]]; then
-            : # HL8548
+            POWER_UP_SEQUENCE="HL85xx" # HL8548
         elif [[ "$MANUFACTURER_ITEM" =~ 3007514 ]]; then
             : # N/A
         elif [[ "$MANUFACTURER_ITEM" =~ 2118465 ]]; then
@@ -46,9 +48,9 @@ start)
         elif [[ "$MANUFACTURER_ITEM" =~ 2118517 ]]; then
             POWER_UP_SEQUENCE="HL78xx"
         elif [[ "$MANUFACTURER_ITEM" =~ 3029492 ]]; then
-            : # HL8518
+            POWER_UP_SEQUENCE="HL85xx" # HL8518
         elif [[ "$MANUFACTURER_ITEM" =~ 3029494 ]]; then
-            : # HL8548-G
+            POWER_UP_SEQUENCE="HL85xx" # HL8548-G
         elif [[ "$MANUFACTURER_ITEM" =~ 2118544 ]]; then
             POWER_UP_SEQUENCE="HL78xx"
         elif [[ "$MANUFACTURER_ITEM" =~ 2118610 ]]; then
@@ -60,7 +62,7 @@ start)
         else
             echo "Using cached label for type detection fallback: $STROMER_LABEL"
             if [[ "$STROMER_LABEL" =~ ^401023- ]]; then
-                : # HL8548 (0054726 or 3008744)
+                POWER_UP_SEQUENCE="HL85xx" # HL8548 (0054726 or 3008744)
             elif [[ "$STROMER_LABEL" =~ ^402173- ]]; then
                 : # N/A
             elif [[ "$STROMER_LABEL" =~ ^403158- ]]; then
@@ -68,9 +70,9 @@ start)
             elif [[ "$STROMER_LABEL" =~ ^403730- ]]; then
                 POWER_UP_SEQUENCE="HL78xx"
             elif [[ "$STROMER_LABEL" =~ ^403470- ]]; then
-                : # HL8518
+                POWER_UP_SEQUENCE="HL85xx" # HL8518
             elif [[ "$STROMER_LABEL" =~ ^403471- ]]; then
-                : # HL8548-G
+                POWER_UP_SEQUENCE="HL85xx" # HL8548-G
             else
                 # For any newly produced device which does neither have "item" nor "label" set
                 # yet, but barebox-state already exists with the default values "0000000"
@@ -79,6 +81,8 @@ start)
                 echo "Using device-tree for type detection fallback: $COMPATIBLE"
                 if [[ "$COMPATIBLE" =~ imx6ull ]]; then
                     POWER_UP_SEQUENCE="HL78xx"
+                elif [[ "$COMPATIBLE" =~ imx6ul ]]; then
+                    POWER_UP_SEQUENCE="HL85xx"
                 fi
             fi
         fi
@@ -87,6 +91,8 @@ start)
         echo "Using device-tree for type detection fallback: $COMPATIBLE"
         if [[ "$COMPATIBLE" =~ imx6ull ]]; then
             POWER_UP_SEQUENCE="HL78xx"
+        elif [[ "$COMPATIBLE" =~ imx6ul ]]; then
+            POWER_UP_SEQUENCE="HL85xx"
         fi
     fi
     echo "POWER_UP_SEQUENCE: $POWER_UP_SEQUENCE"
@@ -106,9 +112,14 @@ start)
     sleep 0.2
     # Release GSM_RESET to start HL78xx (HL85xx should not care)
     echo "0" > /sys/class/gpio/gpio128/value
-    if [ "$POWER_UP_SEQUENCE" == "$POWER_UP_SEQUENCE_DEFAULT" ]; then
+    if [ "$POWER_UP_SEQUENCE" == "$POWER_UP_SEQUENCE_DEFAULT" ] || [ "$POWER_UP_SEQUENCE" == "HL85xx" ]; then
         # Assert GSM_ON_N to start HL85xx (HL78xx in USB mode should not care)
         echo "1" > /sys/class/gpio/gpio133/value
+    fi
+    if [ "$POWER_UP_SEQUENCE" == "HL85xx" ]; then
+        # Release GSM_ON_N for HL85xx UART (minimum assertion time is 25ms)
+        sleep 0.1
+        echo "0" > /sys/class/gpio/gpio133/value
     fi
     # Probe UART driver
     sleep 0.5
