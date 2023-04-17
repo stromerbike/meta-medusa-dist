@@ -23,25 +23,35 @@ start)
 ;;
 
 stop)
+    # Turn off the Bluetooth radio using btmgmt
+    btmgmt power off
+
+    # Kill all existing hciattach processes (will also take down hci interface)
     killall hciattach
+
+    # BLE_nSHUTD (put device in low power mode and do internal reset)
     echo "0" > /sys/class/gpio/gpio120/value
 ;;
 
 reload)
-    killall hciattach
-    hciconfig hci0 down
+    # Turn off the Bluetooth radio using btmgmt
     btmgmt power off
-    
-    # do BLE_nSHUTD reset
+
+    # Kill all existing hciattach processes (will also take down hci interface)
+    killall hciattach
+
+    # BLE_nSHUTD (put device in low power mode and do internal reset)
     echo "0" > /sys/class/gpio/gpio120/value
+    # Wait (minimum time for nSHUT_DOWN low to reset the device: 5ms)
     sleep 0.1
+    # BLE_nSHUTD (bring device out of low power mode)
     echo "1" > /sys/class/gpio/gpio120/value
 
-    # hci0
+    # Attach the HCI device using hciattach
     hciattach /dev/ttymxc2 texas
 
+    # Power on the Bluetooth radio using btmgmt
     btmgmt power on
-    hciconfig hci0 up
 ;;
 
 *)
