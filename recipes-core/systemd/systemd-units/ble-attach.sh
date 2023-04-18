@@ -7,13 +7,11 @@ case $1 in
 start)
     # BLE_nON
     test -e /sys/class/gpio/gpio499 || echo "499" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio499/direction
-    echo "0" > /sys/class/gpio/gpio499/value
+    echo "low" > /sys/class/gpio/gpio499/direction
 
     # BLE_nSHUTD
     test -e /sys/class/gpio/gpio120 || echo "120" > /sys/class/gpio/export
-    echo "out" > /sys/class/gpio/gpio120/direction
-    echo "1" > /sys/class/gpio/gpio120/value
+    echo "high" > /sys/class/gpio/gpio120/direction
 
     # hci0
     hciattach /dev/ttymxc2 texas
