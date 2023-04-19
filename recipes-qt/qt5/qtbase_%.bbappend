@@ -241,7 +241,6 @@ QT_CONFIG_FLAGS += " \
     -no-feature-localserver \
     -no-feature-mdiarea \
     -no-feature-mimetype \
-    -no-feature-movie \
     -no-feature-networkdiskcache \
     -no-feature-networkinterface \
     -no-feature-networkproxy \
