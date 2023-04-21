@@ -8,9 +8,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=9ac2e7cff1ddaf48b6eab6028f23ef88"
 
 DEPENDS = "udev"
 
-SRCREV = "3491b5af596c8edea2cfb136d9b42be804d320a0"
-SRC_URI = "git://git.pengutronix.de/git/tools/dt-utils.git"
-S = "${WORKDIR}/git"
+SRC_URI = "http://www.pengutronix.de/software/dt-utils/download/${BPN}-${PV}.tar.xz"
+SRC_URI[sha256sum] = "6fa29f2b38251847376bb78c4a2b6cb126f713a1953c189358e98076cea2dbef"
 
 PR = "r0"
 
