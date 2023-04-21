@@ -16,13 +16,11 @@ LICENSE = "MIT"
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
 # openssh-sshd - ssh connection used during production
-# bluez-tools - bt-adapter used during production for obtaining MAC
 # iperf3 - used during production for bandwidth test
 # medusa-version - used during production for obtaining version
 IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
                          kernel-image kernel-devicetree \
                          openssh-sshd \
-                         bluez-tools \
                          iperf3 \
                          medusa-version \
 "
