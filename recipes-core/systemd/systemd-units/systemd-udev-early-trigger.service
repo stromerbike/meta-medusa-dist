@@ -8,7 +8,7 @@
 #  (at your option) any later version.
 
 [Unit]
-Description=udev Coldplug input and ubi Devices
+Description=Coldplug input and ubi Devices
 Documentation=man:udev(7) man:systemd-udevd.service(8)
 DefaultDependencies=no
 Wants=systemd-udevd.service
@@ -18,7 +18,7 @@ ConditionPathIsReadWrite=/sys
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStartPre=/sbin/modprobe st1633
+#ExecStartPre=/sbin/modprobe st1633
 ExecStart=/bin/udevadm trigger -s input -s ubi --action=add
 
 [Install]

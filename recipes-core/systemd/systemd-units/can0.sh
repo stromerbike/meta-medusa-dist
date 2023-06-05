@@ -12,10 +12,11 @@ start)
     test -e /sys/class/gpio/gpio137 || echo "137" > /sys/class/gpio/export
     echo "low" > /sys/class/gpio/gpio137/direction
 
-    while [ ! -d "/sys/devices/soc0/soc/2000000.aips-bus/2094000.flexcan/net/can0" ];
-    do
-        sleep 1
-    done
+    # /sys/devices/platform/soc/2000000.aips-bus/2094000.flexcan/net/can0/
+    #while [ ! -d "/sys/devices/soc0/soc/2000000.aips-bus/2094000.flexcan/net/can0" ];
+    #do
+    #    sleep 1
+    #done
     ip link set can0 up type can bitrate 250000 restart-ms 5000
 ;;
 

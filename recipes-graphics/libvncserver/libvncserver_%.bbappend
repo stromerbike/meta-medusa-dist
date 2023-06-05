@@ -1,1 +1,1 @@
-PACKAGECONFIG_remove = " gcrypt gnutls jpeg sdl"
+PACKAGECONFIG:remove = " gcrypt gnutls jpeg sdl"

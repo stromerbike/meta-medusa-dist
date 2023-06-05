@@ -1,1 +1,1 @@
-RRECOMMENDS_${PN} = ""
+RRECOMMENDS:${PN} = ""

@@ -20,7 +20,7 @@ SRC_URI += " \
             file://50-wlan0.rules \
 "
 
-FILES_${PN}_append = " \
+FILES:${PN}:append = " \
     ${sysconfdir}/udev/rules.d/ \
 "
 

@@ -16,7 +16,7 @@ SRC_URI = " \
             file://ue_lte_2g.fw \
 "
 
-FILES_${PN}_append = " ${base_libdir}/firmware/sierra-wireless/HL7802.4.4.14.0/*"
+FILES:${PN}:append = " ${base_libdir}/firmware/sierra-wireless/HL7802.4.4.14.0/*"
 
 do_install () {
     install -d ${D}/${base_libdir}/firmware/sierra-wireless/HL7802.4.4.14.0

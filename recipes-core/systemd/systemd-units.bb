@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += " \
+RDEPENDS:${PN} += " \
     bash \
     bluez5 \
     busybox \
@@ -23,8 +23,8 @@ RDEPENDS_${PN} += " \
     multilog \
     picocom \
     ppp \
-    pv \
-    systemd (>= 236) \
+    pv (= 1.6.6) \
+    systemd \
     tar \
     usbutils \
     util-linux-ldattach \
@@ -34,20 +34,23 @@ RDEPENDS_${PN} += " \
     zip \
 "
 
-RRECOMMENDS_${PN} = "gnuwin-gawk"
+RRECOMMENDS:${PN} = "gnuwin-gawk"
 
 SRC_URI += " \
             file://images/busy.png \
             file://images/done.png \
             file://images/error.png \
             file://images/logo.png \
+            file://10-bnep0.network \
+            file://10-eth0.network \
+            file://10-wlan0-ap.network \
+            file://10-wlan0.network \
             file://ble-attach.service \
             file://ble-attach.sh \
             file://ble.target \
             file://btmon-save@.service \
             file://btmon-save.sh \
             file://btmon.service \
-            file://bnep0.network \
             file://can0.service \
             file://can0.sh \
             file://candump-save@.service \
@@ -59,7 +62,6 @@ SRC_URI += " \
             file://cpupower.service \
             file://debug.target \
             file://drive.target \
-            file://eth0.network \
             file://fwu-usb-chk.service \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
@@ -97,8 +99,6 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
-            file://wlan0-ap.network \
-            file://wlan0.network \
             file://wlan0.sh \
             file://wvdial-hl78xx-usb.service \
             file://wvdial-hl78xx.service \
@@ -106,7 +106,7 @@ SRC_URI += " \
             file://wvdial.sh \
 "
 
-FILES_${PN}_append = " \
+FILES:${PN}:append = " \
     /mnt/ \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
@@ -118,7 +118,7 @@ inherit systemd
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 
-SYSTEMD_SERVICE_${PN} = " \
+SYSTEMD_SERVICE:${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'ble-attach.service')} \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
@@ -137,7 +137,7 @@ SYSTEMD_SERVICE_${PN} = " \
     vnc-server.service \
 "
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${systemd_system_unitdir}
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble-attach.service ${D}${systemd_system_unitdir}
@@ -209,10 +209,10 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/images/logo.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wlan0-ap.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-bnep0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-eth0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-wlan0-ap.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-wlan0.network ${D}${systemd_unitdir}/network/
 
     install -m 0644 ${WORKDIR}/ble.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}

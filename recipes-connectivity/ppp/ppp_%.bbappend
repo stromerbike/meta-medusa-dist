@@ -1,12 +1,12 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-RDEPENDS_${PN} += "dash iproute2"
+RDEPENDS:${PN} += "dash iproute2"
 
 SRC_URI += " \
             file://script \
 "
 
-do_install_append() {
+do_install:append() {
     install -m 0755 ${WORKDIR}/script ${D}${sysconfdir}/ppp/ip-up.d/
 
     echo "debug" >> ${D}${sysconfdir}/ppp/options

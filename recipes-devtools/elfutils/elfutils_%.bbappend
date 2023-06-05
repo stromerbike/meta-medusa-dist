@@ -1,6 +1,6 @@
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
-FILES_${PN}-binutils += "\
+FILES:${PN}-binutils += "\
     ${bindir}/eu-ar \
     ${bindir}/eu-elfcmp \
     ${bindir}/eu-elfcompress \
@@ -12,6 +12,6 @@ FILES_${PN}-binutils += "\
     ${bindir}/eu-strings \
     ${bindir}/eu-unstrip"
 
-do_install_append_class-target() {
-    find ${D}${libdir}/${BPN}/ -type f,l -not -name '*arm*' -delete
-}
+#do_install:append:class-target() {
+#    find ${D}${libdir}/${BPN}/ -type f,l -not -name '*arm*' -delete
+#}

@@ -1,5 +1,5 @@
 diff --git a/gdb/data-directory/Makefile.in b/gdb/data-directory/Makefile.in
-index 304d4b05c0..3df9d44fc3 100644
+index 6e219e09efc..12cf789ca21 100644
 --- a/gdb/data-directory/Makefile.in
 +++ b/gdb/data-directory/Makefile.in
 @@ -49,21 +49,9 @@ GDB_DATADIR = @GDB_DATADIR@
@@ -20,7 +20,7 @@ index 304d4b05c0..3df9d44fc3 100644
 -	sparc-linux.xml \
 -	sparc64-linux.xml
 -
--SYSCALLS_FILES = gdb-syscalls.dtd freebsd.xml $(GEN_SYSCALLS_FILES)
+-SYSCALLS_FILES = gdb-syscalls.dtd freebsd.xml netbsd.xml $(GEN_SYSCALLS_FILES)
 +
 +SYSCALLS_FILES = gdb-syscalls.dtd $(GEN_SYSCALLS_FILES)
  

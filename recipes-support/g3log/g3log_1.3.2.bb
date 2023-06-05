@@ -16,14 +16,17 @@ SRC_URI = " \
 SRC_URI[md5sum] = "9c7d427b4624530c62914f77e87d3d55"
 SRC_URI[sha256sum] = "0ed1983654fdd8268e051274904128709c3d9df8234acf7916e9015199b0b247"
 
+# This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+WARN_QA:remove = "src-uri-bad"
+
 # add g3log to main packages
 # see https://lists.yoctoproject.org/pipermail/yocto/2013-December/017509.html
-FILES_${PN} += "${libdir}/*"
-FILES_${PN}-dev += "${libdir}/cmake"
+FILES:${PN} += "${libdir}/*"
+FILES:${PN}-dev += "${libdir}/cmake"
 FILES_SOLIBSDEV = ""
 
-INSANE_SKIP_${PN} = "dev-so"
-RPROVIDES_${PN} += "libg3logger.so"
+INSANE_SKIP:${PN} = "dev-so"
+RPROVIDES:${PN} += "libg3logger.so"
 
 inherit cmake
 

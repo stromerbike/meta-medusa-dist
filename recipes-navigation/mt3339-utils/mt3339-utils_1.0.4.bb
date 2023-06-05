@@ -4,7 +4,7 @@ SECTION = "console/utils"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f457cf0e901dfa16d32f5ca1999b7d9b"
 
-RDEPENDS_${PN} = "bash coreutils-stdbuf lsof python-argparse python-codecs python-curses python-io python-math python-pyserial python-subprocess python-terminal python-threading"
+RDEPENDS:${PN} = "bash coreutils-stdbuf lsof python-argparse python-codecs python-curses python-io python-math python-pyserial python-subprocess python-terminal python-threading"
 
 PR = "r0"
 

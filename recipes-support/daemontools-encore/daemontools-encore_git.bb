@@ -9,16 +9,16 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=6bdb502d7342218080b2efcf4b4c4e2a"
 PR = "r0"
 PV = "1.11+gitr${SRCPV}"
 DEPENDS += "daemontools-encore-native"
-DEPENDS_class-native = ""
+DEPENDS:class-native = ""
 
 SRC_URI = " \
-           git://github.com/bruceg/${BPN}.git;protocol=git;branch=master \
+           git://github.com/bruceg/${BPN}.git;protocol=https;branch=master \
 "
 
-SRC_URI_append_class-target = "file://cross-compile.patch \
+SRC_URI:append:class-target = "file://cross-compile.patch \
                                file://0001-daemontools-Fix-QA-Issue.patch"
 
-SRC_URI_append_class-native = "file://host-compile.patch \
+SRC_URI:append:class-native = "file://host-compile.patch \
                                file://0001-daemontools-native-Fix-a-warning.patch"
 
 SRCREV = "b40600d9ee0aa6025f33f2644207e069315ca64c"
@@ -37,6 +37,6 @@ do_install() {
 }
 
 PACKAGES =+ "multilog"
-FILES_multilog = "${bindir}/multilog"
+FILES:multilog = "${bindir}/multilog"
 
 BBCLASSEXTEND = "native"

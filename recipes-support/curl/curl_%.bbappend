@@ -1,3 +1,1 @@
-PACKAGECONFIG_remove += "gnutls"
-
-PACKAGECONFIG_append += "ssl"
+PACKAGECONFIG:remove = " libidn"

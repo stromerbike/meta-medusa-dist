@@ -7,10 +7,10 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=c6a37c0d0de68f28a9a4503fed2ab10d"
 
 PV = "gitr${SRCPV}"
 
-SRC_URI = "git://github.com/gosquared/${BPN}.git;protocol=git;branch=master"
+SRC_URI = "git://github.com/gosquared/${BPN}.git;protocol=https;branch=master"
 SRCREV = "1d382a9ea87667ac59c493b8fd771f49ce837e6a"
 
-FILES_${PN}_append = " ${datadir}/flags/*"
+FILES:${PN}:append = " ${datadir}/flags/*"
 
 S = "${WORKDIR}/git"
 
