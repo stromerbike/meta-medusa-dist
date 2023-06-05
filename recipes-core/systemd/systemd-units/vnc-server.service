@@ -5,7 +5,7 @@ Wants=late-init.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/x11vnc -forever -rawfb /dev/fb0 -pipeinput UINPUT:direct_abs=/dev/input/event1
+ExecStart=/usr/bin/x11vnc -forever -rawfb /dev/fb0 -pipeinput UINPUT:direct_abs=/dev/input/event0
 KillSignal=SIGINT
 
 [Install]

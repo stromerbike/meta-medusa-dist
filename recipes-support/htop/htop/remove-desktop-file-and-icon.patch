@@ -1,19 +1,24 @@
 diff --git a/Makefile.am b/Makefile.am
-index e033c35..e73087f 100644
+index 2a9cc29f..8d68cfe6 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -5,12 +5,8 @@ AUTOMAKE_OPTIONS = subdir-objects
- bin_PROGRAMS = htop
- 
- dist_man_MANS = htop.1
--EXTRA_DIST = $(dist_man_MANS) htop.desktop htop.png scripts/MakeHeader.py \
-+EXTRA_DIST = $(dist_man_MANS) scripts/MakeHeader.py \
- install-sh autogen.sh missing
+@@ -10,19 +10,10 @@ dist_man_MANS = htop.1
+ EXTRA_DIST = \
+ 	$(dist_man_MANS) \
+ 	autogen.sh \
+-	htop.desktop \
+-	htop.png \
+-	htop.svg \
+ 	build-aux/compile \
+ 	build-aux/depcomp \
+ 	build-aux/install-sh \
+ 	build-aux/missing
 -applicationsdir = $(datadir)/applications
 -applications_DATA = htop.desktop
 -pixmapdir = $(datadir)/pixmaps
 -pixmap_DATA = htop.png
+-appicondir = $(datadir)/icons/hicolor/scalable/apps
+-appicon_DATA = htop.svg
  
- htop_CFLAGS = -pedantic -Wall $(wextra_flag) -std=c99 -D_XOPEN_SOURCE_EXTENDED -DSYSCONFDIR=\"$(sysconfdir)\" -I"$(top_srcdir)/$(my_htop_platform)"
- htop_LDFLAGS = 
-
+ AM_CFLAGS += -pedantic -std=c99 -D_XOPEN_SOURCE_EXTENDED -DSYSCONFDIR="\"$(sysconfdir)\"" -I"$(top_srcdir)/$(my_htop_platform)"
+ AM_LDFLAGS =

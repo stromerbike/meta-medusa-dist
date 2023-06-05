@@ -1,12 +1,13 @@
 diff --git a/configure.ac b/configure.ac
-index 382ef1df5..5ee2defe5 100644
+index 65ae52336..ba682bd79 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -820,18 +820,19 @@ if test x"$LIBUSB_NAME" != x ; then
+@@ -846,19 +846,19 @@ if test x"$LIBUSB_NAME" != x ; then
                    have_libusb=yes ])
     AC_MSG_CHECKING([libusb include dir])
     usb_incdir_found="no"
--   for _incdir in "" "/usr/include/libusb-1.0" "/usr/local/include/libusb-1.0"; do
+-   for _incdir in "" "/usr/include/libusb-1.0" \
+-       "/usr/local/include/libusb-1.0" "/usr/pkg/include/libusb-1.0"; do
 -     _libusb_save_cppflags=$CPPFLAGS
 -     if test -n "${_incdir}"; then
 -       CPPFLAGS="-I${_incdir} ${CPPFLAGS}"
@@ -34,4 +35,3 @@ index 382ef1df5..5ee2defe5 100644
     if test "$usb_incdir_found" = "yes"; then
       AC_MSG_RESULT([${usb_incdir}])
     else
-

@@ -4,9 +4,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 PR = "r0"
 
-RDEPENDS_${PN} = "bash bluez5 dt-utils-barebox-state"
-RRECOMMENDS_${PN} = "hl78xx-firmware-xmodem"
-RSUGGESTS_${PN} = "hl78xx-firmware-sft hl78xx-sft"
+RDEPENDS:${PN} = "bash bluez5 dt-utils-barebox-state"
+RRECOMMENDS:${PN} = "hl78xx-firmware-xmodem"
+RSUGGESTS:${PN} = "hl78xx-firmware-sft hl78xx-sft"
 
 SRC_URI += " \
             file://ble-revision.sh \
@@ -19,7 +19,7 @@ SRC_URI += " \
             file://hostname.sh \
 "
 
-FILES_${PN}_append = " \
+FILES:${PN}:append = " \
     ${sysconfdir}/scripts/ \
 "
 

@@ -1,5 +1,5 @@
 diff --git a/units/systemd-journal-upload.service.in b/units/systemd-journal-upload.service.in
-index 42da70f473..4464b66822 100644
+index e3800473ec..a70315479c 100644
 --- a/units/systemd-journal-upload.service.in
 +++ b/units/systemd-journal-upload.service.in
 @@ -10,8 +10,6 @@
@@ -10,5 +10,5 @@ index 42da70f473..4464b66822 100644
 -After=network-online.target
  
  [Service]
- ExecStart=@rootlibexecdir@/systemd-journal-upload --save-state
+ DynamicUser=yes
 

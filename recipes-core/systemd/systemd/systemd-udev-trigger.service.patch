@@ -1,0 +1,23 @@
+diff --git a/units/systemd-udev-trigger.service b/units/systemd-udev-trigger.service
+index 3d0f7b4f20..1442a71174 100644
+--- a/units/systemd-udev-trigger.service
++++ b/units/systemd-udev-trigger.service
+@@ -8,16 +8,15 @@
+ #  (at your option) any later version.
+ 
+ [Unit]
+-Description=Coldplug All udev Devices
++Description=Coldplug all Devices except input and ubi
+ Documentation=man:udev(7) man:systemd-udevd.service(8)
+ DefaultDependencies=no
+ Wants=systemd-udevd.service
+ After=systemd-udevd-kernel.socket systemd-udevd-control.socket
+-Before=sysinit.target
+ ConditionPathIsReadWrite=/sys
+ 
+ [Service]
+ Type=oneshot
+ RemainAfterExit=yes
+ ExecStart=-udevadm trigger --type=subsystems --action=add
+-ExecStart=-udevadm trigger --type=devices --action=add
++ExecStart=-udevadm trigger -S input -S ubi --type=devices --action=add

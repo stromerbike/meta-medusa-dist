@@ -1,8 +1,8 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://dbus.service.in.patch \
 "
 
-do_install_append_class-target() {
+do_install:append:class-target() {
     rm ${D}${systemd_system_unitdir}/multi-user.target.wants/dbus.service
 }

@@ -9,7 +9,7 @@ PR = "r0"
 PV = "0.0.0+gitr${SRCPV}"
 
 SRC_URI = " \
-           git://github.com/Kavarenshko/plp-mtu-discovery.git;protocol=git;branch=master \
+           git://github.com/Kavarenshko/plp-mtu-discovery.git;protocol=https;branch=master \
 "
 SRCREV = "6a8abc4906744f0fac07f980219bd99378b5fb3d"
 

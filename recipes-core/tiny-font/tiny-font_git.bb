@@ -11,7 +11,7 @@ SRCREV = "a238c565d10a7539a0f036c56e2739e713066316"
 S = "${WORKDIR}/git"
 
 SRC_URI = " \
-    git://github.com/nbah22/tiny-font.git;protocol=git \
+    git://github.com/nbah22/tiny-font.git;protocol=https;branch=master \
 "
 
 do_install() {
@@ -19,4 +19,4 @@ do_install() {
     install -m 0644 ${S}/font4x6.psf.gz ${D}${datadir}/consolefonts
 }
 
-FILES_${PN} = "${datadir}/consolefonts"
+FILES:${PN} = "${datadir}/consolefonts"

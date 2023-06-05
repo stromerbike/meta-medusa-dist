@@ -1,4 +1,4 @@
-do_configure_append() {
+do_configure:append() {
     kconfig_set BAREBOXENV_TARGET n
     kconfig_set BAREBOXCRC32_TARGET n
     kconfig_set KERNEL_INSTALL_TARGET n

@@ -10,10 +10,8 @@ PYPI_PACKAGE_EXT = "zip"
 SRC_URI[md5sum] = "0bf05d40e1af5abea6939215dfcb9105"
 SRC_URI[sha256sum] = "d781a43b0c16ace3f9366aade73e8ad3a7bd5137d58f0b45ab2d3f54876f20db"
 
+SRC_URI += "file://remove_distutils_config.patch"
+
 inherit setuptools3 pypi
 
 S = "${WORKDIR}"
-
-do_install_append() {
-    rm -r ${D}${datadir}
-}

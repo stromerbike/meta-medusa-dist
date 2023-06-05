@@ -1,68 +1,55 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
             file://introduce-wait-online@.service-for-specific-interface.patch \
             file://move_state_file_to_data_partition.patch \
             file://resolved.conf \
-            file://system.conf \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
-            file://systemd-udev-trigger.service.in.patch \
+            file://systemd-udev-trigger.service.patch \
             file://timesyncd.conf \
 "
 
-# backported from poky commit d0b2cedfb0996739c79a1011159b4047988851bf
-SUMMARY_${PN}-journal-upload = "Send journal messages over the network"
-DESCRIPTION_${PN}-journal-upload = "systemd-journal-upload uploads journal entries to a specified URL."
-PACKAGES =+ " \
-    ${PN}-journal-upload \
-"
-SYSTEMD_PACKAGES += "${@bb.utils.contains('PACKAGECONFIG', 'journal-upload', '${PN}-journal-upload', '', d)}"
-FILES_${PN}-journal-upload = "${rootlibexecdir}/systemd/systemd-journal-upload \
-                              ${systemd_system_unitdir}/systemd-journal-upload.service \
-                              ${sysconfdir}/systemd/journal-upload.conf \
-                             "
+RDEPENDS:${PN} += "systemd-udev systemd-units"
 
-PACKAGECONFIG_append = " \
-    journal-upload \
-"
+RRECOMMENDS:${PN}:remove = " systemd-extra-utils udev-hwdb util-linux-fsck e2fsprogs-e2fsck"
 
-RDEPENDS_${PN} += "systemd-udev systemd-units"
-
-RRECOMMENDS_${PN}_remove = " systemd-extra-utils systemd-compat-units udev-hwdb util-linux-fsck e2fsprogs-e2fsck"
-
-PACKAGECONFIG_remove = " \
+PACKAGECONFIG:remove = " \
     backlight \
     binfmt \
-    firstboot \
+    gshadow \
     hibernate \
+    idn \
     ima \
     localed \
     logind \
     machined \
     myhostname \
     nss \
-    polkit \
+    nss-mymachines \
+    nss-resolve \
     quotacheck \
     randomseed \
     smack \
     sysusers \
+    sysvinit \
+    userdb \
     utmp \
     vconsole \
-    xz \
+    wheel-group \
+    zstd \
 "
 
 PACKAGECONFIG[bashcompletion] = ",-Dbashcompletiondir=no,"
 PACKAGECONFIG[hwdb] = "-Dhwdb=true,-Dhwdb=false,hwdb"
 
-do_install_append() {
+do_install:append() {
     install -m 0644 ${WORKDIR}/resolved.conf ${D}${sysconfdir}/systemd
-    install -m 0644 ${WORKDIR}/system.conf ${D}${sysconfdir}/systemd
     install -m 0644 ${WORKDIR}/timesyncd.conf ${D}${sysconfdir}/systemd
 
     # disable virtual console service
-    rm ${D}${sysconfdir}/systemd/system/getty.target.wants/getty@tty1.service
+    sed -i 's/enable getty@.service/disable getty@.service/g' ${D}${systemd_unitdir}/system-preset/90-systemd.preset
 
     # remove unused mounts
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-kernel-config.mount
@@ -86,7 +73,7 @@ do_install_append() {
     sed -i '/GROUP=\"render\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
 
     # use fixed machine-id
-    echo "1234567890abcdef1234567890abcdef" | tee ${D}${sysconfdir}/machine-id
+    #echo "1234567890abcdef1234567890abcdef" | tee ${D}${sysconfdir}/machine-id
     rm ${D}${base_bindir}/systemd-machine-id-setup
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
@@ -94,11 +81,6 @@ do_install_append() {
     # use recommended mode of operation for resolved
     rm ${D}${sysconfdir}/resolv-conf.systemd
     ln -s ../run/systemd/resolve/stub-resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
-
-    # start resolved and timesyncd service after gps.target
-    install -d ${D}${sysconfdir}/systemd/system/gsm.target.wants
-    mv ${D}${sysconfdir}/systemd/system/multi-user.target.wants/systemd-resolved.service ${D}${sysconfdir}/systemd/system/gsm.target.wants/systemd-resolved.service
-    mv ${D}${sysconfdir}/systemd/system/sysinit.target.wants/systemd-timesyncd.service ${D}${sysconfdir}/systemd/system/gsm.target.wants/systemd-timesyncd.service
 
     # allow journal to fill up log partition almost to its maximum
     sed -i 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
@@ -114,7 +96,5 @@ do_install_append() {
     # remove unused generators
     rm ${D}${systemd_unitdir}/system-generators/systemd-debug-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-gpt-auto-generator
-    rm ${D}${systemd_unitdir}/system-generators/systemd-rc-local-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-system-update-generator
-    rm ${D}${systemd_unitdir}/system-generators/systemd-sysv-generator
 }

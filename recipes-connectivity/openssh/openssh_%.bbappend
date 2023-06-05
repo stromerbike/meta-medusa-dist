@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://id_rsa_medusa_root.pub \
             file://id_rsa_medusa_user.pub \
@@ -12,7 +12,7 @@ SRC_URI += " \
             file://ssh_host_rsa_key.pub \
 "
 
-do_install_append() {
+do_install:append() {
     # install public part of ssh key for "root"
     install -d ${D}/home/root/.ssh/
     install -m 0644 ${WORKDIR}/id_rsa_medusa_root.pub ${D}/home/root/.ssh/authorized_keys
@@ -49,10 +49,10 @@ do_install_append() {
     sed -i 's/^[#[:space:]]*UsePAM.*/UsePAM no/' ${D}${sysconfdir}/ssh/sshd_config*
 }
 
-FILES_${PN} += " \
+FILES:${PN} += " \
                 /home/root/.ssh/authorized_keys \
                 /home/user/.ssh/authorized_keys \
 "
 
-RDEPENDS_${PN}_remove += "${PN}-keygen"
-RDEPENDS_${PN}-sshd_remove += "${PN}-keygen"
+RDEPENDS:${PN}:remove = " ${PN}-keygen"
+RDEPENDS:${PN}-sshd:remove = " ${PN}-keygen"

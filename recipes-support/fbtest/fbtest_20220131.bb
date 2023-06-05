@@ -2,14 +2,14 @@ SUMMARY = "fbtest"
 DESCRIPTION = "This program supports you with adjusting display settings."
 HOMEPAGE = "https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git"
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ea5bed2f60d357618ca161ad539f7c0a"
 
 PR = "r1"
 
 # Revert back to kernel.org once ca-certificates has been updated in development environments.
-# "git://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git;protocol=https"
-SRC_URI = "git://kernel.googlesource.com/pub/scm/linux/kernel/git/geert/fbtest;protocol=https \
+# "git://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git;protocol=https;branch=master"
+SRC_URI = "git://kernel.googlesource.com/pub/scm/linux/kernel/git/geert/fbtest;protocol=https;branch=master \
            file://0001-provide-a-pre-generated-penguin.c-to-get-rid-of-this.patch \
            file://add-option-norestore.patch \
            file://repair-make-rules.patch \

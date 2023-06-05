@@ -1,2 +1,2 @@
 # Required by qtbase
-PACKAGECONFIG_append = " pcre16"
+PACKAGECONFIG:append = " pcre16"

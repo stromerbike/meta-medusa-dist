@@ -175,7 +175,7 @@ umount_usb ()
 await_shutdown ()
 {
     echo "Waiting for touch event..."
-    while evtest --query /dev/input/event1 EV_KEY BTN_TOUCH; do
+    while evtest --query /dev/input/event0 EV_KEY BTN_TOUCH; do
         sleep 0.1
     done
     echo "...done"
