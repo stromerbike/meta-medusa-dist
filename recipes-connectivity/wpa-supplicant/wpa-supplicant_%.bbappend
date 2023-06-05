@@ -1,10 +1,10 @@
-PACKAGECONFIG_remove += "gnutls"
+PACKAGECONFIG:remove = " gnutls"
 
-PACKAGECONFIG_append += "openssl"
+PACKAGECONFIG:append = " openssl"
 
-SYSTEMD_SERVICE_${PN} += "wpa_supplicant-wext@.service"
+SYSTEMD_SERVICE:${PN} += "wpa_supplicant-wext@.service"
 
-do_install_append() {
+do_install:append() {
     cp ${D}${systemd_system_unitdir}/wpa_supplicant-nl80211@.service ${D}${systemd_system_unitdir}/wpa_supplicant-wext@.service
     sed -i 's/nl80211/wext/' ${D}${systemd_system_unitdir}/wpa_supplicant-wext@.service
     sed -i 's/-Dnl80211/-Dwext/' ${D}${systemd_system_unitdir}/wpa_supplicant-wext@.service

@@ -4,7 +4,7 @@ SECTION = "console/utils"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=22c6ab45312590e4752810768e93ef66"
 
-RDEPENDS_${PN} = "python-argparse python-pyserial"
+RDEPENDS:${PN} = "python-argparse python-pyserial"
 
 PR = "r0+gitr${SRCPV}"
 
@@ -13,14 +13,14 @@ SRCREV = "2d39fb9caacc4dc1067e5d131cab127735a93fe3"
 S = "${WORKDIR}/git"
 
 SRC_URI = " \
-            git://github.com/dimhoff/mt333x-fw-utils.git;protocol=git \
+            git://github.com/dimhoff/mt333x-fw-utils.git;protocol=https;branch=master \
             file://MTK_AllInOne_DA_MT3318_v4.01.bin \
             file://MTK_AllInOne_DA_MT3329_v4.02.bin \
             file://MTK_AllInOne_DA_MT3333.bin \
             file://MTK_AllInOne_DA_MT3339_E3.bin \
 "
 
-FILES_${PN} = "${sysconfdir}/mediatek/"
+FILES:${PN} = "${sysconfdir}/mediatek/"
 
 do_install() {
     install -d ${D}${sysconfdir}/mediatek/

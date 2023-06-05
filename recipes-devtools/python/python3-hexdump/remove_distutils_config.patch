@@ -1,0 +1,73 @@
+diff -ur hexdump-3.3_orig/setup.py hexdump-3.3/setup.py
+--- hexdump-3.3_orig/setup.py	2016-01-22 16:36:38.000000000 +0100
++++ hexdump-3.3/setup.py	2023-04-04 12:01:23.387045456 +0200
+@@ -38,58 +38,7 @@
+     return text.decode('utf-8')
+ 
+ 
+-# --- distutils config
+-
+-import os
+-import textwrap
+-import zipfile
+-from distutils.core import setup
+-from distutils import log
+-from distutils import archive_util
+-
+-# Distutils 'API' to ship test data along with hexdump.py
+-# http://stackoverflow.com/questions/1612733/including-non-python-files-with-setup-py
+-from distutils.command.install import INSTALL_SCHEMES
+-for scheme in INSTALL_SCHEMES.values():
+-  scheme['data'] = scheme['purelib']
+-
+-# Override sdist to always produce .zip archive (initialize_options),
+-# strip top dir from .zip that prevent import (make_archive)
+-# and make the .zip file executable (run method)
+-# https://docs.python.org/2/distutils/extending.html
+-# https://docs.python.org/2/distutils/apiref.html#creating-a-new-distutils-command
+-from distutils.command.sdist import sdist as _sdist
+-class sdistzip(_sdist):
+-    mainpy_tpl = textwrap.dedent("""\
+-        import sys
+-        import {modname}
+-        sys.exit({modname}.main())
+-        """)
+-    def initialize_options(self):
+-        _sdist.initialize_options(self)
+-        self.formats = 'zip'
+-    def make_archive(self, base_name, format, root_dir=None, base_dir=None,
+-                     owner=None, group=None):
+-        log.info('[custom] strip extra dir from archive structure')
+-        root = base_dir
+-        return archive_util.make_archive(base_name, format, root_dir=root,
+-                     dry_run=self.dry_run, owner=owner, group=group)
+-    def run(self):
+-        _sdist.run(self)
+-        for archive in self.archive_files:
+-            if archive.endswith('.zip'):
+-                log.info('[custom] making \'%s\' executable' % archive)
+-                self.make_executable(archive)
+-    def make_executable(self, archive):
+-        zf = zipfile.ZipFile(archive, 'a', zipfile.ZIP_DEFLATED)
+-        tplvars = dict(
+-            modname = self.distribution.get_name(),
+-            importdir = self.distribution.get_fullname())
+-        text = self.mainpy_tpl.format(**tplvars)
+-        zf.writestr('__main__.py', text)
+-        zf.close()
+-
+-# /-- distutils config
++from setuptools import setup
+ 
+ setup(
+     name='hexdump',
+@@ -111,9 +60,6 @@
+     ],
+ 
+     py_modules=['hexdump'],
+-    data_files=[('data', ['data/hexfile.bin'])],
+ 
+     long_description=get_description('README.txt'),
+-
+-    cmdclass={'sdist': sdistzip},
+ )

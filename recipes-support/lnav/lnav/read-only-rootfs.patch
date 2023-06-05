@@ -1,41 +1,64 @@
+diff --git a/src/lnav_config.cc b/src/lnav_config.cc
+index 4e9396a0..8f2e77bc 100644
+--- a/src/lnav_config.cc
++++ b/src/lnav_config.cc
+@@ -1448,10 +1448,6 @@ load_config(const std::vector<ghc::filesystem::path>& extra_paths,
+         auto write_res = lnav::filesystem::write_file(sample_path,
+                                                       bsf.to_string_fragment());
+         if (write_res.isErr()) {
+-            fprintf(stderr,
+-                    "error:unable to write default config file: %s -- %s\n",
+-                    sample_path.c_str(),
+-                    write_res.unwrapErr().c_str());
+         }
+     }
+ 
 diff --git a/src/log_format_loader.cc b/src/log_format_loader.cc
-index 7c131df..917a695 100644
+index ba895f7b..dee2c350 100644
 --- a/src/log_format_loader.cc
 +++ b/src/log_format_loader.cc
-@@ -665,7 +665,6 @@ static void write_sample_file(void)
-         (write(sample_fd.get(),
-                default_log_formats_json,
-                strlen(default_log_formats_json)) == -1)) {
--        perror("error: unable to write default format file");
-     }
- 
-     string sh_path = dotlnav_path("formats/default/dump-pid.sh");
-@@ -673,7 +672,6 @@ static void write_sample_file(void)
- 
-     if ((sh_fd = open(sh_path.c_str(), O_WRONLY|O_TRUNC|O_CREAT, 0755)) == -1 ||
-         write(sh_fd.get(), dump_pid_sh, strlen(dump_pid_sh)) == -1) {
--        perror("error: unable to write default text file");
-     }
- 
-     static const char *SCRIPTS[] = {
-@@ -703,7 +701,6 @@ static void write_sample_file(void)
+@@ -1003,10 +1003,6 @@ write_sample_file()
+                 == -1
+             || (write(sample_fd.get(), sf.data(), sf.length()) == -1))
+         {
+-            fprintf(stderr,
+-                    "error:unable to write default format file: %s -- %s\n",
+-                    sample_path.c_str(),
+-                    strerror(errno));
          }
-         if ((script_fd = open(script_path.c_str(), O_WRONLY|O_TRUNC|O_CREAT, 0755)) == -1 ||
-             write(script_fd.get(), script_content, script_len) == -1) {
--            perror("error: unable to write default text file");
+     }
+ 
+@@ -1021,10 +1017,6 @@ write_sample_file()
+                 == -1
+             || write(sh_fd.get(), sf.data(), sf.length()) == -1)
+         {
+-            fprintf(stderr,
+-                    "error:unable to write default text file: %s -- %s\n",
+-                    sh_path.c_str(),
+-                    strerror(errno));
+         }
+     }
+ 
+@@ -1047,10 +1039,6 @@ write_sample_file()
+                 == -1
+             || write(script_fd.get(), sf.data(), sf.length()) == -1)
+         {
+-            fprintf(stderr,
+-                    "error:unable to write default text file: %s -- %s\n",
+-                    script_path.c_str(),
+-                    strerror(errno));
          }
      }
  }
 diff --git a/src/session_data.cc b/src/session_data.cc
-index b07e964..13c40d4 100644
+index acc0f7c7..190f5873 100644
 --- a/src/session_data.cc
 +++ b/src/session_data.cc
-@@ -1217,7 +1217,6 @@ void save_session()
-     view_file_tmp_name = view_file_name + ".tmp";
+@@ -1398,7 +1398,6 @@ save_session_with_id(const std::string& session_id)
+     auto view_file_tmp_name = view_file_name.string() + ".tmp";
  
      if ((file = fopen(view_file_tmp_name.c_str(), "w")) == nullptr) {
 -        perror("Unable to open session file");
-     }
-     else if (nullptr == (handle = yajl_gen_alloc(nullptr))) {
+     } else if (nullptr == (handle = yajl_gen_alloc(nullptr))) {
          perror("Unable to create yajl_gen object");
-
+     } else {

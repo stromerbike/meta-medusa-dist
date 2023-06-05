@@ -1,1 +1,1 @@
-PACKAGECONFIG_append = " lzma"
+PACKAGECONFIG:append = " lzma"

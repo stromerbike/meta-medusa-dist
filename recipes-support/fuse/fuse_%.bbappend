@@ -1,3 +1,3 @@
-do_install_append() {
+do_install:append() {
     rm -r ${D}${sysconfdir}/modules-load.d/
 }

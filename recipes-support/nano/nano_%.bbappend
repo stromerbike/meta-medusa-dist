@@ -1,11 +1,11 @@
-RDEPENDS_${PN}_remove += "ncurses-terminfo"
-RDEPENDS_${PN}_append += "ncurses-terminfo-base"
+RDEPENDS:${PN}:remove = " ncurses-terminfo"
+RDEPENDS:${PN}:append = " ncurses-terminfo-base"
 
-DEPENDS_remove += "file"
+DEPENDS:remove = " file"
 
-FILES_${PN} += "${sysconfdir}/nanorc"
+FILES:${PN} += "${sysconfdir}/nanorc"
 
-do_install_append() {
+do_install:append() {
     # enable syntax highlighting
     install -d ${D}${sysconfdir}
     echo "include \"/usr/share/nano/*.nanorc\"" | tee -a ${D}${sysconfdir}/nanorc

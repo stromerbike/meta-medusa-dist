@@ -1,5 +1,5 @@
-PACKAGECONFIG_remove += "scripting"
+PACKAGECONFIG:remove = " scripting"
 
-do_install_append() {
+do_install:append() {
     rm -r ${D}/${sysconfdir}/bash_completion.d
 }

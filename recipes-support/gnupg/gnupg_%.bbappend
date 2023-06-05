@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://add-libusb-directory-configure-arg.patch \
             file://do-not-try-to-use-gettext.patch \
@@ -10,17 +10,17 @@ EXTRA_OECONF += "--enable-ccid-driver \
                  --with-libusb=${STAGING_INCDIR} \
 "
 
-PACKAGECONFIG_remove = "gnutls"
+PACKAGECONFIG:remove = " gnutls"
 
-FILES_${PN} = "${bindir}/* ${datadir}/* ${libexecdir}/* ${sbindir}/*"
+FILES:${PN} = "${bindir}/* ${datadir}/* ${libexecdir}/* ${sbindir}/*"
 
-RDEPENDS_${PN} = "${PN}-gpgv"
+RDEPENDS:${PN} = "${PN}-gpgv"
 PACKAGES =+ "${PN}-gpgv"
-FILES_${PN}-gpgv = "${bindir}/gpgv*"
+FILES:${PN}-gpgv = "${bindir}/gpgv*"
 
-FILES_${PN}-gpgv += "${sysconfdir}/gnupg/pubring.gpg"
+FILES:${PN}-gpgv += "${sysconfdir}/gnupg/pubring.gpg"
 
-do_install_append() {
+do_install:append() {
     # remove help texts
     rm -r ${D}${datadir}/gnupg/help.*
 

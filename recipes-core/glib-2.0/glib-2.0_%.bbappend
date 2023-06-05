@@ -1,1 +1,1 @@
-RRECOMMENDS_${PN}_remove = "shared-mime-info"
+RRECOMMENDS:${PN}:remove = "shared-mime-info"
