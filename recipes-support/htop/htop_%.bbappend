@@ -4,6 +4,3 @@ SRC_URI += " \
 "
 
 PACKAGECONFIG:remove = " delayacct"
-
-# TODO: still required with patch?
-FILES:${PN}:remove = " ${datadir}/icons/hicolor/scalable/apps/htop.svg"
