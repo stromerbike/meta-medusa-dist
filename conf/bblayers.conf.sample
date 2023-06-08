@@ -6,8 +6,7 @@ BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
 OEROOT := "##OEROOT##"
-BBLAYERS  ?= " \
-  ${OEROOT}/../meta-medusa-backport \
+BBLAYERS ?= " \
   ${OEROOT}/meta \
   ${OEROOT}/meta-poky \
   ${OEROOT}/meta-yocto-bsp \
