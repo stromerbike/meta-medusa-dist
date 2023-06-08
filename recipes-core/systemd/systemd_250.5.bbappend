@@ -72,8 +72,7 @@ do_install:append() {
     sed -i '/GROUP=\"kvm\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
     sed -i '/GROUP=\"render\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
 
-    # use fixed machine-id
-    #echo "1234567890abcdef1234567890abcdef" | tee ${D}${sysconfdir}/machine-id
+    # remove machine-id related services since a fixed one is used
     rm ${D}${base_bindir}/systemd-machine-id-setup
     rm ${D}${systemd_system_unitdir}/systemd-machine-id-commit.service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-machine-id-commit.service
