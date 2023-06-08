@@ -59,6 +59,7 @@ BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
 # Set empty root password and add user
+# Remark: The "useradd-staticids" class is not used for simplicity, since all uid's and gid's would have to be defined ourselves.
 INHERIT += "extrausers"
 EXTRA_USERS_PARAMS = "usermod -p '' root; usermod -s /bin/bash root; \
                       useradd -p '' user; usermod -s /bin/bash user; usermod -G systemd-journal user; \
