@@ -1,3 +1,7 @@
+# protobuf branch name change
+SRC_URI:remove = "git://github.com/protocolbuffers/protobuf.git;destsuffix=git/src/third_party/protobuf/protobuf;name=protobuf;branch=master;protocol=https"
+SRC_URI:append = " git://github.com/protocolbuffers/protobuf.git;destsuffix=git/src/third_party/protobuf/protobuf;name=protobuf;branch=main;protocol=https"
+
 RDEPENDS:${PN}-dev += "${PN}-staticdev"
 
 EXTRA_OECONF:append:class-target = " --disable-tools"
