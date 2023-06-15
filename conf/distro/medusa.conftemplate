@@ -73,7 +73,3 @@ VOLATILE_LOG_DIR = "no"
 
 # Missing dependency in manifest for zipfile https://github.com/python/cpython/blob/3.10/Lib/importlib/readers.py#L2
 IMAGE_INSTALL:append = " python3-compression"
-
-# protobuf branch name change in breakpad recipe
-SRC_URI:remove:pn-breakpad = "git://github.com/protocolbuffers/protobuf.git;destsuffix=git/src/third_party/protobuf/protobuf;name=protobuf;branch=master;protocol=https"
-SRC_URI:append:pn-breakpad = " git://github.com/protocolbuffers/protobuf.git;destsuffix=git/src/third_party/protobuf/protobuf;name=protobuf;branch=main;protocol=https"
