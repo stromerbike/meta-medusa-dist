@@ -1,12 +1,12 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 914a761..035b5bf 100644
+index 83ded10..2ce45d0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -93,6 +93,7 @@ IF ( NOT VERSION )
-    # SET(BUILD_NUMBER ${GIT_VERSION})
+@@ -90,6 +90,7 @@ IF ( NOT VERSION )
+    message( STATUS "version remainder: ${VERSION-REMAINDER}" )
     SET(BUILD_NUMBER ${VERSION-BASE})
     SET(VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${BUILD_NUMBER}-${VERSION-REMAINDER})
-+   SET(VERSION "1.3.0-0")
++   SET(VERSION "2.3.0-0")
  ENDIF()
  message( STATUS "Software Version: ${VERSION}" )
  
