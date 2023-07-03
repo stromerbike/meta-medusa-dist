@@ -5,6 +5,7 @@ IMAGE_INSTALL = " \
                   ${CORE_IMAGE_EXTRA_INSTALL} \
 "
 inherit core-image python3-dir
+inherit populate_sdk_qt5_base
 
 SUMMARY = ""
 DESCRIPTION = "Medusa image"
@@ -87,3 +88,6 @@ IMAGE_CMD_TAR = "tar --sort=name"
 # Create debug file system
 #IMAGE_GEN_DEBUGFS = "1"
 #IMAGE_FSTYPES_DEBUGFS = "tar.xz"
+
+# Ensure that qmake and protoc are part of the SDK
+TOOLCHAIN_HOST_TASK:append = " nativesdk-packagegroup-qt5-toolchain-host nativesdk-protobuf-compiler"
