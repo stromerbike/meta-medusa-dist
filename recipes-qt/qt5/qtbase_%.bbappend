@@ -328,6 +328,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-proxymodel \
        -feature-pushbutton \
     -no-feature-radiobutton \
+       -feature-raster-64bit \
        -feature-regularexpression \
     -no-feature-relocatable \
        -feature-resizehandler \
