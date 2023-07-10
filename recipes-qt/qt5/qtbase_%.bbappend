@@ -1,6 +1,6 @@
 # https://qtlite.com
 
-PACKAGECONFIG:append = " libinput linuxfb no-opengl"
+PACKAGECONFIG:append = " libinput linuxfb no-opengl kms"
 PACKAGECONFIG_DEFAULT = "udev widgets libs ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
 
