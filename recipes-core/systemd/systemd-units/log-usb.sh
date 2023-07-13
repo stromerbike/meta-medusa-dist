@@ -60,13 +60,13 @@ unmount_usb ()
 if [ -d "/mnt/usb/log" ]; then
     led1_blue
     LOGFILE="/mnt/usb/log/$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
-    echo "Writing short log to $LOGFILE-short.zip..."
+    echo "Writing short log to $LOGFILE-short.gz..."
     led2_blue
-    if journalctl -a -o short-precise --no-hostname --no-pager | gzip > $LOGFILE-short.zip; then
-        echo "...done ($(stat -c%s $LOGFILE-short.zip) bytes written)"
-        echo "Writing json log to $LOGFILE-json.zip..."
-        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.zip; then
-            echo "...done ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+    if journalctl -a -o short-precise --no-hostname --no-pager | gzip > $LOGFILE-short.gz; then
+        echo "...done ($(stat -c%s $LOGFILE-short.gz) bytes written)"
+        echo "Writing json log to $LOGFILE-json.gz..."
+        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.gz; then
+            echo "...done ($(stat -c%s $LOGFILE-json.gz) bytes written)"
             for i in btmon candump
             do
                 if [ -d "/mnt/data/$i" ] && [ ! -z "$(ls -A /mnt/data/$i)" ]; then
@@ -89,13 +89,13 @@ if [ -d "/mnt/usb/log" ]; then
             done
             unmount_usb
         else
-            echo "<3>...ERROR ($(stat -c%s $LOGFILE-json.zip) bytes written)"
+            echo "<3>...ERROR ($(stat -c%s $LOGFILE-json.gz) bytes written)"
             unmount_usb
             led2_red
             exit 1
         fi
     else
-        echo "<3>...ERROR ($(stat -c%s $LOGFILE-short.zip) bytes written)"
+        echo "<3>...ERROR ($(stat -c%s $LOGFILE-short.gz) bytes written)"
         led2_red
         exit 1
     fi
