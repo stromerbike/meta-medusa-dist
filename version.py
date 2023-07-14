@@ -31,9 +31,14 @@ def isFileContentChanged(filePath, newContent):
 
 if __name__ == '__main__':
     codename = get_medusa_codename()
-    git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
-    git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()[:8]
-    git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
+    try: # Python 3
+        git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip().decode('utf-8')
+        git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip().decode('utf-8')[:8]
+        git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip().decode('utf-8')
+    except AttributeError: # Python 2
+        git_date_time = subprocess.check_output(['git', 'log', '-1', '--format=%cd', '--date=format:%Y-%m-%d-%H%M%S'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
+        git_hash_short = subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()[:8]
+        git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=os.path.dirname(os.path.realpath(__file__)) + '/..').strip()
     variant = get_medusa_variant()
 
     content = ''
