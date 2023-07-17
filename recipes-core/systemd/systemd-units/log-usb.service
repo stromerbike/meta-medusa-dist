@@ -1,7 +1,7 @@
 [Unit]
 Description=log-usb
-After=mnt-log.service led.service hostname-set.service check.target
-Wants=mnt-log.service led.service hostname-set.service check.target
+After=mnt-log.service hostname-set.service check.target
+Wants=mnt-log.service hostname-set.service check.target
 BindsTo=mnt-usb.service
 
 [Service]
