@@ -184,13 +184,13 @@ do
                     # 1: CAT-M
                     # 2: NB-IoT
                     # 3: GSM
-                    if [[ $RESPONSE =~ \+KSELACQ:\ 1,3 ]]; then
+                    if [[ $RESPONSE =~ \+KSELACQ:\ 1,3,2 ]]; then
                         echo "...PRL selection is set correctly"
                         PRL_SELECTION_DONE="yes"
                     elif [[ $RESPONSE =~ (\+KSELACQ:\ [^$'\r\n']+) ]]; then
                         echo "...PRL selection is supported but has to be adjusted..."
                         prepareComport
-                        RESPONSE="$(grep -m1 "OK\|ERROR" <(echo -e "AT+KSELACQ=0,1,3\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
+                        RESPONSE="$(grep -m1 "OK\|ERROR" <(echo -e "AT+KSELACQ=0,1,3,2\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
                         cleanupComport
                         cat $FULL_RESPONSE
                         if [[ $RESPONSE =~ OK ]]; then
