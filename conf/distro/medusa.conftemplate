@@ -112,3 +112,12 @@ VOLATILE_LOG_DIR = "no"
 # Remark: Everything else in /lib/.debug is removed in glibc_%.bbappend
 IMAGE_INSTALL_append = " ${TCLIBC}-dbg "
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
+
+# Source mirror settings
+SOURCE_MIRROR_URL = "https://gitlab-yocto-mirror.stromerbike.com/downloads/"
+INHERIT += "own-mirrors"
+
+# State mirror settings
+BB_HASHSERVE = ""
+BB_SIGNATURE_HANDLER = "OEBasicHash"
+SSTATE_MIRRORS ?= "file://.* https://gitlab-yocto-mirror.stromerbike.com/sstate-cache/PATH;downloadfilename=PATH"
