@@ -71,5 +71,14 @@ EXTRA_IMAGE_FEATURES = "debug-tweaks read-only-rootfs"
 # Do not symlink log to a volatile storage in order to have a persistent systemd journal
 VOLATILE_LOG_DIR = "no"
 
+# Source mirror settings
+SOURCE_MIRROR_URL = "https://gitlab-yocto-mirror.stromerbike.com/downloads/"
+INHERIT += "own-mirrors"
+
+# State mirror settings
+BB_HASHSERVE = ""
+BB_SIGNATURE_HANDLER = "OEBasicHash"
+SSTATE_MIRRORS ?= "file://.* https://gitlab-yocto-mirror.stromerbike.com/sstate-cache/PATH;downloadfilename=PATH"
+
 # Missing dependency in manifest for zipfile https://github.com/python/cpython/blob/3.10/Lib/importlib/readers.py#L2
 IMAGE_INSTALL:append = " python3-compression"
