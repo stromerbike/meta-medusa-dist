@@ -1,10 +1,17 @@
 SYSTEMD_AUTO_ENABLE_${PN} = "disable"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-SRC_URI += " \
-            file://gpsd.service.patch \
-            file://gpsdctl-output-info-instead-of-error-on-action.patch \
+SRC_URI = "git://git.savannah.gnu.org/gpsd.git \
+           file://0001-SConstruct-prefix-includepy-with-sysroot-and-drop-sy.patch \
+           file://0004-SConstruct-disable-html-and-man-docs-building-becaus.patch \
+           file://0001-include-sys-ttydefaults.h.patch \
+           file://gpsd.service.patch \
+           file://gpsdctl-output-info-instead-of-error-on-action.patch \
 "
+
+SRCREV = "18bc54e3ef722495a7ff84db7321c1a399806149"
+
+S = "${WORKDIR}/git"
 
 EXTRA_OESCONS += " \
     debug='false' \
