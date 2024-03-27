@@ -274,7 +274,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-gssapi \
     -no-feature-highdpiscaling \
     -no-feature-hijricalendar \
-    -no-feature-http \
+       -feature-http \
     -no-feature-iconv \
     -no-feature-identityproxymodel \
     -no-feature-im \
@@ -375,7 +375,7 @@ QT_CONFIG_FLAGS += " \
     -no-feature-textmarkdownreader \
     -no-feature-textmarkdownwriter \
     -no-feature-textodfwriter \
-    -no-feature-thread \
+       -feature-thread \
        -feature-timezone \
     -no-feature-toolbar \
     -no-feature-toolbox \
