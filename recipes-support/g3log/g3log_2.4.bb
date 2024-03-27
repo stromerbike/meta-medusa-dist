@@ -12,7 +12,7 @@ SRC_URI = " \
     git://github.com/KjellKod/${BPN}.git;protocol=https;branch=master \
     file://0001-fix_version.patch \
 "
-SRCREV = "4f1224b9d52d7bfe74fde2bf31f88733ce04d19d"
+SRCREV = "5980182db04e4efc6c110e8ae142fe00540e9619"
 
 S = "${WORKDIR}/git"
 
@@ -31,5 +31,6 @@ EXTRA_OECMAKE = " \
                   -DCMAKE_BUILD_TYPE=Release \
                   -DUSE_DYNAMIC_LOGGING_LEVELS=1 \
                   -DENABLE_FATAL_SIGNALHANDLING=OFF \
+                  -DADD_G3LOG_UNIT_TEST=OFF \
                   -DCPACK_INSTALL_PREFIX=${prefix} \
 "
