@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d11a250..df67ac3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -160,8 +160,4 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+ endif()
+ 
+ install(TARGETS btop RUNTIME)
+-install(FILES "btop.desktop" DESTINATION "share/applications")
+-install(FILES "Img/icon.png" DESTINATION "share/icons/hicolor/48x48/apps" RENAME "btop.png")
+-install(FILES "Img/icon.svg" DESTINATION "share/icons/hicolor/scalable/apps" RENAME "btop.svg")
+-install(DIRECTORY "themes" DESTINATION "share/btop")
+ 
