@@ -1,0 +1,260 @@
+From a61f364e385d98677c04070a994397b287385219 Mon Sep 17 00:00:00 2001
+From: Linex <26711215+linex-cd@users.noreply.github.com>
+Date: Tue, 1 Aug 2023 18:53:24 +0800
+Subject: [PATCH] Support shm key and drm for rawfb option
+
+This will support both x11 and Wayland. (#227)
+
+* Add support shm key for rawfb option
+
+Sometime shmid is not same on different time or system, we should use a constant ID for shm. Here use shm key to instead.
+
+* Add DRM support
+
+access GPU with DRM, this will support x11 and wayland
+
+* Fix a bug for shmget params.
+
+shmget should be 0 otherwise it would alloc a new shared memory but not for the frame buffer.
+
+* fix drm configure while compiling.
+---
+ configure.ac    |  22 +++++++++
+ doc/OPTIONS.md  |  11 ++++-
+ src/Makefile.am |   1 +
+ src/screen.c    | 123 +++++++++++++++++++++++++++++++++++++++++++++++-
+ src/x11vnc.h    |   7 +++
+ 5 files changed, 161 insertions(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6b62ac55..40f148d7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -22,6 +22,12 @@ AC_ARG_WITH(ssl,
+ [  --without-ssl           disable support for openssl libssl]
+ [  --with-ssl=DIR          use openssl include/library files in DIR],,)
+ 
++AH_TEMPLATE(HAVE_LIBDRM, [drm library present])
++AC_ARG_WITH(drm,
++[  --without-drm           disable support for library libdrm]
++[  --with-drm=DIR          use drm include/library files in DIR],,)
++
++
+ if test "x$with_crypto" != "xno" -a "x$with_ssl" != "xno"; then
+ 	if test ! -z "$with_ssl" -a "x$with_ssl" != "xyes"; then
+ 		saved_CPPFLAGS="$CPPFLAGS"
+@@ -59,6 +65,22 @@ if test "x$with_crypt" != "xno"; then
+ fi
+ AC_SUBST(CRYPT_LIBS)
+ 
++AH_TEMPLATE(HAVE_LIBDRM, [libdrm library present])
++AC_ARG_WITH(drm,
++[  --without-drm         disable support for libdrm],,)
++if test "x$with_drm" != "xno"; then
++	AC_CHECK_FUNCS([drm], HAVE_LIBC_DRM="true")
++	if test -z "$HAVE_LIBC_DRM"; then
++		AC_CHECK_LIB(drm, drmModeGetResources,
++			DRM_LIBS="-ldrm"
++			[AC_DEFINE(HAVE_LIBDRM) HAVE_LIBDRM="true"], ,)
++
++
++		CPPFLAGS="$saved_CPPFLAGS -I$with_drm/include/drm"
++	fi
++fi
++AC_SUBST(DRM_LIBS)
++
+ AH_TEMPLATE(HAVE_X509_PRINT_EX_FP, [open ssl X509_print_ex_fp available])
+ if test "x$with_ssl" != "xno"; then
+ 	if test "x$HAVE_LIBCRYPTO" = "xtrue"; then
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 11168c7b..dc2242e9 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -140,6 +140,7 @@ AM_CPPFLAGS = \
+ x11vnc_LDADD = \
+ 	$(LDADD) \
+ 	@SSL_LIBS@ \
++	@DRM_LIBS@ \
+ 	@CRYPT_LIBS@ \
+ 	@X_LIBS@ \
+ 	@AVAHI_LIBS@ \
+diff --git a/src/screen.c b/src/screen.c
+index a89cb211..203e55a9 100644
+--- a/src/screen.c
++++ b/src/screen.c
+@@ -1636,6 +1636,7 @@ void linux_dev_fb_msg(char* q) {
+ #define RAWFB_MMAP 1
+ #define RAWFB_FILE 2
+ #define RAWFB_SHM  3
++#define RAWFB_DRM  4
+ 
+ XImage *initialize_raw_fb(int reset) {
+ 	char *str, *rstr, *q;
+@@ -1934,6 +1935,7 @@ if (db) fprintf(stderr, "initialize_raw_fb reset\n");
+ 	 * -rawfb shm:163938442@640x480x32:ff/ff00/ff0000+3000
+ 	 * -rawfb map:/path/to/file@640x480x32:ff/ff00/ff0000
+ 	 * -rawfb file:/path/to/file@640x480x32:ff/ff00/ff0000
++	 * -rawfb drm:/dev/dri/card0@640x480x32:ff/ff00/ff0000
+ 	 */
+ 
+ 	if (raw_fb_full_str) {
+@@ -2110,7 +2112,8 @@ if (db) fprintf(stderr, "initialize_raw_fb reset\n");
+ 	}
+ 
+ 	if (strstr(str, "shm:") != str && strstr(str, "mmap:") != str &&
+-	    strstr(str, "map:") != str && strstr(str, "file:") != str) {
++	    strstr(str, "map:") != str && strstr(str, "file:") != str &&
++		strstr(str, "drm:") != str ) {
+ 		/* hmmm, not following directions, see if map: applies */
+ 		struct stat sbuf;
+ 		if (stat(str, &sbuf) == 0) {
+@@ -2130,6 +2133,18 @@ if (db) fprintf(stderr, "initialize_raw_fb reset\n");
+ 	if (sscanf(str, "shm:%d", &shmid) == 1) {
+ 		/* shm:N */
+ #if HAVE_XSHM || HAVE_SHMAT
++		/* try to use shm key*/
++		key_t shmkey = 0;
++		int newshmid = -1;
++		
++		shmkey = shmid;
++
++		newshmid = shmget(shmkey, 0, 0);
++		if (newshmid != -1) {
++			rfbLog("rawfb: use %d as shm key, shmid is %d \n", shmid, newshmid);
++			shmid = newshmid;
++		}
++		
+ 		raw_fb_addr = (char *) shmat(shmid, 0, SHM_RDONLY);
+ 		if (! raw_fb_addr) {
+ 			rfbLogEnable(1);
+@@ -2266,7 +2281,111 @@ if (db) fprintf(stderr, "initialize_raw_fb reset\n");
+ 			rfbLog("rawfb: seek file: %s\n", q);
+ 			rfbLog("   W: %d H: %d B: %d sz: %d\n", w, h, b, size);
+ 		}
+-	} else {
++	}
++
++	else if (strstr(str, "drm:") == str ) {
++		/* drm:D */
++		/* drm:/dev/dri/card0 */
++#if HAVE_LIBDRM
++		q = strchr(str, ':');
++		q++;
++		
++		/* open DRM device */
++		int fd = open(q, O_RDWR | O_CLOEXEC);
++		if (fd < 0) {
++			rfbLogEnable(1);
++			rfbLog("can not open drm device: %s\n", str);
++			clean_up_exit(1);
++		}
++
++		/* get current CRTC  */
++		drmModeRes* res = drmModeGetResources(fd);
++		if (!res) {
++			rfbLogEnable(1);
++			rfbLog("can not read drm device: %s\n", str);
++			clean_up_exit(1);
++		}
++
++		/* get first crtc */
++		/* drmModeCrtc* crtc = drmModeGetCrtc(fd, res->crtcs[0]);  */
++		drmModeCrtc* crtc = 0;
++		drmModeFB* fb = 0;
++		int dma_buf_fd = 0;
++		rfbLog("drm crtc count:%d\n", res->count_crtcs);
++		for (int i = 0; i < res->count_crtcs; i++) {
++
++			crtc = drmModeGetCrtc(fd, res->crtcs[i]);
++			if (crtc->mode_valid && crtc->buffer_id != 0) {
++
++				fb = drmModeGetFB(fd, crtc->buffer_id);
++
++				struct drm_prime_handle prime_handle = {
++					.handle = fb->handle,
++					.fd = -1,
++					.flags = 0
++				};
++
++				if (ioctl(fd, DRM_IOCTL_PRIME_HANDLE_TO_FD, &prime_handle) < 0) {
++					drmModeFreeFB(fb);
++					drmModeFreeCrtc(crtc);
++					crtc = NULL;
++				}
++				else{
++					dma_buf_fd = prime_handle.fd;
++					break;
++					
++				}
++				
++				
++			}
++			
++		}
++		
++		if (!crtc) {
++			rfbLogEnable(1);
++			rfbLog("no valid crtc for drm device: %s\n", str);
++			clean_up_exit(1);
++		}
++		
++		if (!dma_buf_fd) {
++			rfbLogEnable(1);
++			rfbLog("open CRTC err, please turn on your display. ");
++			clean_up_exit(1);
++		}
++				
++		
++		
++		/* get  DMA-BUF size */
++		off_t size = lseek(dma_buf_fd, 0, SEEK_END);
++		lseek(dma_buf_fd, 0, SEEK_SET);
++		rfbLog("dma buffer (%d) size=%ld\n", dma_buf_fd, size);
++
++		/* mapping DMA-BUF to memory */
++		void* map = mmap(NULL, size, PROT_READ, MAP_SHARED, dma_buf_fd, 0);
++		if (map == MAP_FAILED) {
++			rfbLogEnable(1);
++			rfbLog("mmap failed for drm device: %s\n", str);
++			clean_up_exit(1);
++		}
++
++		/* clean resouces */
++		/* close(dma_buf_fd); */
++		drmModeFreeFB(fb);
++		drmModeFreeCrtc(crtc);
++		drmModeFreeResources(res);
++		close(fd);
++
++		raw_fb_addr = (char*)map;
++		last_mode = RAWFB_DRM;
++#else
++		rfbLogEnable(1);
++		rfbLog("x11vnc was compiled without drm support.\n");
++		rfbLogPerror("drmModeGetResources");
++		clean_up_exit(1);
++#endif
++
++	} 
++	else {
+ 		rfbLogEnable(1);
+ 		rfbLog("invalid rawfb str: %s\n", str);
+ 		clean_up_exit(1);
+diff --git a/src/x11vnc.h b/src/x11vnc.h
+index 18d5feb0..86d63f78 100644
+--- a/src/x11vnc.h
++++ b/src/x11vnc.h
+@@ -69,6 +69,13 @@ so, delete this exception statement from your version.
+ #include <rfb/rfb.h>
+ #include <rfb/rfbregion.h>
+ 
++#if HAVE_LIBDRM
++/* drm access */
++#include <sys/ioctl.h>
++#include <xf86drm.h>
++#include <xf86drmMode.h>
++
++#endif
+ 
+ /* we can now build under --without-x: */
+ #if HAVE_X11
