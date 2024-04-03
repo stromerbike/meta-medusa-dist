@@ -7,6 +7,7 @@ BBFILES ?= ""
 
 OEROOT := "##OEROOT##"
 BBLAYERS ?= " \
+  ${OEROOT}/../meta-medusa-backport \
   ${OEROOT}/meta \
   ${OEROOT}/meta-poky \
   ${OEROOT}/meta-yocto-bsp \

@@ -37,6 +37,7 @@ IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
 # iftop iproute2-ss iputils ppp-tools socat tcpdump - networking tools
+# btop htop nmon - monitoring tools
 IMAGE_INSTALL:append = " busybox \
                          tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          acl fuse-exfat ntfs-3g \
@@ -46,7 +47,8 @@ IMAGE_INSTALL:append = " busybox \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
                          iftop iproute2-ss iputils ppp-tools socat tcpdump \
-                         dtc fbgrab glibc-utils htop interceptty interceptty-nicedump less libgpiod-tools lsof memtester mtd-utils-tests nano ncurses-tools nmon rsyslog sudo systemd-extra-utils systemd-journal-upload \
+                         btop htop nmon \
+                         dtc fbgrab glibc-utils interceptty interceptty-nicedump less libgpiod-tools lsof memtester mtd-utils-tests nano ncurses-tools rsyslog sudo systemd-extra-utils systemd-journal-upload \
 "
 
 # Revert installation of links in update-alternative scheme due to the following reasons:
