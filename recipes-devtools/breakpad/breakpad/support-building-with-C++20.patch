@@ -1,0 +1,34 @@
+From 5c4b5d89e494753656fc84c5266519478ebb448c Mon Sep 17 00:00:00 2001
+From: Kristofer Spinka <kspinka@gmail.com>
+Date: Thu, 13 May 2021 09:22:45 -0400
+Subject: [PATCH] Support building with C++20
+
+std::allocator<T>::pointer and related are removed in C++20, so moving to
+std::allocator_traits which is available since C++11.
+Change-Id: Ie67b5c24b27e59edf5595a3575f2794748c3817f
+Reviewed-on: https://chromium-review.googlesource.com/c/breakpad/breakpad/+/2894004
+Reviewed-by: Mike Frysinger <vapier@chromium.org>
+---
+ src/common/memory_allocator.h | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/src/common/memory_allocator.h b/src/common/memory_allocator.h
+index 69055a158..d28fbfc36 100644
+--- a/src/common/memory_allocator.h
++++ b/src/common/memory_allocator.h
+@@ -160,9 +160,12 @@ class PageAllocator {
+ 
+ // Wrapper to use with STL containers
+ template <typename T>
+-struct PageStdAllocator : public std::allocator<T> {
+-  typedef typename std::allocator<T>::pointer pointer;
+-  typedef typename std::allocator<T>::size_type size_type;
++struct PageStdAllocator {
++  using AllocatorTraits = std::allocator_traits<std::allocator<T>>;
++  using value_type = typename AllocatorTraits::value_type;
++  using pointer = typename AllocatorTraits::pointer;
++  using difference_type = typename AllocatorTraits::difference_type;
++  using size_type = typename AllocatorTraits::size_type;
+ 
+   explicit PageStdAllocator(PageAllocator& allocator) : allocator_(allocator),
+                                                         stackdata_(NULL),
