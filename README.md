@@ -66,6 +66,7 @@ Busybox configuration (1.35.0):
 - set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
 - set "Linux System Utilities ---> nologin" to N; Remark: Not needed with shadow-base.
 - set "Linux System Utilities ---> rtcwake" to N; Remark: Not needed without RTC.
+- set "Linux System Utilities ---> umount" to N; Remark: Not needed with systemd/util-linux-umount.
 - set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed without onboard speaker.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
 - set "Miscellaneous Utilities ---> crond" to N; Remark: Not needed with systemd.
