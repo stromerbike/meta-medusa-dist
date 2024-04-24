@@ -41,7 +41,7 @@ IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
                          tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
-                         acl fuse-exfat ntfs-3g \
+                         acl \
                          systemd-analyze \
                          gdb ltrace perf strace \
                          gdbserver tcf-agent \

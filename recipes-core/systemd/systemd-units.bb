@@ -86,6 +86,7 @@ SRC_URI += " \
             file://mnt-rfs.sh \
             file://mnt-usb.service \
             file://mnt-usb.sh \
+            file://mount.ntfs \
             file://peripheral-mpio.service \
             file://peripheral-mpio.sh \
             file://peripheral-pwr.service \
@@ -106,6 +107,7 @@ SRC_URI += " \
 
 FILES:${PN}:append = " \
     /mnt/ \
+    ${base_sbindir}/mount.ntfs \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
     ${sysconfdir}/images/ \
@@ -189,6 +191,8 @@ do_install:append() {
     install -d ${D}/mnt/usb
     install -m 0644 ${WORKDIR}/mnt-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-usb.sh ${D}${sysconfdir}/scripts/
+    install -d ${D}${base_sbindir}
+    install -m 0755 ${WORKDIR}/mount.ntfs ${D}${base_sbindir}/
 
     install -m 0644 ${WORKDIR}/fwu-usb-chk.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb-chk.sh ${D}${sysconfdir}/scripts/
