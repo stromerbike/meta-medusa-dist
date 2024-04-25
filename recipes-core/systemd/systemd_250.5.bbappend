@@ -52,6 +52,7 @@ do_install:append() {
     sed -i 's/enable getty@.service/disable getty@.service/g' ${D}${systemd_unitdir}/system-preset/90-systemd.preset
 
     # remove unused mounts
+    rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-fs-fuse-connections.mount
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-kernel-config.mount
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/sys-kernel-debug.mount
 
