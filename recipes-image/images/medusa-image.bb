@@ -30,7 +30,6 @@ IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
 # Added packets from Stromer:
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
 # tzdata - timezone database
-# acl fuse-exfat ntfs-3g - extended filesystem support
 # systemd-analyze - debug information collection
 # gdb ltrace perf strace - debugging
 # gdbserver tcf-agent - low level debugging
@@ -41,7 +40,6 @@ IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
                          tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
-                         acl \
                          systemd-analyze \
                          gdb ltrace perf strace \
                          gdbserver tcf-agent \
