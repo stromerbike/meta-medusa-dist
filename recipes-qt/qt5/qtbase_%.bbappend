@@ -9,8 +9,6 @@ PACKAGECONFIG:append = " libinput linuxfb no-opengl kms"
 PACKAGECONFIG_DEFAULT = "udev widgets libs ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
 
-PACKAGECONFIG[ltcg] = "-ltcg"
-
 # Disable features which translate into separate shared libraries
 QT_CONFIG_FLAGS += " \
     -no-feature-concurrent \
