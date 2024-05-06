@@ -1,3 +1,8 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+SRC_URI += " \
+            file://REVERT-QTBUG-77006-ensure-all-children-of-a-widget-get-updated-when-a-stylesheet-changes.patch \
+"
+
 # https://qtlite.com
 
 PACKAGECONFIG:append = " libinput linuxfb no-opengl kms"

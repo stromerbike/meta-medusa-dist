@@ -1,0 +1,16 @@
+diff --git a/src/widgets/styles/qstylesheetstyle.cpp b/src/widgets/styles/qstylesheetstyle.cpp
+index 9fcb8ba522..e7f13e33fa 100644
+--- a/src/widgets/styles/qstylesheetstyle.cpp
++++ b/src/widgets/styles/qstylesheetstyle.cpp
+@@ -2767,11 +2767,6 @@ static void updateObjects(const QList<const QObject *>& objects)
+         if (auto widget = qobject_cast<QWidget*>(const_cast<QObject*>(object))) {
+             widget->style()->polish(widget);
+             QCoreApplication::sendEvent(widget, &event);
+-            QList<const QObject *> children;
+-            children.reserve(widget->children().size() + 1);
+-            for (auto child: qAsConst(widget->children()))
+-                children.append(child);
+-            updateObjects(children);
+         }
+     }
+ }
