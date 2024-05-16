@@ -43,6 +43,7 @@ SRC_URI += " \
             file://images/logo.png \
             file://10-bnep0.network \
             file://10-eth0.network \
+            file://10-ppp0.network \
             file://10-wlan0-ap.network \
             file://10-wlan0.network \
             file://ble-attach.service \
@@ -210,6 +211,7 @@ do_install:append() {
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/10-bnep0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/10-eth0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-ppp0.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/10-wlan0-ap.network ${D}${systemd_unitdir}/network/
     install -m 0644 ${WORKDIR}/10-wlan0.network ${D}${systemd_unitdir}/network/
 
