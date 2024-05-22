@@ -1,10 +1,5 @@
 #!/bin/bash
 
-OPTION_PURGEDATA_IGNORE="no"
-
-# To handle cases where RecordCommander gets stuck a SIGKILL is sent after 5s using timeout.
-TIMEOUT_CMD="timeout -s KILL 5"
-
 led1_blue ()
 {
     echo "255" 2> /dev/null > /sys/class/leds/rgb1_blue/brightness
@@ -75,25 +70,10 @@ enable_writeaccess ()
     fi
 }
 
-check_purge_data_ignore ()
-{
-    if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8001")" =~ true ]]; then
-        echo "locked is true: purgedata will be ignored!"
-        OPTION_PURGEDATA_IGNORE="yes"
-    else
-        echo "locked is false"
-    fi
-    if [[ "$($TIMEOUT_CMD /usr/bin/medusa/RecordCommander/RecordCommander /usr/bin/medusa/TargetIpcConfiguration.json "get 8002")" =~ true ]]; then
-        echo "theft is true: purgedata will be ignored!"
-        OPTION_PURGEDATA_IGNORE="yes"
-    else
-        echo "theft is false"
-    fi
-}
-
 purge_data ()
 {
     OPTION_PURGEDATA="no"
+    OPTION_PURGEDATA_IGNORE="no"
 
     if [ -d "/mnt/usb/autoupdate/" ]; then
         if find /mnt/usb/autoupdate/ -maxdepth 1 -mindepth 1 -type f -iname "*-purgedata.rootfs.tar.xz" | grep -i "purgedata.rootfs.tar.xz"; then
@@ -117,25 +97,25 @@ purge_data ()
         echo "Directory autoupdate-settings does not exist"
     fi
 
+    if [[ "$(cat /tmp/8001.rcg)" =~ true ]]; then
+        echo "locked is true: purgedata will be ignored!"
+        OPTION_PURGEDATA_IGNORE="yes"
+    else
+        echo "locked is false"
+    fi
+    if [[ "$(cat /tmp/8002.rcg)" =~ true ]]; then
+        echo "theft is true: purgedata will be ignored!"
+        OPTION_PURGEDATA_IGNORE="yes"
+    else
+        echo "theft is false"
+    fi
+
     if [ "$OPTION_PURGEDATA" == "yes" ]; then
         echo "Purgedata option is selected"
         if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-            echo "Starting DataServer..."
-            systemctl start medusa-DataServer || true
+            echo "Purging data partition"
+            rm -rf /mnt/data/*
             echo "...done"
-            echo "Rechecking if purgedata shall be ignored..."
-            check_purge_data_ignore # recheck a second time in case fwu-usb has been aborted prematurely before (e.g. by pulling usb)
-            echo "...done"
-            if [ "$OPTION_PURGEDATA_IGNORE" == "no" ]; then
-                echo "Stopping DataServer application..."
-                systemctl stop medusa-DataServer || true
-                echo "...done"
-                echo "Purging data partition"
-                rm -rf /mnt/data/*
-                echo "...done"
-            else
-                echo "Keeping data partition"
-            fi
         else
             echo "Keeping data partition"
         fi
@@ -219,9 +199,6 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
         echo "Nothing to up- or downgrade"
         exit 0
     else
-        echo "Checking if purgedata shall be ignored..."
-        check_purge_data_ignore
-        echo "...done"
         echo "Stopping DataServer application..." # also stops DataServer based applications
         until ! systemctl is-active medusa-DataServer.service
         do
