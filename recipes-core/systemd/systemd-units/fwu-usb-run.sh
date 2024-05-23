@@ -225,7 +225,7 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
                 if rm -rf /mnt/rfs_inactive/*; then
                     echo "...done"
                     echo "Extracting firmware..."
-                    if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJ -C /mnt/rfs_inactive --warning=no-timestamp; then
+                    if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJf - -C /mnt/rfs_inactive --warning=no-timestamp; then
                         echo "...done"
                         enable_writeaccess
                         echo "Syncing..."
