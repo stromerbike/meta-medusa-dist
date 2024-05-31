@@ -1,0 +1,74 @@
+image: $DOCKER_HUB_USER/yocto-medusa:latest
+
+stages:
+  - build
+  - apps
+
+.build_machine:
+  tags:
+    - cpx51
+
+.build_machine_yocto:
+  tags:
+    - cpx51 # cpx21 has been tested as a minimum
+
+.before_script_ssh: &before_script_ssh
+  - mkdir -p ~/.ssh
+  - ssh-keyscan ${CI_SERVER_HOST} | tee -a ~/.ssh/known_hosts
+  - (umask 077 ; echo $SSH_PRIVATE_KEY | base64 --decode > ~/.ssh/id_rsa)
+
+.common_script: &common_script
+  - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/gitlab-runner-common.git
+  - cd gitlab-runner-common
+  - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/".insteadOf "git@${CI_SERVER_HOST}:"
+  - . yocto-parent-build.sh "git@${CI_SERVER_HOST}:${CI_PROJECT_NAMESPACE}/medusa.git" "tools/yocto/${CI_PROJECT_NAME}"
+
+bsp:
+  stage: build
+  extends: .build_machine_yocto
+  before_script:
+    - *before_script_ssh
+  script:
+    - *common_script
+    - ./shell-build.sh medusa-image
+
+sdk:
+  stage: build
+  extends: .build_machine_yocto
+  before_script:
+    - *before_script_ssh
+  script:
+    - *common_script
+    - ./shell-build.sh medusa-image "-c populate_sdk"
+    - cd $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/yocto/medusa-image/deploy/sdk
+    - cp * $CI_PROJECT_DIR/
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - medusa-x86_64-toolchain-*
+
+cross:
+  stage: apps
+  dependencies:
+    - sdk
+  extends: .build_machine
+  script:
+    - sudo ./medusa-x86_64-toolchain-*-DIRTY.sh -y
+    - . /opt/medusa/*/environment-setup-cortexa7hf-neon-vfpv4-oe-linux-gnueabi
+    - *common_script
+    - |
+      for BUILD_TYPE in Debug Release; do
+        mkdir -p $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/Cross/$BUILD_TYPE
+        cd $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/Cross/$BUILD_TYPE
+        cmake -GNinja \
+              -DBUILD_SHARED_LIBS=ON \
+              -DCMAKE_INSTALL_PREFIX=install/usr \
+              -DUSE_CCACHE=OFF \
+              -DUSE_CLANG_TIDY=OFF \
+              -DUSE_CPPCHECK=OFF \
+              -DPLATFORM=Cross \
+              -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+              ../../../src
+        ninja -j$(nproc)
+        ninja install
+      done
