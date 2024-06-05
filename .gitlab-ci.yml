@@ -53,7 +53,7 @@ cross:
     - sdk
   extends: .build_machine
   script:
-    - sudo ./medusa-x86_64-toolchain-*-DIRTY.sh -y
+    - sudo ./medusa-x86_64-toolchain-*.sh -y
     - . /opt/medusa/*/environment-setup-cortexa7hf-neon-vfpv4-oe-linux-gnueabi
     - *common_script
     - |
