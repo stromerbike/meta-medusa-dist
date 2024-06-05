@@ -7,7 +7,7 @@ SRC_URI = " \
             file://sft \
 "
 
-INSANE_SKIP_${PN} += "already-stripped"
+INSANE_SKIP:${PN} += "already-stripped"
 
 do_install () {    
     install -d ${D}${bindir}

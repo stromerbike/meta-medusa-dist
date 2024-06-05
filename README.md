@@ -1,20 +1,21 @@
 This is the repository of the distribution specific Yocto layer for the Stromer Medusa hardware.
 
 Modifications:
-- python3_3.7.7: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
+- python3_3.10.9: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
 
 Patches:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
 - [systemd /etc/localtime symlinks chasing](https://github.com/stromerbike/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
+- [systemd /mnt/data/timesync as state directory](https://github.com/stromerbike/meta-medusa-dist/blob/master/recipes-core/systemd/systemd/move_state_file_to_data_partition.patch)
 
 Fixed recipe version:
-- [sumo: dt-utils 2016.08.0](https://github.com/PHYTEC-Messtechnik-GmbH/meta-phytec/commit/bd856199aaf116e828e354152f496344d26d25dd)
-- [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3)
+- [honister: pv 1.6.6](https://github.com/openembedded/meta-openembedded/commit/c61dc077bbd81260e4f167fa2251643ba0ba6974) to avoid issue https://github.com/a-j-wood/pv/issues/23
+- [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3) to avoid having to introduce a new delta firmware package file format version
 
-Busybox configuration (1.31.0):
-- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_31_0 && make defconfig && make menuconfig
+Busybox configuration (1.35.0):
+- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_35_0 && make defconfig && make menuconfig
 - set "Settings ---> Include busybox applet" to N; Remark: Not needed.
-- set "Settings ---> Build shared libbusybox" to Y; Remark: Small binaries result in faster startup time.
+- set "Settings ---> Build shared libbusybox" to y; Remark: Small binaries result in faster startup time.
 - set "Settings ---> Enable locale support (system needs locale for this to work)" to y.
 - set "Settings ---> Use libc routines for Unicode (else uses internal ones)" to y.
 - set "Settings ---> Range of supported Unicode characters" to 1114111.
@@ -34,6 +35,7 @@ Busybox configuration (1.31.0):
 - set "Coreutils ---> groups" to N; Remark: Not needed with shadow-base.
 - set "Console Utilities ---> clear" to N; Remark: Not needed with ncurses-tools.
 - set "Console Utilities ---> reset" to N; Remark: Not needed with ncurses-tools.
+- set "Editors ---> awk" to N; Remark: Not needed with gawk.
 - set "Finding Utilities  ---> grep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> egrep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> fgrep" to N; Remark: Not needed with grep.
@@ -63,43 +65,45 @@ Busybox configuration (1.31.0):
 - set "Linux System Utilities ---> mke2fs" to N; Remark: Not needed.
 - set "Linux System Utilities ---> mkfs.ext2" to N; Remark: Not needed.
 - set "Linux System Utilities ---> mount" to N; Remark: Not needed with systemd/util-linux-mount.
+- set "Linux System Utilities ---> nologin" to N; Remark: Not needed with shadow-base.
 - set "Linux System Utilities ---> rtcwake" to N; Remark: Not needed without RTC.
+- set "Linux System Utilities ---> umount" to N; Remark: Not needed with systemd/util-linux-umount.
 - set "Miscellaneous Utilities ---> beep" to N; Remark: Not needed without onboard speaker.
 - set "Miscellaneous Utilities ---> chat" to N; Remark: To avoid conflicts with ppp.
 - set "Miscellaneous Utilities ---> crond" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> crontab" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
-- set "Miscellaneous Utilities ---> less" to No; Remark: Not needed with less.
-- set "Miscellaneous Utilities ---> man" to No; Remark: Remark: Not needed.
-- set "Miscellaneous Utilities ---> mt" to No; Remark: Remark: Not needed.
-- set "Miscellaneous Utilities ---> nandwrite" to No; Remark: Not needed with mtd-utils-tests.
-- set "Miscellaneous Utilities ---> nanddump" to No; Remark: Not needed with mtd-utils-tests.
-- set "Miscellaneous Utilities ---> runlevel" to No; Remark: Not needed with systemd.
-- set "Miscellaneous Utilities ---> rx" to No; Remark: Not needed with lrzsz.
-- set "Miscellaneous Utilities ---> watchdog" to No; Remark: Not needed with systemd.
-- set "Networking Utilities ---> arping" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> ping" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> ping6" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> dnsd" to No; Remark: Not needed with systemd-resolved.
-- set "Networking Utilities ---> ftpd" to No; Remark: Not needed.
-- set "Networking Utilities ---> httpd" to No; Remark: Not needed.
-- set "Networking Utilities ---> ip" to No; Remark: Not needed with iproute2.
-- set "Networking Utilities ---> ntpd" to No; Remark: Not needed with systemd-timesyncd.
-- set "Networking Utilities ---> ssl_client" to No; Remark: Not needed (with openssl).
-- set "Networking Utilities ---> tftpd" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> traceroute" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> traceroute6" to No; Remark: Not needed with iputils.
-- set "Networking Utilities ---> wget" to No; Remark: Not needed with wget.
-- set "Networking Utilities ---> udhcpd" to No; Remark: Not needed with systemd-networkd.
-- set "Networking Utilities ---> udhcpc" to No; Remark: Not needed with systemd-networkd.
-- set "Networking Utilities ---> udhcpc6" to No; Remark: Not needed with systemd-networkd.
-- set "Print Utilities ---> lpd" to No; Remark: Not needed.
-- set "Print Utilities ---> lpr" to No; Remark: Not needed.
-- set "Print Utilities ---> lpq" to No; Remark: Not needed.
-- set "Mail Utilities ---> makemime" to No; Remark: Not needed.
-- set "Mail Utilities ---> popmaildir" to No; Remark: Not needed.
-- set "Mail Utilities ---> reformime" to No; Remark: Not needed.
-- set "Mail Utilities ---> sendmail" to No; Remark: Not needed.
+- set "Miscellaneous Utilities ---> less" to N; Remark: Not needed with less.
+- set "Miscellaneous Utilities ---> man" to N; Remark: Remark: Not needed.
+- set "Miscellaneous Utilities ---> mt" to N; Remark: Remark: Not needed.
+- set "Miscellaneous Utilities ---> nandwrite" to N; Remark: Not needed with mtd-utils-tests.
+- set "Miscellaneous Utilities ---> nanddump" to N; Remark: Not needed with mtd-utils-tests.
+- set "Miscellaneous Utilities ---> runlevel" to N; Remark: Not needed with systemd.
+- set "Miscellaneous Utilities ---> rx" to N; Remark: Not needed with lrzsz.
+- set "Miscellaneous Utilities ---> watchdog" to N; Remark: Not needed with systemd.
+- set "Networking Utilities ---> arping" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> dnsd" to N; Remark: Not needed with systemd-resolved.
+- set "Networking Utilities ---> ftpd" to N; Remark: Not needed.
+- set "Networking Utilities ---> httpd" to N; Remark: Not needed.
+- set "Networking Utilities ---> ip" to N; Remark: Not needed with iproute2.
+- set "Networking Utilities ---> ntpd" to N; Remark: Not needed with systemd-timesyncd.
+- set "Networking Utilities ---> ping" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> ping6" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> ssl_client" to N; Remark: Not needed with openssl.
+- set "Networking Utilities ---> tftpd" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> traceroute" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> traceroute6" to N; Remark: Not needed with iputils.
+- set "Networking Utilities ---> wget" to N; Remark: Not needed with wget.
+- set "Networking Utilities ---> udhcpd" to N; Remark: Not needed with systemd-networkd.
+- set "Networking Utilities ---> udhcpc" to N; Remark: Not needed with systemd-networkd.
+- set "Networking Utilities ---> udhcpc6" to N; Remark: Not needed with systemd-networkd.
+- set "Print Utilities ---> lpd" to N; Remark: Not needed.
+- set "Print Utilities ---> lpr" to N; Remark: Not needed.
+- set "Print Utilities ---> lpq" to N; Remark: Not needed.
+- set "Mail Utilities ---> makemime" to N; Remark: Not needed.
+- set "Mail Utilities ---> popmaildir" to N; Remark: Not needed.
+- set "Mail Utilities ---> reformime" to N; Remark: Not needed.
+- set "Mail Utilities ---> sendmail" to N; Remark: Not needed.
 - set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> chpst" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.

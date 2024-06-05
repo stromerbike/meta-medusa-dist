@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI = " \
            file://gpsd-machine \
@@ -6,7 +6,7 @@ SRC_URI = " \
 
 inherit update-alternatives
 
-ALTERNATIVE_${PN} = "gpsd-defaults"
+ALTERNATIVE:${PN} = "gpsd-defaults"
 ALTERNATIVE_LINK_NAME[gpsd-defaults] = "${sysconfdir}/default/gpsd"
 ALTERNATIVE_TARGET[gpsd-defaults] = "${sysconfdir}/default/gpsd.machine"
 ALTERNATIVE_PRIORITY[gpsd-defaults] = "15"

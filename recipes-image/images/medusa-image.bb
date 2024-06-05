@@ -5,6 +5,7 @@ IMAGE_INSTALL = " \
                   ${CORE_IMAGE_EXTRA_INSTALL} \
 "
 inherit core-image python3-dir
+inherit populate_sdk_qt5_base
 
 SUMMARY = ""
 DESCRIPTION = "Medusa image"
@@ -15,11 +16,12 @@ LICENSE = "MIT"
 # dt-utils-barebox-state - linux packet for set/get shared barebox variables
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
+# kernel-modules - copy kernel modules into rootfs (lib directory)
 # openssh-sshd - ssh connection used during production
 # iperf3 - used during production for bandwidth test
 # medusa-version - used during production for obtaining version
-IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
-                         kernel-image kernel-devicetree \
+IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
+                         kernel-image kernel-devicetree kernel-modules \
                          openssh-sshd \
                          iperf3 \
                          medusa-version \
@@ -28,23 +30,25 @@ IMAGE_INSTALL_append = " barebox dt-utils-barebox-state \
 # Added packets from Stromer:
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
 # tzdata - timezone database
-# acl fuse-exfat ntfs-3g - extended filesystem support
 # systemd-analyze - debug information collection
 # gdb ltrace perf strace - debugging
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
-# hostapd linux-firmware-rtl8192cu wpa-supplicant - wifi
-# bind-utils iftop iproute2-ss iputils ppp-tools socat tcpdump - networking tools
-IMAGE_INSTALL_append = " busybox \
-                         tzdata tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
-                         acl fuse-exfat ntfs-3g \
+# hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
+# iftop iproute2-ss iputils ppp-tools socat tcpdump - networking tools
+# btop htop nmon - monitoring tools
+# fbgrab kmsgrab - screen capturing tools
+IMAGE_INSTALL:append = " busybox \
+                         tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          systemd-analyze \
                          gdb ltrace perf strace \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
-                         hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wpa-supplicant \
-                         bind-utils iftop iproute2-ss iputils ppp-tools socat tcpdump \
-                         dtc fbgrab glibc-utils htop interceptty interceptty-nicedump less lsof memtester mtd-utils-tests nano ncurses-tools nmon rsyslog sudo systemd-extra-utils systemd-journal-upload \
+                         hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
+                         iftop iproute2-ss iputils ppp-tools socat tcpdump \
+                         btop htop nmon \
+                         fbgrab kmsgrab \
+                         dtc glibc-utils interceptty interceptty-nicedump less libgpiod-tools lsof memtester mtd-utils-tests nano ncurses-tools rsyslog sudo systemd-extra-utils systemd-journal-upload \
 "
 
 # Revert installation of links in update-alternative scheme due to the following reasons:
@@ -86,3 +90,6 @@ IMAGE_CMD_TAR = "tar --sort=name"
 # Create debug file system
 #IMAGE_GEN_DEBUGFS = "1"
 #IMAGE_FSTYPES_DEBUGFS = "tar.xz"
+
+# Ensure that qmake and protoc are part of the SDK
+TOOLCHAIN_HOST_TASK:append = " nativesdk-packagegroup-qt5-toolchain-host nativesdk-protobuf-compiler"

@@ -1,2 +1,3 @@
-PACKAGECONFIG[tftpd] = "-DBUILD_TFTPD=true,-DBUILD_TFTPD=false,"
-ALLOW_EMPTY_${PN}-tftpd = "1"
+DEPENDS:remove = " gnutls"
+
+SYSTEMD_AUTO_ENABLE:${PN}-rdisc = "disable"

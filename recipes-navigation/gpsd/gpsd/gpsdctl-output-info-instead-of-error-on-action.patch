@@ -1,13 +1,13 @@
-diff --git a/gpsdctl.c b/gpsdctl.c
-index cd794184c..6759ab602 100644
---- a/gpsdctl.c
-+++ b/gpsdctl.c
-@@ -29,7 +29,7 @@ static int gpsd_control(char *action, char *argument)
+diff --git a/clients/gpsdctl.c b/clients/gpsdctl.c
+index b30300f4d..7f0b8f126 100644
+--- a/clients/gpsdctl.c
++++ b/clients/gpsdctl.c
+@@ -32,7 +32,7 @@ static int gpsd_control(const char *action, const char *argument)
      char buf[512];
      int status;
  
 -    (void)syslog(LOG_ERR, "gpsd_control(action=%s, arg=%s)", action, argument);
 +    (void)syslog(LOG_INFO, "gpsd_control(action=%s, arg=%s)", action, argument);
-     if (access(control_socket, F_OK) == 0 &&
- 	    (connect = netlib_localsocket(control_socket, SOCK_STREAM)) >= 0)
- 	syslog(LOG_INFO, "reached a running gpsd");
+     if (0 == access(control_socket, F_OK) &&
+         0 <= (connect = netlib_localsocket(control_socket, SOCK_STREAM))) {
+         syslog(LOG_INFO, "reached a running gpsd");

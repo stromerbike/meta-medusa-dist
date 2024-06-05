@@ -13,8 +13,7 @@ start)
 
     # turn on the 5V_OUT supply voltage
     test -e /sys/class/gpio/gpio498 || echo 498 > /sys/class/gpio/export
-    echo out > /sys/class/gpio/gpio498/direction
-    echo 1 > /sys/class/gpio/gpio498/value
+    echo "high" > /sys/class/gpio/gpio498/direction
 ;;
 
 stop)

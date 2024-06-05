@@ -5,8 +5,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 PR = "r0"
 
+# candump-save preferably uses the more performant gawk over busybox awk
 # can0 service depends on ip which is included in iproute2
-RDEPENDS_${PN} += " \
+RDEPENDS:${PN} += " \
     bash \
     bluez5 \
     busybox \
@@ -15,6 +16,7 @@ RDEPENDS_${PN} += " \
     dash \
     evtest \
     fbv \
+    gawk \
     gnupg-gpgv \
     iproute2 \
     inotify-tools \
@@ -23,8 +25,8 @@ RDEPENDS_${PN} += " \
     multilog \
     picocom \
     ppp \
-    pv \
-    systemd (>= 236) \
+    pv (= 1.6.6) \
+    systemd \
     tar \
     usbutils \
     util-linux-ldattach \
@@ -34,20 +36,24 @@ RDEPENDS_${PN} += " \
     zip \
 "
 
-RRECOMMENDS_${PN} = "gnuwin-gawk"
+RRECOMMENDS:${PN} = "gnuwin-gawk"
 
 SRC_URI += " \
             file://images/busy.png \
             file://images/done.png \
             file://images/error.png \
             file://images/logo.png \
+            file://10-bnep0.network \
+            file://10-eth0.network \
+            file://10-ppp0.network \
+            file://10-wlan0-ap.network \
+            file://10-wlan0.network \
             file://ble-attach.service \
             file://ble-attach.sh \
             file://ble.target \
             file://btmon-save@.service \
             file://btmon-save.sh \
             file://btmon.service \
-            file://bnep0.network \
             file://can0.service \
             file://can0.sh \
             file://candump-save@.service \
@@ -59,7 +65,6 @@ SRC_URI += " \
             file://cpupower.service \
             file://debug.target \
             file://drive.target \
-            file://eth0.network \
             file://fwu-usb-chk.service \
             file://fwu-usb-chk.sh \
             file://fwu-usb-run.service \
@@ -76,8 +81,6 @@ SRC_URI += " \
             file://late-init.target \
             file://ldattach-hl78xx.service \
             file://ldattach-hl78xx.sh \
-            file://led.service \
-            file://led.sh \
             file://log-usb.service \
             file://log-usb.sh \
             file://mnt-data.mount \
@@ -86,6 +89,7 @@ SRC_URI += " \
             file://mnt-rfs.sh \
             file://mnt-usb.service \
             file://mnt-usb.sh \
+            file://mount.ntfs \
             file://peripheral-mpio.service \
             file://peripheral-mpio.sh \
             file://peripheral-pwr.service \
@@ -97,8 +101,6 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
-            file://wlan0-ap.network \
-            file://wlan0.network \
             file://wlan0.sh \
             file://wvdial-hl78xx-usb.service \
             file://wvdial-hl78xx.service \
@@ -106,8 +108,9 @@ SRC_URI += " \
             file://wvdial.sh \
 "
 
-FILES_${PN}_append = " \
+FILES:${PN}:append = " \
     /mnt/ \
+    ${base_sbindir}/mount.ntfs \
     ${systemd_system_unitdir} \
     ${systemd_unitdir}/network/ \
     ${sysconfdir}/images/ \
@@ -118,7 +121,7 @@ inherit systemd
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 
-SYSTEMD_SERVICE_${PN} = " \
+SYSTEMD_SERVICE:${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'ble-attach.service')} \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
@@ -128,7 +131,6 @@ SYSTEMD_SERVICE_${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
-    led.service \
     mnt-data.mount \
     mnt-log.service \
     peripheral-mpio.service \
@@ -137,7 +139,7 @@ SYSTEMD_SERVICE_${PN} = " \
     vnc-server.service \
 "
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${systemd_system_unitdir}
     install -d ${D}${sysconfdir}/scripts
     install -m 0644 ${WORKDIR}/ble-attach.service ${D}${systemd_system_unitdir}
@@ -162,8 +164,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ldattach-hl78xx.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/led.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/led.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-mpio.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/peripheral-mpio.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-pwr.service ${D}${systemd_system_unitdir}
@@ -194,6 +194,8 @@ do_install_append() {
     install -d ${D}/mnt/usb
     install -m 0644 ${WORKDIR}/mnt-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/mnt-usb.sh ${D}${sysconfdir}/scripts/
+    install -d ${D}${base_sbindir}
+    install -m 0755 ${WORKDIR}/mount.ntfs ${D}${base_sbindir}/
 
     install -m 0644 ${WORKDIR}/fwu-usb-chk.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/fwu-usb-chk.sh ${D}${sysconfdir}/scripts/
@@ -209,10 +211,11 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/images/logo.png ${D}${sysconfdir}/images/
 
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/bnep0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/eth0.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wlan0-ap.network ${D}${systemd_unitdir}/network/
-    install -m 0644 ${WORKDIR}/wlan0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-bnep0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-eth0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-ppp0.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-wlan0-ap.network ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/10-wlan0.network ${D}${systemd_unitdir}/network/
 
     install -m 0644 ${WORKDIR}/ble.target ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/check.target ${D}${systemd_system_unitdir}

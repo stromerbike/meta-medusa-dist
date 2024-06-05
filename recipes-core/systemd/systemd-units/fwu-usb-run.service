@@ -1,8 +1,8 @@
 [Unit]
 Description=fwu-usb-run
-After=mnt-rfs.service led.service check.target
+After=mnt-rfs.service check.target
 Requires=mnt-rfs.service
-Wants=led.service check.target
+Wants=check.target
 BindsTo=mnt-usb.service
 
 [Service]

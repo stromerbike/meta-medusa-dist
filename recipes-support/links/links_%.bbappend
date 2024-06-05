@@ -1,11 +1,11 @@
-DEPENDS_remove += "gpm"
+DEPENDS:remove = " gpm"
 
 PACKAGECONFIG[gpm] = "--with-gpm,--without-gpm,gpm"
 
-EXTRA_OECONF_remove += "--enable-graphics"
+EXTRA_OECONF:remove = " --enable-graphics"
 
-FILES_${PN}_append = " ${ROOT_HOME}"
+FILES:${PN}:append = " ${ROOT_HOME}"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${ROOT_HOME}/.links
 }

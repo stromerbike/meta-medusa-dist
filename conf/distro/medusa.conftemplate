@@ -6,8 +6,8 @@ DISTRO = "medusa"
 DISTRO_NAME = "Stromer Medusa"
 DISTRO_CODENAME = "${MEDUSA_METADATA_CODENAME}"
 DISTRO_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}"
-OS_RELEASE_FIELDS_append_pn-os-release = " BUILD_ID"
-hostname_pn-base-files = "${DISTRO}"
+OS_RELEASE_FIELDS:append:pn-os-release = " BUILD_ID"
+hostname:pn-base-files = "${DISTRO}"
 
 # Image naming
 IMAGE_LINK_NAME = "${IMAGE_BASENAME}"
@@ -16,51 +16,32 @@ IMAGE_NAME = "${IMAGE_BASENAME}-${MEDUSA_METADATA_CODENAME}-${MEDUSA_METADATA_GI
 # SDK naming
 SDK_NAME = "${DISTRO}-${SDK_ARCH}"
 SDK_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}"
-SDKPATH = "/opt/${DISTRO}/${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}"
+SDKPATHINSTALL = "/opt/${DISTRO}/${SDK_VERSION}"
 
 # Distro features
-DISTRO_FEATURES = "${DISTRO_FEATURES_LIBC} fbdev pam systemd"
+DISTRO_FEATURES = "${DISTRO_FEATURES_LIBC} fbdev pam systemd opengl"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
 # Locales
 GLIBC_GENERATE_LOCALES = "en_US.UTF-8"
 
 # Machine features
-MACHINE_FEATURES_append = " 3g bluetooth can usbhost wifi"
+MACHINE_FEATURES:append = " 3g bluetooth can usbhost wifi"
 
-# Virtual runtime settings
-VIRTUAL-RUNTIME_dev_manager = "udev"
-VIRTUAL-RUNTIME_init_manager = "systemd"
-DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
-VIRTUAL-RUNTIME_login_manager = "shadow-base"
-VIRTUAL-RUNTIME_syslog = ""
-VIRTUAL-RUNTIME_initscripts = ""
+# systemd selected via conf/distro/include/init-manager-${INIT_MANAGER}.inc
+INIT_MANAGER = "systemd"
 
 # systemd settings
 SYSTEMD_DEFAULT_TARGET = "started.target"
 
 # Remove QML software renderer
-RDEPENDS_qtbase_remove += "opengldummy qtdeclarative-render2d"
-
-# Mask Escatec packagegroups appends since we use our own image
-BBMASK += "meta-medusa-bsp/recipes-extended/packagegroups"
-
-# Mask Escatec service recipes since we use our own
-BBMASK += "meta-medusa-bsp/recipes-rootfs/copy2roofs"
+RDEPENDS:qtbase:remove = " opengldummy qtdeclarative-render2d"
 
 # Uncomment this to skip medusa image appends.
 #BBMASK += "meta-medusa-app/recipes-image/"
 
-# Uncomment this to install SDMA firmware.
-#SRC_URI_append_pn-linux-mainline = " file://sdma-imx.cfg"
-#IMAGE_INSTALL_append = " sdma-firmware"
-
-# Uncomment this to install qt exmaples.
-#PACKAGECONFIG_append_pn-qtbase = " examples"
-#IMAGE_INSTALL_append = " qtbase-examples"
-
 # Uncomment this to enable JTAG in kernel.
-#SRC_URI_append_pn-linux-mainline = " file://jtag-pm.patch"
+#SRC_URI:append:pn-linux-mainline = " file://jtag-pm.patch"
 
 # Activate config checker
 INHERIT += "sanity"
@@ -77,26 +58,8 @@ INHERIT += "buildhistory"
 BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
-# fuse-exfat mirror
-SRC_URI_remove_pn-fuse-exfat = "${DEBIAN_MIRROR}/main/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
-SRC_URI_append_pn-fuse-exfat = "http://ports.ubuntu.com/ubuntu-ports/pool/universe/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
-
-# lsof mirror
-SRC_URI_remove_pn-lsof = "http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_${PV}.tar.bz2"
-SRC_URI_append_pn-lsof = "https://ftp.osuosl.org/pub/blfs/conglomeration/lsof/lsof_${PV}.tar.bz2"
-
-# wvdial and wvstreams mirrors
-SRC_URI_remove_pn-wvdial = "http://${BPN}.googlecode.com/files/${BP}.tar.bz2"
-SRC_URI_append_pn-wvdial = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.bz2"
-SRC_URI_remove_pn-wvstreams = "http://${BPN}.googlecode.com/files/${BP}.tar.gz"
-SRC_URI_append_pn-wvstreams = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.gz"
-
-# Phytec git mirrors
-#GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
-#GIT_URL_pn-barebox-targettools = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
-#GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
-
 # Set empty root password and add user
+# Remark: The "useradd-staticids" class is not used for simplicity, since all uid's and gid's would have to be defined ourselves.
 INHERIT += "extrausers"
 EXTRA_USERS_PARAMS = "usermod -p '' root; usermod -s /bin/bash root; \
                       useradd -p '' user; usermod -s /bin/bash user; usermod -G systemd-journal user; \
@@ -108,11 +71,6 @@ EXTRA_IMAGE_FEATURES = "debug-tweaks read-only-rootfs"
 # Do not symlink log to a volatile storage in order to have a persistent systemd journal
 VOLATILE_LOG_DIR = "no"
 
-# Install libpthread and libthread_db in /lib/.debug for gdb
-# Remark: Everything else in /lib/.debug is removed in glibc_%.bbappend
-IMAGE_INSTALL_append = " ${TCLIBC}-dbg "
-PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
-
 # Source mirror settings
 SOURCE_MIRROR_URL = "https://gitlab-yocto-mirror.stromerbike.com/downloads/"
 INHERIT += "own-mirrors"
@@ -121,3 +79,6 @@ INHERIT += "own-mirrors"
 BB_HASHSERVE = ""
 BB_SIGNATURE_HANDLER = "OEBasicHash"
 SSTATE_MIRRORS ?= "file://.* https://gitlab-yocto-mirror.stromerbike.com/sstate-cache/PATH;downloadfilename=PATH"
+
+# Missing dependency in manifest for zipfile https://github.com/python/cpython/blob/3.10/Lib/importlib/readers.py#L2
+IMAGE_INSTALL:append = " python3-compression"

@@ -1,9 +1,9 @@
 diff --git a/man/rules/meson.build b/man/rules/meson.build
-index bfc267b544..5cb11ebf22 100644
+index 26ac25dbdd..6e8eec6af5 100644
 --- a/man/rules/meson.build
 +++ b/man/rules/meson.build
-@@ -595,7 +595,7 @@ manpages = [
-  ['systemd-mount', '1', ['systemd-umount'], ''],
+@@ -933,7 +933,7 @@ manpages = [
+  ['systemd-network-generator.service', '8', ['systemd-network-generator'], ''],
   ['systemd-networkd-wait-online.service',
    '8',
 -  ['systemd-networkd-wait-online'],
@@ -12,10 +12,10 @@ index bfc267b544..5cb11ebf22 100644
   ['systemd-networkd.service', '8', ['systemd-networkd'], 'ENABLE_NETWORKD'],
   ['systemd-notify', '1', [], ''],
 diff --git a/man/systemd-networkd-wait-online.service.xml b/man/systemd-networkd-wait-online.service.xml
-index 96715cad2f..d93d18325f 100644
+index 9c6b02ac1c..a3a70db209 100644
 --- a/man/systemd-networkd-wait-online.service.xml
 +++ b/man/systemd-networkd-wait-online.service.xml
-@@ -46,12 +46,14 @@
+@@ -18,12 +18,14 @@
  
    <refnamediv>
      <refname>systemd-networkd-wait-online.service</refname>
@@ -30,10 +30,10 @@ index 96715cad2f..d93d18325f 100644
      <para><filename>/usr/lib/systemd/systemd-networkd-wait-online</filename></para>
    </refsynopsisdiv>
  
-@@ -65,6 +67,17 @@
-     <citerefentry><refentrytitle>systemd-networkd.service</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-     to be fully configured or failed, and for at least one link to
-     gain a carrier.</para>
+@@ -38,6 +40,17 @@
+     to be fully configured or failed, and for at least one link to be online. Here, online means that
+     the link's operational state is equal or higher than <literal>degraded</literal>. The threshold
+     can be configured by <option>--operational-state=</option> option.</para>
 +
 +    <para>The service <filename>systemd-networkd-wait-online.service</filename> invokes
 +    <command>systemd-networkd-wait-online</command> without any options. Thus, it waits for all managed
@@ -49,20 +49,20 @@ index 96715cad2f..d93d18325f 100644
  
    <refsect1>
 diff --git a/units/meson.build b/units/meson.build
-index 814ee7885b..9a449f95a4 100644
+index a9bf28f6d9..8516fcc0a0 100644
 --- a/units/meson.build
 +++ b/units/meson.build
-@@ -188,6 +188,7 @@ in_units = [
-          join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
-         ['systemd-networkd-wait-online.service', 'ENABLE_NETWORKD',
-          join_paths(pkgsysconfdir, 'system/network-online.target.wants/')],
+@@ -220,6 +220,7 @@ in_units = [
+         ['systemd-network-generator.service',    ''],
+         ['systemd-networkd.service',             'ENABLE_NETWORKD'],
+         ['systemd-networkd-wait-online.service', 'ENABLE_NETWORKD'],
 +        ['systemd-networkd-wait-online@.service','ENABLE_NETWORKD'],
          ['systemd-nspawn@.service',              ''],
-         ['systemd-poweroff.service',             ''],
-         ['systemd-quotacheck.service',           'ENABLE_QUOTACHECK'],
+         ['systemd-oomd.service',                 'ENABLE_OOMD',
+          'dbus-org.freedesktop.oom1.service'],
 diff --git a/units/systemd-networkd-wait-online@.service.in b/units/systemd-networkd-wait-online@.service.in
 new file mode 100644
-index 000000000000..949695f53e21
+index 0000000000..949695f53e
 --- /dev/null
 +++ b/units/systemd-networkd-wait-online@.service.in
 @@ -0,0 +1,25 @@
@@ -86,7 +86,7 @@ index 000000000000..949695f53e21
 +
 +[Service]
 +Type=oneshot
-+ExecStart=@rootlibexecdir@/systemd-networkd-wait-online -i %i
++ExecStart={{ROOTLIBEXECDIR}}/systemd-networkd-wait-online -i %i
 +RemainAfterExit=yes
 +
 +[Install]

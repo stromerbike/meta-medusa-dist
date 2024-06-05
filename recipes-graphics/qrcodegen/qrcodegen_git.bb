@@ -3,32 +3,32 @@ HOMEPAGE = "https://www.nayuki.io/page/qr-code-generator-library"
 SECTION = "libs"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://Readme.markdown;beginline=175;md5=063a6c9f330bca206cb38453ceb96785"
+LIC_FILES_CHKSUM = "file://Readme.markdown;beginline=69;md5=794c65ba35e2a4bebd467469bab52040"
 
 PR = "r0"
-BASEPV = "1.6.0"
+BASEPV = "1.8.0"
 PV = "${BASEPV}+gitr${SRCPV}"
 
-SRC_URI = "git://github.com/nayuki/QR-Code-generator.git;protocol=git;branch=master"
-SRCREV = "71c75cfeb0f06788ebc43a39b704c39fcf5eba7c"
+SRC_URI = "git://github.com/nayuki/QR-Code-generator.git;protocol=https;branch=master"
+SRCREV = "720f62bddb7226106071d4728c292cb1df519ceb"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "${libdir}/lib${BPN}.so"
+FILES:${PN} += "${libdir}/lib${BPN}.so"
 FILES_SOLIBSDEV = ""
 
-INSANE_SKIP_${PN} = "dev-so"
-RPROVIDES_${PN} += "lib${BPN}.so"
+INSANE_SKIP:${PN} = "dev-so"
+RPROVIDES:${PN} += "lib${BPN}.so"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_compile() {
-    ${CC} -std=c++11 -O -shared -fPIC -Wl,-soname,lib${BPN}.so.1 cpp/QrCode.cpp -o lib${BPN}.so.${BASEPV}
+    ${CC} -std=c++11 -O -shared -fPIC -Wl,-soname,lib${BPN}.so.1 cpp/qrcodegen.cpp -o lib${BPN}.so.${BASEPV}
 }
 
 do_install() {
     install -d ${D}${libdir}
-    oe_soinstall lib${BPN}.so.${BASEPV} ${D}${libdir}
+    oe_libinstall -so lib${BPN} ${D}${libdir}
     install -d ${D}${includedir}/${BPN}
-    install cpp/QrCode.hpp ${D}${includedir}/${BPN}
+    install cpp/qrcodegen.hpp ${D}${includedir}/${BPN}
 }

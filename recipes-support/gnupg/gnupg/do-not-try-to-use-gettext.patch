@@ -1,8 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index 382ef1df5..524201fdd 100644
+index 65ae52336..17a0d891e 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -630,7 +630,7 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
+@@ -641,7 +641,7 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
  PKG_PROG_PKG_CONFIG
  
  

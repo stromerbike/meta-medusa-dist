@@ -1,4 +1,4 @@
-image: $DOCKER_HUB_USER/yocto-medusa-sumo:latest
+image: $DOCKER_HUB_USER/yocto-medusa:latest
 
 stages:
   - build
@@ -39,9 +39,6 @@ sdk:
     - *before_script_ssh
   script:
     - *common_script
-    # Yocto sumo does not support SDKPATHINSTALL but DISTRO_VERSION will change on each build and shall not trigger a rebuild
-    # Mofication will cause a "WARNING: medusa-image-1.0-r0 do_populate_sdk: Manifest /builds/st2/medusa/build/yocto/medusa-image/tmp-glibc/sstate-control/manifest-allarch-nativesdk-linux-libc-headers.populate_sysroot not found in x86_64_linux allarch (variant '')?"
-    - echo -e "\n\nSDKPATH = \"/opt/medusa\"" | tee -a tools/yocto/meta-medusa-dist/conf/distro/medusa.conftemplate
     - ./shell-build.sh medusa-image "-c populate_sdk"
     - cd $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/yocto/medusa-image/deploy/sdk
     - cp * $CI_PROJECT_DIR/
@@ -57,13 +54,12 @@ cross:
   extends: .build_machine
   script:
     - sudo ./medusa-x86_64-toolchain-*-DIRTY.sh -y
-    - . /opt/medusa/environment-setup-cortexa7hf-neon-vfpv4-oe-linux-gnueabi
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/medusa.git
-    - cd medusa
+    - . /opt/medusa/*/environment-setup-cortexa7hf-neon-vfpv4-oe-linux-gnueabi
+    - *common_script
     - |
       for BUILD_TYPE in Debug Release; do
-        mkdir -p $CI_PROJECT_DIR/medusa/build/Cross/$BUILD_TYPE
-        cd $CI_PROJECT_DIR/medusa/build/Cross/$BUILD_TYPE
+        mkdir -p $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/Cross/$BUILD_TYPE
+        cd $CI_PROJECT_DIR/gitlab-runner-common/medusa/build/Cross/$BUILD_TYPE
         cmake -GNinja \
               -DBUILD_SHARED_LIBS=ON \
               -DCMAKE_INSTALL_PREFIX=install/usr \
