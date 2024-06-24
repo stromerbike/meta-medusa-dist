@@ -93,3 +93,6 @@ IMAGE_CMD_TAR = "tar --sort=name"
 
 # Ensure that qmake and protoc are part of the SDK
 TOOLCHAIN_HOST_TASK:append = " nativesdk-packagegroup-qt5-toolchain-host nativesdk-protobuf-compiler"
+
+# Ensure that gtest and mkspecs (for cortexa7hf-neon-vfpv4-oe-linux-gnueabi) are part of the SDK
+TOOLCHAIN_TARGET_TASK:append = " googletest qtbase-mkspecs"
