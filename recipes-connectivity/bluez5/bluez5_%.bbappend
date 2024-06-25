@@ -9,8 +9,6 @@ SRC_URI += " \
 
 PACKAGECONFIG:remove = " \
     obex-profiles \
-    a2dp-profiles \
-    avrcp-profiles \
     hid-profiles \
     hog-profiles \
     udev \
@@ -39,5 +37,6 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/TIInit_6.7.16.bts ${D}/${base_libdir}/firmware/ti-connectivity
     install -m 0644 ${WORKDIR}/TIInit_6.12.26.bts ${D}/${base_libdir}/firmware/ti-connectivity
 
+    install -d ${D}/${sysconfdir}/bluetooth
     install -m 0644 ${WORKDIR}/main.conf ${D}/${sysconfdir}/bluetooth/
 }
