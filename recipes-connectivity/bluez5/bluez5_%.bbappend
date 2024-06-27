@@ -2,6 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://bluetooth.service.in.patch \
             file://fix_coredump.patch \
+            file://fix_issue_773.patch \
             file://main.conf \
             file://TIInit_6.7.16.bts \
             file://TIInit_6.12.26.bts \
