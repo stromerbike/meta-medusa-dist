@@ -1,5 +1,5 @@
 [Unit]
-Description=ble
+Description=ble-attach
 After=dbus.service check.target
 Requires=dbus.service
 Wants=check.target
