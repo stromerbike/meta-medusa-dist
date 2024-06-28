@@ -9,10 +9,19 @@ SRC_URI += " \
 
 PACKAGECONFIG:remove = " \
     obex-profiles \
+    a2dp-profiles \
+    avrcp-profiles \
     hid-profiles \
     hog-profiles \
     udev \
 "
+
+PACKAGECONFIG[bap-profiles] = "--enable-bap,--disable-bap"
+PACKAGECONFIG[bass-service] = "--enable-bass,--disable-bass"
+PACKAGECONFIG[mcp-profiles] = "--enable-mcp,--disable-mcp"
+PACKAGECONFIG[vcp-profiles] = "--enable-vcp,--disable-vcp"
+PACKAGECONFIG[micp-profiles] = "--enable-micp,--disable-micp"
+PACKAGECONFIG[csip-profiles] = "--enable-csip,--disable-csip"
 
 NOINST_TOOLS_READLINE = " \
     tools/btmgmt \
