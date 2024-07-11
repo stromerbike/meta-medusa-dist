@@ -2,5 +2,6 @@
 Name=eth0
 
 [Network]
-DHCP=ipv4
 Address=192.168.3.11/24
+# https://github.com/systemd/systemd/issues/24717
+LinkLocalAddressing=no

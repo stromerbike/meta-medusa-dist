@@ -6,3 +6,5 @@ Property=INTERFACE=ppp0
 KeepConfiguration=static
 DNS=10.89.23.40
 DNS=10.89.23.41
+# https://github.com/systemd/systemd/issues/24717
+LinkLocalAddressing=no
