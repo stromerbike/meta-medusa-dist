@@ -1,39 +1,20 @@
 diff --git a/units/systemd-timesyncd.service.in b/units/systemd-timesyncd.service.in
-index c606461091..1e05235486 100644
+index c606461091..f3842cbb67 100644
 --- a/units/systemd-timesyncd.service.in
 +++ b/units/systemd-timesyncd.service.in
-@@ -17,11 +17,10 @@ After=systemd-sysusers.service
+@@ -17,6 +17,7 @@ After=systemd-sysusers.service
  Before=time-set.target sysinit.target shutdown.target
  Conflicts=shutdown.target
  Wants=time-set.target
 +RequiresMountsFor=/mnt/data
  
  [Service]
--AmbientCapabilities=CAP_SYS_TIME
- BusName=org.freedesktop.timesync1
--CapabilityBoundingSet=CAP_SYS_TIME
- # Turn off DNSSEC validation for hostname look-ups, since those need the
- # correct time to work, but we likely won't acquire that without NTP. Let's
- # break this chicken-and-egg cycle here.
-@@ -39,7 +38,7 @@ ProtectHostname=yes
- ProtectKernelLogs=yes
+ AmbientCapabilities=CAP_SYS_TIME
+@@ -40,6 +41,7 @@ ProtectKernelLogs=yes
  ProtectKernelModules=yes
  ProtectKernelTunables=yes
--ProtectSystem=strict
-+ProtectSystem=full
+ ProtectSystem=strict
++ReadWritePaths=/mnt/data/timesync
  Restart=always
  RestartSec=0
  RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
-@@ -47,12 +46,10 @@ RestrictNamespaces=yes
- RestrictRealtime=yes
- RestrictSUIDSGID=yes
- RuntimeDirectory=systemd/timesync
--StateDirectory=systemd/timesync
- SystemCallArchitectures=native
- SystemCallErrorNumber=EPERM
- SystemCallFilter=@system-service @clock
- Type=notify
--User=systemd-timesync
- {{SERVICE_WATCHDOG}}
- 
- [Install]
