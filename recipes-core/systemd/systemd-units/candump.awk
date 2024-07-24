@@ -130,6 +130,14 @@
     }
     else
     {
+        if (3>=NF)
+        {
+            invalidLineFound = 1
+        }
+        if (1==invalidLineFound)
+        {
+            printf ";"
+        }
         printf("%u) %.3f 1 Rx %s - %s", NR, currentTimeOffset * 1000, $3, substr($4, 2, length($4) - 2))
         if (5<=NF)
         {
