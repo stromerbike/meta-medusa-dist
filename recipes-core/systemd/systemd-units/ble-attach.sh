@@ -22,7 +22,7 @@ start)
 
 stop)
     # Turn off the Bluetooth radio using btmgmt ('echo -e "power off\nquit\n" | bluetoothctl' could also be used)
-    script -qc "btmgmt power off"
+    script -qc "btmgmt power off" /dev/null
 
     # Kill all existing hciattach processes (will also take down hci interface)
     killall hciattach
@@ -32,8 +32,8 @@ stop)
 ;;
 
 reload)
-    # Turn off the Bluetooth radio using btmgmt ()
-    script -qc "btmgmt power off"
+    # Turn off the Bluetooth radio using btmgmt ('echo -e "power off\nquit\n" | bluetoothctl' could also be used)
+    script -qc "btmgmt power off" /dev/null
 
     # Kill all existing hciattach processes (will also take down hci interface)
     killall hciattach
