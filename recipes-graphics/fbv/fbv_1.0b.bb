@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=130f9d9dddfebd2c6ff59165f066e41c"
 DEPENDS = "libpng"
 PR = "r0"
 
-SRC_URI = "http://s-tech.elsat.net.pl/fbv/fbv-1.0b.tar.gz \
+SRC_URI = "https://sources.buildroot.net/fbv/fbv-1.0b.tar.gz \
 	file://cross_compile.patch \
 	file://fbv-1.0b.patch \
 	file://png.c.patch \
