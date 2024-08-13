@@ -18,9 +18,7 @@ function catchTerminationRequest() {
 }
 trap catchTerminationRequest SIGTERM
 
-if [ "$NAME" == "manual" ]; then
-    TMPDIR="/tmp/candump-manual"
-else
+if [ "$NAME" != "manual" ]; then
     if mkdir "/tmp/candump.lock"; then
         echo "No non-manual candump-save service is already active"
     else
@@ -100,13 +98,25 @@ if [ "$NAME" == "manual" ]; then
     fi
     TERM=linux clear > /dev/tty1 < /dev/tty1
 elif [ "$NAME" == "update" ]; then
-    echo "Concatenating $previousLatest $latest with a maximum length of 100000 to $TMPDIR/$NAME.candump..."
-    cat "$previousLatest" "$latest" | tail -n 100000 > "$TMPDIR/$NAME.candump"
-    echo "...done"
+    if [ -n "$previousLatest" ]; then
+        echo "Concatenating $previousLatest $latest with a maximum length of 100000 to $TMPDIR/$NAME.candump..."
+        lzop -dc "$previousLatest" "$latest" | tail -n 100000 > "$TMPDIR/$NAME.candump"
+        echo "...done"
+    else
+        echo "Using $latest with a maximum length of 100000 as $TMPDIR/$NAME.candump..."
+        lzop -dc "$latest" | tail -n 100000 > "$TMPDIR/$NAME.candump"
+        echo "...done"
+    fi
 else
-    echo "Concatenating $previousLatest $latest with a maximum length of 10000 to $TMPDIR/$NAME.candump..."
-    cat "$previousLatest" "$latest" | tail -n 10000 > "$TMPDIR/$NAME.candump"
-    echo "...done"
+    if [ -n "$previousLatest" ]; then
+        echo "Concatenating $previousLatest $latest with a maximum length of 10000 to $TMPDIR/$NAME.candump..."
+        lzop -dc "$previousLatest" "$latest" | tail -n 10000 > "$TMPDIR/$NAME.candump"
+        echo "...done"
+    else
+        echo "Using $latest with a maximum length of 10000 as $TMPDIR/$NAME.candump..."
+        lzop -dc "$latest" | tail -n 10000 > "$TMPDIR/$NAME.candump"
+        echo "...done"
+    fi
 fi
 
 if [ "$NAME" != "manual" ]; then
