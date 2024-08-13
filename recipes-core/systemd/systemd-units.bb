@@ -12,7 +12,6 @@ RDEPENDS:${PN} += " \
     bluez5 \
     busybox \
     can-utils \
-    cpupower \
     dash \
     evtest \
     fbv \
@@ -61,7 +60,6 @@ SRC_URI += " \
             file://candump.service \
             file://candump.awk \
             file://check.target \
-            file://cpupower.service \
             file://debug.target \
             file://drive.target \
             file://fwu-usb-chk.service \
@@ -125,7 +123,6 @@ SYSTEMD_SERVICE:${PN} = " \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
     can0.service \
     candump.service \
-    cpupower.service \
     ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
@@ -151,7 +148,6 @@ do_install:append() {
     install -m 0755 ${WORKDIR}/candump-save.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/candump.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/candump.awk ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/cpupower.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/gps.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/gps.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/gsm.service ${D}${systemd_system_unitdir}
