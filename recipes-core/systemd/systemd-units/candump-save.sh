@@ -1,5 +1,12 @@
 #!/bin/bash
 
+led1_off ()
+{
+    echo "0" 2> /dev/null > /sys/class/leds/rgb1_blue/brightness
+    echo "0" 2> /dev/null > /sys/class/leds/rgb1_green/brightness
+    echo "0" 2> /dev/null > /sys/class/leds/rgb1_red/brightness
+}
+
 if [ $# -eq 0 ]; then
     echo "<4>No file name specified"
     exit 1
@@ -81,6 +88,7 @@ if [ "$NAME" == "manual" ]; then
         if umount /mnt/usb; then
             echo "...done"
         fi
+        led1_off
     else
         echo "Concatenating up to 10 chunks to $TMPDIR/$NAME.candump..."
         ls -1tr "$TMPDIR/"*.lzo | tail -n 10 | xargs lzop -dc > "$TMPDIR/$NAME.candump"

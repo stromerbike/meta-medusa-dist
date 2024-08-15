@@ -50,6 +50,11 @@ unmount_usb ()
     exit 0
 }
 
+if [ -d "/mnt/usb/candump" ]; then
+    echo "candump folder exists"
+    led1_blue
+fi
+
 if [ -d "/mnt/usb/log" ]; then
     led1_blue
     LOGFILE="/mnt/usb/log/$(hostname)_$(date --utc +"%Y-%m-%d-%H%M%S")_$(cat /etc/medusa-version)"
