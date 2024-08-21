@@ -1,0 +1,6 @@
+[Unit]
+Description=chk-usb
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/chk-usb.sh

@@ -130,13 +130,6 @@ purge_data ()
     fi
 }
 
-export_log ()
-{
-    echo "Exporting log..."
-    systemctl start log-usb || true
-    echo "...done"
-}
-
 umount_usb ()
 {
     echo "Unmounting usb..."
@@ -162,7 +155,6 @@ part0_active ()
     echo "Setting partition 0 as active one..."
     if barebox-state -s partition=0; then
         echo "...done"
-        export_log
         umount_usb
         display_done
         await_shutdown
@@ -176,7 +168,6 @@ part1_active ()
     echo "Setting partition 1 as active one..."
     if barebox-state -s partition=1; then
         echo "...done"
-        export_log
         umount_usb
         display_done
         await_shutdown

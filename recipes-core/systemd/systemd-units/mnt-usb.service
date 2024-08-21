@@ -4,6 +4,6 @@ Description=mnt-usb
 [Service]
 Type=oneshot
 ExecStart=/etc/scripts/mnt-usb.sh start
-ExecStartPost=/bin/systemctl --no-block start fwu-usb-chk.service
+ExecStartPost=/bin/systemctl --no-block start chk-usb.service
 ExecStop=/etc/scripts/mnt-usb.sh stop
 RemainAfterExit=yes

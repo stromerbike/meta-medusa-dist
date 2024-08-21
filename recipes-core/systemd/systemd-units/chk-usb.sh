@@ -1,10 +1,16 @@
 #!/bin/bash
 
-export_log ()
+log_or_candump ()
 {
-    echo "Exporting log..."
-    systemctl start log-usb || true
-    echo "...done"
+    if [ -d "/mnt/usb/log" ]; then
+        echo "Exporting log..."
+        systemctl start log-usb
+        echo "...done"
+    elif [ -d "/mnt/usb/candump" ]; then
+        echo "Triggering manual candump"
+        systemctl start candump-save-manually
+        echo "...done"
+    fi
 }
 
 COUNTER=0
@@ -17,11 +23,11 @@ do
             echo "Firmware tarball $firstTarXz found"
             if [[ ${firstTarXz/-purgedata/} =~ .*$(cat /etc/medusa-version).rootfs.tar.xz$ ]]; then
                 echo "Nothing to up- or downgrade"
-                export_log
+                log_or_candump
                 exit 0
             else
-                echo "Starting fwu-usb-run now..."
-                systemctl start fwu-usb-run
+                echo "Starting fwu-usb now..."
+                systemctl start fwu-usb
                 echo "...done"
                 exit 0
             fi
@@ -34,4 +40,4 @@ do
     sleep 1
 done
 
-export_log
+log_or_candump

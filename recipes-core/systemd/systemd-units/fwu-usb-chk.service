@@ -1,6 +1,0 @@
-[Unit]
-Description=fwu-usb-chk
-
-[Service]
-Type=simple
-ExecStart=/etc/scripts/fwu-usb-chk.sh
