@@ -60,12 +60,12 @@ SRC_URI += " \
             file://candump.service \
             file://candump.awk \
             file://check.target \
+            file://chk-usb.service \
+            file://chk-usb.sh \
             file://debug.target \
             file://drive.target \
-            file://fwu-usb-chk.service \
-            file://fwu-usb-chk.sh \
-            file://fwu-usb-run.service \
-            file://fwu-usb-run.sh \
+            file://fwu-usb.service \
+            file://fwu-usb.sh \
             file://gps.service \
             file://gps.sh \
             file://gps.target \
@@ -190,10 +190,10 @@ do_install:append() {
     install -d ${D}${base_sbindir}
     install -m 0755 ${WORKDIR}/mount.ntfs ${D}${base_sbindir}/
 
-    install -m 0644 ${WORKDIR}/fwu-usb-chk.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu-usb-chk.sh ${D}${sysconfdir}/scripts/
-    install -m 0644 ${WORKDIR}/fwu-usb-run.service ${D}${systemd_system_unitdir}
-    install -m 0755 ${WORKDIR}/fwu-usb-run.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/chk-usb.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/chk-usb.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/fwu-usb.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/fwu-usb.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/log-usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/log-usb.sh ${D}${sysconfdir}/scripts/
 
