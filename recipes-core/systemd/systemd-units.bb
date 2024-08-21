@@ -119,11 +119,11 @@ inherit systemd
 NATIVE_SYSTEMD_SUPPORT = "1"
 
 SYSTEMD_SERVICE:${PN} = " \
-    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'ble-attach.service')} \
-    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'btmon.service')} \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).find('-EMV'), '', 'ble-attach.service')} \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).find('-EMV'), '', 'btmon.service')} \
     can0.service \
     candump.service \
-    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).endswith('-EMV'), '', 'gsm.service')} \
+    ${@oe.utils.ifelse(d.getVar('DISTRO_VERSION', True).find('-EMV'), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
     mnt-data.mount \
