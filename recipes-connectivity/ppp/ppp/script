@@ -1,9 +1,0 @@
-#!/bin/dash
-
-if [ "$PPP_IFACE" = "ppp0" ]; then
-    ip route add 10.89.23.0/24 dev ppp0
-    # systemd-networkd doesn't support the KeepConfiguration option. Therefore,
-    # it might happen that if a network rule is used it might delete the ip
-    # addresses of an interface. This is a workaround.
-    systemd-resolve -i ppp0 --set-dns=10.89.23.40 --set-dns=10.89.23.41
-fi
