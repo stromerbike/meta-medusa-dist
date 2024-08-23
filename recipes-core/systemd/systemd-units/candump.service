@@ -6,7 +6,7 @@ DefaultDependencies=no
 
 [Service]
 Type=simple
-ExecStart=/bin/dash -c '/usr/bin/candump can0,0:0,#FFFFFFFF -t a -r 1048576 | /usr/bin/multilog s4194304 n65 !lzop wcandump.lzo /tmp/candump'
+ExecStart=/bin/dash -c '/usr/bin/candump can0,0:0,#FFFFFFFF -H -t a -r 1048576 | /usr/bin/multilog s4194304 n65 !lzop wcandump.lzo /tmp/candump'
 ExecStopPost=/bin/rm -rf /tmp/candump
 Restart=always
 
