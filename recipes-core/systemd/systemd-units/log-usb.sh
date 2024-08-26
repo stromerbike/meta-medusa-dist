@@ -58,7 +58,7 @@ if [ -d "/mnt/usb/log" ]; then
     if journalctl -a -o short-precise --no-hostname --no-pager | gzip > $LOGFILE-short.gz; then
         echo "...done ($(stat -c%s $LOGFILE-short.gz) bytes written)"
         echo "Writing json log to $LOGFILE-json.gz..."
-        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | gzip > $LOGFILE-json.gz; then
+        if journalctl -a -o json --no-pager --output-fields=MESSAGE,PRIORITY,_PID,SYSLOG_IDENTIFIER,_SYSTEMD_UNIT | { [ -f /etc/scripts/systemd-journald-json-decode-ansi-escape.py ] && /etc/scripts/systemd-journald-json-decode-ansi-escape.py || cat; } | gzip > $LOGFILE-json.gz; then
             echo "...done ($(stat -c%s $LOGFILE-json.gz) bytes written)"
             for i in btmon candump
             do
