@@ -88,9 +88,12 @@ if [ ! -z "$CGMR" ]; then
                 #         (the calculation method EURY-4127 does not always seem valid):
                 #         - HL7802_4.3.9.0_to_4.4.14.0_allBin_nbIOT11_sig11.ua: --1k works
                 #         - HL7802_4.3.9.0_to_4.6.9.4_allBin_nbIOT11_sig11.ua:  --1k does not work (ERROR)
+                #         - HL7802_4.4.14.0_to_4.7.1.0_allBin_nbIOT11_sig11.ua: --1k works
                 #         - HL7802_4.4.14.0_to_4.6.9.4_allBin_nbIOT11_sig11.ua: --1k does not work (CME ERROR 3)
                 #         - HL7802_4.4.14.0_to_4.5.4.0_allBin_nbIOT11_sig11.ua: --1k works
                 #         - HL7802_4.5.4.0_to_4.6.9.4_allBin_nbIOT11_sig11.ua:  --1k works
+                #         - HL7802_4.5.4.0_to_4.7.1.0_allBin_nbIOT11_sig11.ua:  --1k works
+                #         - HL7802_4.6.9.4_to_4.7.1.0_allBin_nbIOT11_sig11.ua:  --1k works (since EURY-4127 fixed)
                 #
                 #         To make use of the considerably faster 1024 byte block transfer, an update to 4.6.9.4+
                 #         over intermediate versions (4.4.14.0 -> 4.5.4.0 -> 4.6.9.4) should be strongly favored.
