@@ -6,8 +6,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 RRECOMMENDS:${PN} = "lrzsz"
 
 SRC_URI = " \ 
-            file://HL7802_4.4.14.0_to_4.5.4.0_allBin_nbIOT11_sig11.ua \
-            file://HL7802_4.5.4.0_to_4.6.9.4_allBin_nbIOT11_sig11.ua \
+            file://HL7802_4.4.14.0_to_4.7.1.0_allBin_nbIOT11_sig11.ua \
+            file://HL7802_4.5.4.0_to_4.7.1.0_allBin_nbIOT11_sig11.ua \
+            file://HL7802_4.6.9.4_to_4.7.1.0_allBin_nbIOT11_sig11.ua \
             file://SHA256SUMS \
 "
 
