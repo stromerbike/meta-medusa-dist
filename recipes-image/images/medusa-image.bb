@@ -12,7 +12,6 @@ DESCRIPTION = "Medusa image"
 LICENSE = "MIT"
 
 # Added packets from and for manufacturer:
-# barebox - bootloader
 # dt-utils-barebox-state - linux packet for set/get shared barebox variables
 # kernel-image - copy kernel into rootfs (boot directory)
 # kernel-devicetree - copy dtb into rootfs (boot directory)
@@ -20,7 +19,7 @@ LICENSE = "MIT"
 # openssh-sshd - ssh connection used during production
 # iperf3 - used during production for bandwidth test
 # medusa-version - used during production for obtaining version
-IMAGE_INSTALL:append = " barebox dt-utils-barebox-state \
+IMAGE_INSTALL:append = " dt-utils-barebox-state \
                          kernel-image kernel-devicetree kernel-modules \
                          openssh-sshd \
                          iperf3 \
