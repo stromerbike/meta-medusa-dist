@@ -1,5 +1,16 @@
+From 2487c1c82f4e7ad46547cf5f486980ebcd4b17ed Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:57:35 +0200
+Subject: [PATCH] ldattach adjust gsm config
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ sys-utils/ldattach.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 diff --git a/sys-utils/ldattach.c b/sys-utils/ldattach.c
-index d33d68535..3335b765c 100644
+index 9c67eeec8..1b2b4f48b 100644
 --- a/sys-utils/ldattach.c
 +++ b/sys-utils/ldattach.c
 @@ -270,9 +270,9 @@ static void gsm0710_set_conf(int tty_fd)
@@ -15,4 +26,6 @@ index d33d68535..3335b765c 100644
  	/*  set the new configuration */
  	ioctl(tty_fd, GSMIOC_SETCONF, &c);
  	/* Add by guowenxue end*/
+-- 
+2.34.1
 

@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://ldattach-adjust-gsm-config.patch \
+            file://0001-ldattach-adjust-gsm-config.patch \
 "
 
 RDEPENDS:${PN} =+ "util-linux-ldattach"
