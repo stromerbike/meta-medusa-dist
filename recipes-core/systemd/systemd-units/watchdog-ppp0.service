@@ -1,0 +1,6 @@
+[Unit]
+Description=watchdog-ppp0
+
+[Service]
+Type=simple
+ExecStart=/etc/scripts/watchdog-ppp0.sh

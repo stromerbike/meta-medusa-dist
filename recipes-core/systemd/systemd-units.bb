@@ -97,6 +97,8 @@ SRC_URI += " \
             file://usb.service \
             file://usb.sh \
             file://vnc-server.service \
+            file://watchdog-ppp0.service \
+            file://watchdog-ppp0.sh \
             file://wlan0.sh \
             file://wvdial-hl78xx-usb.service \
             file://wvdial-hl78xx.service \
@@ -166,6 +168,8 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/vnc-server.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/watchdog-ppp0.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/watchdog-ppp0.sh ${D}${sysconfdir}/scripts/
     install -m 0755 ${WORKDIR}/wlan0.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/wvdial-hl78xx-usb.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/wvdial-hl78xx.service ${D}${systemd_system_unitdir}
