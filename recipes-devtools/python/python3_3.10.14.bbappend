@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://only-generate-legacy-bytecode.patch \
+            file://0001-only-generate-legacy-bytecode.patch \
             file://python3-manifest-with-additions.json \
 "
 
