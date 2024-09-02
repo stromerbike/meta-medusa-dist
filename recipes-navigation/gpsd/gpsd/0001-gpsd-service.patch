@@ -1,0 +1,27 @@
+From aa6db7997704a6d4d59a8ad7fe2dc6d1f94119b9 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 19:25:09 +0200
+Subject: [PATCH] gpsd service
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ systemd/gpsd.service.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/systemd/gpsd.service.in b/systemd/gpsd.service.in
+index 768e3dcd6..2dad4758f 100644
+--- a/systemd/gpsd.service.in
++++ b/systemd/gpsd.service.in
+@@ -2,7 +2,7 @@
+ Description=GPS (Global Positioning System) Daemon
+ Requires=gpsd.socket
+ # Needed with chrony SOCK refclock
+-After=chronyd.service
++After=chronyd.service ble.target
+ 
+ [Service]
+ Type=forking
+-- 
+2.34.1
+

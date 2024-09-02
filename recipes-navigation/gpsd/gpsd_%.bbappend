@@ -2,8 +2,8 @@ SYSTEMD_AUTO_ENABLE:${PN} = "disable"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://gpsd.service.patch \
-            file://gpsdctl-output-info-instead-of-error-on-action.patch \
+            file://0001-gpsd-service.patch \
+            file://0001-gpsdctl-output-info-instead-of-error-on-action.patch \
 "
 
 do_install:append:class-target() {

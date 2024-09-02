@@ -1,3 +1,14 @@
+From 35f722a388dbe1e13367f280b9f44d635e46b79b Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 19:22:14 +0200
+Subject: [PATCH] gpsdctl output info instead of error on action
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ clients/gpsdctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/clients/gpsdctl.c b/clients/gpsdctl.c
 index b30300f4d..7f0b8f126 100644
 --- a/clients/gpsdctl.c
@@ -11,3 +22,6 @@ index b30300f4d..7f0b8f126 100644
      if (0 == access(control_socket, F_OK) &&
          0 <= (connect = netlib_localsocket(control_socket, SOCK_STREAM))) {
          syslog(LOG_INFO, "reached a running gpsd");
+-- 
+2.34.1
+
