@@ -1,8 +1,19 @@
+From 9818fa7f7b304ccfc8f1b195dfac0e1e2c26d463 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:08:08 +0200
+Subject: [PATCH] add libusb directory configure arg
+
+Upstream-Status: Inappropriate [yocto]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ configure.ac | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
 diff --git a/configure.ac b/configure.ac
-index 65ae52336..ba682bd79 100644
+index 5cd15067b..097fef5ab 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -846,19 +846,19 @@ if test x"$LIBUSB_NAME" != x ; then
+@@ -914,19 +914,19 @@ if test x"$LIBUSB_NAME" != x ; then
                    have_libusb=yes ])
     AC_MSG_CHECKING([libusb include dir])
     usb_incdir_found="no"
@@ -35,3 +46,6 @@ index 65ae52336..ba682bd79 100644
     if test "$usb_incdir_found" = "yes"; then
       AC_MSG_RESULT([${usb_incdir}])
     else
+-- 
+2.34.1
+

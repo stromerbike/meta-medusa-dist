@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://add-libusb-directory-configure-arg.patch \
-            file://do-not-try-to-use-gettext.patch \
+            file://0001-add-libusb-directory-configure-arg.patch \
+            file://0001-do-not-try-to-use-gettext.patch \
             file://pubring.gpg \
 "
 

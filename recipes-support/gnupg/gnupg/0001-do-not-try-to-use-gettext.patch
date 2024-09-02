@@ -1,0 +1,27 @@
+From bbb90dc77dbbd66bfe545bbf4b55947d207ac8df Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:10:26 +0200
+Subject: [PATCH] do not try to use gettext
+
+Upstream-Status: Inappropriate [yocto]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 5cd15067b..9625019e5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -687,7 +687,7 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
+ PKG_PROG_PKG_CONFIG
+ 
+ 
+-try_gettext=yes
++try_gettext=no
+ require_iconv=yes
+ have_dosish_system=no
+ have_w32_system=no
+-- 
+2.34.1
+
