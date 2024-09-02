@@ -1,3 +1,14 @@
+From fad4916c6ee5c904001b506059434c30d97069d0 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:44:19 +0200
+Subject: [PATCH] bluetooth.service.in
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/bluetooth.service.in | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
 diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
 index beb98ce0c..63c9049e1 100644
 --- a/src/bluetooth.service.in
@@ -35,3 +46,6 @@ index beb98ce0c..63c9049e1 100644
  
  # Execute Mappings
  MemoryDenyWriteExecute=true
+-- 
+2.34.1
+
