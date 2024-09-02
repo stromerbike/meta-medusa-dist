@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://remove-non-arm-files.patch \
+            file://0001-remove-non-arm-files.patch \
 "
 
 PACKAGECONFIG:remove = " python"

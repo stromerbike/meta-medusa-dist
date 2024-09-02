@@ -1,3 +1,14 @@
+From 0cd7e9586d685bfe64c63fe93e47da2f8fe51108 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:32:46 +0200
+Subject: [PATCH] remove non arm files
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ gdb/data-directory/Makefile.in | 19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
+
 diff --git a/gdb/data-directory/Makefile.in b/gdb/data-directory/Makefile.in
 index 6e219e09efc..12cf789ca21 100644
 --- a/gdb/data-directory/Makefile.in
@@ -36,3 +47,6 @@ index 6e219e09efc..12cf789ca21 100644
  
  FLAGS_TO_PASS = \
  	"prefix=$(prefix)" \
+-- 
+2.34.1
+
