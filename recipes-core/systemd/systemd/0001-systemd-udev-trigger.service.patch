@@ -1,3 +1,14 @@
+From 28414567b67e4d4f1dad0b977dd97ae087128ccb Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 22:22:10 +0200
+Subject: [PATCH] systemd-udev-trigger.service
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ units/systemd-udev-trigger.service | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
 diff --git a/units/systemd-udev-trigger.service b/units/systemd-udev-trigger.service
 index 3d0f7b4f20..1442a71174 100644
 --- a/units/systemd-udev-trigger.service
@@ -21,3 +32,6 @@ index 3d0f7b4f20..1442a71174 100644
  ExecStart=-udevadm trigger --type=subsystems --action=add
 -ExecStart=-udevadm trigger --type=devices --action=add
 +ExecStart=-udevadm trigger -S input -S ubi --type=devices --action=add
+-- 
+2.34.1
+

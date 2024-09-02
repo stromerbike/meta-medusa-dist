@@ -1,0 +1,27 @@
+From cd1aa6a5ed293fa6912158e1f75406cef01dec71 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 22:28:53 +0200
+Subject: [PATCH] systemd-journal-upload.service.in
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ units/systemd-journal-upload.service.in | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/units/systemd-journal-upload.service.in b/units/systemd-journal-upload.service.in
+index e4359a80e4..60ccb92a32 100644
+--- a/units/systemd-journal-upload.service.in
++++ b/units/systemd-journal-upload.service.in
+@@ -10,8 +10,6 @@
+ [Unit]
+ Description=Journal Remote Upload Service
+ Documentation=man:systemd-journal-upload(8)
+-Wants=network-online.target
+-After=network-online.target
+ 
+ [Service]
+ DynamicUser=yes
+-- 
+2.34.1
+

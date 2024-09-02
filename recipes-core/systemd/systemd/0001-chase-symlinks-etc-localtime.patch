@@ -1,3 +1,14 @@
+From 71f8f75b3d3c3361e20dbf7622b29ecb176cf4f1 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 22:37:39 +0200
+Subject: [PATCH] chase symlinks etc localtime
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/basic/time-util.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
 diff --git a/src/basic/time-util.c b/src/basic/time-util.c
 index b659d6905d..b8591b56b2 100644
 --- a/src/basic/time-util.c
@@ -19,3 +30,6 @@ index b659d6905d..b8591b56b2 100644
          if (r == -ENOENT) {
                  /* If the symlink does not exist, assume "UTC", like glibc does */
                  z = strdup("UTC");
+-- 
+2.34.1
+

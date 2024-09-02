@@ -1,3 +1,14 @@
+From fdcf82bd1d0db5c6837ea3f5e4ac77429835efad Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 22:25:12 +0200
+Subject: [PATCH] systemd-timesyncd.service.in
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ units/systemd-timesyncd.service.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
 diff --git a/units/systemd-timesyncd.service.in b/units/systemd-timesyncd.service.in
 index c606461091..f3842cbb67 100644
 --- a/units/systemd-timesyncd.service.in
@@ -18,3 +29,6 @@ index c606461091..f3842cbb67 100644
  Restart=always
  RestartSec=0
  RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+-- 
+2.34.1
+

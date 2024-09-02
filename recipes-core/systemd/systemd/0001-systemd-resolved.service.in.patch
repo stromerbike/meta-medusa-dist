@@ -1,3 +1,14 @@
+From e3d426ebaca433a4a95ad0d5c64c03c64c3974e4 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 22:26:59 +0200
+Subject: [PATCH] systemd-resolved.service.in
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ units/systemd-resolved.service.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/units/systemd-resolved.service.in b/units/systemd-resolved.service.in
 index 00812fb26c..a4a75ad808 100644
 --- a/units/systemd-resolved.service.in
@@ -18,3 +29,6 @@ index 00812fb26c..a4a75ad808 100644
 -WantedBy=multi-user.target
 +WantedBy=gsm.target
  Alias=dbus-org.freedesktop.resolve1.service
+-- 
+2.34.1
+

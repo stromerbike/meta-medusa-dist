@@ -1,13 +1,13 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://chase_symlinks_etc_localtime.patch \
-            file://introduce-wait-online@.service-for-specific-interface.patch \
-            file://move_state_file_to_data_partition.patch \
+            file://0001-chase-symlinks-etc-localtime.patch \
+            file://0001-introduce-wait-online-.service-for-specific-interfac.patch \
+            file://0001-move-clock-state-file-to-data-partition.patch \
+            file://0001-systemd-journal-upload.service.in.patch \
+            file://0001-systemd-resolved.service.in.patch \
+            file://0001-systemd-timesyncd.service.in.patch \
+            file://0001-systemd-udev-trigger.service.patch \
             file://resolved.conf \
-            file://systemd-journal-upload.service.in.patch \
-            file://systemd-resolved.service.in.patch \
-            file://systemd-timesyncd.service.in.patch \
-            file://systemd-udev-trigger.service.patch \
             file://timesyncd.conf \
 "
 
