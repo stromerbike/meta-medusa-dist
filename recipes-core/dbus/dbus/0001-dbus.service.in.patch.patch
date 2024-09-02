@@ -1,0 +1,26 @@
+From 9fe5d927df0e80b1bec54b026a126e8635e25306 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 18:51:54 +0200
+Subject: [PATCH] dbus.service.in.patch
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ bus/dbus.service.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/bus/dbus.service.in b/bus/dbus.service.in
+index 3713810b..0b637330 100644
+--- a/bus/dbus.service.in
++++ b/bus/dbus.service.in
+@@ -2,6 +2,7 @@
+ Description=D-Bus System Message Bus
+ Documentation=man:dbus-daemon(1)
+ Requires=dbus.socket
++DefaultDependencies=no
+ 
+ [Service]
+ Type=notify
+-- 
+2.34.1
+

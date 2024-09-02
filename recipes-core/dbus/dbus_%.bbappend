@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://dbus.service.in.patch \
+            file://0001-dbus.service.in.patch \
 "
 
 do_install:append:class-target() {
