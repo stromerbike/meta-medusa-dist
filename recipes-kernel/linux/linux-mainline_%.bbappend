@@ -35,7 +35,7 @@ python do_process_logo() {
     bb.build.exec_func('do_postprocess_logo', d)
 }
 
-addtask process_logo after do_prepare_recipe_sysroot before do_compile
+addtask process_logo after do_patch do_prepare_recipe_sysroot before do_compile
 
 do_compile:prepend() {
     mkdir -p ${S}/linux-firmware/imx/sdma/
