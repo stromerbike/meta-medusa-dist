@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
-            file://REVERT-QTBUG-77006-ensure-all-children-of-a-widget-get-updated-when-a-stylesheet-changes.patch \
+            file://0001-REVERT-QTBUG-77006.patch \
 "
 
 # https://qtlite.com

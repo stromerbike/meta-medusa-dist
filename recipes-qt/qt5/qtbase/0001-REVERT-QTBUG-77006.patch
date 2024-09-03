@@ -1,3 +1,16 @@
+From 08817df0799e7c378b652c51d242d41a21d99b13 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Tue, 3 Sep 2024 14:16:05 +0200
+Subject: [PATCH] REVERT QTBUG 77006
+
+ensure all children of a widget get updated when a stylesheet-changes
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/widgets/styles/qstylesheetstyle.cpp | 5 -----
+ 1 file changed, 5 deletions(-)
+
 diff --git a/src/widgets/styles/qstylesheetstyle.cpp b/src/widgets/styles/qstylesheetstyle.cpp
 index 9fcb8ba522..e7f13e33fa 100644
 --- a/src/widgets/styles/qstylesheetstyle.cpp
@@ -14,3 +27,6 @@ index 9fcb8ba522..e7f13e33fa 100644
          }
      }
  }
+-- 
+2.34.1
+
