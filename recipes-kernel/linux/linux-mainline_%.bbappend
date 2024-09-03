@@ -4,7 +4,7 @@ DEPENDS += "imagemagick-native python3-pillow-native"
 
 SRC_URI += " \
             https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/imx/sdma/sdma-imx6q.bin?id=20230404;downloadfilename=sdma-imx6q.bin;name=sdma-imx6q.bin \
-            file://gpiolib-sysfs.c.patch \
+            file://0001-print-warning-as-info-in-gpiolib-sysfs.c.patch \
             file://SiseriffLTStd-Regular.otf \
 "
 

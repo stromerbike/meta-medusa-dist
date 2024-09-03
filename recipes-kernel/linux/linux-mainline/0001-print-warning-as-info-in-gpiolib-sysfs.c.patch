@@ -1,3 +1,14 @@
+From 25e180462e0bc00a3781056b66b17732085dcf70 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Tue, 3 Sep 2024 14:51:48 +0200
+Subject: [PATCH] print warning as info in gpiolib-sysfs.c
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ drivers/gpio/gpiolib-sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
 index 44c1ad51b3fe..50cf4ff522ad 100644
 --- a/drivers/gpio/gpiolib-sysfs.c
@@ -20,3 +31,6 @@ index 44c1ad51b3fe..50cf4ff522ad 100644
  		return -EINVAL;
  	}
  
+-- 
+2.34.1
+
