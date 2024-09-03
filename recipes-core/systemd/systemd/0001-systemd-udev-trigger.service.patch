@@ -1,6 +1,6 @@
-From 28414567b67e4d4f1dad0b977dd97ae087128ccb Mon Sep 17 00:00:00 2001
+From e3a55b2fe61cca64f949b5167b64330d45229124 Mon Sep 17 00:00:00 2001
 From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Mon, 2 Sep 2024 22:22:10 +0200
+Date: Mon, 2 Sep 2024 23:10:04 +0200
 Subject: [PATCH] systemd-udev-trigger.service
 
 Upstream-Status: Inappropriate [stromer-specific]
@@ -10,10 +10,10 @@ Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/units/systemd-udev-trigger.service b/units/systemd-udev-trigger.service
-index 3d0f7b4f20..1442a71174 100644
+index cb1e4f9fea..3fa26c3240 100644
 --- a/units/systemd-udev-trigger.service
 +++ b/units/systemd-udev-trigger.service
-@@ -8,16 +8,15 @@
+@@ -8,15 +8,14 @@
  #  (at your option) any later version.
  
  [Unit]
@@ -29,9 +29,8 @@ index 3d0f7b4f20..1442a71174 100644
  [Service]
  Type=oneshot
  RemainAfterExit=yes
- ExecStart=-udevadm trigger --type=subsystems --action=add
--ExecStart=-udevadm trigger --type=devices --action=add
-+ExecStart=-udevadm trigger -S input -S ubi --type=devices --action=add
+-ExecStart=-udevadm trigger --type=all --action=add --prioritized-subsystem=module,block,tpmrm,net,tty,input
++ExecStart=-udevadm trigger -S input -S ubi --type=all --action=add --prioritized-subsystem=module,block,tpmrm,net,tty,input
 -- 
 2.34.1
 

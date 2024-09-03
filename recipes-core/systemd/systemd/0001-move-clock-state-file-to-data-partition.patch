@@ -1,6 +1,6 @@
-From bdb62ab15d3cc07513cbcc9a722781834e5a0bf5 Mon Sep 17 00:00:00 2001
+From 659fdf6fc896d19604e61f7cd07db41b5723b7b9 Mon Sep 17 00:00:00 2001
 From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Mon, 2 Sep 2024 22:31:07 +0200
+Date: Mon, 2 Sep 2024 23:15:05 +0200
 Subject: [PATCH] move clock state file to data partition
 
 Upstream-Status: Inappropriate [stromer-specific]
@@ -11,10 +11,10 @@ Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/man/systemd-timesyncd.service.xml b/man/systemd-timesyncd.service.xml
-index 34e0a67472..fad8903f7c 100644
+index 87625ac3f2..3b7e8d20df 100644
 --- a/man/systemd-timesyncd.service.xml
 +++ b/man/systemd-timesyncd.service.xml
-@@ -58,7 +58,7 @@
+@@ -59,7 +59,7 @@
      <para><filename>systemd-timesyncd</filename> initialization delays the start of units that are ordered
      after <filename>time-set.target</filename> (see
      <citerefentry><refentrytitle>systemd.special</refentrytitle><manvolnum>7</manvolnum></citerefentry> for
@@ -23,7 +23,7 @@ index 34e0a67472..fad8903f7c 100644
      (see below) in order to make it roughly monotonic. It does not delay other units until synchronization
      with an accurate reference time sources has been reached. Use
      <citerefentry><refentrytitle>systemd-time-wait-sync.service</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-@@ -72,7 +72,7 @@
+@@ -73,7 +73,7 @@
  
      <variablelist>
        <varlistentry>
@@ -31,12 +31,12 @@ index 34e0a67472..fad8903f7c 100644
 +        <term><filename>/mnt/data/timesync/clock</filename></term>
  
          <listitem>
-           <para>The modification time ("mtime") of this file is updated on each successful NTP synchronization
+           <para>The modification time ("mtime") of this file is updated on each successful NTP
 diff --git a/src/timesync/timesyncd-manager.h b/src/timesync/timesyncd-manager.h
-index aceb0098ce..b8e8e16094 100644
+index f444787489..52b6bbf546 100644
 --- a/src/timesync/timesyncd-manager.h
 +++ b/src/timesync/timesyncd-manager.h
-@@ -31,7 +31,7 @@ typedef struct Manager Manager;
+@@ -32,7 +32,7 @@ typedef struct Manager Manager;
  
  #define DEFAULT_SAVE_TIME_INTERVAL_USEC (60 * USEC_PER_SEC)
  

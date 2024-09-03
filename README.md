@@ -1,19 +1,17 @@
 This is the repository of the distribution specific Yocto layer for the Stromer Medusa hardware.
 
 Modifications:
-- python3_3.10.9: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
+- python3_3.12.3: Added python3-manifest-with-additions.json for defining more fine grained packages than python3-misc does. Also adopted paths for pyc only distribution.
 
-Patches:
+Notes:
 - [JTAG with running Linux Kernel](https://community.nxp.com/thread/376786)
-- [systemd /etc/localtime symlinks chasing](https://github.com/stromerbike/meta-medusa-dist/tree/master/recipes-core/systemd/systemd/chase_symlinks_etc_localtime.patch)
-- [systemd /mnt/data/timesync as state directory](https://github.com/stromerbike/meta-medusa-dist/blob/master/recipes-core/systemd/systemd/move_state_file_to_data_partition.patch)
 
 Fixed recipe version:
 - [honister: pv 1.6.6](https://github.com/openembedded/meta-openembedded/commit/c61dc077bbd81260e4f167fa2251643ba0ba6974) to avoid issue https://github.com/a-j-wood/pv/issues/23
 - [rocko: tar 1.29](https://github.com/kraj/poky/commit/a38ab4ddb786b4d692d4ae891144da576cc190e3) to avoid having to introduce a new delta firmware package file format version
 
-Busybox configuration (1.35.0):
-- git clone https://github.com/mirror/busybox.git && cd busybox && git reset --hard 1_35_0 && make defconfig && make menuconfig
+Busybox configuration (1.36.1):
+- git clone https://git.busybox.net/busybox && cd busybox && git reset --hard 1_36_1 && make defconfig && make menuconfig
 - set "Settings ---> Include busybox applet" to N; Remark: Not needed.
 - set "Settings ---> Build shared libbusybox" to y; Remark: Small binaries result in faster startup time.
 - set "Settings ---> Enable locale support (system needs locale for this to work)" to y.
@@ -27,6 +25,7 @@ Busybox configuration (1.35.0):
 - set "Archival Utilities ---> unxz" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> xzcat" to N; Remark: Not needed with xz.
 - set "Archival Utilities ---> xz -d" to N; Remark: Not needed with xz.
+- set "Archival Utilities ---> lzop" to N; Remark: Not needed with lzop.
 - set "Archival Utilities ---> tar" to N; Remark: Not needed with tar.
 - set "Archival Utilities ---> tar Support old tar header format" to N;
 - set "Archival Utilities ---> tar Enable untarring of tarballs with checksums produced by buggy Sun tar" to N;

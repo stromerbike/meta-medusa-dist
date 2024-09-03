@@ -1,6 +1,6 @@
-From 71f8f75b3d3c3361e20dbf7622b29ecb176cf4f1 Mon Sep 17 00:00:00 2001
+From 7fd0f00db3310a1e6813113063fbe9a1388d6da0 Mon Sep 17 00:00:00 2001
 From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Mon, 2 Sep 2024 22:37:39 +0200
+Date: Mon, 2 Sep 2024 23:17:23 +0200
 Subject: [PATCH] chase symlinks etc localtime
 
 Upstream-Status: Inappropriate [stromer-specific]
@@ -10,23 +10,23 @@ Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/basic/time-util.c b/src/basic/time-util.c
-index b659d6905d..b8591b56b2 100644
+index f9014dc560..f73a6192f7 100644
 --- a/src/basic/time-util.c
 +++ b/src/basic/time-util.c
 @@ -11,6 +11,7 @@
  #include <unistd.h>
  
  #include "alloc-util.h"
-+#include "chase-symlinks.h"
++#include "chase.h"
  #include "fd-util.h"
  #include "fileio.h"
  #include "fs-util.h"
-@@ -1497,7 +1498,7 @@ int get_timezone(char **ret) {
-         char *z;
-         int r;
+@@ -1612,7 +1613,7 @@ int get_timezone(char **ret) {
+ 
+         assert(ret);
  
 -        r = readlink_malloc("/etc/localtime", &t);
-+        r = chase_symlinks("/etc/localtime", NULL, 0, &t, NULL);
++        r = chase("/etc/localtime", NULL, 0, &t, NULL);
          if (r == -ENOENT) {
                  /* If the symlink does not exist, assume "UTC", like glibc does */
                  z = strdup("UTC");

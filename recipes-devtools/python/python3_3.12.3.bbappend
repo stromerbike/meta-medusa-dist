@@ -4,6 +4,8 @@ SRC_URI += " \
             file://python3-manifest-with-additions.json \
 "
 
+WARN_QA:remove = "buildpaths"
+
 do_install:append:class-target() {
     find ${D}${libdir}/python${PYTHON_MAJMIN} -type d -name "__pycache__" -exec rm -r {} +
     find ${D}${libdir}/python${PYTHON_MAJMIN} -name "*.py" -not -name "*_sysconfigdata*.py" -delete

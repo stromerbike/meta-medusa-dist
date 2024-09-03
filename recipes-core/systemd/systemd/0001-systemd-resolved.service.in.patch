@@ -1,32 +1,34 @@
-From e3d426ebaca433a4a95ad0d5c64c03c64c3974e4 Mon Sep 17 00:00:00 2001
+From 039e831b7445411e150abdb7c5161f6e843bc84e Mon Sep 17 00:00:00 2001
 From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Mon, 2 Sep 2024 22:26:59 +0200
+Date: Mon, 2 Sep 2024 23:13:12 +0200
 Subject: [PATCH] systemd-resolved.service.in
 
 Upstream-Status: Inappropriate [stromer-specific]
 Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
 ---
- units/systemd-resolved.service.in | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ units/systemd-resolved.service.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/units/systemd-resolved.service.in b/units/systemd-resolved.service.in
-index 00812fb26c..a4a75ad808 100644
+index 820aecfef6..784fe97af7 100644
 --- a/units/systemd-resolved.service.in
 +++ b/units/systemd-resolved.service.in
-@@ -15,7 +15,7 @@ Documentation=https://www.freedesktop.org/wiki/Software/systemd/writing-network-
+@@ -15,8 +15,8 @@ Documentation=https://www.freedesktop.org/wiki/Software/systemd/writing-network-
  Documentation=https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
  
  DefaultDependencies=no
--After=systemd-sysusers.service systemd-networkd.service
-+After=systemd-sysusers.service systemd-networkd.service gps.target
- Before=network.target nss-lookup.target shutdown.target
- Conflicts=shutdown.target
+-After=systemd-sysctl.service systemd-sysusers.service
+-Before=sysinit.target network.target nss-lookup.target shutdown.target initrd-switch-root.target
++After=systemd-sysctl.service systemd-sysusers.service gps.target
++Before=network.target nss-lookup.target shutdown.target initrd-switch-root.target
+ Conflicts=shutdown.target initrd-switch-root.target
  Wants=nss-lookup.target
-@@ -54,5 +54,5 @@ User=systemd-resolve
+ 
+@@ -55,5 +55,5 @@ ImportCredential=network.search_domains
  {{SERVICE_WATCHDOG}}
  
  [Install]
--WantedBy=multi-user.target
+-WantedBy=sysinit.target
 +WantedBy=gsm.target
  Alias=dbus-org.freedesktop.resolve1.service
 -- 

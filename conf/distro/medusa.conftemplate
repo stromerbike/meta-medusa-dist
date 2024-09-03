@@ -11,7 +11,7 @@ hostname:pn-base-files = "${DISTRO}"
 
 # Image naming
 IMAGE_LINK_NAME = "${IMAGE_BASENAME}"
-IMAGE_NAME = "${IMAGE_BASENAME}-${MEDUSA_METADATA_CODENAME}-${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}"
+IMAGE_NAME = "${IMAGE_BASENAME}-${MEDUSA_METADATA_CODENAME}-${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT}${MEDUSA_METADATA_VARIANT}${IMAGE_NAME_SUFFIX}"
 
 # SDK naming
 SDK_NAME = "${DISTRO}-${SDK_ARCH}"
@@ -58,6 +58,9 @@ INHERIT += "buildhistory"
 BUILDHISTORY_COMMIT = "1"
 INHERIT += "buildstats"
 
+# Explicitly define home directory for root
+ROOT_HOME = "/home/root"
+
 # Set empty root password and add user
 # Remark: The "useradd-staticids" class is not used for simplicity, since all uid's and gid's would have to be defined ourselves.
 INHERIT += "extrausers"
@@ -82,3 +85,6 @@ SSTATE_MIRRORS ?= "file://.* https://gitlab-yocto-mirror.stromerbike.com/sstate-
 
 # Missing dependency in manifest for zipfile https://github.com/python/cpython/blob/3.10/Lib/importlib/readers.py#L2
 IMAGE_INSTALL:append = " python3-compression"
+
+# Multiple providers note being shown for util-linux-sfdisk-native
+PREFERRED_RPROVIDER_util-linux-sfdisk-native = "util-linux-native"

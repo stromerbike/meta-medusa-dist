@@ -1,49 +1,31 @@
-From 8a21edb719ae3ee6acf7aff297dc8ebd761ccfae Mon Sep 17 00:00:00 2001
+From 061805f8b5fbda84e3510e9b1454660d968acc57 Mon Sep 17 00:00:00 2001
 From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Mon, 2 Sep 2024 22:55:09 +0200
+Date: Mon, 2 Sep 2024 23:20:33 +0200
 Subject: [PATCH] only generate legacy bytecode
 
 Upstream-Status: Inappropriate [stromer-specific]
 Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
 ---
- Makefile.pre.in | 22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ Makefile.pre.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index fa99dd86c41..0a6c93d6340 100644
+index 27a26c22523..c8ed5aace22 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -1602,30 +1602,12 @@ libinstall:	build_all $(srcdir)/Modules/xxmodule.c
- 			$(DESTDIR)$(LIBDEST)/distutils/tests ; \
- 	fi
- 	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+@@ -2326,12 +2326,12 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+ 	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
+ 	@ # Build PYC files for the 3 optimization levels (0, 1, 2)
+ 	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
 +		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py -b \
- 		-d $(LIBDEST) -f \
- 		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
+ 		-o 0 -o 1 -o 2 $(COMPILEALL_OPTS) -d $(LIBDEST) -f \
+ 		-x 'bad_coding|badsyntax|site-packages|test/test_lib2to3/data' \
  		$(DESTDIR)$(LIBDEST)
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
--		$(PYTHON_FOR_BUILD) -Wi -O $(DESTDIR)$(LIBDEST)/compileall.py \
--		-d $(LIBDEST) -f \
--		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
--		$(DESTDIR)$(LIBDEST)
--	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
--		$(PYTHON_FOR_BUILD) -Wi -OO $(DESTDIR)$(LIBDEST)/compileall.py \
--		-d $(LIBDEST) -f \
--		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
--		$(DESTDIR)$(LIBDEST)
--	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
--		-d $(LIBDEST)/site-packages -f \
--		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
--	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
--		$(PYTHON_FOR_BUILD) -Wi -O $(DESTDIR)$(LIBDEST)/compileall.py \
--		-d $(LIBDEST)/site-packages -f \
--		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
--	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
--		$(PYTHON_FOR_BUILD) -Wi -OO $(DESTDIR)$(LIBDEST)/compileall.py \
 +		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py -b \
- 		-d $(LIBDEST)/site-packages -f \
+ 		-o 0 -o 1 -o 2 $(COMPILEALL_OPTS) -d $(LIBDEST)/site-packages -f \
  		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -- 

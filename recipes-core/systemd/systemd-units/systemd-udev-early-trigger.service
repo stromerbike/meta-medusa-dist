@@ -1,4 +1,4 @@
-#  SPDX-License-Identifier: LGPL-2.1+
+#  SPDX-License-Identifier: LGPL-2.1-or-later
 #
 #  This file is part of systemd.
 #
@@ -12,13 +12,13 @@ Description=Coldplug input and ubi Devices
 Documentation=man:udev(7) man:systemd-udevd.service(8)
 DefaultDependencies=no
 Wants=systemd-udevd.service
-After=systemd-udevd.service
+After=systemd-udevd-kernel.socket systemd-udevd-control.socket
 ConditionPathIsReadWrite=/sys
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/udevadm trigger -s input -s ubi --action=add
+ExecStart=-udevadm trigger -s input -s ubi --action=add --prioritized-subsystem=module,block,tpmrm,net,tty,input
 
 [Install]
 WantedBy=sysinit.target

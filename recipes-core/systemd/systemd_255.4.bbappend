@@ -1,7 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://0001-chase-symlinks-etc-localtime.patch \
-            file://0001-introduce-wait-online-.service-for-specific-interfac.patch \
             file://0001-move-clock-state-file-to-data-partition.patch \
             file://0001-systemd-journal-upload.service.in.patch \
             file://0001-systemd-resolved.service.in.patch \
@@ -43,6 +42,11 @@ PACKAGECONFIG:remove = " \
 
 PACKAGECONFIG[bashcompletion] = ",-Dbashcompletiondir=no,"
 PACKAGECONFIG[hwdb] = "-Dhwdb=true,-Dhwdb=false,hwdb"
+
+do_install:prepend() {
+    # create /var/log/journal, since -Dcreate-log-dirs=false is used
+    install -d ${D}${localstatedir}/log/journal
+}
 
 do_install:append() {
     install -m 0644 ${WORKDIR}/resolved.conf ${D}${sysconfdir}/systemd
