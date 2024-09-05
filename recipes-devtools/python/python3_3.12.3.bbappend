@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://0001-only-generate-legacy-bytecode.patch \
-            file://python3-manifest-with-additions.json \
+            file://python3-manifest-pyc-only.json \
 "
 
 WARN_QA:remove = "buildpaths"
@@ -14,7 +14,7 @@ do_install:append:class-target() {
 python(){
     import collections, json
 
-    filename = os.path.join(d.getVar('THISDIR'), '../../../../meta-medusa-dist/recipes-devtools/python', 'python3', 'python3-manifest-with-additions.json')
+    filename = os.path.join(d.getVar('THISDIR'), '../../../../meta-medusa-dist/recipes-devtools/python', 'python3', 'python3-manifest-pyc-only.json')
     # This python changes the datastore based on the contents of a file, so mark
     # that dependency.
     bb.parse.mark_dependency(d, filename)

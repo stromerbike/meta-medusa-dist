@@ -1282,17 +1282,5 @@
             "${libdir}/python${PYTHON_MAJMIN}/zoneinfo"
         ],
         "cached": []
-    },
-    "netrc": {
-        "summary": "Python netrc",
-        "rdepends": [
-            "core"
-        ],
-        "files": [
-            "${libdir}/python${PYTHON_MAJMIN}/netrc.py"
-        ],
-        "cached": [
-            "${libdir}/python${PYTHON_MAJMIN}/netrc.pyc"
-        ]
     }
 }
