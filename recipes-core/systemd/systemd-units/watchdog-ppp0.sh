@@ -16,11 +16,12 @@ WATCHDOG_TIMEOUT=1800
 # be served and the device connectivity be degraded anyway.
 SYNC_FILE="/run/systemd/timesync/synchronized"
 
-# To not timeout the watchdog on isolated NTP issues alone, a failed DNS request to both
-# servers is required as well before action is taken.
+# To not timeout the watchdog on isolated NTP issues alone, a failed port check to both
+# DNS servers is required as well before action is taken.
 DNS_SERVER_PRIMARY="10.89.23.40"
 DNS_SERVER_SECONDARY="10.89.23.41"
-DNS_QUERY="backend.stromer.internal"
+DNS_SERVER_PORT=53
+DNS_SERVER_TIMEOUT=60
 
 # Simulation of error cases:
 # - Dialed-in & ipv4 assigned but no connectivity/route:
@@ -61,10 +62,10 @@ do
         inotifywait -t $WATCHDOG_TIMEOUT "$SYNC_FILE" &>/dev/null
         if [ $? -ne 0 ]; then
             echo "No event detected on $SYNC_FILE for ${WATCHDOG_TIMEOUT}s"
-            if ! nslookup "$DNS_QUERY" "$DNS_SERVER_PRIMARY" >/dev/null; then
-                echo "$DNS_SERVER_PRIMARY did not resolve $DNS_QUERY"
-                if ! nslookup "$DNS_QUERY" "$DNS_SERVER_SECONDARY" >/dev/null; then
-                    echo "$DNS_SERVER_SECONDARY did also not resolve $DNS_QUERY"
+            if ! nc -zv -w "$DNS_SERVER_TIMEOUT" "$DNS_SERVER_PRIMARY" "$DNS_SERVER_PORT" >/dev/null; then
+                echo "$DNS_SERVER_PRIMARY port not open"
+                if ! nc -zv -w "$DNS_SERVER_TIMEOUT" "$DNS_SERVER_SECONDARY" "$DNS_SERVER_PORT" >/dev/null; then
+                    echo "$DNS_SERVER_SECONDARY not open"
                     timeout_timestamp=$(date -u +%s)
                     echo "Watchdog timeout at: $timeout_timestamp ($(date -d @$timeout_timestamp +"%Y-%m-%d %H:%M:%S"))"
                     recordCommanderSetter "set 98121: $timeout_timestamp"
@@ -72,11 +73,11 @@ do
                     #terminatePppd
                     exit 0
                 else
-                    echo "But $DNS_SERVER_SECONDARY resolved $DNS_QUERY (primary DNS issue?)"
+                    echo "But $DNS_SERVER_SECONDARY port open (primary DNS issue?)"
                     sleep 600
                 fi
             else
-                echo "But $DNS_SERVER_PRIMARY resolved $DNS_QUERY (NTP issue?)"
+                echo "But $DNS_SERVER_PRIMARY port open (NTP issue?)"
                 sleep 600
             fi
         else
