@@ -1,0 +1,35 @@
+From 6956081c917e6e260b36447fcc01922fd237a8a9 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Thu, 5 Sep 2024 17:24:00 +0200
+Subject: [PATCH] use hardcoded version instead of importlib.metadata
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/aioftp/__init__.py | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/src/aioftp/__init__.py b/src/aioftp/__init__.py
+index d992bd8..fcdb663 100644
+--- a/src/aioftp/__init__.py
++++ b/src/aioftp/__init__.py
+@@ -1,15 +1,13 @@
+ """ftp client/server for asyncio"""
+ # flake8: noqa
+ 
+-import importlib.metadata
+-
+ from .client import *
+ from .common import *
+ from .errors import *
+ from .pathio import *
+ from .server import *
+ 
+-__version__ = importlib.metadata.version(__package__)
++__version__ = "0.22.3"
+ version = tuple(map(int, __version__.split(".")))
+ 
+ __all__ = (
+-- 
+2.43.0
+
