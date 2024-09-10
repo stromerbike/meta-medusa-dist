@@ -12,13 +12,13 @@ start)
     echo 1 > /sys/class/gpio/gpio114/value
 
     # turn on the 5V_OUT supply voltage
-    test -e /sys/class/gpio/gpio498 || echo 498 > /sys/class/gpio/export
-    echo "high" > /sys/class/gpio/gpio498/direction
+    test -e /sys/class/gpio/gpio514 || echo 514 > /sys/class/gpio/export
+    echo "high" > /sys/class/gpio/gpio514/direction
 ;;
 
 stop)
     # turn off the 5V_OUT supply voltage
-    echo 0 > /sys/class/gpio/gpio498/value
+    echo 0 > /sys/class/gpio/gpio514/value
 
     # disable I2C4
     echo 0 > /sys/class/gpio/gpio114/value

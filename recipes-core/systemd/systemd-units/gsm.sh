@@ -106,8 +106,8 @@ start)
     test -e /sys/class/gpio/gpio128 || echo "128" > /sys/class/gpio/export
     echo "high" > /sys/class/gpio/gpio128/direction
     # 3V7_ON (to enable pin of U22)
-    test -e /sys/class/gpio/gpio497 || echo "497" > /sys/class/gpio/export
-    echo "high" > /sys/class/gpio/gpio497/direction
+    test -e /sys/class/gpio/gpio513 || echo "513" > /sys/class/gpio/export
+    echo "high" > /sys/class/gpio/gpio513/direction
     # Wait for 3V7 voltage to rise (U22 is configured via C162 to soft start over 16ms)
     sleep 0.2
     # Release GSM_RESET to start HL78xx (HL85xx should not care)
@@ -130,7 +130,7 @@ stop)
     # Remove UART driver
     rmmod imx6ul_mod_uart
     # Disable 3V7 voltage
-    echo "0" > /sys/class/gpio/gpio497/value
+    echo "0" > /sys/class/gpio/gpio513/value
 ;;
 
 reload)

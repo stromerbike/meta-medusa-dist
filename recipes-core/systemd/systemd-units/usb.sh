@@ -10,16 +10,16 @@ start)
     echo "high" > /sys/class/gpio/gpio23/direction
 
     # ILIM_SEL = ILIM_LO (1A)
-    test -e /sys/class/gpio/gpio504 || echo "504" > /sys/class/gpio/export
-    echo "low" > /sys/class/gpio/gpio504/direction
+    test -e /sys/class/gpio/gpio520 || echo "520" > /sys/class/gpio/export
+    echo "low" > /sys/class/gpio/gpio520/direction
 
     # CTL2
-    test -e /sys/class/gpio/gpio506 || echo "506" > /sys/class/gpio/export
-    echo "high" > /sys/class/gpio/gpio506/direction
+    test -e /sys/class/gpio/gpio522 || echo "522" > /sys/class/gpio/export
+    echo "high" > /sys/class/gpio/gpio522/direction
 ;;
 
 stop)
-    echo "0" > /sys/class/gpio/gpio506/value
+    echo "0" > /sys/class/gpio/gpio522/value
     echo "0" > /sys/class/gpio/gpio23/value
 ;;
 

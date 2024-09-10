@@ -6,8 +6,8 @@ DESC="Initialization of bluetooth chip"
 case $1 in
 start)
     # BLE_nON
-    test -e /sys/class/gpio/gpio499 || echo "499" > /sys/class/gpio/export
-    echo "low" > /sys/class/gpio/gpio499/direction
+    test -e /sys/class/gpio/gpio515 || echo "515" > /sys/class/gpio/export
+    echo "low" > /sys/class/gpio/gpio515/direction
 
     # BLE_nSHUTD
     test -e /sys/class/gpio/gpio120 || echo "120" > /sys/class/gpio/export
