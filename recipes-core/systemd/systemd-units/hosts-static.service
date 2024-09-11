@@ -1,0 +1,12 @@
+[Unit]
+Description=hosts-static
+RequiresMountsFor=/tmp
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cp /etc/hosts.static /tmp/hosts
+RemainAfterExit=yes
+
+[Install]
+WantedBy=local-fs.target

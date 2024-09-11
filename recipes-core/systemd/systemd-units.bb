@@ -74,6 +74,7 @@ SRC_URI += " \
             file://hostname-det.service \
             file://hostname-det.sh \
             file://hostname-set.service \
+            file://hosts-static.service \
             file://late-init.target \
             file://ldattach-hl78xx.service \
             file://ldattach-hl78xx.sh \
@@ -127,6 +128,7 @@ SYSTEMD_SERVICE:${PN} = " \
     ${@oe.utils.ifelse('-EMV' in d.getVar('DISTRO_VERSION', True), '', 'gsm.service')} \
     hostname-det.service \
     hostname-set.service \
+    hosts-static.service \
     mnt-data.mount \
     mnt-log.service \
     peripheral-mpio.service \
@@ -156,6 +158,7 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/hostname-det.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/hostname-det.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/hostname-set.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/hosts-static.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/ldattach-hl78xx.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/ldattach-hl78xx.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-mpio.service ${D}${systemd_system_unitdir}
