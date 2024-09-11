@@ -1,0 +1,27 @@
+From 845d6c9f9f0c2b3392a71555ac72d35598876e64 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Wed, 11 Sep 2024 17:23:04 +0200
+Subject: [PATCH] print warning as info in gpiolib.c
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: t tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ drivers/gpio/gpiolib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 1c512ed3fa6d..3314325b8b5e 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -830,7 +830,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 		 */
+ 		gc->base = base;
+ 	} else {
+-		dev_warn(&gdev->dev,
++		dev_info(&gdev->dev,
+ 			 "Static allocation of GPIO base is deprecated, use dynamic allocation.\n");
+ 	}
+ 	gdev->base = base;
+-- 
+2.43.0
+
