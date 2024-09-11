@@ -1,0 +1,40 @@
+From 7a102849fda240160242391f5a4e007ae17c201b Mon Sep 17 00:00:00 2001
+From: Michael Hunold <michael.hunold@eu.panasonic.com>
+Date: Mon, 16 Oct 2023 08:59:05 +0000
+Subject: [PATCH 1/1] tools/hciattach: Increase timeout for TI-specific
+ initialization
+
+The call to hci_send_req() in the function brf_send_command_socket() in
+bluez/tools/hciattach_ti.c uses a timeout value of 15 milliseconds which
+seems to be too short for newer variants of the CC2564 chipset, for
+example the CC2564C revision B.
+
+During initialization of these newer variants the initialization always
+stops at a certain point during the processing of the device-specific
+init script.
+
+Increasing this value makes everything work again for the CC2564C
+revision B.
+
+Upstream-Status: Pending
+Signed-off-by: Michael Hunold <michael.hunold@eu.panasonic.com>
+---
+ tools/hciattach_ti.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/hciattach_ti.c b/tools/hciattach_ti.c
+index 24efceaa1..918db868b 100644
+--- a/tools/hciattach_ti.c
++++ b/tools/hciattach_ti.c
+@@ -241,7 +241,7 @@ static int brf_send_command_socket(int fd, struct bts_action_send *send_action)
+ 	rq.rparam = response;
+ 	rq.rlen   = sizeof(response);
+ 
+-	if (hci_send_req(fd, &rq, 15) < 0) {
++	if (hci_send_req(fd, &rq, 100) < 0) {
+ 		perror("Cannot send hci command to socket");
+ 		return -1;
+ 	}
+-- 
+2.34.1
+

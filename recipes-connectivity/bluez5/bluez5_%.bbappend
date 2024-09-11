@@ -2,6 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://0001-bluetooth.service.in.patch \
             file://0001-fix-coredump-unclear-if-still-required.patch \
+            file://0001-tools-hciattach-Increase-timeout-for-TI-specific-ini.patch \
             file://main.conf \
             file://TIInit_6.7.16.bts \
             file://TIInit_6.12.26.bts \
