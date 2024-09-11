@@ -1,0 +1,34 @@
+From 3efa2286ce8dd3876acaf88de29b5e28c5a00a75 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Wed, 11 Sep 2024 16:43:55 +0200
+Subject: [PATCH] journal-file disable strict ordering by clock
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/libsystemd/sd-journal/journal-file.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/libsystemd/sd-journal/journal-file.c b/src/libsystemd/sd-journal/journal-file.c
+index d2493a027a..b694c2af3c 100644
+--- a/src/libsystemd/sd-journal/journal-file.c
++++ b/src/libsystemd/sd-journal/journal-file.c
+@@ -2319,6 +2319,7 @@ static int journal_file_append_entry_internal(
+                  * Typically, if any of the errors generated here are seen journald will just rotate the
+                  * journal files and start anew. */
+ 
++                /*
+                 if (ts->realtime < le64toh(f->header->tail_entry_realtime))
+                         return log_debug_errno(SYNTHETIC_ERRNO(EREMCHG),
+                                                "Realtime timestamp %" PRIu64 " smaller than previous realtime "
+@@ -2334,6 +2335,7 @@ static int journal_file_append_entry_internal(
+                                         " while having the same boot ID, refusing entry.",
+                                         ts->monotonic,
+                                         le64toh(f->header->tail_entry_monotonic));
++                */
+         }
+ 
+         if (seqnum_id) {
+-- 
+2.43.0
+

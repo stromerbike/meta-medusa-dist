@@ -1,6 +1,8 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://0001-chase-symlinks-etc-localtime.patch \
+            file://0001-journal-file-disable-sequence-number-ID-check.patch \
+            file://0001-journal-file-disable-strict-ordering-by-clock.patch \
             file://0001-move-clock-state-file-to-data-partition.patch \
             file://0001-systemd-journal-upload.service.in.patch \
             file://0001-systemd-resolved.service.in.patch \

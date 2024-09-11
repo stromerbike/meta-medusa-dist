@@ -1,0 +1,30 @@
+From eb5dbfea78893d5ab5ad5becf2e3b8dcac6448cf Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Wed, 11 Sep 2024 17:19:37 +0200
+Subject: [PATCH] journal-file disable sequence number ID check
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/libsystemd/sd-journal/journal-file.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/libsystemd/sd-journal/journal-file.c b/src/libsystemd/sd-journal/journal-file.c
+index d2493a027a..75f8fe7b57 100644
+--- a/src/libsystemd/sd-journal/journal-file.c
++++ b/src/libsystemd/sd-journal/journal-file.c
+@@ -2345,9 +2345,11 @@ static int journal_file_append_entry_internal(
+                         /* Different seqnum IDs? We can't allow entries from multiple IDs end up in the same journal.*/
+                         if (le64toh(f->header->n_entries) == 0)
+                                 f->header->seqnum_id = *seqnum_id; /* Caller has one, and file so far has no entries, then copy the one from the caller */
++                        /*
+                         else
+                                 return log_debug_errno(SYNTHETIC_ERRNO(EILSEQ),
+                                                        "Sequence number IDs don't match, refusing entry.");
++                        */
+                 }
+         }
+ 
+-- 
+2.43.0
+
