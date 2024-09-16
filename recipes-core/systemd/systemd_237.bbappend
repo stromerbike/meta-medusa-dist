@@ -8,6 +8,7 @@ SRC_URI += " \
             file://systemd-journal-upload.service.in.patch \
             file://systemd-resolved.service.in.patch \
             file://systemd-timesyncd.service.in.patch \
+            file://systemd-timesyncd-synchronized-file.patch \
             file://systemd-udev-trigger.service.in.patch \
             file://timesyncd.conf \
 "
