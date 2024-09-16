@@ -15,12 +15,12 @@ QT_CONFIG_FLAGS += " \
     -no-feature-openssl \
     -no-feature-printer \
     -no-feature-sql \
+    -no-feature-testlib \
     -no-feature-vnc \
     -no-feature-xml \
 "
-# "-no-tests" possible?
 
-# 5.15.7@ab28ff2207e8f33754c79793089dbf943d67736d: configure --list-features
+# 5.15.13@4e158f6bfa7d0747d8da70b3b15a44b52e35bb8a: configure --list-features
 # abstractbutton .......... Widgets: Abstract base class of button widgets, providing functionality common to buttons.
 # abstractslider .......... Widgets: Common super class for widgets like QScrollBar, QSlider and QDial.
 # accessibility ........... Utilities: Provides accessibility support.
