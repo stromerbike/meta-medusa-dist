@@ -69,8 +69,7 @@ do
                     timeout_timestamp=$(date -u +%s)
                     echo "Watchdog timeout at: $timeout_timestamp ($(date -d @$timeout_timestamp +"%Y-%m-%d %H:%M:%S"))"
                     recordCommanderSetter "set 98121: $timeout_timestamp"
-                    # TODO: uncomment once tested/ready
-                    #terminatePppd
+                    terminatePppd
                     exit 0
                 else
                     echo "But $DNS_SERVER_SECONDARY port open (primary DNS issue?)"
