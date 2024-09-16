@@ -1,2 +1,1 @@
-ACTION=="add", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block start watchdog-ppp0.service"
-ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block stop watchdog-ppp0.service systemd-networkd-wait-online@ppp0.service"
+ACTION=="remove", SUBSYSTEM=="net", ENV{INTERFACE}=="ppp0", RUN+="/bin/systemctl --no-block stop systemd-networkd-wait-online@ppp0.service"
