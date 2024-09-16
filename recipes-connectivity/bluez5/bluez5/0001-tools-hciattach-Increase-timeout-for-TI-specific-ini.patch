@@ -31,7 +31,7 @@ index 24efceaa1..918db868b 100644
  	rq.rlen   = sizeof(response);
  
 -	if (hci_send_req(fd, &rq, 15) < 0) {
-+	if (hci_send_req(fd, &rq, 100) < 0) {
++	if (hci_send_req(fd, &rq, 1000) < 0) {
  		perror("Cannot send hci command to socket");
  		return -1;
  	}
