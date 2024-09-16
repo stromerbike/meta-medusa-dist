@@ -47,7 +47,7 @@ IMAGE_INSTALL:append = " busybox \
                          iftop iproute2-ss iputils ppp-tools socat tcpdump \
                          btop htop nmon \
                          fbgrab kmsgrab \
-                         dtc glibc-utils interceptty interceptty-nicedump less libgpiod-tools lsof nano ncurses-tools rsyslog sudo systemd-extra-utils \
+                         dtc glibc-utils interceptty interceptty-nicedump less libgpiod-tools lsof nano ncurses-tools rsyslog sudo-sudo systemd-extra-utils \
 "
 
 # Revert installation of links in update-alternative scheme due to the following reasons:

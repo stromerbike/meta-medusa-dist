@@ -1,8 +1,5 @@
-FILES:${PN}-cvtsudoers = "${bindir}/cvtsudoers"
 FILES:${PN}-sudoedit = "${bindir}/sudoedit"
-FILES:${PN}-sudoreplay = "${bindir}/sudoreplay"
-FILES:${PN}-visudo = "${sbindir}/visudo"
-PACKAGES =+ "${PN}-cvtsudoers ${PN}-sudoedit ${PN}-sudoreplay ${PN}-visudo"
+PACKAGES =+ "${PN}-sudoedit"
 
 do_install:append () {
     # avoid non-readable sudo file to not break generation of pristine files on delta update server
