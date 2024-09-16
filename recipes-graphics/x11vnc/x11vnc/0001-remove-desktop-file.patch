@@ -1,0 +1,35 @@
+From a4cf52703191b2bf8d221bc9f289fce125490fb4 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Mon, 2 Sep 2024 19:18:06 +0200
+Subject: [PATCH] remove desktop file
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ Makefile.am | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 9ad698b..490d1b5 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -4,9 +4,6 @@ SUBDIRS = \
+ 	src \
+ 	misc
+ 
+-desktopdir = $(datadir)/applications
+-desktop_DATA = x11vnc.desktop
+-
+ man_MANS = x11vnc.1
+ 
+ EXTRA_DIST = \
+@@ -14,5 +11,4 @@ EXTRA_DIST = \
+ 	README \
+ 	NEWS \
+ 	tkx11vnc \
+-	$(man_MANS) \
+-	$(desktop_DATA)
++	$(man_MANS)
+-- 
+2.43.0
+

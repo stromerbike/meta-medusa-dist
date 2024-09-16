@@ -1,5 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://0001-remove-desktop-file.patch \
             file://support-shm-key-and-drm-for-rawfb-option.patch \
 "
 
