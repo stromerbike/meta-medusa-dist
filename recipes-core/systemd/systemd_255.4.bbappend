@@ -95,8 +95,13 @@ do_install:append() {
     sed -i 's/.*SystemMaxUse.*/SystemMaxUse=40M/' ${D}${sysconfdir}/systemd/journald.conf
     sed -i 's/.*SystemKeepFree.*/SystemKeepFree=1M/' ${D}${sysconfdir}/systemd/journald.conf
 
-    # do not setup /var/log/journal and /var/spool since the file system is normally read-only
-    sed -i 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
+    # do not setup certain tmpfiles:
+    # /var/log/journal since we manage it ourselves via mnt-log.service
+    # /var/log/private and /var/spool since the file system is normally read-only
+    sed -i 's#.*ExecStart.*#& --exclude-prefix=/var/log/journal --exclude-prefix=/var/log/private --exclude-prefix=/var/spool#' ${D}${systemd_system_unitdir}/systemd-tmpfiles-setup.service
+
+    # do not setup tmpfiles for systemd.system-credentials since file system is normally read-only
+    rm ${D}/${libdir}/tmpfiles.d/provision.conf
 
     # disable swap.target
     sed -i '/After=swap.target/d' ${D}${systemd_system_unitdir}/tmp.mount
