@@ -6,29 +6,7 @@ index 3281d09c76..7b0e5f0ba1 100644
  
          /* If touch fails, there isn't much we can do. Maybe it'll work next time. */
          (void) touch("/mnt/data/timesync/clock");
-+        (void) touch("/run/systemd/timesync/synchronized");
++        (void) touch("/tmp/synchronized");
  
          m->drift_ppm = tmx.freq / 65536;
  
-diff --git a/units/systemd-timesyncd.service.in b/units/systemd-timesyncd.service.in
-index 96873bde0a..167f974417 100644
---- a/units/systemd-timesyncd.service.in
-+++ b/units/systemd-timesyncd.service.in
-@@ -25,6 +25,9 @@ Restart=always
- RestartSec=0
- ExecStart=!!@rootlibexecdir@/systemd-timesyncd
- WatchdogSec=3min
-+User=systemd-timesync
-+CapabilityBoundingSet=CAP_SYS_TIME
-+AmbientCapabilities=CAP_SYS_TIME
- PrivateDevices=yes
- ProtectHome=yes
- ProtectControlGroups=yes
-@@ -34,6 +37,7 @@ MemoryDenyWriteExecute=yes
- RestrictRealtime=yes
- RestrictNamespaces=yes
- RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
-+RuntimeDirectory=systemd/timesync
- SystemCallFilter=~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io @reboot @swap
- SystemCallArchitectures=native
- LockPersonality=yes
