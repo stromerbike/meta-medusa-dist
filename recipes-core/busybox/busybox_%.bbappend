@@ -1,5 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
+            file://0001-ip-link-support-for-the-CAN-netlink.patch \
             file://defconfig.cfg \
 "
 

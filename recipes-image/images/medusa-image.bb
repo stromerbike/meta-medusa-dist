@@ -34,7 +34,7 @@ IMAGE_INSTALL:append = " dt-utils-barebox-state \
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
-# iftop iproute2-ss iputils ppp-tools socat tcpdump - networking tools
+# iftop iproute2-ss ppp-tools socat tcpdump - networking tools
 # btop htop nmon - monitoring tools
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
@@ -44,7 +44,7 @@ IMAGE_INSTALL:append = " busybox \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
-                         iftop iproute2-ss iputils ppp-tools socat tcpdump \
+                         iftop iproute2-ss ppp-tools socat tcpdump \
                          btop htop nmon \
                          fbgrab kmsgrab \
                          dtc glibc-utils interceptty interceptty-nicedump libgpiod-tools lsof nano ncurses-tools rsyslog sudo-sudo systemd-extra-utils \
