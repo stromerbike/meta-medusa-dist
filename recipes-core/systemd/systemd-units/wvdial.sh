@@ -2,7 +2,7 @@
 
 source /etc/scripts/hlxxxx-common.sh
 
-# Especially when the module is in a network where the prefered radio access technology is not supported,
+# Especially when the module is in a network where the preferred radio access technology is not supported,
 # it shall be given enough time to search for a supported fallback before being reset.
 UNFINISHED_REGISTRATION_COUNT_LIMIT=199 # (199+1)x3s equals 600 seconds
 
