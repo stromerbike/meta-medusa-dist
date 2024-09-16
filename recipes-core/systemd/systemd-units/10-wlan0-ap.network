@@ -1,5 +1,6 @@
 [Match]
-Name=wlan0
+#Name=wlan0 would cause a warning "based on potentially unpredictable interface name"
+Property=INTERFACE=wlan0
 Driver=!r8188eu
 
 [Network]
