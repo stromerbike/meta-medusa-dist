@@ -34,8 +34,9 @@ IMAGE_INSTALL:append = " dt-utils-barebox-state \
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
-# iftop iproute2-ss ppp-tools socat tcpdump - networking tools
-# btop htop - monitoring tools
+# iproute2-ss ppp-tools socat tcpdump - networking tools
+# gps-utils-cgps gps-utils-gpsmon - gps monitoring tools
+# btop htop iftop - monitoring tools
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
                          tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
@@ -44,11 +45,16 @@ IMAGE_INSTALL:append = " busybox \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
-                         iftop iproute2-ss ppp-tools socat tcpdump \
-                         btop htop \
+                         iproute2-ss ppp-tools socat tcpdump \
+                         gps-utils-cgps gps-utils-gpsmon \
+                         btop htop iftop \
                          fbgrab kmsgrab \
                          dtc glibc-utils interceptty interceptty-nicedump libgpiod-tools nano ncurses-tools rsyslog sudo-sudo systemd-extra-utils \
 "
+
+# Optional packages useful for development:
+# hl78xx-sft hl78xx-firmware-sft - mobile communication module downgrade
+#IMAGE_INSTALL:append = " hl78xx-sft hl78xx-firmware-sft"
 
 # Revert installation of links in update-alternative scheme due to the following reasons:
 # - In a non-interactively used system, there is no use of having alternatives since the
