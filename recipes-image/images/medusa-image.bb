@@ -35,7 +35,7 @@ IMAGE_INSTALL:append = " dt-utils-barebox-state \
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
 # iftop iproute2-ss ppp-tools socat tcpdump - networking tools
-# btop htop nmon - monitoring tools
+# btop htop - monitoring tools
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
                          tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
@@ -45,7 +45,7 @@ IMAGE_INSTALL:append = " busybox \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
                          iftop iproute2-ss ppp-tools socat tcpdump \
-                         btop htop nmon \
+                         btop htop \
                          fbgrab kmsgrab \
                          dtc glibc-utils interceptty interceptty-nicedump libgpiod-tools nano ncurses-tools rsyslog sudo-sudo systemd-extra-utils \
 "
