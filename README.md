@@ -95,7 +95,6 @@ Busybox configuration (1.36.1):
 - set "Mail Utilities ---> popmaildir" to N; Remark: Not needed.
 - set "Mail Utilities ---> reformime" to N; Remark: Not needed.
 - set "Mail Utilities ---> sendmail" to N; Remark: Not needed.
-- set "Process Utilities ---> lsof" to N; Remark: To avoid hiding the full blown lsof.
 - set "Runint Utilities ---> chpst" to N; Remark: Not needed with systemd.
 - set "Runint Utilities ---> setuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
 - set "Runint Utilities ---> envuidgid" to N; Remark: To avoid conflicts with daemontools(-encore) / Not needed with systemd.
