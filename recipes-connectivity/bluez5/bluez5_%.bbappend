@@ -36,7 +36,6 @@ FILES:${PN}:append = " ${base_libdir}/firmware/ti-connectivity/*.bts"
 
 PACKAGES =+ "${PN}-misc"
 FILES:${PN}-misc += " \
-    ${bindir}/bccmd \
     ${bindir}/bluemoon \
     ${bindir}/ciptool \
     ${bindir}/mpris-proxy \
