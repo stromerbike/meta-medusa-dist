@@ -11,3 +11,5 @@ do_install:append() {
     sed -i 's#/etc/wpa_supplicant/wpa_supplicant-wext-%I.conf#/mnt/usb/wlan/wpa_supplicant.conf#' ${D}${systemd_system_unitdir}/wpa_supplicant-wext@.service
     sed -i 's#Type=simple#Type=simple\nExecStartPre=/bin/sleep 10#' ${D}${systemd_system_unitdir}/wpa_supplicant-wext@.service
 }
+
+RRECOMMENDS:${PN}:remove = "${PN}-passphrase ${PN}-cli ${PN}-plugins"
