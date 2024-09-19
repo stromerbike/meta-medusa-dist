@@ -19,7 +19,7 @@ SDK_VERSION = "${MEDUSA_METADATA_GIT_DATE_TIME}-${MEDUSA_METADATA_GIT_HASH_SHORT
 SDKPATHINSTALL = "/opt/${DISTRO}/${SDK_VERSION}"
 
 # Distro features
-DISTRO_FEATURES = "fbdev pam systemd opengl"
+DISTRO_FEATURES = "fbdev systemd opengl"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
 # Locales

@@ -32,9 +32,7 @@ PACKAGECONFIG:remove = " \
     nss-resolve \
     quotacheck \
     randomseed \
-    smack \
     sysusers \
-    sysvinit \
     userdb \
     utmp \
     vconsole \
@@ -71,9 +69,6 @@ do_install:append() {
 
     # disable update done service
     rm ${D}${systemd_system_unitdir}/sysinit.target.wants/systemd-update-done.service
-
-    # disable user sessions service
-    rm ${D}${systemd_system_unitdir}/multi-user.target.wants/systemd-user-sessions.service
 
     # remove udev rules for groups which do not exist to avoid errors
     sed -i '/GROUP=\"kvm\"/d' ${D}/${base_libdir}/udev/rules.d/50-udev-default.rules
