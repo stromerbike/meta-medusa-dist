@@ -1,5 +1,3 @@
-ALLOW_EMPTY:${PN} = "1"
-
 FILES:${PN}-binutils += "\
     ${bindir}/eu-ar \
     ${bindir}/eu-elfclassify \
