@@ -5,6 +5,8 @@ SRC_URI += " \
 
 # https://qtlite.com
 
+DEPENDS:remove = "zstd"
+
 PACKAGECONFIG:append = " libinput linuxfb no-opengl kms"
 PACKAGECONFIG_DEFAULT = "udev widgets libs ltcg"
 PACKAGECONFIG_SYSTEM = "libpng"
