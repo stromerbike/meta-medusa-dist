@@ -15,7 +15,6 @@ RDEPENDS:${PN} += " \
     dash \
     evtest \
     fbv \
-    gawk \
     gnupg-gpgv \
     inotify-tools \
     lzop \

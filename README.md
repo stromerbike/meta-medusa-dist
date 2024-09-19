@@ -34,7 +34,6 @@ Busybox configuration (1.36.1):
 - set "Coreutils ---> groups" to N; Remark: Not needed with shadow-base.
 - set "Console Utilities ---> clear" to N; Remark: Not needed with ncurses-tools.
 - set "Console Utilities ---> reset" to N; Remark: Not needed with ncurses-tools.
-- set "Editors ---> awk" to N; Remark: Not needed with gawk.
 - set "Finding Utilities  ---> grep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> egrep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> fgrep" to N; Remark: Not needed with grep.
