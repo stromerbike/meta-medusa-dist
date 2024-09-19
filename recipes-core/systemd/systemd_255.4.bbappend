@@ -14,7 +14,7 @@ SRC_URI += " \
 
 RDEPENDS:${PN} += "systemd-udev systemd-units"
 
-RRECOMMENDS:${PN}:remove = " systemd-extra-utils udev-hwdb util-linux-fsck e2fsprogs-e2fsck"
+RRECOMMENDS:${PN}:remove = " systemd-extra-utils udev-hwdb e2fsprogs-e2fsck"
 
 PACKAGECONFIG:remove = " \
     backlight \
@@ -33,6 +33,7 @@ PACKAGECONFIG:remove = " \
     quotacheck \
     randomseed \
     sysusers \
+    sysvinit \
     userdb \
     utmp \
     vconsole \
@@ -106,4 +107,7 @@ do_install:append() {
     rm ${D}${systemd_unitdir}/system-generators/systemd-debug-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-gpt-auto-generator
     rm ${D}${systemd_unitdir}/system-generators/systemd-system-update-generator
+
+    # remove polkit files
+    rm -r ${D}${datadir}/polkit-1
 }
