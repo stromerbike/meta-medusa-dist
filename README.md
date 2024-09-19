@@ -32,8 +32,6 @@ Busybox configuration (1.36.1):
 - set "Archival Utilities ---> tar Support GNU tar extensions (long filenames)" to N;
 - set "Coreutils ---> Support %[num]N nanosecond format specifier" to y.
 - set "Coreutils ---> groups" to N; Remark: Not needed with shadow-base.
-- set "Console Utilities ---> clear" to N; Remark: Not needed with ncurses-tools.
-- set "Console Utilities ---> reset" to N; Remark: Not needed with ncurses-tools.
 - set "Finding Utilities  ---> grep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> egrep" to N; Remark: Not needed with grep.
 - set "Finding Utilities  ---> fgrep" to N; Remark: Not needed with grep.
