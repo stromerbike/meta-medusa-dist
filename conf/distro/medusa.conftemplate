@@ -89,3 +89,20 @@ IMAGE_INSTALL:append = " python3-compression"
 
 # Multiple providers note being shown for util-linux-sfdisk-native
 PREFERRED_RPROVIDER_util-linux-sfdisk-native = "util-linux-native"
+
+# Optimize bigger packages used interactively for debugging concerning size
+FULL_OPTIMIZATION:append:pn-gdb = " -Os"
+FULL_OPTIMIZATION:append:pn-lnav = " -Os"
+
+# Optimize medium packages used interactively for debugging concerning size
+FULL_OPTIMIZATION:append:pn-btop = " -Os"
+FULL_OPTIMIZATION:append:pn-htop = " -Os"
+FULL_OPTIMIZATION:append:pn-ltrace = " -Os"
+FULL_OPTIMIZATION:append:pn-nano = " -Os"
+FULL_OPTIMIZATION:append:pn-socat = " -Os"
+FULL_OPTIMIZATION:append:pn-strace = " -Os"
+FULL_OPTIMIZATION:append:pn-sudo = " -Os"
+FULL_OPTIMIZATION:append:pn-tcf-agent = " -Os"
+FULL_OPTIMIZATION:append:pn-tcpdump = " -Os"
+FULL_OPTIMIZATION:append:pn-tmux = " -Os"
+FULL_OPTIMIZATION:append:pn-x11vnc = " -Os"
