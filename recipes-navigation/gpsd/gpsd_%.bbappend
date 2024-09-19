@@ -6,10 +6,6 @@ SRC_URI += " \
             file://0001-gpsdctl-output-info-instead-of-error-on-action.patch \
 "
 
-RDEPENDS:gps-utils = "gps-utils-cgps"
-PACKAGES =+ "gps-utils-cgps"
-FILES:gps-utils-cgps = "${bindir}/cgps"
-
 RDEPENDS:gps-utils = "gps-utils-gpsmon"
 PACKAGES =+ "gps-utils-gpsmon"
 FILES:gps-utils-gpsmon = "${bindir}/gpsmon"
