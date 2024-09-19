@@ -28,32 +28,34 @@ IMAGE_INSTALL:append = " dt-utils-barebox-state \
 
 # Added packets from Stromer:
 # busybox - contains a lot of tools in a single executable or in very small binaries (depending on CONFIG_FEATURE_INDIVIDUAL) while providing a small footprint
+# rsyslog - logging
 # tzdata - timezone database
 # systemd-analyze - debug information collection
-# gdb ltrace perf strace - debugging
+# gdb ldd ltrace strace - debugging
 # gdbserver tcf-agent - low level debugging
 # openssh-scp openssh-sftp-server - scp and sftp
 # hostapd linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant - wifi
 # iproute2-ss ppp-tools socat tcpdump - networking tools
-# gps-utils-cgps gps-utils-gpsmon - gps monitoring tools
-# btop htop iftop - monitoring tools
 # fbgrab kmsgrab - screen capturing tools
 IMAGE_INSTALL:append = " busybox \
-                         tzdata-core tzdata-misc tzdata-africa tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
+                         rsyslog \
+                         tzdata-core tzdata-misc tzdata-africa \
+                         tzdata-americas tzdata-antarctica tzdata-arctic tzdata-asia \
+                         tzdata-atlantic tzdata-australia tzdata-europe tzdata-pacific \
                          systemd-analyze \
-                         gdb ltrace perf strace \
+                         gdb ldd ltrace strace \
                          gdbserver tcf-agent \
                          openssh-scp openssh-sftp-server \
                          hostapd linux-firmware-rtl8188 linux-firmware-rtl8192cu wireless-regdb-static wpa-supplicant \
                          iproute2-ss ppp-tools socat tcpdump \
-                         gps-utils-cgps gps-utils-gpsmon \
-                         btop htop iftop \
                          fbgrab kmsgrab \
-                         dtc glibc-utils interceptty interceptty-nicedump libgpiod-tools nano ncurses-tools rsyslog sudo-sudo systemd-extra-utils \
+                         dtc interceptty interceptty-nicedump libgpiod-tools nano sudo-sudo \
 "
 
 # Optional packages useful for development:
+# perf - debugging (pulls in slang for tui)
 # hl78xx-sft hl78xx-firmware-sft - mobile communication module downgrade
+#IMAGE_INSTALL:append = " perf"
 #IMAGE_INSTALL:append = " hl78xx-sft hl78xx-firmware-sft"
 
 # Revert installation of links in update-alternative scheme due to the following reasons:
