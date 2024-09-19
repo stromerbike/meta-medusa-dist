@@ -38,7 +38,14 @@ PACKAGES =+ "${PN}-misc"
 FILES:${PN}-misc += " \
     ${bindir}/bluemoon \
     ${bindir}/ciptool \
+    ${bindir}/hex2hcd \
+    ${bindir}/isotest \
+    ${bindir}/l2ping \
+    ${bindir}/l2test \
     ${bindir}/mpris-proxy \
+    ${bindir}/rctest \
+    ${bindir}/rfcomm \
+    ${bindir}/sdptool \
 "
 
 do_install:append() {
