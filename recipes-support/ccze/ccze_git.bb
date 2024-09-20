@@ -20,3 +20,6 @@ S = "${WORKDIR}/git"
 inherit autotools pkgconfig
 
 TARGET_CC_ARCH += "${LDFLAGS}"
+
+PACKAGES =+ "${PN}-cssdump"
+FILES:${PN}-cssdump = "${bindir}/${PN}-cssdump"
