@@ -6,4 +6,5 @@ FILES:${PN}-extra = "\
                      ${bindir}/minidump-2-core \
                      ${bindir}/minidump_dump \
                      ${bindir}/pid2md \
+                     ${libexecdir}/core_handler \
 "
