@@ -1,0 +1,29 @@
+From b4e78ba664f8ffbbaf3ae4540a5a5bdc2fa09381 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Fri, 20 Sep 2024 15:12:28 +0200
+Subject: [PATCH] journald-server disable rotation on clock jump backwards
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ src/journal/journald-server.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/journal/journald-server.c b/src/journal/journald-server.c
+index 1c3a2a0b37..1e8ff33910 100644
+--- a/src/journal/journald-server.c
++++ b/src/journal/journald-server.c
+@@ -922,8 +922,10 @@ static void server_write_to_journal(
+                  * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
+                  * bisection works correctly. */
+ 
++                /*
+                 log_ratelimit_info(JOURNAL_LOG_RATELIMIT, "Time jumped backwards, rotating.");
+                 rotate = true;
++                */
+         } else {
+ 
+                 f = server_find_journal(s, uid);
+-- 
+2.43.0
+

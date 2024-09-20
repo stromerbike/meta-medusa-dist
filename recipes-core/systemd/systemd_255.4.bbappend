@@ -1,6 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://0001-chase-symlinks-etc-localtime.patch \
+            file://0001-journald-server-disable-rotation-on-clock-jump-backw.patch \
             file://0001-journal-file-disable-sequence-number-ID-check.patch \
             file://0001-journal-file-disable-strict-ordering-by-clock.patch \
             file://0001-move-clock-state-file-to-data-partition.patch \
