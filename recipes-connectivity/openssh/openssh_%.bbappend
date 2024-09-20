@@ -11,6 +11,8 @@ SRC_URI += " \
             file://ssh_host_rsa_key \
             file://ssh_host_rsa_key.pub \
 "
+# To avoid lastlog_openseek: Couldn't stat /var/log/lastlog: No such file or directory
+EXTRA_OECONF:append = " --disable-lastlog"
 
 do_install:append() {
     # install public part of ssh key for "root"
@@ -46,7 +48,6 @@ do_install:append() {
     # disallow password authentication
     sed -i 's/^[#[:space:]]*PasswordAuthentication.*/PasswordAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
     sed -i 's/^[#[:space:]]*ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
-    sed -i 's/^[#[:space:]]*UsePAM.*/UsePAM no/' ${D}${sysconfdir}/ssh/sshd_config*
 }
 
 FILES:${PN} += " \
