@@ -1,0 +1,15 @@
+diff --git a/src/journal/journald-server.c b/src/journal/journald-server.c
+index 5cd58e8a77..ad59179efc 100644
+--- a/src/journal/journald-server.c
++++ b/src/journal/journald-server.c
+@@ -677,8 +677,10 @@ static void write_to_journal(Server *s, uid_t uid, struct iovec *iovec, unsigned
+                  * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
+                  * bisection works correctly. */
+ 
++                /*
+                 log_debug("Time jumped backwards, rotating.");
+                 rotate = true;
++                */
+         } else {
+ 
+                 f = find_journal(s, uid);

@@ -1,6 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://chase_symlinks_etc_localtime.patch \
+            file://disable_journal_rotation_on_clock_jump_backwards.patch \
             file://introduce-wait-online@.service-for-specific-interface.patch \
             file://move_state_file_to_data_partition.patch \
             file://resolved.conf \
