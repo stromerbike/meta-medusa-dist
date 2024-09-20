@@ -20,8 +20,7 @@ SDKPATHINSTALL = "/opt/${DISTRO}/${SDK_VERSION}"
 
 # Distro features
 DISTRO_FEATURES = "fbdev systemd opengl"
-DISTRO_FEATURES_BACKFILL:remove = "ldconfig"
-RDEPENDS:python3-ctypes:remove:libc-glibc = "${MLPREFIX}ldconfig"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "ldconfig"
 
 # Locales
 GLIBC_GENERATE_LOCALES = "en_US.UTF-8"
