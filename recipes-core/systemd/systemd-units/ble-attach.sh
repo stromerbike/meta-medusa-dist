@@ -14,7 +14,18 @@ start)
     echo "high" > /sys/class/gpio/gpio120/direction
 
     # hci0
-    hciattach /dev/ttymxc2 texas
+    # Despite 0001-tools-hciattach-Increase-timeout-for-TI-specific-ini.patch in place
+    # (with the timeout made even bigger: 1000ms) cases have still been observed where
+    # hciattach fails. Retrials shall help to alleviate the issue.
+    COUNTER=0
+    while [ $COUNTER -lt 5 ];
+    do
+        COUNTER=$((COUNTER+1))
+        if hciattach /dev/ttymxc2 texas; then
+            break
+        fi
+        sleep 3
+    done
 
     # Bluetooth daemon "/usr/libexec/bluetooth/bluetoothd" needs to be started before the hci0 interface is up !!! (ScUr: Not sure if still applicable)
     hciconfig hci0 down
