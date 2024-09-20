@@ -1,0 +1,27 @@
+From 770f88ecaa444f389ed4a01e1fa5352294a3a466 Mon Sep 17 00:00:00 2001
+From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
+Date: Fri, 20 Sep 2024 19:07:56 +0200
+Subject: [PATCH] enable JTAG in kernel
+
+Upstream-Status: Inappropriate [stromer-specific]
+Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+---
+ arch/arm/mach-imx/pm-imx6.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/arch/arm/mach-imx/pm-imx6.c b/arch/arm/mach-imx/pm-imx6.c
+index b36f05b54cc7..c2828550c824 100644
+--- a/arch/arm/mach-imx/pm-imx6.c
++++ b/arch/arm/mach-imx/pm-imx6.c
+@@ -300,8 +300,6 @@ int imx6_set_lpm(enum mxc_cpu_pwr_mode mode)
+ 	case WAIT_CLOCKED:
+ 		break;
+ 	case WAIT_UNCLOCKED:
+-		val |= 0x1 << BP_CLPCR_LPM;
+-		val |= BM_CLPCR_ARM_CLK_DIS_ON_LPM;
+ 		break;
+ 	case STOP_POWER_ON:
+ 		val |= 0x2 << BP_CLPCR_LPM;
+-- 
+2.43.0
+

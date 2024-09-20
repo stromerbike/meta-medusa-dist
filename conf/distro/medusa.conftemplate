@@ -41,7 +41,12 @@ RDEPENDS:qtbase:remove = " opengldummy qtdeclarative-render2d"
 #BBMASK += "meta-medusa-app/recipes-image/"
 
 # Uncomment this to enable JTAG in kernel.
-#SRC_URI:append:pn-linux-mainline = " file://jtag-pm.patch"
+#SRC_URI:append:pn-linux-phytec = " file://0001-enable-JTAG-in-kernel.patch"
+
+# Uncomment this to ignore speed grading of otp fuses
+# - i.MX 6UL G2 "MCIMX6G2CVM05A*":  528MHz -> 696MHz
+# - i.MX 6ULL Y2 "MCIMX6Y2CVM08AB": 792MHz -> 900MHz
+#SRC_URI:append:pn-linux-phytec = " file://0001-imx6ul-ignore-speed-grading-of-otp-fuses.patch"
 
 # Activate config checker
 INHERIT += "sanity"
