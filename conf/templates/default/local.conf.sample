@@ -4,9 +4,6 @@ MACHINE ?= "imx6ul-medusa"
 # Sets the default distribution
 DISTRO ?= "medusa"
 
-# Choose instruction set
-ARM_INSTRUCTION_SET = "arm"
-
 # Copy license.manifest to the image 
 COPY_LIC_MANIFEST = "1"
 
