@@ -13,7 +13,6 @@ Fixed recipe version:
 Busybox configuration (1.36.1):
 - git clone https://git.busybox.net/busybox && cd busybox && git reset --hard 1_36_1 && make defconfig && make menuconfig
 - set "Settings ---> Include busybox applet" to N; Remark: Not needed.
-- set "Settings ---> Build shared libbusybox" to y; Remark: Small binaries result in faster startup time.
 - set "Settings ---> Enable locale support (system needs locale for this to work)" to y.
 - set "Settings ---> Use libc routines for Unicode (else uses internal ones)" to y.
 - set "Settings ---> Range of supported Unicode characters" to 1114111.
