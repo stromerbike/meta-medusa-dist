@@ -97,6 +97,8 @@ PREFERRED_RPROVIDER_util-linux-sfdisk-native = "util-linux-native"
 # Optimize bigger packages used interactively for debugging concerning size
 FULL_OPTIMIZATION:append:pn-gdb = " -Os"
 FULL_OPTIMIZATION:append:pn-lnav = " -Os"
+FULL_OPTIMIZATION:append:pn-perf = " -Os"
+FULL_OPTIMIZATION:append:pn-slang = " -Os"
 
 # Optimize medium packages used interactively for debugging concerning size
 FULL_OPTIMIZATION:append:pn-btop = " -Os"
