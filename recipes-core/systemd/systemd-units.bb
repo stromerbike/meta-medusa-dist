@@ -91,6 +91,7 @@ SRC_URI += " \
             file://peripheral-pwr.sh \
             file://peripheral-stem.service \
             file://peripheral-stem.sh \
+            file://systemd-timesyncd-prepare.service \
             file://systemd-udev-early-trigger.service \
             file://started.target \
             file://usb.service \
@@ -129,6 +130,7 @@ SYSTEMD_SERVICE:${PN} = " \
     mnt-log.service \
     peripheral-mpio.service \
     peripheral-pwr.service \
+    systemd-timesyncd-prepare.service \
     usb.service \
     vnc-server.service \
 "
@@ -163,6 +165,7 @@ do_install:append() {
     install -m 0755 ${WORKDIR}/peripheral-pwr.sh ${D}${sysconfdir}/scripts/
     install -m 0644 ${WORKDIR}/peripheral-stem.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/peripheral-stem.sh ${D}${sysconfdir}/scripts/
+    install -m 0644 ${WORKDIR}/systemd-timesyncd-prepare.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/systemd-udev-early-trigger.service ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/usb.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/usb.sh ${D}${sysconfdir}/scripts/

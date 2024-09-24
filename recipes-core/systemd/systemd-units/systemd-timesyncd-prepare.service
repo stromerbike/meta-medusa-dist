@@ -1,0 +1,17 @@
+[Unit]
+Description=Network Time Synchronization State Preparation
+DefaultDependencies=no
+Before=systemd-timesyncd.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mkdir -pv /mnt/data/timesync/
+# It is not guaranteed that the build process generates the same uid and gid without "useradd-staticids"
+# for systemd-timesyncd especially across BSP versions via USERADD_PARAM and the following warning occurs:
+# Directory "/mnt/data/timesync" already exists, but is owned by uid_old:gid_old (uid_new:gid_new was requested), refusing.
+ExecStart=/usr/bin/chown -Rv systemd-timesync:systemd-timesync /mnt/data/timesync/
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target
