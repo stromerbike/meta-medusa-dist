@@ -119,11 +119,29 @@ if [ ! -z "$CGMR" ]; then
                             rm -fv /tmp/cgmr
                         fi
                     fi
+                    EXPECTED_WAIT=60
+                    case "$UPDATE_FILE" in
+                        *4.4.14.0_to_4.5.4.0*)
+                            EXPECTED_WAIT=26
+                            ;;
+                        *4.4.14.0_to_4.7.1.0*)
+                            EXPECTED_WAIT=40
+                            ;;
+                        *4.5.4.0_to_4.6.9.4*)
+                            EXPECTED_WAIT=38
+                            ;;
+                        *4.5.4.0_to_4.7.1.0*)
+                            EXPECTED_WAIT=40
+                            ;;
+                        *4.6.9.4_to_4.7.1.0*)
+                            EXPECTED_WAIT=44
+                            ;;
+                    esac
                     COUNTER=0
-                    while [ $COUNTER -lt 30 ];
+                    while [ $COUNTER -lt 60 ];
                     do
                         COUNTER=$((COUNTER+1))
-                        sleep 8
+                        sleep 3
                         if [[ $INTERFACE == ttyACM* ]]; then
                             CGMR="$(cat /tmp/cgmr 2> /dev/null)"
                             sleep 2
@@ -148,7 +166,11 @@ if [ ! -z "$CGMR" ]; then
                                 exit 11
                             fi
                         else
-                            echo "Not yet complete ($((COUNTER*10))s)"
+                            PERCENT=$((COUNTER*100/EXPECTED_WAIT))
+                            if [ "$PERCENT" -gt 99 ]; then
+                                PERCENT=99
+                            fi
+                            echo "Not yet complete: $PERCENT% (act: $((COUNTER*5))s, exp: $((EXPECTED_WAIT*5))s)"
                         fi
                     done
                     echo "Could not read back revision"

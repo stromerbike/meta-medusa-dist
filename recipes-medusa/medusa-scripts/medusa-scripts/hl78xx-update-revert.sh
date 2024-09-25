@@ -28,7 +28,7 @@ else
                 echo "Checksums valid"
                 cat /lib/firmware/sierra-wireless/HL78$MODULE_VARIANT.*/package_version | grep HL78$MODULE_VARIANT
                 # Remark: Currently unclear why restarting the gsm service is necessary.    
-                #         Wait some reconds afterwards to keep sft from trying other baudrates already.
+                #         Wait some seconds afterwards to keep sft from trying other baudrates already.
                 echo "Restarting gsm service..."
                 systemctl restart gsm
                 sleep 5
