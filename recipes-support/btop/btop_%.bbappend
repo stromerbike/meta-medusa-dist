@@ -1,6 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
             file://remove-installation-to-share.patch \
+            file://remove-warning-messages-for-readonly-cases.patch \
 "
 
 FILES:${PN}:append = " \

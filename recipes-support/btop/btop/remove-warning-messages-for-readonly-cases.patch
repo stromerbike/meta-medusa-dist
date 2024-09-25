@@ -1,0 +1,15 @@
+diff --git a/src/btop_config.cpp b/src/btop_config.cpp
+index aa4d813..bff0a08 100644
+--- a/src/btop_config.cpp
++++ b/src/btop_config.cpp
+@@ -358,10 +358,8 @@ namespace Config {
+ 						statvfs(config_dir.c_str(), &stats) == 0 and (stats.f_flag & ST_RDONLY) == 0) {
+ 						return config_dir;
+ 					} else {
+-						fmt::print(stderr, "\033[0;31mWarning: \033[0m`{}` is not writable\n", fs::absolute(config_dir).string());
+ 						// If the config is readable we can still use the provided config, but changes will not be persistent
+ 						if ((fs::status(config_dir, error).permissions() & fs::perms::owner_read) == fs::perms::owner_read) {
+-							fmt::print(stderr, "\033[0;31mWarning: \033[0mLogging is disabled, config changes are not persistent\n");
+ 							return config_dir;
+ 						}
+ 					}
