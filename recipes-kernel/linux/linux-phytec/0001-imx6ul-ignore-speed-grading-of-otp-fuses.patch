@@ -3,6 +3,9 @@ From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
 Date: Fri, 20 Sep 2024 19:19:11 +0200
 Subject: [PATCH] imx6ul ignore speed grading of otp fuses
 
+i.MX 6UL G2 "MCIMX6G2CVM05A*":  528MHz -> 696MHz
+i.MX 6ULL Y2 "MCIMX6Y2CVM08AB": 792MHz -> 900MHz
+
 Upstream-Status: Inappropriate [stromer-specific]
 Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
 ---

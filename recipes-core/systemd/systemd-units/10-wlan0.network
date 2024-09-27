@@ -1,6 +1,7 @@
 [Match]
-Name=wlan0
-Driver=r8188eu
+#Name=wlan0 would cause a warning "based on potentially unpredictable interface name"
+Property=INTERFACE=wlan0
+Driver=rtl8xxxu
 
 [Network]
 DHCP=yes
