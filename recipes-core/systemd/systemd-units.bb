@@ -19,6 +19,7 @@ RDEPENDS:${PN} += " \
     inotify-tools \
     lzop \
     medusa-scripts \
+    mtd-utils-ubifs-mkfs \
     multilog \
     picocom \
     ppp \
@@ -80,6 +81,7 @@ SRC_URI += " \
             file://log-usb.sh \
             file://mnt-data.mount \
             file://mnt-log.service \
+            file://mnt-log.sh \
             file://mnt-rfs.service \
             file://mnt-rfs.sh \
             file://mnt-usb.service \
@@ -176,12 +178,12 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/wvdial.service ${D}${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/wvdial.sh ${D}${sysconfdir}/scripts/
 
-    install -d ${D}/mnt/ubi2
-    install -d ${D}/mnt/ubi3
     install -d ${D}/mnt/data
-    install -d ${D}/mnt/log
     install -m 0644 ${WORKDIR}/mnt-data.mount ${D}${systemd_system_unitdir}
+
+    install -d ${D}/mnt/log
     install -m 0644 ${WORKDIR}/mnt-log.service ${D}${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/mnt-log.sh ${D}${sysconfdir}/scripts/
 
     install -d ${D}/mnt/rfs_inactive
     install -m 0644 ${WORKDIR}/mnt-rfs.service ${D}${systemd_system_unitdir}

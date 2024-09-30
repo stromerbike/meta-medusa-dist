@@ -4,7 +4,7 @@ After=late-init.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/mount -t ubifs /dev/ubi0_3 /mnt/log
+ExecStart=/etc/scripts/mnt-log.sh start
 ExecStart=/bin/mkdir -p /mnt/log/journal /mnt/log/journal.wd
 ExecStart=/usr/bin/find /mnt/log/ -mindepth 1 -maxdepth 1 -type d ! -name "journal" ! -name "journal.wd" -exec rm -rf {} +
 ExecStart=/bin/chown -R root:systemd-journal /mnt/log/
@@ -13,7 +13,7 @@ ExecStart=/bin/systemd-tmpfiles --create --prefix=/var/log/journal
 ExecStart=/bin/journalctl --flush
 ExecStop=/bin/journalctl --sync
 ExecStop=/bin/umount -l /var/log/journal
-ExecStop=/bin/umount /mnt/log
+ExecStop=/etc/scripts/mnt-log.sh stop
 ExecStop=/bin/umount -l /tmp
 RemainAfterExit=yes
 
