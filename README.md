@@ -70,8 +70,6 @@ Busybox configuration (1.36.1):
 - set "Miscellaneous Utilities ---> fbsplash" to N; Remark: Not needed with fbv.
 - set "Miscellaneous Utilities ---> man" to N; Remark: Remark: Not needed.
 - set "Miscellaneous Utilities ---> mt" to N; Remark: Remark: Not needed.
-- set "Miscellaneous Utilities ---> nandwrite" to N; Remark: Not needed with mtd-utils-tests.
-- set "Miscellaneous Utilities ---> nanddump" to N; Remark: Not needed with mtd-utils-tests.
 - set "Miscellaneous Utilities ---> runlevel" to N; Remark: Not needed with systemd.
 - set "Miscellaneous Utilities ---> rx" to N; Remark: Not needed with lrzsz.
 - set "Miscellaneous Utilities ---> watchdog" to N; Remark: Not needed with systemd.
