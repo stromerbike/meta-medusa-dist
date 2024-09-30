@@ -96,7 +96,9 @@ if [ ! -z "$CGMR" ]; then
                 #         - HL7802_4.6.9.4_to_4.7.1.0_allBin_nbIOT11_sig11.ua:  --1k works (since EURY-4127 fixed)
                 #
                 #         To make use of the considerably faster 1024 byte block transfer, an update to 4.6.9.4+
-                #         over intermediate versions (4.4.14.0 -> 4.5.4.0 -> 4.6.9.4) should be strongly favored.
+                #         over intermediate versions (4.4.14.0 -> 4.5.4.0 -> 4.6.9.4) should be strongly favored
+                #         if no appropriate file for a direct update is available (some files were shared by Sierra
+                #         Wireless upon request).
                 if sx -vv --1k --xmodem $UPDATE_FILE < "/dev/$INTERFACE" > "/dev/$INTERFACE"; then
                     cleanupComport
                     echo "Sent file"
@@ -111,7 +113,7 @@ if [ ! -z "$CGMR" ]; then
                     cleanupComport
                     echo "Accepted the installation and update will be launched"
                     echo "Waiting up to 300s for the installation to complete"
-                    # Upon apperance of the of the ttyACM1 (symlinked to ttyGSM1) interface,
+                    # Upon appearance of the of the ttyACM1 (symlinked to ttyGSM1) interface,
                     # it will be used by the wvdial service and should not be used in this script.
                     # Therefore use the cgmr value read out by the gsm-module service.
                     if [[ $INTERFACE == ttyACM* ]]; then
@@ -166,11 +168,11 @@ if [ ! -z "$CGMR" ]; then
                                 exit 11
                             fi
                         else
-                            PERCENT=$((COUNTER*100/EXPECTED_WAIT))
-                            if [ "$PERCENT" -gt 99 ]; then
-                                PERCENT=99
+                            PROGRESS=$((COUNTER*100/EXPECTED_WAIT))
+                            if [ "$PROGRESS" -gt 99 ]; then
+                                PROGRESS=99
                             fi
-                            echo "Not yet complete: $PERCENT% (act: $((COUNTER*5))s, exp: $((EXPECTED_WAIT*5))s)"
+                            echo "Not yet complete: $PROGRESS% (act: $((COUNTER*5))s, exp: $((EXPECTED_WAIT*5))s)"
                         fi
                     done
                     echo "Could not read back revision"
