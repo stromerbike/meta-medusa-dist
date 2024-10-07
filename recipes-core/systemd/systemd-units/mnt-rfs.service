@@ -5,4 +5,5 @@ Description=mnt-rfs
 Type=oneshot
 ExecStart=/etc/scripts/mnt-rfs.sh start
 ExecStop=/etc/scripts/mnt-rfs.sh stop
+ExecReload=/etc/scripts/mnt-rfs.sh reload
 RemainAfterExit=yes
