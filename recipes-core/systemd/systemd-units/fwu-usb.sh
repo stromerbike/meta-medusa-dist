@@ -206,7 +206,7 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
                 echo "...done"
                 led2_blue
                 echo "Cleaning up inactive partition..."
-                if rm -rf /mnt/rfs_inactive/*; then
+                if rm -r /mnt/rfs_inactive/*; then
                     echo "...done"
                     echo "Extracting firmware..."
                     if pv -F "Extracting: %p" "$firstTarXz" 2> /dev/tty1 | tar -xJf - -C /mnt/rfs_inactive --warning=no-timestamp; then
@@ -237,6 +237,7 @@ if [[ $firstTarXz =~ .*medusa-image-[a-zA-Z0-9.-]+.rootfs.tar.xz$ ]]; then
                         display_error
                     fi
                 else
+                    systemctl reload mnt-rfs.service
                     display_error
                 fi
             else
