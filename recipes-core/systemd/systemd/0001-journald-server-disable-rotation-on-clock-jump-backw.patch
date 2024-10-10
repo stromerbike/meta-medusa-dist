@@ -1,29 +1,50 @@
-From b4e78ba664f8ffbbaf3ae4540a5a5bdc2fa09381 Mon Sep 17 00:00:00 2001
-From: "tristan.ramseyer" <tristan.ramseyer@stromerbike.com>
-Date: Fri, 20 Sep 2024 15:12:28 +0200
+From 879a93fb23a7f6b4bc7c5b3a35e2ec3959daa3d5 Mon Sep 17 00:00:00 2001
+From: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
+Date: Thu, 10 Oct 2024 18:59:41 +0200
 Subject: [PATCH] journald-server disable rotation on clock jump backwards
 
 Upstream-Status: Inappropriate [stromer-specific]
 Signed-off-by: tristan.ramseyer <tristan.ramseyer@stromerbike.com>
 ---
- src/journal/journald-server.c | 2 ++
- 1 file changed, 2 insertions(+)
+ src/journal/journald-server.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
 diff --git a/src/journal/journald-server.c b/src/journal/journald-server.c
-index 1c3a2a0b37..1e8ff33910 100644
+index 1c3a2a0b37..29e3ccab35 100644
 --- a/src/journal/journald-server.c
 +++ b/src/journal/journald-server.c
-@@ -922,8 +922,10 @@ static void server_write_to_journal(
-                  * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
-                  * bisection works correctly. */
+@@ -916,25 +916,14 @@ static void server_write_to_journal(
+         assert_se(sd_event_now(s->event, CLOCK_REALTIME, &ts.realtime) >= 0);
+         assert_se(sd_event_now(s->event, CLOCK_MONOTONIC, &ts.monotonic) >= 0);
  
-+                /*
-                 log_ratelimit_info(JOURNAL_LOG_RATELIMIT, "Time jumped backwards, rotating.");
+-        if (ts.realtime < s->last_realtime_clock) {
+-                /* When the time jumps backwards, let's immediately rotate. Of course, this should not happen during
+-                 * regular operation. However, when it does happen, then we should make sure that we start fresh files
+-                 * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
+-                 * bisection works correctly. */
++        f = server_find_journal(s, uid);
++        if (!f)
++                return;
+ 
+-                log_ratelimit_info(JOURNAL_LOG_RATELIMIT, "Time jumped backwards, rotating.");
++        if (journal_file_rotate_suggested(f, s->max_file_usec, LOG_DEBUG)) {
++                log_debug("%s: Journal header limits reached or header out-of-date, rotating.",
++                          f->path);
                  rotate = true;
-+                */
-         } else {
+-        } else {
+-
+-                f = server_find_journal(s, uid);
+-                if (!f)
+-                        return;
+-
+-                if (journal_file_rotate_suggested(f, s->max_file_usec, LOG_DEBUG)) {
+-                        log_debug("%s: Journal header limits reached or header out-of-date, rotating.",
+-                                  f->path);
+-                        rotate = true;
+-                }
+         }
  
-                 f = server_find_journal(s, uid);
+         if (rotate) {
 -- 
 2.43.0
 
