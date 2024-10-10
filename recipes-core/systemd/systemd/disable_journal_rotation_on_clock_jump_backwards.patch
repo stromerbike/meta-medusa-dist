@@ -1,15 +1,34 @@
 diff --git a/src/journal/journald-server.c b/src/journal/journald-server.c
-index 5cd58e8a77..ad59179efc 100644
+index 5cd58e8a77..6de057bb1b 100644
 --- a/src/journal/journald-server.c
 +++ b/src/journal/journald-server.c
-@@ -677,8 +677,10 @@ static void write_to_journal(Server *s, uid_t uid, struct iovec *iovec, unsigned
-                  * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
-                  * bisection works correctly. */
+@@ -671,24 +671,13 @@ static void write_to_journal(Server *s, uid_t uid, struct iovec *iovec, unsigned
+         assert_se(sd_event_now(s->event, CLOCK_REALTIME, &ts.realtime) >= 0);
+         assert_se(sd_event_now(s->event, CLOCK_MONOTONIC, &ts.monotonic) >= 0);
  
-+                /*
-                 log_debug("Time jumped backwards, rotating.");
+-        if (ts.realtime < s->last_realtime_clock) {
+-                /* When the time jumps backwards, let's immediately rotate. Of course, this should not happen during
+-                 * regular operation. However, when it does happen, then we should make sure that we start fresh files
+-                 * to ensure that the entries in the journal files are strictly ordered by time, in order to ensure
+-                 * bisection works correctly. */
++        f = find_journal(s, uid);
++        if (!f)
++                return;
+ 
+-                log_debug("Time jumped backwards, rotating.");
++        if (journal_file_rotate_suggested(f, s->max_file_usec)) {
++                log_debug("%s: Journal header limits reached or header out-of-date, rotating.", f->path);
                  rotate = true;
-+                */
-         } else {
+-        } else {
+-
+-                f = find_journal(s, uid);
+-                if (!f)
+-                        return;
+-
+-                if (journal_file_rotate_suggested(f, s->max_file_usec)) {
+-                        log_debug("%s: Journal header limits reached or header out-of-date, rotating.", f->path);
+-                        rotate = true;
+-                }
+         }
  
-                 f = find_journal(s, uid);
+         if (rotate) {
