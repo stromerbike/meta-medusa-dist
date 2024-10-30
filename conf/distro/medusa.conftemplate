@@ -81,9 +81,25 @@ INHERIT += "buildstats"
 SRC_URI_remove_pn-fuse-exfat = "${DEBIAN_MIRROR}/main/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
 SRC_URI_append_pn-fuse-exfat = "http://ports.ubuntu.com/ubuntu-ports/pool/universe/f/fuse-exfat/fuse-exfat_${PV}.orig.tar.gz"
 
+# gtest master/main name change
+SRC_URI_remove_pn-gtest = "git://github.com/google/googletest.git;protocol=https;"
+SRC_URI_append_pn-gtest = "git://github.com/google/googletest.git;protocol=https;branch=main"
+SRC_URI_remove_pn-breakpad = "git://github.com/google/googletest.git;destsuffix=git/src/testing/gtest;name=gtest"
+SRC_URI_remove_pn-breakpad = "git://github.com/google/googletest.git;destsuffix=git/src/testing/gtest;name=gtest;branch=main"
+SRC_URI_remove_pn-breakpad-native = "git://github.com/google/googletest.git;destsuffix=git/src/testing/gtest;name=gtest"
+SRC_URI_remove_pn-breakpad-native = "git://github.com/google/googletest.git;destsuffix=git/src/testing/gtest;name=gtest;branch=main"
+
 # lsof mirror
 SRC_URI_remove_pn-lsof = "http://www.mirrorservice.org/sites/lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_${PV}.tar.bz2"
 SRC_URI_append_pn-lsof = "https://ftp.osuosl.org/pub/blfs/conglomeration/lsof/lsof_${PV}.tar.bz2"
+
+# lz4 master/dev name change
+SRC_URI_remove_pn-lz4-native = "git://github.com/lz4/lz4.git"
+SRC_URI_append_pn-lz4-native = "git://github.com/lz4/lz4.git;branch=dev"
+
+# systemd master/main name change
+SRC_URI_remove_pn-systemd = "git://github.com/systemd/systemd.git;protocol=git"
+SRC_URI_append_pn-systemd = "git://github.com/systemd/systemd.git;protocol=git;branch=main"
 
 # wvdial and wvstreams mirrors
 SRC_URI_remove_pn-wvdial = "http://${BPN}.googlecode.com/files/${BP}.tar.bz2"
@@ -94,7 +110,6 @@ SRC_URI_append_pn-wvstreams = "https://storage.googleapis.com/google-code-archiv
 # Phytec git mirrors
 #GIT_URL_pn-barebox = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
 #GIT_URL_pn-barebox-targettools = "git://git@git.stromerbike.com/st2/barebox.git;protocol=ssh"
-#GIT_URL_pn-linux-mainline = "git://git@git.stromerbike.com/st2/linux-mainline.git;protocol=ssh"
 
 # Set empty root password and add user
 INHERIT += "extrausers"
