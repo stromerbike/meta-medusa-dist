@@ -175,22 +175,32 @@ do
 
             if [ "$CGMR_READOUT_DONE" == "yes" ] && [ "$PRL_SELECTION_DONE" == "no" ]; then
                 if [ $((10#$CURRENT_REVISION_ZEROED)) -ge 4006009004 ]; then # 4.6.9.4 and newer
+                    # New command AT+KSELACQ for HL78xx firmware versions 4.5.4.0+ and an empty list as PRL default setting (0).
+                    # 1: CAT-M
+                    # 2: NB-IoT
+                    # 3: GSM
+                    KSELACQ="1,3,2"
+                    if [ -e "/tmp/7048.rcg" ]; then
+                        KSELACQ="$(cat /tmp/7048.rcg)"
+                        echo "Configured string for KSELACQ: $KSELACQ"
+                        KSELACQ=${KSELACQ//4G/1}
+                        KSELACQ=${KSELACQ//NB/2}
+                        KSELACQ=${KSELACQ//2G/3}
+                        KSELACQ=${KSELACQ//+/,}
+                        echo "Configured value for KSELACQ: $KSELACQ"
+                    fi
                     echo "--> AT+KSELACQ supported. Querying PRL selection..."
                     prepareComport
                     RESPONSE="$(grep -m1 "+KSELACQ:\|ERROR" <(echo -e "AT+KSELACQ?\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
                     cleanupComport
                     cat $FULL_RESPONSE
-                    # New command AT+KSELACQ for HL78xx firmware versions 4.5.4.0+ and an empty list as PRL default setting (0).
-                    # 1: CAT-M
-                    # 2: NB-IoT
-                    # 3: GSM
-                    if [[ $RESPONSE =~ \+KSELACQ:\ 1,3,2 ]]; then
+                    if [[ $RESPONSE =~ "+KSELACQ: $KSELACQ$" ]]; then
                         echo "...PRL selection is set correctly"
                         PRL_SELECTION_DONE="yes"
                     elif [[ $RESPONSE =~ (\+KSELACQ:\ [^$'\r\n']+) ]]; then
                         echo "...PRL selection is supported but has to be adjusted..."
                         prepareComport
-                        RESPONSE="$(grep -m1 "OK\|ERROR" <(echo -e "AT+KSELACQ=0,1,3,2\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
+                        RESPONSE="$(grep -m1 "OK\|ERROR" <(echo -e "AT+KSELACQ=0,$KSELACQ\r" | timeout -s KILL 10 microcom -t 2000 "/dev/$INTERFACE" | tee $FULL_RESPONSE))"
                         cleanupComport
                         cat $FULL_RESPONSE
                         if [[ $RESPONSE =~ OK ]]; then
