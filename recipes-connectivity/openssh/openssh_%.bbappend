@@ -48,6 +48,10 @@ do_install:append() {
     # disallow password authentication
     sed -i 's/^[#[:space:]]*PasswordAuthentication.*/PasswordAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
     sed -i 's/^[#[:space:]]*ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
+
+    # allow SHA-1 for RSA key algorithms for PuTTY prior to 0.75 or LabVIEW LabSSH
+    echo "\nPubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config
+    echo "\nPubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
 }
 
 FILES:${PN} += " \
