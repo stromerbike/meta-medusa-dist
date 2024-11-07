@@ -49,9 +49,11 @@ do_install:append() {
     sed -i 's/^[#[:space:]]*PasswordAuthentication.*/PasswordAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
     sed -i 's/^[#[:space:]]*ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' ${D}${sysconfdir}/ssh/sshd_config*
 
-    # allow SHA-1 for RSA key algorithms for PuTTY prior to 0.75 or LabVIEW LabSSH
-    echo "\nPubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config
-    echo "\nPubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
+    # allow SHA-1 for RSA key algorithms for PuTTY prior to 0.75 and LabVIEW LabSSH
+    echo "\nHostKeyAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config
+    echo "\nHostKeyAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
+    echo "PubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config
+    echo "PubkeyAcceptedAlgorithms=+ssh-rsa" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
 }
 
 FILES:${PN} += " \
